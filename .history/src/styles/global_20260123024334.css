@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #514BCB;
+  --color-primary-dark: #3B35AF;
+  --color-primary-light: #6F69D6;
+  --color-cta: #FFD417;
+  --color-cta-hover: #E5BE14;
+  --color-surface: #EFEFEF;
+  --color-surface-dark: #1e293b;
+  --color-darkbg: #0f172a;
+  --font-sans: 'Inter', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  html {
+    @apply font-sans antialiased scroll-smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat;
+  }
+
+  /* БАЗА (СВЕТЛАЯ) */
+  body {
+    background-color: #ffffff;
+    color: #111827;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* ТЕМНАЯ (Только если есть класс .dark) */
+  html.dark body {
+    background-color: #0f172a; /* Темно-синий */
+    color: #f3f4f6;
+  }
+
+  /* Анимации появления */
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .delay-100 { transition-delay: 100ms; }
+}
+
+/* Скроллбар */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+html.dark ::-webkit-scrollbar-thumb { background: #475569; }

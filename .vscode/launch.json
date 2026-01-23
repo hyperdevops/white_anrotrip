@@ -2,10 +2,28 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "./node_modules/.bin/astro dev",
-      "name": "Development server",
+      "name": "Launch Astro Dev Server",
+      "type": "node",
       "request": "launch",
-      "type": "node-terminal"
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/node_modules/.bin/astro",
+      "args": ["dev"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "Run Astro Build",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/node_modules/.bin/astro",
+      "args": ["build"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "production"
+      }
     }
   ]
 }

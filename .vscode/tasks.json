@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Gemini: Анализ проекта",
+      "type": "shell",
+      "command": "gemini analyze src/ --context astro-docs",
+      "group": "build"
+    }
+  ]
+}

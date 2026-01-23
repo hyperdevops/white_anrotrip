@@ -1,4 +1,13 @@
 {
-  "recommendations": ["astro-build.astro-vscode"],
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-json",
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "stylelint.vscode-stylelint",
+    "dbaeumer.vscode-eslint"
+  ],
   "unwantedRecommendations": []
 }

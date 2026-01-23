@@ -1,0 +1,37 @@
+---
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import PopularTours from '../components/PopularTours.astro';
+import SearchWidget from '../components/SearchWidget.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="ANRO TRIP — Будь на высоте!">
+  <Header />
+
+  <main>
+    <!-- 1. Hero: Липкий и позади (z-0) -->
+    <Hero />
+
+    <!-- 2. Контент: Выезжает снизу (z-10, фон) -->
+    <!-- Убрали -mt-20, чтобы контент начинался ПОД картинкой и наезжал при скролле -->
+    <div class="relative z-10 bg-white dark:bg-darkbg rounded-t-[40px] shadow-[0_-20px_60px_rgba(0,0,0,0.2)] pb-20 min-h-screen">
+
+      <!--
+         Виджет поиска с анимацией.
+         -translate-y-1/2 поднимает его наполовину вверх от границы белого блока.
+         reveal-hidden - запускает нашу анимацию всплытия.
+      -->
+      <div class="relative z-20 -translate-y-1/2 reveal-hidden">
+        <SearchWidget />
+      </div>
+
+      <!-- Блок с турами -->
+      <!-- -mt-20 компенсирует пустоту, оставленную поднятым виджетом -->
+      <div class="-mt-16">
+        <PopularTours />
+      </div>
+
+    </div>
+  </main>
+</Layout>

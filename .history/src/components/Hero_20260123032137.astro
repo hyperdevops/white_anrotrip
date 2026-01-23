@@ -1,0 +1,53 @@
+---
+---
+<!--
+  ИСПРАВЛЕНИЕ:
+  sticky top-0 z-0 (был -z-10).
+  Теперь Hero лежит в нормальном слое, а контент (у которого z-10) наедет на него сверху.
+-->
+<section class="sticky top-0 z-0 relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden">
+
+  <div class="absolute inset-0">
+    <img
+      src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop"
+      alt="Вид из самолета"
+      class="h-full w-full object-cover scale-105 animate-[kenburns_30s_infinite_alternate]"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-black/10 to-black/60"></div>
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 text-center text-white mt-16">
+    <h1 class="mx-auto max-w-5xl font-montserrat text-4xl font-extrabold uppercase leading-tight tracking-tight drop-shadow-xl sm:text-6xl md:text-7xl lg:text-8xl">
+      Будь на высоте <br />
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-blue-200">
+        с ANRO TRIP!
+      </span>
+    </h1>
+
+    <p class="mx-auto mt-6 max-w-2xl text-base font-medium text-white/90 sm:text-xl md:text-2xl drop-shadow-md">
+      Путешествия вашей мечты начинаются здесь
+    </p>
+
+    <div class="mt-12 flex flex-col items-center justify-center">
+      <a
+        href="#search"
+        class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-cta px-10 py-5 text-lg font-bold text-[#11111b] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,212,23,0.4)] focus:outline-none focus:ring-4 focus:ring-cta/50"
+      >
+        <span class="relative z-10 flex items-center gap-3">
+          ПОИСК ТУРОВ
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes kenburns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+  }
+</style>

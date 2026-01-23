@@ -1,0 +1,35 @@
+---
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import PopularTours from '../components/PopularTours.astro';
+import SearchWidget from '../components/SearchWidget.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="ANRO TRIP — Будь на высоте!">
+  <Header />
+
+  <main>
+    <Hero />
+
+    <!-- Контент -->
+    <div class="relative z-10 mt-[45vh] md:mt-[20vh] bg-white shadow-[0_-20px_60px_rgba(0,0,0,0.2)] pb-20 min-h-screen">
+
+      <!-- Виджет поиска -->
+      <div class="relative z-20 -translate-y-1/2 reveal-hidden">
+        <SearchWidget />
+      </div>
+
+      <!--
+        ИСПРАВЛЕНИЕ ОТСТУПА:
+        -mt-56 (тянем вверх на мобильном очень сильно)
+        md:-mt-24 (на десктопе тоже чуть плотнее)
+      -->
+      <div class="-mt-56 md:-mt-24 relative z-10">
+        <PopularTours />
+      </div>
+
+      <div class="h-20"></div>
+    </div>
+  </main>
+</Layout>

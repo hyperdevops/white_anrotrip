@@ -10,29 +10,24 @@ import Layout from '../layouts/Layout.astro';
   <Header />
 
   <main>
-    <!-- 1. Hero -->
     <Hero />
 
-    <!--
-      2. Контентная шторка
-      FIX для мобильных:
-      mt-[45vh] — на мобильных отступаем вниз на 45% экрана (так как форма высокая).
-      md:mt-[20vh] — на компьютерах оставляем 20% (форма узкая).
-      Это "спрячет" форму за нижний край гарантированно.
-    -->
     <div class="relative z-10 mt-[45vh] md:mt-[20vh] bg-white dark:bg-darkbg shadow-[0_-20px_60px_rgba(0,0,0,0.2)] pb-20 min-h-screen">
 
-      <!-- Виджет поиска -->
+      <!-- Виджет (поднят вверх) -->
       <div class="relative z-20 -translate-y-1/2 reveal-hidden">
         <SearchWidget />
       </div>
 
-      <!-- Блок с турами -->
-      <div class="-mt-16">
+      <!--
+        ПРАВКА ОТСТУПА:
+        -mt-48 (минус 12rem) — на мобильном сильно тянем вверх, чтобы закрыть дыру от высокой формы.
+        md:-mt-16 — на компе форма низкая, тянем слабее.
+      -->
+      <div class="-mt-48 md:-mt-16">
         <PopularTours />
       </div>
 
-      <!-- Подвал -->
       <div class="h-20"></div>
     </div>
   </main>

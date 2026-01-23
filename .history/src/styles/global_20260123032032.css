@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #514BCB;
+  --color-primary-dark: #3B35AF;
+  --color-primary-light: #6F69D6;
+  --color-cta: #FFD417;
+  --color-cta-hover: #E5BE14;
+  --color-surface: #EFEFEF;
+  --color-surface-dark: #1e293b;
+  --color-darkbg: #0f172a;
+  --font-sans: 'Inter', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  html {
+    @apply font-sans antialiased scroll-smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat;
+  }
+
+  /* ВАЖНО: Делаем фон body прозрачным, чтобы Hero (-z-10) был виден сквозь него */
+  /* Цвет будет задаваться блоками контента */
+  body {
+    background-color: transparent;
+    color: #111827;
+  }
+
+  /* Анимации */
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .delay-100 { transition-delay: 100ms; }
+}
+
+/* === ИДЕАЛЬНОЕ СТЕКЛО === */
+.glass-panel {
+  /* Фон: Белый, но прозрачный (40%) */
+  background: rgba(255, 255, 255, 0.4) !important;
+
+  /* Размытие: Очень сильное */
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+
+  /* Границы */
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* Скроллбар */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }

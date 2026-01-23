@@ -26,6 +26,14 @@ const {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+		<script is:inline>
+			if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+				document.documentElement.classList.add('dark');
+			} else {
+				document.documentElement.classList.remove('dark');
+			}
+		</script>
+
 		<title>{title}</title>
 	</head>
 	<body class="bg-white dark:bg-darkbg text-gray-900 dark:text-gray-100 font-inter antialiased overflow-x-hidden selection:bg-cta selection:text-black transition-colors duration-300">

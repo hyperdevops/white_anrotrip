@@ -1,0 +1,31 @@
+---
+---
+<button
+  id="scroll-to-top"
+  aria-label="Вернуться наверх"
+  class="fixed bottom-6 right-6 z-40 translate-y-20 opacity-0 transition-all duration-500 rounded-full bg-primary/80 p-3 text-white shadow-lg backdrop-blur-md hover:bg-primary hover:shadow-xl hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-cta sm:bottom-8 sm:right-8"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+  </svg>
+</button>
+
+<script>
+  const scrollBtn = document.getElementById('scroll-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      scrollBtn?.classList.remove('translate-y-20', 'opacity-0');
+    } else {
+      scrollBtn?.classList.add('translate-y-20', 'opacity-0');
+    }
+  });
+
+  scrollBtn?.addEventListener('click', () => {
+    if (navigator.vibrate) navigator.vibrate(10);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
