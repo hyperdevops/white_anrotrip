@@ -22,3 +22,12 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Project-specific ignores
+.history/
+.kilocode/
+.specify/
+.gemini/
+.cursorrules
+.ai-rules
+*.txt
