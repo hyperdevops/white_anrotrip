@@ -55,15 +55,18 @@ const tours = [
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
 
       {tours.map((tour, index) => (
-        <a href="#" class:list={[
-          "group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500",
-          "reveal-hidden", // <-- Добавили класс анимации
-          index % 2 === 0 ? "" : "delay-100", // <-- Четные карточки чуть с задержкой
-          tour.size === 'large' ? 'md:col-span-2 md:row-span-2' : '',
-          tour.size === 'tall' ? 'md:col-span-1 md:row-span-2' : '',
-          tour.size === 'wide' ? 'md:col-span-2 md:row-span-1' : '',
-          tour.size === 'normal' ? 'md:col-span-1 md:row-span-1' : ''
-        ]}>
+        <button
+          type="button"
+          data-tour-title={tour.title}
+          class={`group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 reveal-hidden ${
+            index % 2 === 0 ? '' : 'delay-100'
+          } ${
+            tour.size === 'large' ? 'md:col-span-2 md:row-span-2' :
+            tour.size === 'tall' ? 'md:col-span-1 md:row-span-2' :
+            tour.size === 'wide' ? 'md:col-span-2 md:row-span-1' :
+            'md:col-span-1 md:row-span-1'
+          }`}
+        >
 
           <!-- Картинка -->
           <div class="absolute inset-0">
@@ -73,7 +76,7 @@ const tours = [
               class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
           </div>
 
           <!-- Контент -->
@@ -93,9 +96,18 @@ const tours = [
               </p>
             </div>
           </div>
-        </a>
+        </button>
       ))}
     </div>
 
   </div>
 </section>
+
+<script is:inline>
+ document.querySelectorAll('button[data-tour-title]').forEach(button => {
+   button.addEventListener('click', (event) => {
+     const tourTitle = event.currentTarget.getAttribute('data-tour-title');
+     alert(`Детали тура: ${tourTitle}`);
+   });
+ });
+</script>

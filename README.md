@@ -1,46 +1,127 @@
-# Astro Starter Kit: Basics
+# ANRO TRIP - Путешествия вашей мечты
 
-```sh
-npm create astro@latest -- --template basics
+Современный веб-сайт турагентства ANRO TRIP, созданный с использованием Astro и Tailwind CSS. Платформа для поиска и бронирования туров с интуитивным интерфейсом и красивым дизайном.
+
+## 🌟 Особенности
+
+- **Адаптивный дизайн** - идеально выглядит на всех устройствах
+- **Темная/светлая тема** - с возможностью переключения и сохранением предпочтений
+- **Плавные анимации** - эффекты появления элементов при прокрутке
+- **Современный UI** - элегантный и интуитивный интерфейс
+- **Высокая производительность** - благодаря статическому рендерингу Astro
+- **Доступность** - поддержка клавиатурной навигации и ARIA-атрибутов
+
+## 🛠️ Технологии
+
+- [Astro](https://astro.build/) - фреймворк для создания быстрых веб-сайтов
+- [Tailwind CSS](https://tailwindcss.com/) - современный CSS-фреймворк
+- [TypeScript](https://www.typescriptlang.org/) - для типизации JavaScript
+- Modern JavaScript API - Intersection Observer, localStorage и другие
+
+## 📁 Структура проекта
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
-├── public/
+├── public/                 # Статические файлы
 │   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── components/         # Переиспользуемые компоненты
+│   │   ├── Header.astro    # Шапка сайта
+│   │   ├── Hero.astro      # Главный баннер
+│   │   ├── PopularTours.astro # Популярные туры
+│   │   ├── SearchWidget.astro # Поиск туров
+│   │   ├── ThemeToggle.astro # Переключатель темы
+│   │   └── ScrollToTop.astro # Кнопка возврата наверх
+│   ├── layouts/            # Макеты страниц
+│   │   └── Layout.astro    # Основной макет
+│   ├── pages/              # Страницы сайта
+│   │   └── index.astro     # Главная страница
+│   ├── styles/             # Стилевые файлы
+│   │   └── global.css      # Глобальные стили и тема
+│   └── types/              # TypeScript типы
+│       └── window.d.ts     # Расширение Window интерфейса
+└── package.json            # Зависимости и скрипты
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🔧 Установка и запуск
 
-## 🧞 Commands
+1. Клонируйте репозиторий:
+```bash
+git clone <your-repository-url>
+cd white_anrotrip
+```
 
-All commands are run from the root of the project, from a terminal:
+2. Установите зависимости:
+```bash
+npm install
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+3. Запустите локальный сервер разработки:
+```bash
+npm run dev
+```
 
-## 👀 Want to learn more?
+4. Откройте [http://localhost:4321](http://localhost:4321) в браузере
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🚀 Команды
+
+| Команда                   | Описание                                      |
+| ------------------------- | --------------------------------------------- |
+| `npm install`             | Установка зависимостей                        |
+| `npm run dev`             | Запуск локального сервера разработки          |
+| `npm run build`           | Сборка продакшн-версии в папку `./dist/`      |
+| `npm run preview`         | Предварительный просмотр сборки локально      |
+| `npm run astro ...`       | CLI команды (например, `astro add`)           |
+
+## 💡 Возможности
+
+### Адаптивность
+- Полностью адаптивный дизайн для всех размеров экранов
+- Мобильное меню с анимацией
+- Оптимизированная сетка для туров
+
+### Темизация
+- Поддержка светлой и темной темы
+- Сохранение предпочтений пользователя в localStorage
+- Плавные переходы между темами
+
+### Анимации
+- Эффекты появления элементов при прокрутке (scroll-reveal)
+- Анимированный фон героя (kenburns effect)
+- Плавные переходы между состояниями элементов
+
+### Функциональность
+- Поиск туров с удобным интерфейсом
+- Популярные направления в виде сетки bento
+- Кнопка возврата наверх
+- Плавная навигация по странице
+
+## 🎨 Дизайн
+
+### Цветовая палитра
+- Primary: #514BCB (фиолетовый)
+- Primary Dark: #3B35AF
+- Primary Light: #6F69D6
+- CTA (Call To Action): #FFD417 (желтый)
+- Surface: #EFEFEF
+- Dark Background: #0f172a
+
+### Шрифты
+- Основной: Inter
+- Заголовки: Montserrat
+
+## 🤝 Вклад в проект
+
+1. Сделайте fork проекта
+2. Создайте ветку для новой фичи (`git checkout -b feature/amazing-feature`)
+3. Сделайте коммит изменений (`git commit -m 'Add amazing feature'`)
+4. Запушьте ветку (`git push origin feature/amazing-feature`)
+5. Откройте pull request
+
+## 📄 Лицензия
+
+Этот проект распространяется под MIT лицензией.
+
+## 📞 Контакты
+
+ANRO TRIP - Путешествия, которые меняют жизнь.
