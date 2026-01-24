@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/* Включаем ручное управление темой */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+@layer base {
+  html {
+    @apply font-sans antialiased scroll-smooth;
+    /* ГЛАВНОЕ ИСПРАВЛЕНИЕ: Фон прозрачный! Иначе самолета не видно. */
+    background-color: transparent !important;
+  }
+
+  body {
+    background-color: transparent !important;
+    /* Цвет текста меняется плавно (0.7s) */
+    @apply text-gray-900 dark:text-gray-100 transition-colors duration-700 ease-in-out;
+  }
+
+  h1, h2, h3, h4, h5, h6 { @apply font-montserrat; }
+
+  /* ШТОРКА (Контент) - Вот что должно иметь цвет! */
+  .content-sheet {
+    @apply bg-white dark:bg-[#0f172a] transition-colors duration-700 ease-in-out;
+    border-radius: 40px 40px 0 0;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+  }
+}
+
+/* Стекло (Хедер и Виджет) */
+.glass-panel {
+  /* Светлое */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  /* Плавный переход цвета стекла */
+  @apply transition-colors duration-700 ease-in-out;
+}
+
+/* Темное стекло */
+html.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.85); /* Чуть темнее */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Анимации появления */
+.reveal-hidden { opacity: 0; transform: translateY(50px); transition: 0.8s; }
+.reveal-visible { opacity: 1; transform: translateY(0); }
+
+/* Скроллбар */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+html.dark ::-webkit-scrollbar-thumb { background: #475569; }

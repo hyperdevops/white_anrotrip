@@ -10,29 +10,26 @@ import Layout from '../layouts/Layout.astro';
   <Header />
 
   <main>
-    <!-- 1. Hero -->
     <Hero />
 
     <!--
-      2. Контентная шторка
-      FIX для мобильных:
-      mt-[45vh] — на мобильных отступаем вниз на 45% экрана (так как форма высокая).
-      md:mt-[20vh] — на компьютерах оставляем 20% (форма узкая).
-      Это "спрячет" форму за нижний край гарантированно.
+      ШТОРКА С КОНТЕНТОМ
+      Используем класс content-sheet (цвета и переходы настроены в CSS)
+      Убрал лишние bg-white и dark:bg... из HTML, чтобы не было конфликтов.
     -->
-    <div class="relative z-10 mt-[45vh] md:mt-[20vh] bg-white dark:bg-darkbg shadow-[0_-20px_60px_rgba(0,0,0,0.2)] pb-20 min-h-screen">
-
-      <!-- Виджет поиска -->
-      <div class="relative z-20 -translate-y-1/2 reveal-hidden">
+    <div
+      class="relative z-10 mt-[45vh] md:mt-[20vh] content-sheet pb-20 min-h-screen"
+    >
+      <!-- Виджет -->
+      <div class="relative z-20 -translate-y-1/2 px-4">
         <SearchWidget />
       </div>
 
-      <!-- Блок с турами -->
-      <div class="-mt-16">
+      <!-- Туры -->
+      <div class="-mt-48 md:-mt-16 relative z-10">
         <PopularTours />
       </div>
 
-      <!-- Подвал -->
       <div class="h-20"></div>
     </div>
   </main>

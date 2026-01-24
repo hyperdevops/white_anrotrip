@@ -1,58 +1,87 @@
 ---
----
-<!-- Добавлен класс sticky top-0 и -z-10, чтобы контент мог наехать сверху -->
-<section class="sticky top-0 -z-10 min-h-dvh w-full flex items-center justify-center overflow-hidden">
 
-  <div class="absolute inset-0 z-0">
+---
+
+<section
+  class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden"
+>
+  <div class="absolute inset-0">
     <img
       src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop"
       alt="Вид из самолета"
-      class="h-full w-full object-cover scale-105 animate-[kenburns_30s_infinite_alternate]"
+      class="hero-image h-full w-full object-cover scale-105 animate-[kenburns_30s_infinite_alternate]"
       loading="eager"
     />
-    <div class="absolute inset-0 bg-linear-to-b from-blue-900/40 via-black/10 to-black/60 dark:from-blue-950/60 dark:via-black/40 dark:to-black/80"></div>
+    <!-- Градиент остается -->
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-black/10 to-black/60"
+    >
+    </div>
   </div>
 
-  <div class="relative z-10 container mx-auto px-4 text-center text-white mt-16">
-    <h1 class="mx-auto max-w-5xl font-montserrat text-4xl font-extrabold uppercase leading-tight tracking-tight drop-shadow-xl sm:text-6xl md:text-7xl lg:text-8xl">
+  <div
+    class="relative z-10 container mx-auto px-4 text-center text-white mt-16"
+  >
+    <h1
+      class="mx-auto max-w-5xl font-montserrat text-4xl font-extrabold uppercase leading-tight tracking-tight drop-shadow-xl sm:text-6xl md:text-7xl lg:text-8xl"
+    >
       Будь на высоте <br />
-      <span class="text-transparent bg-clip-text bg-linear-to-r from-white via-blue-100 to-blue-200">
+      <span
+        class="text-transparent bg-clip-text bg-linear-to-r from-white via-blue-100 to-blue-200"
+      >
         с ANRO TRIP!
       </span>
     </h1>
 
-    <p class="mx-auto mt-6 max-w-2xl text-base font-medium text-white/90 sm:text-xl md:text-2xl drop-shadow-md">
+    <p
+      class="mx-auto mt-6 max-w-2xl text-base font-medium text-white/90 sm:text-xl md:text-2xl drop-shadow-md"
+    >
       Путешествия вашей мечты начинаются здесь
     </p>
 
     <div class="mt-12 flex flex-col items-center justify-center">
+      <!--
+         КНОПКА С ПРЯМЫМИ СТИЛЯМИ (ГРУБАЯ СИЛА)
+         box-shadow прописан прямо здесь. Его невозможно игнорировать.
+      -->
       <a
         href="#search"
-        onclick="event.preventDefault(); document.querySelector('#search').scrollIntoView({behavior: 'smooth'});"
-        class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-cta px-10 py-5 text-lg font-bold text-[#11111b] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,212,23,0.4)] focus:outline-none focus:ring-4 focus:ring-cta/50"
+        class="group relative inline-flex items-center justify-center rounded-full bg-[#FFD417] px-12 py-6 text-xl font-black text-[#11111b] transition-all duration-300 hover:scale-110 active:scale-95"
+        style="box-shadow: 0 0 20px 5px rgba(255, 212, 23, 0.6);"
       >
+        <!-- Блик внутри кнопки -->
+        <span
+          class="absolute inset-0 rounded-full bg-white/20 group-hover:bg-white/0 transition-colors"
+        ></span>
+
         <span class="relative z-10 flex items-center gap-3">
           ПОИСК ТУРОВ
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-7 w-7 transition-transform duration-300 group-hover:translate-x-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
         </span>
       </a>
     </div>
   </div>
-
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-    <a href="#search" onclick="event.preventDefault(); document.querySelector('#search').scrollIntoView({behavior: 'smooth'});" class="text-white/80 hover:text-white transition-colors" aria-label="Скролл вниз">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7" />
-      </svg>
-    </a>
-  </div>
 </section>
 
 <style>
   @keyframes kenburns {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.15); }
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.15);
+    }
   }
 </style>

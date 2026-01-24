@@ -14,7 +14,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru" class="scroll-smooth" data-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -32,6 +32,40 @@ const {
 		<slot />
 		<ScrollToTop />
 
+        <!-- Скрипт инициализации темы -->
+        <script is:inline>
+          // Проверяем сохраненную тему при загрузке
+          const savedTheme = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          
+          // Если тема была сохранена, используем её, иначе определяем по системным настройкам
+          const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+          
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+          
+          // Обновляем data-theme атрибут при изменении темы
+          const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const hasDarkClass = document.documentElement.classList.contains('dark');
+                const currentTheme = hasDarkClass ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+              }
+            });
+          });
+          
+          observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+          });
+        </script>
+        
         <!-- ОБНОВЛЕННЫЙ СКРИПТ АНИМАЦИИ -->
         <script is:inline>
           // Создаем глобальную функцию для запуска/перезапуска анимаций

@@ -1,50 +1,88 @@
-/* src/styles/global.css */
-@import "tailwindcss";
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* --- Цвета --- */
-  --color-primary: #514BCB;
-  --color-primary-dark: #3B35AF;
-  --color-primary-light: #6F69D6;
-
-  --color-cta: #FFD417;
-  --color-cta-hover: #E5BE14;
-
-  --color-surface: #EFEFEF;
-  --color-surface-dark: #1e293b;
-
-  --color-darkbg: #0f172a;
-
-  /* --- Шрифты --- */
-  --font-sans: 'Inter', sans-serif;
+  --color-primary: #514bcb;
+  --color-primary-dark: #3b35af;
+  --color-primary-light: #6f69d6;
+  --color-cta: #ffd417;
+  --color-cta-hover: #e5be14;
   --font-montserrat: 'Montserrat', sans-serif;
-
-  /* --- Анимации --- */
-  --animate-fade-in: fadeIn 0.3s ease-in-out;
-  --animate-slide-up: slideUp 0.4s ease-out;
-
-  @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  @keyframes slideUp {
-    0% { transform: translateY(20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
+  --font-inter: 'Inter', sans-serif;
 }
 
-/* --- Базовые настройки --- */
 @layer base {
   html {
-    @apply font-sans;
+    @apply font-sans antialiased scroll-smooth;
+    background-color: transparent !important;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  body {
+    background-color: transparent !important;
+    @apply text-gray-900 dark:text-gray-100 transition-colors duration-700 ease-in-out;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-montserrat;
+  }
+
+  .content-sheet {
+    @apply bg-white dark:bg-[#0f172a] transition-colors duration-700 ease-in-out;
+    border-radius: 40px 40px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* --- Кастомный скроллбар --- */
+/* === СТЕКЛО (ТЕНИ УСИЛЕНЫ) === */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  @apply transition-colors duration-700 ease-in-out;
+  /* Усиленная тень для светлой темы */
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15);
+}
+
+html.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Тень для темной */
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* === ЭФФЕКТ ВЕЧЕРА (Затемнение картинки) === */
+/* Применяем фильтр к картинке Hero, когда тема темная */
+html.dark .hero-image {
+  filter: brightness(0.6) contrast(1.1); /* 60% яркости = вечер */
+  transition: filter 0.7s ease-in-out;
+}
+html:not(.dark) .hero-image {
+  filter: brightness(1) contrast(1); /* 100% яркости = день */
+  transition: filter 0.7s ease-in-out;
+}
+
+/* Остальные стили */
+.deep-shadow {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5) !important;
+}
+html.dark .deep-shadow {
+  box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.9) !important;
+}
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.8s;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -55,30 +93,6 @@
   background: #c1c1c1;
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
-}
-.dark ::-webkit-scrollbar-thumb {
+html.dark ::-webkit-scrollbar-thumb {
   background: #475569;
 }
-
-/* === АНИМАЦИИ SCROLL REVEAL === */
-
-/* Исходное состояние: элемент невидим и смещен вниз */
-.reveal-hidden {
-  opacity: 0;
-  transform: translateY(50px); /* Сдвиг вниз на 50px */
-  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); /* Плавная физика */
-  will-change: opacity, transform;
-}
-
-/* Конечное состояние: элемент виден и на месте */
-.reveal-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Задержка для карточек (чтобы они появлялись лесенкой) */
-.delay-100 { transition-delay: 100ms; }
-.delay-200 { transition-delay: 200ms; }
-.delay-300 { transition-delay: 300ms; }
