@@ -6,15 +6,10 @@
   id="theme-toggle"
   type="button"
   class="relative inline-flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 focus:outline-none
-	/* СВЕТЛАЯ ТЕМА: Серый фон, серый текст. Ховер: фон темнее, текст фиолетовый */
-	bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-primary
-	/* ТЕМНАЯ ТЕМА: Темный фон, серый текст. Ховер: фон светлее, текст желтый */
-	dark:bg-slate-800 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-cta
-	/* КРУЖОК (RING): */
-	/* В светлой: прозрачный, при наведении фиолетовый */
-	ring-1 ring-transparent hover:ring-primary/30
-	/* В темной: белый полупрозрачный (чтобы было видно границу), при наведении желтый */
-	dark:ring-white/10 dark:hover:ring-cta/30"
+    /* СВЕТЛАЯ ТЕМА: Серый -> Фиолетовый при наведении */
+    bg-gray-200 text-gray-500 hover:bg-gray-100 hover:text-primary
+    /* ТЕМНАЯ ТЕМА: Темный -> Желтый при наведении */
+    dark:bg-slate-800 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-cta"
   aria-label="Переключить тему"
 >
   <!-- Солнце -->
@@ -43,7 +38,6 @@
 </button>
 
 <script is:inline>
-  /* Скрипт без изменений, он работает отлично */
   const btn = document.getElementById('theme-toggle');
   const sunIcon = document.getElementById('sun-icon');
   const moonIcon = document.getElementById('moon-icon');
