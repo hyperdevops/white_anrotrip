@@ -1,5 +1,5 @@
 ---
-// 1. Импортируем картинку (проверь название файла!)
+// src/components/Hero.astro
 import { Image } from 'astro:assets';
 import heroBg from '../assets/plane.avif';
 ---
@@ -8,17 +8,13 @@ import heroBg from '../assets/plane.avif';
   class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden"
 >
   <div class="absolute inset-0">
-    <!--
-       2. Компонент Image сам разберется с форматом AVIF
-    -->
     <Image
       src={heroBg}
       alt="Вид из самолета"
-      class="hero-image h-full w-full object-cover scale-105 animate-[kenburns_30s_infinite_alternate]"
+      class="h-full w-full object-cover scale-105 animate-[kenburns_30s_infinite_alternate]"
       quality="high"
       loading="eager"
     />
-
     <!-- Градиент затемнения -->
     <div
       class="absolute inset-0 bg-linear-to-b from-blue-900/40 via-black/10 to-black/60"
@@ -48,8 +44,9 @@ import heroBg from '../assets/plane.avif';
 
     <div class="mt-12 flex flex-col items-center justify-center">
       <a
+        id="hero-search-btn"
         href="#search"
-        class="group relative inline-flex items-center justify-center rounded-full bg-[#FFD417] px-12 py-6 text-xl font-black text-[#11111b] transition-all duration-300 hover:scale-110 active:scale-95"
+        class="group relative inline-flex items-center justify-center rounded-full bg-(--color-cta) px-12 py-6 text-xl font-black text-[#11111b] transition-all duration-300 hover:scale-110 active:scale-95"
         style="box-shadow: 0 0 20px 5px rgba(255, 212, 23, 0.6);"
       >
         <span
@@ -74,6 +71,28 @@ import heroBg from '../assets/plane.avif';
       </a>
     </div>
   </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-20">
+    <button
+      id="scroll-arrow"
+      aria-label="Скролл вниз"
+      class="text-white/80 hover:text-white transition-colors cursor-pointer"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-10 w-10 drop-shadow-md"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 14l-7 7m0 0l-7-7"></path>
+      </svg>
+    </button>
+  </div>
 </section>
 
 <style>
@@ -86,3 +105,39 @@ import heroBg from '../assets/plane.avif';
     }
   }
 </style>
+
+<script>
+  // Скрипт прокрутки
+  const searchBtn = document.getElementById('hero-search-btn');
+  const arrowBtn = document.getElementById('scroll-arrow');
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Находим элемент, к которому нужно проскроллить
+      const searchAnchor = document.getElementById('search-anchor');
+      if (searchAnchor) {
+        // Прокручиваем к элементу со смещением вверх на 100px
+        const rect = searchAnchor.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const targetPosition = rect.top + scrollTop - 100; // поднимаем на 100px выше
+        
+        // Плавная прокрутка к позиции
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+
+  if (arrowBtn) {
+    arrowBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      document
+        .getElementById('popular-tours')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+</script>

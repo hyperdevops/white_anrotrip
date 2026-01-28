@@ -1,0 +1,95 @@
+---
+// src/components/ui/Modal.astro
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<dialog
+  id={id}
+  class="modal bg-transparent p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+>
+  <div
+    class="modal-box relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-auto mt-20 transform transition-all scale-95 opacity-0 open:scale-100 open:opacity-100"
+  >
+    <!-- Кнопка закрытия -->
+    <button
+      class="close-modal absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Заголовок -->
+    <h3
+      class="text-2xl font-bold text-gray-900 mb-6 text-center"
+    >
+      {title}
+    </h3>
+
+    <!-- Контент (форма вставляется сюда) -->
+    <div class="modal-content">
+      <slot />
+    </div>
+  </div>
+</dialog>
+
+<script define:vars={{ id }}>
+  const dialog = document.getElementById(id);
+
+  // Логика открытия (слушаем события на document)
+  document.addEventListener(`open-modal-${id}`, () => {
+    dialog.showModal();
+    // Небольшая анимация входа
+    dialog
+      .querySelector('.modal-box')
+      .classList.remove('scale-95', 'opacity-0');
+  });
+
+  // Логика закрытия
+  dialog.querySelector('.close-modal').addEventListener('click', () => {
+    close();
+  });
+
+  // Закрытие по клику на фон
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) close();
+  });
+
+  function close() {
+    dialog.querySelector('.modal-box').classList.add('scale-95', 'opacity-0');
+    setTimeout(() => dialog.close(), 200); // Ждем конца анимации
+  }
+</script>
+
+<style>
+  /* Анимация диалога */
+  dialog {
+    transition:
+      display 0.2s allow-discrete,
+      overlay 0.2s allow-discrete;
+  }
+  dialog::backdrop {
+    transition: background-color 0.2s;
+  }
+
+  /* Стили скроллбара */
+  .modal-box {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+</style>

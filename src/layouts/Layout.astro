@@ -1,101 +1,76 @@
 ---
 import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
+import CallbackModal from '../components/CallbackModal.astro';
+import ReviewModal from '../components/ReviewModal.astro';
 
 interface Props {
-	title: string;
-	description?: string;
+  title: string;
+  description?: string;
 }
 
 const {
   title,
-  description = "ANRO TRIP — Путешествия, которые меняют жизнь."
+  description = 'ANRO TRIP — Путешествия, которые меняют жизнь.',
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="ru" class="scroll-smooth" data-theme="light">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-		<title>{title}</title>
-	</head>
-	<body class="bg-white dark:bg-darkbg text-gray-900 dark:text-gray-100 font-inter antialiased overflow-x-hidden selection:bg-cta selection:text-black transition-colors duration-300">
-		<slot />
-		<ScrollToTop />
+    <title>{title}</title>
+  </head>
+  <body
+    class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-cta selection:text-black transition-colors duration-300"
+  >
+    <slot />
+    <ScrollToTop />
 
-        <!-- Скрипт инициализации темы -->
-        <script is:inline>
-          // Проверяем сохраненную тему при загрузке
-          const savedTheme = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          
-          // Если тема была сохранена, используем её, иначе определяем по системным настройкам
-          const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-          
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
-          
-          // Обновляем data-theme атрибут при изменении темы
-          const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-              if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                const hasDarkClass = document.documentElement.classList.contains('dark');
-                const currentTheme = hasDarkClass ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', currentTheme);
-              }
-            });
+    <!-- ОБНОВЛЕННЫЙ СКРИПТ АНИМАЦИИ -->
+    <script is:inline>
+      // Создаем глобальную функцию для запуска/перезапуска анимаций
+      window.initScrollReveal = () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal-visible');
+              observer.unobserve(entry.target); // Перестаем следить после появления
+            }
           });
-          
-          observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['class']
-          });
-        </script>
-        
-        <!-- ОБНОВЛЕННЫЙ СКРИПТ АНИМАЦИИ -->
-        <script is:inline>
-          // Создаем глобальную функцию для запуска/перезапуска анимаций
-          window.initScrollReveal = () => {
-            const observerOptions = {
-              root: null,
-              rootMargin: '0px',
-              threshold: 0.1
-            };
+        }, observerOptions);
 
-            const observer = new IntersectionObserver((entries, observer) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('reveal-visible');
-                  observer.unobserve(entry.target); // Перестаем следить после появления
-                }
-              });
-            }, observerOptions);
+        // Находим все скрытые элементы и начинаем следить
+        document.querySelectorAll('.reveal-hidden').forEach((el) => {
+          // Если мы перезапускаем, убеждаемся, что класс видимости снят
+          // Но делаем это аккуратно, чтобы не мигало то, что уже на экране (если не телепорт)
+          // В данном случае Header сам снимет классы перед вызовом этой функции
+          observer.observe(el);
+        });
+      };
 
-            // Находим все скрытые элементы и начинаем следить
-            document.querySelectorAll('.reveal-hidden').forEach((el) => {
-              // Если мы перезапускаем, убеждаемся, что класс видимости снят
-              // Но делаем это аккуратно, чтобы не мигало то, что уже на экране (если не телепорт)
-              // В данном случае Header сам снимет классы перед вызовом этой функции
-              observer.observe(el);
-            });
-          };
-
-          // Запускаем при первой загрузке
-          window.initScrollReveal();
-        </script>
-	</body>
+      // Запускаем при первой загрузке
+      window.initScrollReveal();
+    </script>
+  </body>
+  <CallbackModal />
+  <ReviewModal />
 </html>

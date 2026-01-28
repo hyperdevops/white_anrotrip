@@ -1,0 +1,124 @@
+---
+// src/components/Team.astro
+import { teamMembers } from '../data/team';
+
+const INITIAL_VISIBLE = 8;
+---
+
+<section id="team" class="py-20 bg-gray-50 transition-colors duration-300">
+  <div class="container mx-auto px-4">
+    <!-- Заголовок -->
+    <div class="text-center mb-16">
+      <h2 class="font-montserrat text-3xl font-extrabold text-slate-900 sm:text-4xl">
+        Команда <span class="text-accent">ANRO TRIP</span>
+      </h2>
+      <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+        Профессионалы, которые делают ваш отдых незабываемым
+      </p>
+    </div>
+
+    <!-- Сетка -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {teamMembers.map((member, index) => (
+        <div
+          class:list={[
+            "team-card group relative bg-white rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border border-gray-100",
+            index >= INITIAL_VISIBLE ? "hidden" : ""
+          ]}
+        >
+          <!-- Фото -->
+          <div class="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-500 bg-slate-200">
+             {/* Заглушка, если картинки нет */}
+             {member.image ? (
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+             ) : (
+                <div class="w-full h-full flex items-center justify-center text-4xl">👤</div>
+             )}
+          </div>
+
+          <!-- Инфо -->
+          <h3 class="text-lg font-bold text-slate-900 mb-1">
+            {member.name}
+          </h3>
+          <p class="text-sm font-medium text-accent mb-4">
+            {member.role}
+          </p>
+
+          <!-- Контакты -->
+          <div class="space-y-2 text-sm text-slate-500">
+            <a href={`mailto:${member.email}`} class="block hover:text-accent transition-colors truncate">
+              {member.email}
+            </a>
+            <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`} class="block font-semibold hover:text-accent transition-colors">
+              {member.phone}
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Кнопка -->
+    {teamMembers.length > INITIAL_VISIBLE && (
+      <div class="mt-12 text-center">
+        <button
+          id="show-more-team"
+          class="inline-flex items-center justify-center px-8 py-3 rounded-full border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all duration-300 active:scale-95"
+        >
+          Показать еще
+        </button>
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('show-more-team');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const hiddenCards = document.querySelectorAll('.team-card.hidden');
+      hiddenCards.forEach(card => {
+        card.classList.remove('hidden');
+        card.classList.add('animate-fade-in');
+      });
+      btn.style.display = 'none';
+    });
+  }
+</script>
+
+<style>
+  /* Определяем цвет акцента, если он не задан в tailwind.config */
+  /* Используем тот же бирюзовый, что и в поиске */
+  .text-accent {
+    color: #04a5e5; /* Fallback */
+    color: var(--color-primary, #04a5e5);
+  }
+  .border-accent {
+    border-color: #04a5e5;
+    border-color: var(--color-primary, #04a5e5);
+  }
+  .bg-accent {
+    background-color: #04a5e5;
+    background-color: var(--color-primary, #04a5e5);
+  }
+  .hover\:bg-accent:hover {
+    background-color: #04a5e5;
+    background-color: var(--color-primary-dark, #0391ca);
+  }
+  .hover\:text-accent:hover {
+    color: #04a5e5;
+    color: var(--color-primary, #04a5e5);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

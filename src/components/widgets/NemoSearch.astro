@@ -1,0 +1,63 @@
+---
+// src/components/widgets/NemoSearch.astro
+---
+
+<!--
+  Убрали overflow-hidden! Это критично для выпадающих меню.
+  position: relative нужен для корректного позиционирования календаря.
+-->
+<div class="nemo-wrapper w-full relative z-40">
+  <div id="nemo-root"></div>
+</div>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.nemo.travel/search-form/v2.5.64/flights.search.widget.min.css"
+/>
+<script
+  is:inline
+  src="https://cdn.nemo.travel/search-form/v2.5.64/flights.search.widget.min.js"
+></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const initNemo = () => {
+      if (typeof FlightsSearchWidget !== 'undefined') {
+        FlightsSearchWidget.init({
+          nemoURL: 'https://ticket.anrotrip.ru',
+          rootElement: document.getElementById('nemo-root'),
+          locale: 'ru',
+        });
+      } else {
+        setTimeout(initNemo, 200);
+      }
+    };
+    initNemo();
+  });
+</script>
+
+<style is:global>
+  /* Попытка перекрасить кнопку Nemo в наш желтый */
+  .nemo-ui-button.nemo-ui-button_main {
+    background-color: var(--color-cta) !important; /* Наш желтый */
+    color: #11111b !important; /* Наш темный текст */
+    border-radius: 999px !important; /* Скругление как у нас */
+  }
+
+  /* Перекрасить активные элементы в наш синий */
+  .nemo-ui-state_active,
+  .nemo-ui-pseudoLink {
+    color: var(--color-primary) !important;
+  }
+  /*
+     Глобальный фикс для календаря Nemo.
+     Иногда он пытается спрятаться под другие блоки.
+  */
+  .ui-datepicker {
+    z-index: 9999 !important;
+  }
+  /* Подгоняем шрифты под наш сайт */
+  #nemo-root * {
+    font-family: 'Inter', sans-serif;
+  }
+</style>

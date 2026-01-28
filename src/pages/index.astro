@@ -1,8 +1,12 @@
 ---
+// src/pages/index.astro
+import About from '../components/About.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import PopularTours from '../components/PopularTours.astro';
-import SearchWidget from '../components/SearchWidget.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
+import SearchWidget from '../components/SearchWidget.astro'; // Убедитесь, что файл есть
+import Team from '../components/Team.astro'; // Убедитесь, что файл есть
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -10,27 +14,43 @@ import Layout from '../layouts/Layout.astro';
   <Header />
 
   <main>
+    <!--
+      Первый экран: Картинка, Заголовок, Кнопка, Стрелка.
+      Занимает 100vh.
+    -->
     <Hero />
 
     <!--
-      ШТОРКА С КОНТЕНТОМ
-      Используем класс content-sheet (цвета и переходы настроены в CSS)
-      Убрал лишние bg-white и dark:bg... из HTML, чтобы не было конфликтов.
+      Блок контента.
+      mt-[90vh] сдвигает его вниз, открывая картинку Hero.
+      content-sheet — класс из global.css (белый/темный фон, скругление).
     -->
-    <div
-      class="relative z-10 mt-[45vh] md:mt-[20vh] content-sheet pb-20 min-h-screen"
-    >
-      <!-- Виджет -->
-      <div class="relative z-20 -translate-y-1/2 px-4">
+    <div id="content" class="relative z-10 mt-[90vh] content-sheet pb-20">
+      <!-- Якорь для кнопки "Поиск туров" (невидимый) -->
+      <div id="search-anchor" class="absolute -top-32 w-full h-1"></div>
+
+      <!--
+         Виджет поиска.
+         -translate-y-24 поднимает его ВВЕРХ, чтобы он наехал на границу Hero.
+         glass-panel — класс из global.css.
+      -->
+      <div class="relative z-20 -translate-y-24 px-4 max-w-7xl mx-auto">
         <SearchWidget />
       </div>
 
-      <!-- Туры -->
-      <div class="-mt-48 md:-mt-16 relative z-10">
-        <PopularTours />
-      </div>
+      <!-- Остальной контент -->
+      <div class="-mt-12 space-y-24">
+        <!-- Якорь для стрелочки "Популярные туры" -->
+        <div id="popular-tours" class="scroll-mt-32">
+          <PopularTours />
+        </div>
 
-      <div class="h-20"></div>
+        <About />
+
+        <Team />
+      </div>
     </div>
   </main>
+
+  <ScrollToTop />
 </Layout>

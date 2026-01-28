@@ -1,14 +1,15 @@
 @import 'tailwindcss';
-@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #514bcb;
-  --color-primary-dark: #3b35af;
-  --color-primary-light: #6f69d6;
+  --color-primary: #3fa0f0;
+  --color-primary-light: #65aeea;
+  --color-primary-dark: #2f7ebf;
   --color-cta: #ffd417;
   --color-cta-hover: #e5be14;
   --font-montserrat: 'Montserrat', sans-serif;
   --font-inter: 'Inter', sans-serif;
+  --font-google: 'Google Sans', sans-serif;
+  --font-rubik: 'Rubik', sans-serif;
 }
 
 @layer base {
@@ -19,7 +20,7 @@
 
   body {
     background-color: transparent !important;
-    @apply text-gray-900 dark:text-gray-100 transition-colors duration-700 ease-in-out;
+    @apply text-gray-900 transition-colors duration-700 ease-in-out;
   }
 
   h1,
@@ -32,7 +33,7 @@
   }
 
   .content-sheet {
-    @apply bg-white dark:bg-[#0f172a] transition-colors duration-700 ease-in-out;
+    @apply bg-white transition-colors duration-700 ease-in-out;
     border-radius: 40px 40px 0 0;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   }
@@ -49,31 +50,11 @@
   box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15);
 }
 
-html.dark .glass-panel {
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  /* Тень для темной */
-  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5);
-}
-
-/* === ЭФФЕКТ ВЕЧЕРА (Затемнение картинки) === */
-/* Применяем фильтр к картинке Hero, когда тема темная */
-html.dark .hero-image {
-  filter: brightness(0.6) contrast(1.1); /* 60% яркости = вечер */
-  transition: filter 0.7s ease-in-out;
-}
-html:not(.dark) .hero-image {
-  filter: brightness(1) contrast(1); /* 100% яркости = день */
-  transition: filter 0.7s ease-in-out;
-}
-
 /* Остальные стили */
 .deep-shadow {
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
-html.dark .deep-shadow {
-  box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.9) !important;
-}
+
 .reveal-hidden {
   opacity: 0;
   transform: translateY(50px);
@@ -92,7 +73,4 @@ html.dark .deep-shadow {
 ::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 4px;
-}
-html.dark ::-webkit-scrollbar-thumb {
-  background: #475569;
 }
