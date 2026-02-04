@@ -1,11 +1,12 @@
 ---
-
+// src/components/ScrollToTop.astro
 ---
 
+<!-- Изначально opacity-0 и translate-y-20 (спрятан внизу) -->
 <button
   id="scroll-to-top"
   aria-label="Вернуться наверх"
-  class="fixed bottom-6 right-6 z-50 translate-y-20 opacity-0 transition-all duration-500 rounded-full bg-primary p-3 text-white focus:outline-none sm:bottom-8 sm:right-8 hover:-translate-y-1 cursor-pointer"
+  class="fixed bottom-8 right-6 z-50 translate-y-20 opacity-0 transition-all duration-500 rounded-full bg-white/20 backdrop-blur p-3 text-white focus:outline-none sm:bottom-8 sm:right-8 hover:-translate-y-1 cursor-pointer"
   style="filter: drop-shadow(0 10px 10px rgba(0,0,0,0.6));"
 >
   <svg
@@ -28,10 +29,27 @@
   const scrollBtn = document.getElementById('scroll-to-top');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-      scrollBtn?.classList.remove('translate-y-20', 'opacity-0');
+    if (!scrollBtn) return;
+
+    // Высота всего документа
+    const docHeight = document.documentElement.scrollHeight;
+    // Текущая позиция низа экрана (сколько + высота окна)
+    const scrollPos = window.scrollY + window.innerHeight;
+
+    // Порог срабатывания (например, 50px до самого конца)
+    // Если разница между высотой и позицией меньше 50px — значит мы внизу
+    if (docHeight - scrollPos < 50) {
+      scrollBtn.classList.remove(
+        'translate-y-20',
+        'opacity-0',
+        'pointer-events-none',
+      );
     } else {
-      scrollBtn?.classList.add('translate-y-20', 'opacity-0');
+      scrollBtn.classList.add(
+        'translate-y-20',
+        'opacity-0',
+        'pointer-events-none',
+      );
     }
   });
 

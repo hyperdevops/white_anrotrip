@@ -1,0 +1,165 @@
+---
+// src/components/Contacts.astro
+---
+
+<section id="contacts" class="py-20 bg-white border-t border-gray-100">
+  <div class="container mx-auto px-4">
+    <h2
+      class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-16 reveal-hidden uppercase tracking-wider"
+    >
+      Контакты
+    </h2>
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center reveal-hidden"
+    >
+      <!-- 1. Для связи -->
+      <div class="flex flex-col items-center space-y-4">
+        <!-- Иконка Телефона -->
+        <div class="w-12 h-12 flex items-center justify-center mb-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10 text-gray-800 stroke-[1.2]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line
+              x1="12"
+              y1="18"
+              x2="12.01"
+              y2="18"
+              stroke-width="2"
+              stroke-linecap="round"></line>
+          </svg>
+        </div>
+
+        <h3 class="font-montserrat text-xl font-bold text-gray-900">
+          Для связи 24/7
+        </h3>
+
+        <p class="text-lg font-medium text-gray-800">
+          <a href="tel:88002224473" class="hover:text-primary transition-colors"
+            >8 (800) 222 44 73</a
+          >
+        </p>
+
+        <div class="text-gray-600">
+          <a
+            href="tel:+79220267059"
+            class="block text-lg hover:text-primary transition-colors"
+            >+7 (922) 026 70 59</a
+          >
+          <span class="text-xs text-gray-400">(WhatsApp, Telegram, Viber)</span>
+        </div>
+
+        <p>
+          <a href="mailto:anro@anrotrip.ru" class="text-primary hover:underline"
+            >anro@anrotrip.ru</a
+          >
+        </p>
+
+        <div>
+          <a
+            href="#"
+            class="text-gray-700 hover:text-primary transition-colors font-medium"
+            >@anrotrip</a
+          >
+          <div class="text-xs text-gray-400">(VK, Telegram)</div>
+        </div>
+      </div>
+
+      <!-- 2. Офис -->
+      <div class="flex flex-col items-center space-y-4">
+        <!-- Иконка Локации (Пин) -->
+        <div class="w-12 h-12 flex items-center justify-center mb-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10 text-gray-800 stroke-[1.2]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+
+        <h3 class="font-montserrat text-xl font-bold text-gray-900">
+          Офис в Челябинске
+        </h3>
+
+        <p class="text-primary font-medium">
+          г. Челябинск,<br />
+          ул. 250-летия Челябинска, д. 29
+        </p>
+
+        <div class="text-gray-600 text-sm">
+          <p class="font-bold text-gray-800 text-base">ПН-ПТ 9.00-18.00</p>
+          <p>(СБ-ВС по предварительной<br />договорённости)</p>
+        </div>
+
+        <p class="text-gray-600 pt-2">
+          8 (351) 225 29 91 <span class="text-xs text-gray-400">(ПН-ПТ)</span>
+        </p>
+      </div>
+
+      <!-- 3. Представительства -->
+      <div class="flex flex-col items-center space-y-4">
+        <!-- Иконка Компаса -->
+        <div class="w-12 h-12 flex items-center justify-center mb-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10 text-gray-800 stroke-[1.2]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            <!-- Альтернатива (Самолет) -->
+            <!-- Или классический компас: -->
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon
+              points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+            ></polygon>
+          </svg>
+        </div>
+
+        <h3 class="font-montserrat text-xl font-bold text-gray-900">
+          Представительства
+        </h3>
+
+        <p class="text-primary font-medium text-lg">
+          г. Москва<br />
+          г. Екатеринбург
+        </p>
+
+        <div class="text-gray-600 text-sm pt-4">
+          <p class="font-bold text-gray-800 text-base">ПН-ВС</p>
+          <p>(по предварительной договорённости)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Кнопка Обратный звонок -->
+    <div class="text-center mt-16 reveal-hidden">
+      <button
+        onclick="document.getElementById('callback-modal').showModal()"
+        class="inline-block px-10 py-4 rounded-full bg-secondary text-white font-bold uppercase tracking-wider shadow-lg shadow-cyan-900/20 hover:bg-white hover:text-secondary hover:-translate-y-1 border-2 border-secondary transition-all duration-300"
+      >
+        Заказать обратный звонок
+      </button>
+    </div>
+  </div>
+</section>

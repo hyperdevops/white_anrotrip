@@ -1,0 +1,60 @@
+---
+// src/components/CookieBanner.astro
+---
+
+<div
+  id="cookie-banner"
+  class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-2147483640 py-4 px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 transition-transform duration-500 translate-y-full"
+>
+  <div
+    class="text-xs md:text-sm text-gray-600 text-center md:text-left font-inter"
+  >
+    <span class="font-bold text-gray-800">Мы используем файлы cookie</span>,
+    чтобы сайт работал лучше. Продолжая использовать сайт, вы соглашаетесь с
+    нашей
+    <a href="#" class="text-secondary hover:underline font-medium"
+      >Политикой конфиденциальности</a
+    >.
+  </div>
+
+  <button
+    id="accept-cookies"
+    class="shrink-0 bg-secondary text-white text-xs font-bold uppercase tracking-wider px-8 py-3 rounded-full hover:bg-white hover:text-secondary border-2 border-secondary transition-colors cursor-pointer"
+  >
+    Хорошо
+  </button>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-banner');
+  const btn = document.getElementById('accept-cookies');
+
+  // Ключ в памяти браузера
+  const STORAGE_KEY = 'anro_cookies_accepted';
+
+  // Проверяем при загрузке
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    // Если метки нет — показываем баннер (убираем сдвиг вниз)
+    // Небольшая задержка для анимации появления
+    setTimeout(() => {
+      banner?.classList.remove('translate-y-full');
+    }, 1000);
+  } else {
+    // Если метка есть — удаляем баннер из DOM, чтобы не мешался
+    banner?.remove();
+  }
+
+  // При клике
+  btn?.addEventListener('click', () => {
+    // 1. Ставим метку
+    localStorage.setItem(STORAGE_KEY, 'true');
+
+    // 2. Прячем баннер (уезжает вниз)
+    banner?.classList.add('translate-y-full');
+
+    // 3. Удаляем совсем через 0.5 сек
+    setTimeout(() => {
+      banner?.remove();
+    }, 500);
+  });
+</script>

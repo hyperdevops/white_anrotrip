@@ -1,0 +1,524 @@
+---
+// src/components/Reviews.astro
+
+const reviews = [
+  {
+    id: 1,
+    title: 'Молодежь Южного Урала',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+1',
+  },
+  {
+    id: 2,
+    title: 'Ниагара',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+2',
+  },
+  {
+    id: 3,
+    title: 'Мерседес',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+3',
+  },
+  {
+    id: 4,
+    title: 'Никс',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+4',
+  },
+  {
+    id: 5,
+    title: 'Письмо Аня Усманова',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+5',
+  },
+  {
+    id: 6,
+    title: 'Napoleon',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+6',
+  },
+  {
+    id: 7,
+    title: 'Проектное бюро',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+7',
+  },
+  {
+    id: 8,
+    title: 'Урал НИИ СТРОЙ',
+    src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+8',
+  },
+];
+---
+
+<section id="reviews" class="py-20 bg-white relative overflow-hidden">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <h2
+      class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-12 reveal-hidden uppercase tracking-wider"
+    >
+      Отзывы клиентов <span class="text-primary">ANRO TRIP</span>
+    </h2>
+
+    <!-- КАРУСЕЛЬ -->
+    <div
+      class="flex overflow-x-auto gap-3 md:gap-4 pb-8 snap-x snap-mandatory scrollbar-hide reveal-hidden px-4 md:justify-center"
+      id="reviews-scroller"
+    >
+      {
+        reviews.map((item, index) => (
+          <div
+            class="snap-start shrink-0 w-28 md:w-32 transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+            onclick={`openLightbox(${index})`}
+          >
+            <div class="bg-white p-1.5 shadow-md hover:shadow-xl rounded-sm border border-gray-100 h-full select-none transition-shadow">
+              <img
+                src={item.src}
+                alt={item.title}
+                class="w-full h-auto object-cover aspect-[1/1.41] pointer-events-none"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="text-center mt-12 reveal-hidden">
+      <button
+        id="open-review-form"
+        class="inline-block px-12 py-4 rounded-full bg-secondary text-white border-2 border-secondary font-bold uppercase tracking-wider shadow-lg shadow-cyan-900/20 hover:bg-white hover:text-secondary hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      >
+        Оставить отзыв
+      </button>
+    </div>
+  </div>
+
+  <!-- === LIGHTBOX (ГАЛЕРЕЯ) === -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-2147483647 bg-white/90 hidden items-center justify-center opacity-0 transition-opacity duration-300 select-none backdrop-blur-md cursor-zoom-in overflow-hidden"
+    onclick="toggleZoom(event)"
+  >
+    <!-- ПАНЕЛЬ (Зум + Закрыть) -->
+    <div
+      class="absolute top-0 right-0 p-6 flex gap-4 z-2147483649"
+      onclick="event.stopPropagation()"
+    >
+      <!-- Кнопка Зум -->
+      <button
+        onclick="toggleZoom(event)"
+        class="text-gray-800 hover:text-primary transition-colors cursor-pointer focus:outline-none p-2 bg-white/50 rounded-full shadow-sm hover:shadow-md"
+        id="zoom-btn"
+      >
+        <svg
+          id="icon-zoom-in"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 stroke-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-4.35-4.35"></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11 8v6M8 11h6"></path>
+        </svg>
+        <svg
+          id="icon-zoom-out"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 stroke-2 hidden"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-4.35-4.35"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 11h6"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Кнопка Закрыть -->
+      <button
+        onclick="closeLightbox()"
+        class="text-gray-800 hover:text-primary transition-colors cursor-pointer focus:outline-none p-2 bg-white/50 rounded-full shadow-sm hover:shadow-md"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 stroke-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- СТРЕЛКИ НАВИГАЦИИ -->
+    <button
+      onclick="event.stopPropagation(); changeSlide(-1)"
+      class="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 p-4 z-2147483649 transition-colors hidden md:block focus:outline-none bg-white/20 rounded-full hover:bg-white/50"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-12 w-12 stroke-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"
+        ></path>
+      </svg>
+    </button>
+
+    <button
+      onclick="event.stopPropagation(); changeSlide(1)"
+      class="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 p-4 z-2147483649 transition-colors hidden md:block focus:outline-none bg-white/20 rounded-full hover:bg-white/50"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-12 w-12 stroke-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- ТРЕК СЛАЙДЕРА -->
+    <div
+      id="lightbox-track"
+      class="flex h-full w-full transition-transform duration-300 ease-out will-change-transform"
+    >
+      {
+        reviews.map((item) => (
+          <div class="w-full h-full shrink-0 flex items-center justify-center slide-item overflow-hidden">
+            <img
+              src={item.src}
+              alt={item.title}
+              class="lightbox-img max-h-[85vh] max-w-[90vw] object-contain shadow-2xl transition-transform duration-300 origin-center"
+              style="transform: scale(1);"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- === ФОРМА (Выплывание) === -->
+  <!-- bg-black/60 (темная подложка) -->
+  <div
+    id="review-modal-overlay"
+    class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-500"
+  >
+    <div
+      class="bg-white rounded-lg shadow-2xl w-full max-w-md mx-4 relative transform translate-y-20 transition-all duration-500 ease-out max-h-[90vh] overflow-y-auto border border-gray-100"
+      id="review-modal-content"
+    >
+      <button
+        id="close-review-form"
+        class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none bg-gray-50 rounded-full hover:bg-gray-100 transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 stroke-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path></svg
+        >
+      </button>
+
+      <div class="p-8">
+        <h3
+          class="font-montserrat text-xl font-bold text-center text-secondary mb-2 uppercase"
+        >
+          Оставить отзыв
+        </h3>
+        <p class="text-center text-xs text-gray-500 mb-6 italic">
+          Друзья! Будем Вам благодарны<br />за отзыв о нашей работе!
+        </p>
+
+        <form
+          class="space-y-4"
+          onsubmit="event.preventDefault(); alert('Спасибо! Отзыв отправлен.'); closeReviewForm();"
+        >
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 ml-1">Ваше имя</label><input
+              type="text"
+              placeholder="Имя"
+              required
+              class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-sm"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 ml-1">Ваш телефон</label><input
+              type="tel"
+              placeholder="Телефон"
+              required
+              class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-sm"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 ml-1">Ваш e-mail</label><input
+              type="email"
+              placeholder="E-mail"
+              class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-sm"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 ml-1">Ваш город</label><input
+              type="text"
+              placeholder="Город"
+              class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-sm"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 ml-1"
+              >За какой услугой обращались к нам</label
+            ><input
+              type="text"
+              placeholder="Билеты/тур/отель/визы/трансфер/другое"
+              class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-sm"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 ml-1">Ваш отзыв</label><textarea
+              rows="3"
+              placeholder="Отзыв"
+              required
+              class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-sm resize-none"
+            ></textarea>
+          </div>
+          <div class="flex items-start gap-2 pt-2">
+            <input
+              type="checkbox"
+              id="agree-review"
+              class="mt-1"
+              checked
+            /><label
+              for="agree-review"
+              class="text-[10px] text-gray-500 leading-tight"
+              >Даю свое согласие на обработку персональных данных в соответствии
+              с <a href="#" class="text-secondary font-bold hover:underline"
+                >Политикой конфиденциальности</a
+              ></label
+            >
+          </div>
+          <button
+            class="cursor-pointer w-full bg-secondary text-white border-2 border-secondary font-bold py-3 rounded-md mt-4 hover:bg-white hover:text-secondary transition-all"
+            >Отправить</button
+          >
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ reviews }}>
+  let currentIndex = 0;
+  let isZoomed = false;
+
+  const lightbox = document.getElementById('lightbox');
+  const track = document.getElementById('lightbox-track');
+  const slides = document.querySelectorAll('.slide-item');
+  const images = document.querySelectorAll('.lightbox-img');
+
+  const zoomBtn = document.getElementById('zoom-btn');
+  const iconZoomIn = document.getElementById('icon-zoom-in');
+  const iconZoomOut = document.getElementById('icon-zoom-out');
+
+  const formOverlay = document.getElementById('review-modal-overlay');
+  const formContent = document.getElementById('review-modal-content');
+  const openFormBtn = document.getElementById('open-review-form');
+  const closeFormBtn = document.getElementById('close-review-form');
+
+  // --- УТИЛИТА: ПЛАВНОЕ ИСЧЕЗНОВЕНИЕ/ПОЯВЛЕНИЕ ---
+  function togglePageElements(hide) {
+    const elementsToHide = [
+      document.querySelector('header'),
+      document.getElementById('scroll-to-top'),
+      document.getElementById('favorites-widget'),
+      document.querySelector('.TVCartStickyButton'),
+    ];
+
+    elementsToHide.forEach((el) => {
+      if (el) {
+        // Добавляем плавность
+        el.style.transition = 'opacity 0.5s ease-in-out';
+
+        if (hide) {
+          el.style.opacity = '0';
+          el.style.pointerEvents = 'none';
+        } else {
+          // Возвращаем
+          el.style.opacity = '1';
+          el.style.pointerEvents = 'auto';
+
+          // Чистим стили после завершения анимации
+          setTimeout(() => {
+            el.style.transition = '';
+            el.style.opacity = '';
+            el.style.pointerEvents = '';
+          }, 500);
+        }
+      }
+    });
+  }
+
+  // --- ЛАЙТБОКС ---
+  window.openLightbox = (index) => {
+    currentIndex = index;
+    updateTrackPosition(false);
+    lightbox.classList.remove('hidden');
+
+    // Скрываем хедер плавно
+    togglePageElements(true);
+
+    setTimeout(() => {
+      lightbox.classList.remove('opacity-0');
+    }, 10);
+
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLightbox = () => {
+    lightbox.classList.add('opacity-0');
+    setTimeout(() => {
+      lightbox.classList.add('hidden');
+      resetZoom();
+      document.body.style.overflow = '';
+
+      // Возвращаем хедер плавно
+      togglePageElements(false);
+    }, 300);
+  };
+
+  // --- СЛАЙДЕР ---
+  window.changeSlide = (direction) => {
+    resetZoom();
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = reviews.length - 1;
+    if (currentIndex >= reviews.length) currentIndex = 0;
+    updateTrackPosition(true);
+  };
+
+  function updateTrackPosition(animate = true) {
+    if (animate) {
+      track.classList.add('transition-transform', 'duration-300');
+    } else {
+      track.classList.remove('transition-transform', 'duration-300');
+    }
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  // --- ЗУМ ---
+  window.toggleZoom = (e) => {
+    // Zoom работает при клике везде, кроме панели управления
+    const activeSlide = slides[currentIndex];
+    const activeImage = images[currentIndex];
+
+    if (isZoomed) {
+      // УМЕНЬШИТЬ
+      activeImage.style.transform = 'scale(1)';
+      activeImage.style.cursor = 'zoom-in';
+      activeSlide.style.overflow = 'hidden';
+      activeSlide.scrollTop = 0;
+      activeSlide.scrollLeft = 0;
+
+      lightbox.style.cursor = 'zoom-in';
+      iconZoomIn.classList.remove('hidden');
+      iconZoomOut.classList.add('hidden');
+      isZoomed = false;
+    } else {
+      // УВЕЛИЧИТЬ
+      activeImage.style.transform = 'scale(2.5)';
+      activeImage.style.cursor = 'zoom-out';
+      activeSlide.style.overflow = 'auto';
+
+      lightbox.style.cursor = 'zoom-out';
+      iconZoomIn.classList.add('hidden');
+      iconZoomOut.classList.remove('hidden');
+      isZoomed = true;
+    }
+  };
+
+  function resetZoom() {
+    images.forEach((img) => {
+      img.style.transform = 'scale(1)';
+      img.style.cursor = 'zoom-in';
+    });
+    slides.forEach((slide) => {
+      slide.style.overflow = 'hidden';
+    });
+    lightbox.style.cursor = 'zoom-in';
+    iconZoomIn.classList.remove('hidden');
+    iconZoomOut.classList.add('hidden');
+    isZoomed = false;
+  }
+
+  // --- ФОРМА ---
+  openFormBtn.addEventListener('click', () => {
+    formOverlay.classList.remove('hidden');
+    formOverlay.style.display = 'flex';
+
+    // Скрываем хедер плавно
+    togglePageElements(true);
+
+    setTimeout(() => {
+      formOverlay.classList.remove('opacity-0');
+      formContent.classList.remove('translate-y-20');
+      formContent.classList.add('translate-y-0');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  });
+
+  window.closeReviewForm = () => {
+    formOverlay.classList.add('opacity-0');
+    formContent.classList.remove('translate-y-0');
+    formContent.classList.add('translate-y-20');
+    setTimeout(() => {
+      formOverlay.classList.add('hidden');
+      formOverlay.style.display = 'none';
+      document.body.style.overflow = '';
+
+      // Возвращаем хедер плавно
+      togglePageElements(false);
+    }, 500);
+  };
+
+  closeFormBtn.addEventListener('click', closeReviewForm);
+  formOverlay.addEventListener('click', (e) => {
+    if (e.target === formOverlay) closeReviewForm();
+  });
+
+  // ESCAPE
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (!lightbox.classList.contains('hidden')) closeLightbox();
+      if (!formOverlay.classList.contains('hidden')) closeReviewForm();
+    }
+  });
+</script>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

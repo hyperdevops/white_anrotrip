@@ -1,0 +1,191 @@
+---
+// src/components/OfficeWidget.astro
+---
+
+<!--
+  right-6 bottom-8: Исходная позиция
+  z-[2147483630]: Высокий слой
+-->
+<div
+  id="office-widget-container"
+  class="fixed bottom-8 right-6 z-2147483630 flex flex-col items-center gap-3 transition-transform duration-75 ease-out will-change-transform"
+>
+  <!-- СПИСОК (Выезжает вверх) -->
+  <div
+    id="social-list"
+    class="flex flex-col gap-3 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none scale-90 origin-bottom pb-2"
+  >
+    <!-- VK -->
+    <a
+      href="https://vk.com/anrotrip"
+      target="_blank"
+      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0077FF] text-white shadow-lg hover:scale-1105 transition-transform relative group"
+    >
+      <span
+        class="absolute right-full mr-3 bg-white px-2 py-1 rounded text-[10px] font-bold text-gray-700 shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+        >ВКонтакте</span
+      >
+      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"
+        ><path
+          d="M19.915 13.028c1.388 1.336 2.768 2.68 3.864 4.296.224.331.436.671.608 1.025.263.541-.121 1.258-.707 1.298-2.527.172-5.061.166-7.587.012-.472-.029-.86-.251-1.144-.608-.553-.695-1.107-1.391-1.637-2.106-.412-.556-.849-1.096-1.428-1.487-.63-.426-1.127-.291-1.408.388-.258.625-.325 1.306-.395 1.977-.076.716-.363 1.254-1.071 1.378-2.316.406-4.392-.191-6.195-1.635-2.071-1.658-3.535-3.806-4.735-6.136-.264-.512-.516-1.03-.758-1.552-.256-.552.059-1.037.662-1.045 2.508-.036 5.016-.027 7.525.006.577.008.974.303 1.182.812.551 1.352 1.149 2.683 1.892 3.939.267.451.564.887.962 1.23.472.406.883.336 1.116-.217.279-.661.341-1.373.359-2.085.029-1.226-.239-2.348-1.218-3.058-.426-.309-1.02-.375-.953-1.05.045-.444.382-.77.935-.907 1.634-.406 4.706-.306 5.672.406.409.301.464.985.505 1.65.056.916.036 1.834.453 2.67.142.285.409.467.728.432.317-.035.564-.264.783-.497 1.05-1.116 1.838-2.42 2.518-3.791.248-.5.474-1.01.701-1.52.194-.436.561-.699 1.04-.707 2.474-.038 4.949-.033 7.424 0 .58.008.969.344.829.932-.513 2.152-1.782 3.868-3.13 5.485-.297.357-.594.714-.888 1.074-.537.658-.518 1.02.046 1.583z"
+        ></path></svg
+      >
+    </a>
+    <!-- Telegram -->
+    <a
+      href="https://t.me/anrotrip"
+      target="_blank"
+      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0088cc] text-white shadow-lg hover:scale-110 transition-transform relative group"
+    >
+      <span
+        class="absolute right-full mr-3 bg-white px-2 py-1 rounded text-[10px] font-bold text-gray-700 shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+        >Telegram</span
+      >
+      <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"
+        ><path
+          d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
+        ></path></svg
+      >
+    </a>
+    <!-- WhatsApp -->
+    <a
+      href="https://wa.me/79220267059"
+      target="_blank"
+      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 transition-transform relative group"
+    >
+      <span
+        class="absolute right-full mr-3 bg-white px-2 py-1 rounded text-[10px] font-bold text-gray-700 shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+        >WhatsApp</span
+      >
+      <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"
+        ><path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .12 5.315.12 11.87c0 2.091.547 4.057 1.548 5.782L0 23l5.47-1.429c1.654.91 3.525 1.397 5.451 1.399h.004C18.14 22.97 24 17.72 24 11.233c0-3.155-1.228-6.12-3.219-8.114"
+        ></path></svg
+      >
+    </a>
+  </div>
+
+  <!-- ГЛАВНАЯ КНОПКА -->
+  <button
+    id="office-toggle-btn"
+    class="w-14 h-14 rounded-full bg-primary text-white shadow-[0_4px_20px_rgba(14,116,144,0.4)] flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300 cursor-pointer animate-pulse-slow relative z-10"
+  >
+    <svg
+      id="icon-msg"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-7 w-7 transition-transform duration-300"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+      ></path>
+    </svg>
+    <svg
+      id="icon-close"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-7 w-7 absolute opacity-0 rotate-90 transition-all duration-300"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const btn = document.getElementById('office-toggle-btn');
+  const list = document.getElementById('social-list');
+  const iconMsg = document.getElementById('icon-msg');
+  const iconClose = document.getElementById('icon-close');
+  const container = document.getElementById('office-widget-container');
+  let isOpen = false;
+
+  // 1. Открытие/Закрытие меню
+  btn?.addEventListener('click', () => {
+    isOpen = !isOpen;
+    if (isOpen) {
+      // Открываем
+      list?.classList.remove(
+        'opacity-0',
+        'translate-y-4',
+        'pointer-events-none',
+        'scale-90',
+      );
+
+      // Иконки
+      iconMsg?.classList.add('opacity-0', '-rotate-90');
+      iconClose?.classList.remove('opacity-0', 'rotate-90');
+    } else {
+      // Закрываем
+      list?.classList.add(
+        'opacity-0',
+        'translate-y-4',
+        'pointer-events-none',
+        'scale-90',
+      );
+
+      // Иконки
+      iconMsg?.classList.remove('opacity-0', '-rotate-90');
+      iconClose?.classList.add('opacity-0', 'rotate-90');
+    }
+  });
+
+  // 2. ЛОГИКА "ПИЛЮЛИ" (Парковка над футером)
+  window.addEventListener('scroll', () => {
+    const footer = document.querySelector('footer');
+    if (!footer || !container) return;
+
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Если футер появился в зоне видимости
+    if (footerRect.top < windowHeight) {
+      // Исходное положение кнопки (расстояние от низа экрана до центра кнопки)
+      // bottom-8 (32px) + половина высоты (28px) = 60px
+      const originalCenterFromBottom = 60;
+
+      // Где сейчас верх футера относительно низа экрана?
+      // (windowHeight - footerRect.top) - это расстояние от низа экрана до верха футера
+      const footerDistFromBottom = windowHeight - footerRect.top;
+
+      // Нам нужно, чтобы центр кнопки был ровно на линии футера.
+      // Значит, нам нужно сдвинуть кнопку вверх на разницу.
+      // Разница = footerDistFromBottom - originalCenterFromBottom
+      const lift = footerDistFromBottom - originalCenterFromBottom;
+
+      // Если lift > 0, значит футер выше нашей кнопки, надо двигать
+      if (lift > 0) {
+        container.style.transform = `translateY(-${lift}px)`;
+      } else {
+        container.style.transform = `translateY(0)`;
+      }
+    } else {
+      container.style.transform = `translateY(0)`;
+    }
+  });
+</script>
+
+<style>
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(63, 160, 240, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(14, 116, 144, 0);
+    }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 2.5s infinite;
+  }
+</style>

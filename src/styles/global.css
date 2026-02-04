@@ -1,21 +1,29 @@
 @import 'tailwindcss';
 
+/* Подключаем плагин typography напрямую в CSS */
+@plugin "@tailwindcss/typography";
+
 @theme {
   --color-primary: #3fa0f0;
   --color-primary-light: #65aeea;
   --color-primary-dark: #2f7ebf;
+
+  /* НОВЫЙ ЦВЕТ (Бирюзовый/Teal из кнопок) */
+  --color-secondary: #0e7490;
+  --color-secondary-hover: #155e75;
+
   --color-cta: #ffd417;
   --color-cta-hover: #e5be14;
+
   --font-montserrat: 'Montserrat', sans-serif;
   --font-inter: 'Inter', sans-serif;
-  --font-google: 'Google Sans', sans-serif;
-  --font-rubik: 'Rubik', sans-serif;
 }
 
 @layer base {
   html {
     @apply font-sans antialiased scroll-smooth;
     background-color: transparent !important;
+    scroll-snap-type: y proximity;
   }
 
   body {
@@ -29,7 +37,7 @@
   h4,
   h5,
   h6 {
-    @apply font-montserrat;
+    @apply font-montserrat font-bold; /* font-bold (700) обычно ближе к Тильде */
   }
 
   .content-sheet {
@@ -73,4 +81,56 @@
 ::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 4px;
+}
+
+/* === TOURVISOR FIXES === */
+
+/* Скрываем серую кнопку избранного */
+/* Но оставляем её кликабельной программно! */
+.TVCartStickyButton {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  z-index: -1 !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+
+/* На всякий случай скрываем внутренности, чтобы они не вылезли */
+.TVCartStickyButtonLeft,
+.TVCartStickyButtonPreview {
+  display: none !important;
+}
+
+/* === TOURVISOR FIXES === */
+
+/* Скрываем стандартную кнопку мягко, чтобы она осталась рабочей */
+.TVCartStickyButton {
+  opacity: 0 !important; /* Прозрачная */
+  position: fixed !important; /* Фиксируем */
+  left: -9999px !important; /* Отправляем далеко влево */
+  top: -9999px !important;
+  z-index: -9999 !important; /* Прячем под всё */
+
+  /* ВАЖНО: Не используем display:none или visibility:hidden,
+     иначе скрипт Турвизора может перестать работать */
+}
+
+/* === TOURVISOR MOBILE FIX === */
+/* Принудительно растягиваем контейнеры Турвизора */
+.tv-search-form,
+.tv-content,
+.tv-container,
+iframe[src*='tourvisor'] {
+  width: 100% !important;
+  min-height: 500px !important; /* Гарантируем высоту */
+  height: auto !important;
+  display: block !important;
+}
+
+/* Фикс для iOS Safari, чтобы iframe не сплющивался */
+#tab-tourvisor {
+  -webkit-overflow-scrolling: touch;
 }

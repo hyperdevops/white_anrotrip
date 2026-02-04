@@ -38,34 +38,71 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
     <div id="tab-nemo" class="tab-content block animate-fade-in">
       <NemoSearch />
     </div>
-    <div id="tab-tourvisor" class="tab-content hidden animate-fade-in">
+    <div
+      id="tab-tourvisor"
+      class="tab-content hidden animate-fade-in"
+      style="min-height: 500px; width: 100%; display: none;"
+    >
       <TourvisorSearch />
     </div>
   </div>
 </section>
 
 <script>
-  // Стандартный скрипт табов (Vanilla JS)
   const tabs = document.querySelectorAll('.tab-btn');
   const contents = document.querySelectorAll('.tab-content');
 
+  // Функция переключения
+  const switchTab = (targetId: string) => {
+    // 1. Скрываем все табы
+    contents.forEach((c) => {
+      c.classList.add('hidden');
+      (c as HTMLElement).style.display = 'none'; // Явно скрываем
+    });
+
+    // 2. Сбрасываем стили кнопок
+    tabs.forEach((t) => {
+      t.classList.remove('text-[var(--color-primary)]');
+      t.querySelector('.active-indicator')?.classList.add('scale-x-0');
+      t.querySelector('.active-indicator')?.classList.remove('scale-x-100');
+    });
+
+    // 3. Активируем нужную кнопку
+    const activeTabBtn = document.querySelector(
+      `.tab-btn[data-target="${targetId}"]`,
+    );
+    if (activeTabBtn) {
+      activeTabBtn.classList.add('text-[var(--color-primary)]');
+      activeTabBtn
+        .querySelector('.active-indicator')
+        ?.classList.remove('scale-x-0');
+      activeTabBtn
+        .querySelector('.active-indicator')
+        ?.classList.add('scale-x-100');
+    }
+
+    // 4. Показываем контент
+    const targetContent = document.getElementById(`tab-${targetId}`);
+    if (targetContent) {
+      targetContent.classList.remove('hidden');
+      (targetContent as HTMLElement).style.display = 'block'; // Явно показываем
+
+      // --- ХАК ДЛЯ МОБИЛЬНЫХ (TOURVISOR) ---
+      // Если открыли Турвизор, заставляем браузер пересчитать размеры
+      if (targetId === 'tourvisor') {
+        // Небольшой "пинок" контейнеру
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize')); // Эмулируем ресайз окна
+        }, 100);
+      }
+    }
+  };
+
+  // Слушатели кликов
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
-      // Сброс
-      tabs.forEach((t) => {
-        t.classList.remove('text-[var(--color-primary)]');
-        t.querySelector('.active-indicator')?.classList.add('scale-x-0');
-        t.querySelector('.active-indicator')?.classList.remove('scale-x-100');
-      });
-      contents.forEach((c) => c.classList.add('hidden'));
-
-      // Актив
-      tab.classList.add('text-[var(--color-primary)]');
-      tab.querySelector('.active-indicator')?.classList.remove('scale-x-0');
-      tab.querySelector('.active-indicator')?.classList.add('scale-x-100');
-
       const target = tab.getAttribute('data-target');
-      document.getElementById(`tab-${target}`)?.classList.remove('hidden');
+      if (target) switchTab(target);
     });
   });
 </script>

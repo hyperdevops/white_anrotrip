@@ -3,6 +3,10 @@ import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import CallbackModal from '../components/CallbackModal.astro';
 import ReviewModal from '../components/ReviewModal.astro';
+import FavoritesWidget from '../components/FavoritesWidget.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import OfficeWidget from '../components/OfficeWidget.astro';
+import GiftModal from '../components/GiftModal.astro';
 
 interface Props {
   title: string;
@@ -38,6 +42,10 @@ const {
   >
     <slot />
     <ScrollToTop />
+    <FavoritesWidget />
+    <OfficeWidget />
+    <CookieBanner />
+    <GiftModal />
 
     <!-- ОБНОВЛЕННЫЙ СКРИПТ АНИМАЦИИ -->
     <script is:inline>

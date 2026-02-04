@@ -1,7 +1,7 @@
 ---
 // src/components/Hero.astro
 import { Image } from 'astro:assets';
-import heroBg from '../assets/plane.avif';
+import heroBg from '../assets/hero/plane.avif';
 ---
 
 <section
@@ -114,19 +114,20 @@ import heroBg from '../assets/plane.avif';
   if (searchBtn) {
     searchBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      
+
       // Находим элемент, к которому нужно проскроллить
       const searchAnchor = document.getElementById('search-anchor');
       if (searchAnchor) {
         // Прокручиваем к элементу со смещением вверх на 100px
         const rect = searchAnchor.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
         const targetPosition = rect.top + scrollTop - 100; // поднимаем на 100px выше
-        
+
         // Плавная прокрутка к позиции
         window.scrollTo({
           top: targetPosition,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
     });

@@ -1,42 +1,45 @@
 ---
+import { Image } from 'astro:assets';
+
+import antalyaImg from '../assets/tours/antalya.avif';
+import dubaiImg from '../assets/tours/dubai.jpg';
+import thailandImg from '../assets/tours/thailand.jpg';
+import maldivesImg from '../assets/tours/maldives.webp';
+import egyptImg from '../assets/tours/egypt.avif';
+
 const tours = [
   {
     title: 'Турция, Анталья',
     price: 'от 45 000 ₽',
-    image:
-      'https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop',
+    image: antalyaImg,
     size: 'large',
     badge: '🔥 Хит продаж',
   },
   {
     title: 'ОАЭ, Дубай',
     price: 'от 80 000 ₽',
-    image:
-      'https://images.unsplash.com/photo-1512453979798-5ea932a23518?q=80&w=2074&auto=format&fit=crop',
+    image: dubaiImg,
     size: 'tall',
     badge: 'Shopping',
   },
   {
     title: 'Таиланд, Пхукет',
     price: 'от 95 000 ₽',
-    image:
-      'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=2039&auto=format&fit=crop',
+    image: thailandImg,
     size: 'normal',
     badge: 'Relax',
   },
   {
     title: 'Мальдивы',
     price: 'от 150 000 ₽',
-    image:
-      'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2065&auto=format&fit=crop',
+    image: maldivesImg,
     size: 'normal',
     badge: 'Luxury',
   },
   {
     title: 'Египет, Шарм',
     price: 'от 55 000 ₽',
-    image:
-      'https://images.unsplash.com/photo-1566321743167-7b8c26922579?q=80&w=2070&auto=format&fit=crop',
+    image: egyptImg,
     size: 'wide',
     badge: 'Все включено',
   },
@@ -55,13 +58,9 @@ const tours = [
       <h2
         class="font-montserrat text-3xl font-extrabold text-gray-900 sm:text-4xl md:text-5xl"
       >
-        Популярные <span class="text-primary"
-          >Направления</span
-        >
+        Популярные <span class="text-primary">Направления</span>
       </h2>
-      <p class="mt-4 text-lg text-gray-600">
-        Лучшие предложения этого сезона
-      </p>
+      <p class="mt-4 text-lg text-gray-600">Лучшие предложения этого сезона</p>
     </div>
 
     <!-- Bento Grid -->
@@ -87,11 +86,13 @@ const tours = [
             ]}
           >
             <div class="absolute inset-0">
-              <img
+              <Image
                 src={tour.image}
                 alt={tour.title}
                 class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
+                width="400"
+                height="400"
               />
               <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/80%),rgb(0_0_0/20%),transparent)] opacity-80 group-hover:opacity-60 transition-opacity" />
             </div>

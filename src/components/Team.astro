@@ -1,124 +1,163 @@
 ---
 // src/components/Team.astro
-import { teamMembers } from '../data/team';
 
-const INITIAL_VISIBLE = 8;
+// 1. ОСНОВАТЕЛИ
+const founders = [
+  {
+    name: 'Анна Рожкова',
+    role: 'Основатель и генеральный директор',
+    email: 'anna@anrotrip.ru',
+    image: 'https://placehold.co/400x400/333/FFF?text=Anna'
+  },
+  {
+    name: 'Никита Рожков',
+    role: 'Исполнительный директор',
+    email: 'nikita@anrotrip.ru',
+    image: 'https://placehold.co/400x400/333/FFF?text=Nikita'
+  }
+];
+
+// 2. КОМАНДА
+const team = [
+  // АВИАОТДЕЛ
+  { name: 'Екатерина Неделько', role: 'Руководитель', dept: 'Авиаотдел', email: 'e.nedelko@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 115)', img: '' },
+  { name: 'Елена Щербакова', role: 'Авиакассир', dept: 'Авиаотдел', email: 'lena@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 114)', img: '' },
+  { name: 'Светлана Мосинцева', role: 'Авиакассир', dept: 'Авиаотдел', email: 'svetlana.m@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 111)', img: '' },
+  { name: 'Наталья Королёва', role: 'Авиакассир', dept: 'Авиаотдел', email: 'koroleva@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 112)', img: '' },
+  { name: 'Юлия Субботина', role: 'Авиакассир', dept: 'Авиаотдел', email: 'iuliia.s@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 116)', img: '' },
+  { name: 'Диана Семушова', role: 'Авиакассир', dept: 'Авиаотдел', email: 'diana@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 110)', img: '' },
+  { name: 'Татьяна Данкова', role: 'Авиакассир', dept: 'Авиаотдел', email: 't.dankova@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+  { name: 'Светлана Леднева', role: 'Авиакассир', dept: 'Авиаотдел', email: 'svetlana.l@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 115)', img: '' },
+
+  // СЕРВИС
+  { name: 'Ксения Мусина', role: 'Менеджер', dept: 'Отдел сервиса', email: 'ksenia@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 666)', img: '' },
+
+  // ТУРИСТИЧЕСКИЙ ОТДЕЛ
+  { name: 'Анна Денисова', role: 'Руководитель', dept: 'Туристический отдел', email: 'a.denisova@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+  { name: 'Анна Бочкарева', role: 'Менеджер', dept: 'Туристический отдел', email: 'bochkareva@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 120)', img: '' },
+  { name: 'Анастасия Крестовских', role: 'Менеджер', dept: 'Туристический отдел', email: 'anastasiya@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 117)', img: '' },
+  { name: 'Елена Голованова', role: 'Менеджер', dept: 'Туристический отдел', email: 'anro.chelyabinsk@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 119)', img: '' },
+  { name: 'Юлия Пасынкова', role: 'Менеджер', dept: 'Туристический отдел', email: 'anro.chelyabinsk@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 118)', img: '' },
+  { name: 'Анна Батенева', role: 'Менеджер', dept: 'Туристический отдел', email: 'a.bateneva@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 122)', img: '' },
+  { name: 'Ольга Голикова', role: 'Визовый специалист', dept: 'Туристический отдел', email: 'visa@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+
+  // ДИРЕКЦИЯ И БУХГАЛТЕРИЯ
+  { name: 'Юлия Денисова', role: 'Директор офиса г. Челябинск', dept: '', email: 'online@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+  { name: 'Ольга Домашевская', role: 'Главный бухгалтер', dept: 'Финансовый отдел', email: 'finance@anrotrip.ru', phone: '8 (800) 222-44-73 (доб. 333)', img: '' },
+  { name: 'Екатерина Мамыкина', role: 'Бухгалтер', dept: 'Финансовый отдел', email: 'katya@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+  { name: 'Наталья Вафина', role: 'Бухгалтер', dept: 'Финансовый отдел', email: 'natalia.v@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+  { name: 'Кристина Наговицына', role: 'Бухгалтер', dept: 'Финансовый отдел', email: 'buh1@anrotrip.ru', phone: '8 (800) 222-44-73', img: '' },
+];
 ---
 
-<section id="team" class="py-20 bg-gray-50 transition-colors duration-300">
-  <div class="container mx-auto px-4">
-    <!-- Заголовок -->
-    <div class="text-center mb-16">
-      <h2 class="font-montserrat text-3xl font-extrabold text-slate-900 sm:text-4xl">
-        Команда <span class="text-accent">ANRO TRIP</span>
-      </h2>
-      <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-        Профессионалы, которые делают ваш отдых незабываемым
-      </p>
-    </div>
+<!-- 1. ТЕМНАЯ СЕКЦИЯ + КНОПКА -->
+<section id="founders" class="pt-24 pb-28 bg-[#262626] text-white relative z-10 border-t border-gray-800">
+  <div class="container mx-auto px-4 max-w-7xl relative">
 
-    <!-- Сетка -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      {teamMembers.map((member, index) => (
-        <div
-          class:list={[
-            "team-card group relative bg-white rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border border-gray-100",
-            index >= INITIAL_VISIBLE ? "hidden" : ""
-          ]}
-        >
-          <!-- Фото -->
-          <div class="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-500 bg-slate-200">
-             {/* Заглушка, если картинки нет */}
-             {member.image ? (
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
-             ) : (
-                <div class="w-full h-full flex items-center justify-center text-4xl">👤</div>
-             )}
+    <h2 class="font-montserrat text-3xl font-extrabold text-center text-white mb-16 reveal-hidden uppercase tracking-wider">
+      Команда ANRO TRIP
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto reveal-hidden">
+      {founders.map((person) => (
+        <div class="flex flex-col sm:flex-row items-center gap-6 bg-[#333333] p-6 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 shadow-xl group">
+          <div class="w-32 h-32 shrink-0 rounded-xl overflow-hidden shadow-lg bg-[#2a2a2a]">
+            <img
+              src={person.image}
+              alt={person.name}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0"
+              loading="lazy"
+            />
           </div>
-
-          <!-- Инфо -->
-          <h3 class="text-lg font-bold text-slate-900 mb-1">
-            {member.name}
-          </h3>
-          <p class="text-sm font-medium text-accent mb-4">
-            {member.role}
-          </p>
-
-          <!-- Контакты -->
-          <div class="space-y-2 text-sm text-slate-500">
-            <a href={`mailto:${member.email}`} class="block hover:text-accent transition-colors truncate">
-              {member.email}
-            </a>
-            <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`} class="block font-semibold hover:text-accent transition-colors">
-              {member.phone}
+          <div class="text-center sm:text-left">
+            <h3 class="font-montserrat text-xl font-bold text-white mb-1">{person.name}</h3>
+            <p class="text-xs text-gray-400 mb-3 uppercase tracking-wider">{person.role}</p>
+            <a href={`mailto:${person.email}`} class="text-primary font-bold hover:text-white transition-colors text-sm">
+              {person.email}
             </a>
           </div>
         </div>
       ))}
     </div>
 
-    <!-- Кнопка -->
-    {teamMembers.length > INITIAL_VISIBLE && (
-      <div class="mt-12 text-center">
-        <button
-          id="show-more-team"
-          class="inline-flex items-center justify-center px-8 py-3 rounded-full border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all duration-300 active:scale-95"
-        >
-          Показать еще
-        </button>
-      </div>
-    )}
+  </div>
+
+  <!-- КНОПКА -->
+	<div class="absolute -bottom-19 left-0 w-full flex justify-center z-30 transition-all duration-500" id="team-btn-wrapper">
+    <button
+      id="toggle-team-btn"
+      class="inline-block px-12 py-4 rounded-full bg-secondary text-white border-2 border-secondary font-bold uppercase tracking-wider shadow-lg shadow-cyan-900/20 hover:bg-white hover:text-secondary hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+    >
+      Показать еще
+    </button>
+  </div>
+</section>
+
+<!-- 2. БЕЛАЯ СЕКЦИЯ (ОСТАЛЬНАЯ КОМАНДА) -->
+<!-- CLASS HIDDEN: Главное изменение! Блок физически убран со страницы -->
+<section
+id="team-list"
+class="relative bg-white overflow-hidden transition-all duration-1000 ease-in-out max-h-0 opacity-0 hidden"
+>
+  <!-- Внутренний контейнер -->
+  <!-- pt-20 создает отступ сверху ПОСЛЕ раскрытия -->
+  <div class="container mx-auto px-4 max-w-7xl pt-20 pb-20 border-t border-gray-100">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
+      {team.map((member) => (
+        <div class="flex flex-col items-center text-center group">
+
+          <!-- Аватарка -->
+          <div class="w-40 h-40 rounded-full overflow-hidden mb-5 border-4 border-white shadow-xl group-hover:scale-105 transition-all duration-300 relative bg-gray-100 ring-1 ring-gray-100">
+            {member.img ? (
+              <img src={member.img} alt={member.name} class="w-full h-full object-cover" loading="lazy" />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400 text-4xl font-bold">
+                {member.name.charAt(0)}
+              </div>
+            )}
+          </div>
+
+          <h3 class="font-montserrat text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
+
+          {member.dept && <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">{member.dept}</p>}
+          <p class="text-sm text-gray-500 mb-3 font-medium">{member.role}</p>
+
+          <div class="space-y-1 text-sm flex flex-col items-center">
+            <a href={`mailto:${member.email}`} class="text-primary hover:text-secondary transition-colors font-medium">{member.email}</a>
+            {member.phone && <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`} class="text-secondary hover:text-primary transition-colors font-bold whitespace-nowrap">{member.phone}</a>}
+          </div>
+        </div>
+      ))}
+    </div>
+
   </div>
 </section>
 
 <script>
-  const btn = document.getElementById('show-more-team');
-  if (btn) {
+  const btn = document.getElementById('toggle-team-btn');
+  const btnWrapper = document.getElementById('team-btn-wrapper');
+  const wrapper = document.getElementById('team-list');
+
+  if (btn && wrapper && btnWrapper) {
     btn.addEventListener('click', () => {
-      const hiddenCards = document.querySelectorAll('.team-card.hidden');
-      hiddenCards.forEach(card => {
-        card.classList.remove('hidden');
-        card.classList.add('animate-fade-in');
+      // 1. Убираем класс hidden, чтобы блок появился в DOM
+      wrapper.classList.remove('hidden');
+
+      // Небольшая пауза (requestAnimationFrame), чтобы браузер успел отрисовать блок перед стартом анимации
+      requestAnimationFrame(() => {
+          wrapper.style.maxHeight = wrapper.scrollHeight + "px";
+          wrapper.classList.remove('opacity-0');
+          wrapper.classList.add('opacity-100');
       });
-      btn.style.display = 'none';
+
+      // 2. Скрываем кнопку
+      btnWrapper.style.opacity = '0';
+      btnWrapper.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+         btnWrapper.style.display = 'none';
+      }, 500);
     });
   }
 </script>
-
-<style>
-  /* Определяем цвет акцента, если он не задан в tailwind.config */
-  /* Используем тот же бирюзовый, что и в поиске */
-  .text-accent {
-    color: #04a5e5; /* Fallback */
-    color: var(--color-primary, #04a5e5);
-  }
-  .border-accent {
-    border-color: #04a5e5;
-    border-color: var(--color-primary, #04a5e5);
-  }
-  .bg-accent {
-    background-color: #04a5e5;
-    background-color: var(--color-primary, #04a5e5);
-  }
-  .hover\:bg-accent:hover {
-    background-color: #04a5e5;
-    background-color: var(--color-primary-dark, #0391ca);
-  }
-  .hover\:text-accent:hover {
-    color: #04a5e5;
-    color: var(--color-primary, #04a5e5);
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>

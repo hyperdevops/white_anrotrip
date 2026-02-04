@@ -1,4 +1,7 @@
-// Global extension of the Window interface to include custom properties
+// Global window extension declarations for gift modal functionality
+
 interface Window {
-  initScrollReveal?: () => void;
+  openGiftModal: () => void;
+  closeGiftModal: () => void;
+  initScrollReveal: () => void;
 }
