@@ -391,7 +391,7 @@ const reviews = [
       lightbox.classList.remove('opacity-0');
     }, 10);
 
-    document.body.style.overflow = 'hidden';
+    window.lockScroll();
   };
 
   window.closeLightbox = () => {
@@ -399,8 +399,7 @@ const reviews = [
     setTimeout(() => {
       lightbox.classList.add('hidden');
       resetZoom();
-      document.body.style.overflow = '';
-
+      window.unlockScroll();
       // Возвращаем хедер плавно
       togglePageElements(false);
     }, 300);

@@ -192,7 +192,7 @@
         content.classList.remove('translate-y-20');
         content.classList.add('translate-y-0');
       }, 10);
-      document.body.style.overflow = 'hidden';
+      window.lockScroll();
     }
   }
 
@@ -208,7 +208,7 @@
       setTimeout(() => {
         overlay.classList.add('hidden');
         overlay.style.display = 'none';
-        document.body.style.overflow = '';
+        window.unlockScroll();
         toggleHeader(false); // Возвращаем хедер
       }, 500);
     }

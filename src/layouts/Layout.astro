@@ -77,6 +77,44 @@ const {
 
       // Запускаем при первой загрузке
       window.initScrollReveal();
+      // Функция вычисления ширины скроллбара
+      function getScrollbarWidth() {
+        return window.innerWidth - document.documentElement.clientWidth;
+      }
+
+      // БЛОКИРОВКА СКРОЛЛА С КОМПЕНСАЦИЕЙ
+      window.lockScroll = () => {
+        const scrollbarWidth = getScrollbarWidth();
+
+        // Если скроллбара нет (мобилка), просто блокируем и выходим
+        if (scrollbarWidth <= 0) {
+          document.body.style.overflow = 'hidden';
+          return;
+        }
+
+        // 1. Добавляем отступ body, чтобы контент не прыгал
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+
+        // 2. Добавляем отступ ХЕДЕРУ (если он fixed w-full), чтобы он не растягивался
+        const header = document.querySelector('header');
+        if (header) {
+          header.style.paddingRight = `${scrollbarWidth}px`;
+        }
+
+        // 3. Блокируем скролл
+        document.body.style.overflow = 'hidden';
+      };
+
+      // РАЗБЛОКИРОВКА
+      window.unlockScroll = () => {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+
+        const header = document.querySelector('header');
+        if (header) {
+          header.style.paddingRight = '';
+        }
+      };
     </script>
   </body>
   <CallbackModal />
