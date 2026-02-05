@@ -72,6 +72,30 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Переменные для отступов */
+:root {
+  --header-height: 4rem; /* Примерная высота хедера */
+  --scroll-offset: 40px; /* Желаемый отступ между хедером и заголовком блока */
+}
+
+/* Отступы для прокрутки к якорям с учетом высоты хедера */
+:target {
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+}
+
+/* Конкретные отступы для секций */
+#about:target,
+#reviews:target,
+#tours:target,
+#awards:target,
+#team:target,
+#team-list:target,
+#contacts:target,
+#partners:target,
+#search:target {
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+}
 ::-webkit-scrollbar {
   width: 8px;
 }

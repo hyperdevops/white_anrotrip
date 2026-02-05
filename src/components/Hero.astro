@@ -116,13 +116,13 @@ import heroBg from '../assets/hero/plane.avif';
       e.preventDefault();
 
       // Находим элемент, к которому нужно проскроллить
-      const searchAnchor = document.getElementById('search-anchor');
+      const searchAnchor = document.getElementById('search');
       if (searchAnchor) {
         // Прокручиваем к элементу со смещением вверх на 100px
         const rect = searchAnchor.getBoundingClientRect();
         const scrollTop =
           window.pageYOffset || document.documentElement.scrollTop;
-        const targetPosition = rect.top + scrollTop - 100; // поднимаем на 100px выше
+        const targetPosition = rect.top + scrollTop - 104; // поднимаем на 100px выше
 
         // Плавная прокрутка к позиции
         window.scrollTo({

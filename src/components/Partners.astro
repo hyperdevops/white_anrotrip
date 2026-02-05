@@ -1,64 +1,67 @@
 ---
-// src/components/Partners.astro
+import { Image } from 'astro:assets';
+import chelbasketImg from '../assets/partners/chelbasket.webp';
+import ferrosplavImg from '../assets/partners/ferrosplav.webp';
+import inrostImg from '../assets/partners/inrost.webp';
+import mercedesImg from '../assets/partners/mercedes.webp';
+import napoleonImg from '../assets/partners/napoleon.webp';
+import niagaraImg from '../assets/partners/niagara.webp';
+import niksImg from '../assets/partners/niks.webp';
+import r1projectImg from '../assets/partners/r1project.webp';
+import redpepperImg from '../assets/partners/redpepper.webp';
+import unisteamImg from '../assets/partners/unisteam.webp';
 
 // Массив партнеров (логотипы)
-// ВАЖНО: Замени пути '/images/partners/...' на реальные файлы
 const partners = [
-  { name: 'Napoleon IT', logo: '' }, // 1. Картинка (например: /partners/napoleon.png)
-  { name: 'R1 Проектное бюро', logo: '' }, // 2. Картинка
-  { name: 'Ниагара', logo: '' }, // 3. Картинка
-  { name: 'НИКС', logo: '' }, // 4. Картинка
-  { name: 'Mercedes Benz', logo: '' }, // 5. Картинка
-  { name: 'Ферросплав', logo: '' }, // 6. Картинка
-  { name: 'Unisteam', logo: '' }, // 7. Картинка
-  { name: 'Red Pepper Film', logo: '' }, // 8. Картинка
-  { name: 'Инрост', logo: '' }, // 9. Картинка
-  { name: 'Челбаскет', logo: '' }, // 10. Картинка
+  { name: 'Napoleon IT', logo: napoleonImg },
+  { name: 'R1 Проектное бюро', logo: r1projectImg },
+  { name: 'Ниагара', logo: niagaraImg },
+  { name: 'НИКС', logo: niksImg },
+  { name: 'Mercedes Benz', logo: mercedesImg },
+  { name: 'Ферросплав', logo: ferrosplavImg },
+  { name: 'Unisteam', logo: unisteamImg },
+  { name: 'Red Pepper Film', logo: redpepperImg },
+  { name: 'Инрост', logo: inrostImg },
+  { name: 'Челбаскет', logo: chelbasketImg },
 ];
+
+interface Props {
+  class?: string;
+}
+
+const { class: classes = '' }: Props = Astro.props;
 ---
 
-<section id="partners" class="py-16 bg-white border-t border-gray-100">
+<section
+  id="partners"
+  class={`py-14 bg-white border-t border-gray-100 ${classes}`}
+>
   <div class="container mx-auto px-4 max-w-7xl">
     <!-- Заголовок -->
     <h2
-      class="font-montserrat text-2xl font-bold text-center text-gray-900 mb-12 reveal-hidden uppercase tracking-wider"
+      class="font-montserrat text-4xl font-extrabold text-center text-gray-900 mb-26 reveal-hidden tracking-wider"
     >
       Нам доверяют
     </h2>
 
     <!-- Сетка логотипов -->
     <div
-      class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500 reveal-hidden"
+      class="grid grid-cols-2 md:grid-cols-5 gap-x-8 gap-y-25 items-center justify-items-center transition-all duration-500 reveal-hidden"
     >
       {
-        partners.map((partner, index) => (
+        partners.map((partner, _index) => (
           <div class="w-full flex items-center justify-center p-4 h-24">
-            {/*
-             ЛОГИКА ЗАГЛУШКИ:
-             Если logo пустой -> показываем серый квадрат с названием.
-             Если logo есть -> показываем картинку.
-          */}
-
-            {partner.logo ? (
-              <img
-                src={partner.logo}
-                alt={partner.name}
-                class="max-h-16 w-auto object-contain"
-              />
-            ) : (
-              // === ЗАГЛУШКА (ЗАМЕНИТЬ НА КАРТИНКУ В МАССИВЕ СВЕРХУ) ===
-              <div class="w-full h-full min-h-15 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50 text-xs text-gray-400 font-bold text-center p-2">
-                LOGO: {partner.name}
-              </div>
-              // ========================================================
-            )}
+            <Image
+              src={partner.logo}
+              alt={partner.name}
+              class="max-h-0 w-auto object-contain scale-90"
+              loading="lazy"
+            />
           </div>
         ))
       }
     </div>
-
-    <!-- Разделительная линия внизу (как на скрине) -->
-    <div class="w-full h-px bg-gray-200 mt-16"></div>
   </div>
-  <!-- <hr class="absolute bottom-0 left-0 w-full border-gray-200" /> -->
+  <!-- Разделительная линия внизу (на всю ширину страницы) -->
+  <div class="w-full h-px bg-gray-200 mt-24"></div>
 </section>

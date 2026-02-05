@@ -7,6 +7,12 @@ import thailandImg from '../assets/tours/thailand.jpg';
 import maldivesImg from '../assets/tours/maldives.webp';
 import egyptImg from '../assets/tours/egypt.avif';
 
+export interface Props {
+  class?: string;
+}
+
+const { class: classes = '' } = Astro.props;
+
 const tours = [
   {
     title: 'Турция, Анталья',
@@ -46,12 +52,7 @@ const tours = [
 ];
 ---
 
-<!--
-  ИСПРАВЛЕНИЕ:
-  Убрал bg-white.
-  Теперь фон прозрачный, и виден цвет родительской шторки (.content-sheet).
--->
-<section id="tours" class="py-10 transition-colors">
+<section id="tours" class={`py-10 transition-colors ${classes}`}>
   <div class="container mx-auto px-4">
     <!-- Заголовок -->
     <div class="mb-12 text-center reveal-hidden">

@@ -32,8 +32,8 @@ import Layout from '../layouts/Layout.astro';
       content-sheet — класс из global.css (белый/темный фон, скругление).
     -->
     <div id="content" class="relative z-10 mt-[90vh] content-sheet pb-20">
-      <!-- Якорь для кнопки "Поиск туров" (невидимый) -->
-      <div id="search-anchor" class="absolute -top-32 w-full h-1"></div>
+       <!-- Якорь для кнопки "Поиск туров" (невидимый) -->
+       <div id="search" class="absolute -top-32 w-full h-1"></div>
 
       <!--
          Виджет поиска.
@@ -48,11 +48,11 @@ import Layout from '../layouts/Layout.astro';
       <div class="-mt-12 space-y-24">
         <!-- Якорь для стрелочки "Популярные туры" -->
         <div id="popular-tours" class="scroll-mt-32">
-          <PopularTours />
+          <PopularTours class="mb-0" />
         </div>
 
-        <About />
-        <Partners />
+        <About class="-mt-16" />
+        <Partners class="-mt-10" />
         <Reviews />
         <Awards />
         <GiftSection />
