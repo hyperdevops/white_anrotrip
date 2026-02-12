@@ -3,11 +3,14 @@
     "astro-build.astro-vscode",
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "ms-vscode.vscode-json",
+    "usernamehw.errorlens",
+    "formulahendry.auto-rename-tag",
     "GitHub.copilot",
     "GitHub.copilot-chat",
-    "stylelint.vscode-stylelint",
-    "dbaeumer.vscode-eslint"
+    "stylelint.vscode-stylelint"
   ],
-  "unwantedRecommendations": []
+  "unwantedRecommendations": [
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-json"
+  ]
 }

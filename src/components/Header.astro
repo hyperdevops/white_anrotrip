@@ -99,14 +99,14 @@ const navItems = [
 
   <div
     id="mobile-menu"
-    class="fixed top-20 right-[2.5%] w-52 origin-top-right scale-95 opacity-0 invisible transition-all duration-300 rounded-2xl glass-panel p-2 lg:hidden z-40 shadow-2xl shadow-black/20"
+    class="fixed top-22 right-[2.5%] w-52 bg-white/90 backdrop-blur-xl rounded-2xl glass-panel p-2 lg:hidden z-40 shadow-2xl shadow-black/20 transition-transform duration-500 ease-out -translate-y-[200%]"
   >
     <nav class="flex flex-col gap-1">
       {
         navItems.map((item) => (
           <a
             href={item.href}
-            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-gray-800 hover:bg-white/50 hover:text-primary transition-colors"
+            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-gray-800 hover:bg-white/50 hover:text-primary transition-all active:scale-95 duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -131,12 +131,12 @@ const navItems = [
     </nav>
   </div>
 </header>
-
 <script>
   const toggleBtn = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const logoBtn = document.getElementById('logo-btn');
 
+  // --- Твоя логика логотипа (оставляем без изменений) ---
   logoBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     document.body.style.transition = 'opacity 0.7s ease-in-out';
@@ -148,31 +148,28 @@ const navItems = [
         el.classList.remove('reveal-visible');
       });
       // @ts-ignore
-      if (window.initScrollReveal) {
-        window.initScrollReveal();
-      }
+      if (window.initScrollReveal) window.initScrollReveal();
       setTimeout(() => {
         document.body.style.opacity = '1';
         setTimeout(() => {
           document.body.style.transition = '';
           document.body.style.opacity = '';
-          document.body.style.backgroundColor = '';
         }, 700);
       }, 100);
     }, 700);
   });
 
+  // --- НОВАЯ ЛОГИКА МЕНЮ (SLIDE DOWN) ---
   const openMenu = () => {
-    menu?.classList.remove('invisible', 'scale-95', 'opacity-0');
-    menu?.classList.add('scale-100', 'opacity-100');
+    // Убираем класс, который держит меню наверху
+    menu?.classList.remove('-translate-y-[200%]');
     toggleBtn?.setAttribute('aria-expanded', 'true');
   };
 
   const closeMenu = () => {
-    menu?.classList.remove('scale-100', 'opacity-100');
-    menu?.classList.add('scale-95', 'opacity-0');
+    // Возвращаем класс, который отправляет меню вверх
+    menu?.classList.add('-translate-y-[200%]');
     toggleBtn?.setAttribute('aria-expanded', 'false');
-    setTimeout(() => menu?.classList.add('invisible'), 200);
   };
 
   toggleBtn?.addEventListener('click', (e) => {
@@ -181,6 +178,7 @@ const navItems = [
     isExpanded ? closeMenu() : openMenu();
   });
 
+  // Закрытие по клику вне
   document.addEventListener('click', (e) => {
     const isExpanded = toggleBtn?.getAttribute('aria-expanded') === 'true';
     if (
@@ -191,5 +189,13 @@ const navItems = [
     ) {
       closeMenu();
     }
+  });
+
+  // Закрытие по клику на ссылку
+  const menuLinks = menu?.querySelectorAll('a');
+  menuLinks?.forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
   });
 </script>

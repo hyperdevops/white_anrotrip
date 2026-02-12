@@ -1,91 +1,169 @@
 {
-  // Настройки для обычного JSON
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.formatOnSave": true
-  },
-
-  // Настройки для JSON с комментариями (tsconfig.json, .vscode/settings.json)
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.formatOnSave": true
-  },
-
-  // Настройки для Astro
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
-  // Настройки для HTML (ускорение верстки)
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.suggest.insertMode": "replace"
-  },
-
-  // Настройки для CSS
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
-  // Настройки для JavaScript
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
-  // Настройки для TypeScript
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
-  // Глобальные настройки форматирования
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
-  },
-  "prettier.trailingComma": "none",
-  "prettier.semi": false,
-  "prettier.singleQuote": true,
-
-  // Настройки Emmet для Astro
-  "emmet.includeLanguages": {
-    "astro": "html"
-  },
-  "emmet.triggerExpansionOnTab": true,
-
-  // Рекомендуется для Astro
-  "editor.linkedEditing": true,
-  "editor.guides.bracketPairs": "active",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairsHorizontal": true,
-  "editor.smoothScrolling": true,
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.fontFamily": "'JetBrainsMono Nerd Font'",
-  "editor.fontSize": 14,
-  "editor.wordWrap": "off",
-  "editor.tabSize": 2,
-  "editor.insertSpaces": false,
-  "editor.detectIndentation": false,
-  "editor.autoIndentOnPaste": true,
-  "editor.renderWhitespace": "none",
-  "editor.fontLigatures": true,
-
-  // Настройки для удобства работы
-  "files.trimTrailingWhitespace": true,
-  "files.autoGuessEncoding": true,
-  "workbench.editor.decorations.colors": false,
-  "workbench.editor.scrollToSwitchTabs": true,
-  "workbench.colorTheme": "Catppuccin Mocha",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.productIconTheme": "material-product-icons",
-  "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false,
-  "breadcrumbs.enabled": false,
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.cursorBlinking": true,
-  "terminal.integrated.smoothScrolling": true,
-  "workbench.list.smoothScrolling": true
+	// Настройки для обычного JSON
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+		"editor.formatOnSave": true
+	},
+	// Настройки для JSON с комментариями (tsconfig.json, .vscode/settings.json)
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+		"editor.formatOnSave": true
+	},
+	// Настройки для Astro
+	"[astro]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	// Настройки для HTML (ускорение верстки)
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.suggest.insertMode": "replace"
+	},
+	// Настройки для CSS
+	"[css]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	// Настройки для JavaScript
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	// Настройки для TypeScript
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	// Глобальные настройки форматирования
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit"
+	},
+	"prettier.trailingComma": "none",
+	"prettier.semi": false,
+	"prettier.singleQuote": true,
+	// Настройки Emmet для Astro
+	"emmet.includeLanguages": {
+		"astro": "html"
+	},
+	"emmet.triggerExpansionOnTab": true,
+	// Рекомендуется для Astro
+	"editor.linkedEditing": true,
+	"editor.guides.bracketPairs": "active",
+	"editor.bracketPairColorization.enabled": true,
+	"editor.guides.bracketPairsHorizontal": true,
+	"editor.smoothScrolling": true,
+	"editor.cursorSmoothCaretAnimation": "on",
+	"editor.fontFamily": "'JetBrainsMono Nerd Font'",
+	"editor.fontSize": 14,
+	"editor.wordWrap": "off",
+	"editor.tabSize": 2,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.autoIndentOnPaste": true,
+	"editor.renderWhitespace": "none",
+	"editor.fontLigatures": true,
+	// Настройки для удобства работы
+	"files.trimTrailingWhitespace": true,
+	"files.autoGuessEncoding": true,
+	"workbench.editor.decorations.colors": false,
+	"workbench.editor.scrollToSwitchTabs": true,
+	"workbench.colorTheme": "Catppuccin Mocha",
+	"workbench.iconTheme": "material-icon-theme",
+	"workbench.productIconTheme": "material-product-icons",
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"breadcrumbs.enabled": false,
+	"git.autofetch": true,
+	"git.confirmSync": false,
+	"terminal.integrated.copyOnSelection": true,
+	"terminal.integrated.cursorBlinking": true,
+	"terminal.integrated.smoothScrolling": true,
+	"workbench.list.smoothScrolling": true,
+	"stylelint.validate": [
+		"css",
+		"scss",
+		"less"
+	],
+	"stylelint.ignorePath": ".stylelintignore",
+	// Настройки cSpell (Code Spell Checker)
+	"cSpell.enabled": true,
+	"cSpell.enabledFileTypes": {
+		"javascript": true,
+		"typescript": true,
+		"json": true,
+		"jsonc": true,
+		"markdown": true
+	},
+	"cSpell.diagnosticLevel": "Hint",
+	"cSpell.showStatus": false,
+	"cSpell.ignorePaths": [
+		"node_modules/**",
+		"dist/**",
+		".astro/**",
+		"*.lock",
+		"package-lock.json",
+		"pnpm-lock.yaml"
+	],
+	// Отключить подчеркивания для markdown файлов
+	"[markdown]": {
+		"cSpell.enabled": false
+	},
+	// Словарь для технических терминов проекта
+	"cSpell.words": [
+		"anrotrip",
+		"astro",
+		"tailwindcss",
+		"playwright",
+		"serena",
+		"context7",
+		"firecrawl",
+		"tavily",
+		"flowbite",
+		"i18next",
+		"mcp",
+		"MCP",
+		"filesystem",
+		"notion",
+		"figma",
+		"docker",
+		"uvx",
+		"npx",
+		"tourvisor",
+		"nemo",
+		"anrotrip",
+		"montserrat",
+		"iconify",
+		"sitemap",
+		"compressor",
+		"sharp",
+		"prettier",
+		"eslint",
+		"stylelint",
+		"jsonc",
+		"astrojs",
+		"tailwindcss",
+		"webp",
+		"avif",
+		"lighthouse",
+		"a11y",
+		"WCAG",
+		"accessibility",
+		"SEO",
+		"JSON-LD",
+		"LocalBusiness",
+		"FAQPage",
+		"WebPage",
+		"OpenGraph",
+		"ARIA",
+		"IntersectionObserver",
+		"localStorage",
+		"scrollbar",
+		"scrollbarWidth",
+		"unlockScroll",
+		"lockScroll",
+		"initScrollReveal",
+		"reveal-hidden",
+		"reveal-visible",
+		"glass-panel",
+		"content-sheet",
+		"deep-shadow"
+	]
 }

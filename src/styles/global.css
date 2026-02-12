@@ -4,13 +4,18 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  /* --color-primary: #0991b1;
+  --color-primary-light: #4bb9e5;
+  --color-primary-dark: #008ec6; */
   --color-primary: #3fa0f0;
   --color-primary-light: #65aeea;
   --color-primary-dark: #2f7ebf;
 
   /* НОВЫЙ ЦВЕТ (Бирюзовый/Teal из кнопок) */
-  --color-secondary: #0e7490;
-  --color-secondary-hover: #155e75;
+  --color-secondary: #1a6db1;
+  --color-secondary-hover: #225d8d;
+  /* --color-secondary: #0e7490;
+  --color-secondary-hover: #155e75; */
 
   --color-cta: #ffd417;
   --color-cta-hover: #e5be14;

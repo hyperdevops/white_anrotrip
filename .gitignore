@@ -1,13 +1,13 @@
 # build output
 dist/
+build/
+out/
 
 # generated types
 .astro/
 
 # dependencies
 node_modules/
-
-# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -16,18 +16,65 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+.env.*
+!.env.example
 
-# macOS-specific files
-.DS_Store
+# logs
+*.log
+logs/
 
-# jetbrains setting folder
-.idea/
-
-# Project-specific ignores
+# temporary folders
+.npm/
+.vercel/
+.turbo/
 .history/
 .kilocode/
 .specify/
 .gemini/
+
+# IDE-specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Editor-specific files
+.cursor/
 .cursorrules
-.ai-rules
-*.txt
+.cursorignore
+.frontmatter/
+.serena/
+
+# Project-specific
+.cspell.json
+.editorconfig
+.eslint*
+.prettier*
+.stylelint*
+tsconfig.json
+jsconfig.json
+astro.config.mjs
+tailwind.config.js
+postcss.config.js
+pnpm-lock.json
+pnpm-workspace.yaml
+yarn.lock
+package-lock.json
+
+# Test files
+coverage/
+.nyc_output/
+*.spec.js
+*.spec.ts
+*.test.js
+*.test.ts
+*.d.ts
+
+# Configuration files (keep important ones)
+# Exclude config files only if they are auto-generated or contain sensitive data
+# astro.config.mjs, tailwind.config.js, etc. are kept above if needed
+
+# Media files (only exclude if they are large generated files)
+# Currently keeping image assets as they appear to be part of the project
+# *.png, *.jpg, etc. removed from ignore as they seem to be used in the project
