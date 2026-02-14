@@ -8,7 +8,7 @@
 -->
 <div
   id="office-widget-container"
-  class="fixed bottom-6 left-6 z-2147483630 flex flex-col items-center gap-3 transition-transform duration-75 ease-out will-change-transform lg:bottom-25 lg:left-6"
+  class="fixed bottom-4 right-4 z-2147483630 flex flex-col items-center gap-3 transition-transform duration-75 ease-out will-change-transform lg:bottom-5 lg:right-5"
 >
   <!-- СПИСОК (Выезжает вверх) -->
   <div
@@ -140,39 +140,49 @@
     }
   });
 
-  // 2. ЛОГИКА "ПИЛЮЛИ" (Парковка над футером)
-  // window.addEventListener('scroll', () => {
-  //   const footer = document.querySelector('footer');
-  //   if (!footer || !container) return;
+  // 2. ЛОГИКА остановки на 200px от низа страницы
+  let ticking = false;
 
-  //   const footerRect = footer.getBoundingClientRect();
-  //   const windowHeight = window.innerHeight;
+  function updateWidgetPosition() {
+    if (!container) return;
 
-  //   // Если футер появился в зоне видимости
-  //   if (footerRect.top < windowHeight) {
-  //     // Исходное положение кнопки (расстояние от низа экрана до центра кнопки)
-  //     // bottom-8 (32px) + половина высоты (28px) = 60px
-  //     const originalCenterFromBottom = 60;
+    const scrollY = window.scrollY || window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
 
-  //     // Где сейчас верх футера относительно низа экрана?
-  //     // (windowHeight - footerRect.top) - это расстояние от низа экрана до верха футера
-  //     const footerDistFromBottom = windowHeight - footerRect.top;
+    // Расстояние от низа страницы, на котором кнопка должна остановиться
+    const stopDistance = 100;
 
-  //     // Нам нужно, чтобы центр кнопки был ровно на линии футера.
-  //     // Значит, нам нужно сдвинуть кнопку вверх на разницу.
-  //     // Разница = footerDistFromBottom - originalCenterFromBottom
-  //     const lift = footerDistFromBottom - originalCenterFromBottom;
+    // Позиция низа экрана относительно документа
+    const bottomOfScreen = scrollY + windowHeight;
 
-  //     // Если lift > 0, значит футер выше нашей кнопки, надо двигать
-  //     if (lift > 0) {
-  //       container.style.transform = `translateY(-${lift}px)`;
-  //     } else {
-  //       container.style.transform = `translateY(0)`;
-  //     }
-  //   } else {
-  //     container.style.transform = `translateY(0)`;
-  //   }
-  // });
+    // Вычисляем, насколько нужно сдвинуть кнопку вверх
+    const distanceFromBottom = documentHeight - bottomOfScreen;
+
+    // Если мы близко к концу страницы
+    if (distanceFromBottom < stopDistance) {
+      // Сдвигаем кнопку вверх на разницу
+      const offset = stopDistance - distanceFromBottom;
+      container.style.transform = `translateY(-${offset}px)`;
+    } else {
+      // Возвращаем в исходную позицию
+      container.style.transform = 'translateY(0)';
+    }
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateWidgetPosition);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Проверяем начальное состояние
+  updateWidgetPosition();
 </script>
 
 <style>

@@ -44,12 +44,6 @@
   h6 {
     @apply font-montserrat font-bold; /* font-bold (700) обычно ближе к Тильде */
   }
-
-  .content-sheet {
-    @apply bg-white transition-colors duration-700 ease-in-out;
-    border-radius: 40px 40px 0 0;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
-  }
 }
 
 /* === СТЕКЛО (ТЕНИ УСИЛЕНЫ) === */

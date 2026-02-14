@@ -2,11 +2,11 @@
 // src/components/ScrollToTop.astro
 ---
 
-<!-- Изначально opacity-0 и translate-y-20 (спрятан внизу) -->
+<!-- Кнопка "Наверх" - изначально скрыта -->
 <button
   id="scroll-to-top"
   aria-label="Вернуться наверх"
-  class="fixed bottom-8 right-6 z-50 translate-y-20 opacity-0 transition-all duration-500 rounded-full bg-white/20 backdrop-blur p-3 text-white focus:outline-none sm:bottom-8 sm:right-8 hover:-translate-y-1 cursor-pointer"
+  class="fixed bottom-5 right-4 z-[2147483646] pointer-events-none opacity-0 translate-y-20 transition-all duration-500 rounded-full bg-white/20 backdrop-blur p-3 text-white focus:outline-none sm:bottom-6 sm:right-6 hover:-translate-y-1 hover:scale-110 active:scale-95 cursor-pointer"
   style="filter: drop-shadow(0 10px 10px rgba(0,0,0,0.6));"
 >
   <svg
@@ -24,40 +24,90 @@
   </svg>
 </button>
 
-<!-- ... скрипт ... -->
-<script>
-  const scrollBtn = document.getElementById('scroll-to-top');
+<script is:inline>
+  (function () {
+    // Ждем загрузки DOM
+    function initScrollToTop() {
+      const scrollBtn = document.getElementById('scroll-to-top');
 
-  window.addEventListener('scroll', () => {
-    if (!scrollBtn) return;
+      if (!scrollBtn) {
+        console.warn('ScrollToTop: кнопка не найдена');
+        return;
+      }
 
-    // Высота всего документа
-    const docHeight = document.documentElement.scrollHeight;
-    // Текущая позиция низа экрана (сколько + высота окна)
-    const scrollPos = window.scrollY + window.innerHeight;
+      let ticking = false;
 
-    // Порог срабатывания (например, 50px до самого конца)
-    // Если разница между высотой и позицией меньше 50px — значит мы внизу
-    if (docHeight - scrollPos < 50) {
-      scrollBtn.classList.remove(
-        'translate-y-20',
-        'opacity-0',
-        'pointer-events-none',
-      );
-    } else {
-      scrollBtn.classList.add(
-        'translate-y-20',
-        'opacity-0',
-        'pointer-events-none',
-      );
+      // Функция обновления видимости кнопки
+      function updateButtonVisibility() {
+        // Высота всего документа
+        const docHeight = document.documentElement.scrollHeight;
+        // Текущая позиция низа экрана (scrollY + высота окна)
+        const scrollPos = window.scrollY + window.innerHeight;
+
+        // Порог срабатывания: 50px до самого конца страницы
+        // Если разница меньше 50px — значит мы в самом низу
+        if (docHeight - scrollPos < 50) {
+          scrollBtn.classList.remove(
+            'opacity-0',
+            'translate-y-20',
+            'pointer-events-none',
+          );
+          scrollBtn.classList.add(
+            'opacity-100',
+            'translate-y-0',
+            'pointer-events-auto',
+          );
+        } else {
+          scrollBtn.classList.remove(
+            'opacity-100',
+            'translate-y-0',
+            'pointer-events-auto',
+          );
+          scrollBtn.classList.add(
+            'opacity-0',
+            'translate-y-20',
+            'pointer-events-none',
+          );
+        }
+
+        ticking = false;
+      }
+
+      // Обработчик скролла с throttling
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(updateButtonVisibility);
+          ticking = true;
+        }
+      }
+
+      // Обработчик клика
+      function onClick() {
+        if (navigator.vibrate) {
+          navigator.vibrate(10);
+        }
+
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
+
+      // Подключаем обработчики
+      window.addEventListener('scroll', onScroll, { passive: true });
+      scrollBtn.addEventListener('click', onClick);
+
+      // Проверяем начальное состояние
+      updateButtonVisibility();
+
+      console.log('ScrollToTop: инициализирован');
     }
-  });
 
-  scrollBtn?.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(10);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  });
+    // Запускаем инициализацию
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollToTop);
+    } else {
+      initScrollToTop();
+    }
+  })();
 </script>
