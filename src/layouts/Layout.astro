@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import ScrollProgress from '../components/ScrollProgress.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import CallbackModal from '../components/CallbackModal.astro';
 import ReviewModal from '../components/ReviewModal.astro';
@@ -35,11 +37,15 @@ const {
       rel="stylesheet"
     />
 
+    <!-- View Transitions API для плавных переходов между страницами -->
+    <ClientRouter />
+
     <title>{title}</title>
   </head>
   <body
     class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-cta selection:text-black transition-colors duration-300"
   >
+    <ScrollProgress />
     <slot />
     <ScrollToTop />
     <FavoritesWidget />

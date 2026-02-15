@@ -1,0 +1,38 @@
+---
+// src/components/ScrollProgress.astro
+// Индикатор прогресса прокрутки страницы (горизонтальная линия вверху)
+---
+
+<div
+  id="scroll-progress"
+  class="fixed top-0 left-0 h-1 bg-linear-to-r from-primary via-secondary to-cta z-9999 transition-all duration-100 ease-out"
+  style="width: 0%; transform-origin: left;"
+></div>
+
+<script>
+  function updateScrollProgress() {
+    const progressBar = document.getElementById('scroll-progress');
+    if (!progressBar) return;
+
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+
+    progressBar.style.width = `${scrollPercent}%`;
+  }
+
+  // Throttle через requestAnimationFrame для производительности
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateScrollProgress();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Инициализация при загрузке
+  updateScrollProgress();
+</script>

@@ -303,12 +303,7 @@ const reviews = [
             ></textarea>
           </div>
           <div class="flex items-start gap-2 pt-2">
-            <input
-              type="checkbox"
-              id="agree-review"
-              class="mt-1"
-              checked
-            /><label
+            <input type="checkbox" id="agree-review" class="mt-1" /><label
               for="agree-review"
               class="text-[10px] text-gray-500 leading-tight"
               >Даю свое согласие на обработку персональных данных в соответствии
@@ -383,7 +378,8 @@ const reviews = [
     currentIndex = index;
     updateTrackPosition(false);
     lightbox.classList.remove('hidden');
-
+    if (window.lockScroll) window.lockScroll();
+    else document.body.style.overflow = 'hidden';
     // Скрываем хедер плавно
     togglePageElements(true);
 
@@ -398,6 +394,8 @@ const reviews = [
     lightbox.classList.add('opacity-0');
     setTimeout(() => {
       lightbox.classList.add('hidden');
+      if (window.unlockScroll) window.unlockScroll();
+      else document.body.style.overflow = '';
       resetZoom();
       window.unlockScroll();
       // Возвращаем хедер плавно
@@ -472,6 +470,8 @@ const reviews = [
   openFormBtn.addEventListener('click', () => {
     formOverlay.classList.remove('hidden');
     formOverlay.style.display = 'flex';
+    if (window.lockScroll) window.lockScroll();
+    else document.body.style.overflow = 'hidden';
 
     // Скрываем хедер плавно
     togglePageElements(true);
@@ -492,6 +492,8 @@ const reviews = [
       formOverlay.classList.add('hidden');
       formOverlay.style.display = 'none';
       document.body.style.overflow = '';
+      if (window.unlockScroll) window.unlockScroll();
+      else document.body.style.overflow = '';
 
       // Возвращаем хедер плавно
       togglePageElements(false);

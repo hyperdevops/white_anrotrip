@@ -1,5 +1,6 @@
 ---
 // src/components/About.astro
+import TrustBadges from './TrustBadges.astro';
 
 // 1. УСЛУГИ (Иконки верхний ряд)
 const services = [
@@ -33,7 +34,7 @@ const services = [
 const features = [
   {
     title: 'Быстро развиваемся',
-    desc: 'Входим в ТОП-10 компаний России по результатам 2024 года',
+    desc: 'Входим в ТОП-10 компаний России по результатам 2026 года',
     icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />`,
   },
   {
@@ -46,14 +47,6 @@ const features = [
     desc: 'Бронируем любые направления и быстро осуществляем обмен/возврат в собственных GDS пультах',
     icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />`,
   },
-];
-
-// 3. ТЕКСТОВЫЕ БЛОКИ
-const textBlocks = [
-  `ANRO TRIP — это команда профессионалов, предоставляющих консьерж-сервис по организации командировок и путешествий по всему миру на протяжении 6 лет.`,
-  `ANRO TRIP — это покупка авиа и ж/д билетов, заказ трансфера, оформление страховки, бронирование отеля или тура, помощь в оформлении визы, командировки под ключ и корпоративные мероприятия для Вашей компании.`,
-  `ANRO TRIP — это российский туроператор РТО 022708.`,
-  `ANRO TRIP — это 14 000 довольных клиентов по всему миру, 700 компаний на корпоративном обслуживании и более 18 лет работы в туризме.`,
 ];
 
 // 4. НАПРАВЛЕНИЯ РАБОТЫ (Нижний блок)
@@ -90,12 +83,48 @@ const { class: classes = '' } = Astro.props;
 <section id="about" class={`py-6 bg-white overflow-hidden ${classes}`}>
   <div class="container mx-auto px-4 max-w-7xl">
     <!-- ЗАГОЛОВОК -->
-    <div class="text-center mb-14 reveal-hidden">
+    <div class="text-center mb-8 reveal-hidden">
       <h2
         class="font-montserrat text-4xl font-extrabold text-gray-900 tracking-wide"
       >
         Почему выбирают <span class="text-primary">ANRO TRIP</span>
       </h2>
+    </div>
+
+    <!-- STATS HERO BLOCK (объединяет слоган + Trust Badges) -->
+    <div
+      class="glass-panel rounded-3xl p-8 md:p-12 mb-16 reveal-hidden relative overflow-hidden"
+    >
+      <!-- Декоративный градиент -->
+      <div
+        class="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"
+      >
+      </div>
+
+      <div class="relative z-10">
+        <!-- Слоган -->
+        <p
+          class="text-center text-xl md:text-2xl text-gray-800 font-medium leading-relaxed mb-8 max-w-4xl mx-auto"
+        >
+          <span class="text-primary font-bold">ANRO TRIP</span> — команда профессионалов,
+          предоставляющих консьерж-сервис по организации командировок и путешествий
+          по всему миру. Покупка авиа и ж/д билетов, заказ трансфера, оформление страховки,
+          бронирование отеля или тура, помощь в оформлении визы, командировки под
+          ключ и корпоративные мероприятия Вашей компании.
+          <!-- <br /><br />
+          <span class="text-primary font-bold">ANRO TRIP</span> — это покупка авиа
+          и ж/д билетов, заказ трансфера, оформление страховки, бронирование отеля
+          или тура, помощь в оформлении визы, командировки под ключ и корпоративные
+          мероприятия для Вашей компании.
+          <br /><br />
+          <span class="text-primary font-bold">ANRO TRIP</span> - это 14 000 довольных
+          клиентов по всему миру, 700 компаний на корпоративном обслуживании и более
+          18 лет работы в туризме. -->
+        </p>
+
+        <!-- Trust Badges внутри блока -->
+        <TrustBadges />
+      </div>
     </div>
 
     <!-- 1. ИКОНКИ УСЛУГ (Верхний ряд) -->
@@ -162,18 +191,9 @@ const { class: classes = '' } = Astro.props;
       }
     </div>
 
-    <!-- 3. ТЕКСТ (На всю ширину с акцентами) -->
-    <div class="w-full space-y-6 reveal-hidden mb-16 text-left">
-      {
-        textBlocks.map((text) => (
-          <p class="text-lg text-gray-700 leading-relaxed font-inter">
-            <span class="font-bold text-primary">ANRO TRIP</span>{' '}
-            {text.replace('ANRO TRIP', '').replace(/^— /, '')}
-          </p>
-        ))
-      }
-
-      <p class="text-xl font-medium text-gray-800 mt-8">
+    <!-- CTA: Свяжитесь с нами -->
+    <div class="w-full mb-16 text-center reveal-hidden">
+      <p class="text-xl md:text-2xl font-medium text-gray-800">
         <a
           href="#contacts"
           class="text-primary font-bold hover:underline decoration-2 underline-offset-4 transition-all"

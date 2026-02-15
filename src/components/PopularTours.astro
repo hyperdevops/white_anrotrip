@@ -53,7 +53,8 @@ const tours = [
 ---
 
 <section id="tours" class={`py-10 transition-colors ${classes}`}>
-  <div class="container mx-auto px-4">
+  <!-- НОВОЕ: @container для Container Queries -->
+  <div class="@container container mx-auto px-4">
     <!-- Заголовок -->
     <div class="mb-12 text-center reveal-hidden">
       <h2
@@ -64,8 +65,8 @@ const tours = [
       <p class="mt-4 text-lg text-gray-600">Лучшие предложения этого сезона</p>
     </div>
 
-    <!-- Bento Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
+    <!-- Bento Grid с Container Queries (@md, @lg вместо md:, lg:) -->
+    <div class="grid grid-cols-1 @md:grid-cols-4 gap-4 auto-rows-[250px]" data-reveal-stagger>
       {
         tours.map((tour, index) => (
           <button
@@ -77,13 +78,13 @@ const tours = [
               // ИСПОЛЬЗУЕМ НАШ КЛАСС
               'deep-shadow border border-white/20',
 
-              // Анимация
-              'reveal-hidden',
-              index % 2 === 0 ? '' : 'delay-100',
-              tour.size === 'large' ? 'md:col-span-2 md:row-span-2' : '',
-              tour.size === 'tall' ? 'md:col-span-1 md:row-span-2' : '',
-              tour.size === 'wide' ? 'md:col-span-2 md:row-span-1' : '',
-              tour.size === 'normal' ? 'md:col-span-1 md:row-span-1' : '',
+              // Анимация: добавляем reveal-scale для эффекта масштабирования
+              'reveal-hidden reveal-scale',
+              // Container Queries (@md:) вместо media queries (md:)
+              tour.size === 'large' ? '@md:col-span-2 @md:row-span-2' : '',
+              tour.size === 'tall' ? '@md:col-span-1 @md:row-span-2' : '',
+              tour.size === 'wide' ? '@md:col-span-2 @md:row-span-1' : '',
+              tour.size === 'normal' ? '@md:col-span-1 @md:row-span-1' : '',
             ]}
           >
             <div class="absolute inset-0">
