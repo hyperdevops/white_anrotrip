@@ -32,29 +32,26 @@ interface Props {
 const { class: classes = '' }: Props = Astro.props;
 ---
 
-<section
-  id="partners"
-  class={`py-14 bg-white border-t border-gray-100 ${classes}`}
->
-  <div class="container mx-auto px-4 max-w-7xl">
+<section id="partners" class={`py-12 md:py-16 bg-white ${classes}`}>
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
     <!-- Заголовок -->
     <h2
-      class="font-montserrat text-4xl font-extrabold text-center text-gray-900 mb-26 reveal-hidden tracking-wider"
+      class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-10 md:mb-12 reveal-hidden uppercase tracking-wider"
     >
       Нам доверяют
     </h2>
 
     <!-- Сетка логотипов -->
     <div
-      class="grid grid-cols-2 md:grid-cols-5 gap-x-8 gap-y-25 items-center justify-items-center transition-all duration-500 reveal-hidden"
+      class="grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-12 md:gap-x-8 md:gap-y-20 items-center justify-items-center transition-all duration-500 reveal-hidden"
     >
       {
         partners.map((partner, _index) => (
-          <div class="w-full flex items-center justify-center p-4 h-24">
+          <div class="w-full flex items-center justify-center p-4 sm:p-6 h-24 sm:h-28">
             <Image
               src={partner.logo}
               alt={partner.name}
-              class="max-h-0 w-auto object-contain scale-90"
+              class="max-h-full w-auto object-contain transition-transform duration-300 hover:scale-105"
               loading="lazy"
             />
           </div>
@@ -62,6 +59,4 @@ const { class: classes = '' }: Props = Astro.props;
       }
     </div>
   </div>
-  <!-- Разделительная линия внизу (на всю ширину страницы) -->
-  <div class="w-full h-px bg-gray-200 mt-24"></div>
 </section>

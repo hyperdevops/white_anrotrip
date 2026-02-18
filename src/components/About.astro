@@ -80,12 +80,15 @@ export interface Props {
 const { class: classes = '' } = Astro.props;
 ---
 
-<section id="about" class={`py-6 bg-white overflow-hidden ${classes}`}>
-  <div class="container mx-auto px-4 max-w-7xl">
+<section
+  id="about"
+  class={`py-12 md:py-16 bg-gray-50 overflow-hidden ${classes}`}
+>
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
     <!-- ЗАГОЛОВОК -->
-    <div class="text-center mb-8 reveal-hidden">
+    <div class="text-center mb-10 md:mb-12 reveal-hidden">
       <h2
-        class="font-montserrat text-4xl font-extrabold text-gray-900 tracking-wide"
+        class="font-montserrat text-3xl font-extrabold text-gray-900 uppercase tracking-wider"
       >
         Почему выбирают <span class="text-primary">ANRO TRIP</span>
       </h2>
@@ -93,7 +96,7 @@ const { class: classes = '' } = Astro.props;
 
     <!-- STATS HERO BLOCK (объединяет слоган + Trust Badges) -->
     <div
-      class="glass-panel rounded-3xl p-8 md:p-12 mb-16 reveal-hidden relative overflow-hidden"
+      class="glass-panel rounded-3xl p-6 sm:p-8 md:p-12 mb-10 md:mb-12 reveal-hidden relative overflow-hidden"
     >
       <!-- Декоративный градиент -->
       <div
@@ -102,25 +105,18 @@ const { class: classes = '' } = Astro.props;
       </div>
 
       <div class="relative z-10">
-        <!-- Слоган -->
-        <p
-          class="text-center text-xl md:text-2xl text-gray-800 font-medium leading-relaxed mb-8 max-w-4xl mx-auto"
-        >
-          <span class="text-primary font-bold">ANRO TRIP</span> — команда профессионалов,
-          предоставляющих консьерж-сервис по организации командировок и путешествий
-          по всему миру. Покупка авиа и ж/д билетов, заказ трансфера, оформление страховки,
-          бронирование отеля или тура, помощь в оформлении визы, командировки под
-          ключ и корпоративные мероприятия Вашей компании.
-          <!-- <br /><br />
-          <span class="text-primary font-bold">ANRO TRIP</span> — это покупка авиа
-          и ж/д билетов, заказ трансфера, оформление страховки, бронирование отеля
-          или тура, помощь в оформлении визы, командировки под ключ и корпоративные
-          мероприятия для Вашей компании.
-          <br /><br />
-          <span class="text-primary font-bold">ANRO TRIP</span> - это 14 000 довольных
-          клиентов по всему миру, 700 компаний на корпоративном обслуживании и более
-          18 лет работы в туризме. -->
-        </p>
+        <!-- Короткий слоган + доверительная фраза -->
+        <div class="text-center mb-8 max-w-2xl mx-auto">
+          <p
+            class="text-lg sm:text-xl md:text-2xl text-gray-800 font-medium leading-snug mb-3"
+          >
+            <span class="text-primary font-bold">ANRO TRIP</span> — консьерж-сервис
+            по организации путешествий и командировок по всему миру.
+          </p>
+          <p class="text-sm sm:text-base text-gray-500 font-normal italic">
+            За нас говорят наши успехи!
+          </p>
+        </div>
 
         <!-- Trust Badges внутри блока -->
         <TrustBadges />
@@ -129,15 +125,15 @@ const { class: classes = '' } = Astro.props;
 
     <!-- 1. ИКОНКИ УСЛУГ (Верхний ряд) -->
     <div
-      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-24 reveal-hidden"
+      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 mb-10 md:mb-12 reveal-hidden"
     >
       {
         services.map((item) => (
           <div class="flex flex-col items-center text-center group cursor-default">
-            <div class="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-primary/30 group-hover:shadow-lg group-hover:shadow-primary/10 transition-all duration-300">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 group-hover:border-primary/30 group-hover:shadow-lg group-hover:shadow-primary/10 transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8 text-gray-600 group-hover:text-primary transition-colors"
+                class="h-7 w-7 sm:h-8 sm:w-8 text-gray-600 group-hover:text-primary transition-colors"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -145,7 +141,7 @@ const { class: classes = '' } = Astro.props;
                 set:html={item.icon}
               />
             </div>
-            <span class="text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors">
+            <span class="text-xs sm:text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors">
               {item.title}
             </span>
           </div>
@@ -154,12 +150,12 @@ const { class: classes = '' } = Astro.props;
     </div>
 
     <!-- 2. КАРТОЧКИ ПРЕИМУЩЕСТВ (3 штуки) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10 md:mb-12">
       {
         features.map((item, index) => (
           <div
             class:list={[
-              'group p-8 rounded-3xl bg-white transition-all duration-300',
+              'group p-6 sm:p-8 rounded-3xl bg-white transition-all duration-300',
               'border border-gray-100',
               'hover:border-primary/20',
               'deep-shadow hover:-translate-y-2',
@@ -180,10 +176,10 @@ const { class: classes = '' } = Astro.props;
               />
             </div>
 
-            <h3 class="font-montserrat text-xl font-bold text-gray-900 mb-3 tracking-wide">
+            <h3 class="font-montserrat text-xl font-bold text-gray-900 mb-4 tracking-wide">
               {item.title}
             </h3>
-            <p class="text-sm text-gray-600 leading-relaxed max-w-xs">
+            <p class="text-sm text-gray-600 leading-relaxed max-w-xs mx-auto">
               {item.desc}
             </p>
           </div>
@@ -192,8 +188,10 @@ const { class: classes = '' } = Astro.props;
     </div>
 
     <!-- CTA: Свяжитесь с нами -->
-    <div class="w-full mb-16 text-center reveal-hidden">
-      <p class="text-xl md:text-2xl font-medium text-gray-800">
+    <div class="w-full mb-10 md:mb-12 text-center reveal-hidden px-1">
+      <p
+        class="text-lg sm:text-xl md:text-2xl font-medium text-gray-800 leading-snug"
+      >
         <a
           href="#contacts"
           class="text-primary font-bold hover:underline decoration-2 underline-offset-4 transition-all"
@@ -207,35 +205,39 @@ const { class: classes = '' } = Astro.props;
 
     <!-- 4. КНОПКИ (Коммерческое предложение) -->
     <div
-      class="flex flex-col md:flex-row items-center justify-center gap-6 mb-24 reveal-hidden"
+      class="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 sm:gap-6 mb-10 md:mb-12 reveal-hidden"
     >
       <a
         href="#contacts"
-        class="w-full md:w-auto px-8 py-5 rounded-full bg-primary text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-primary/30 hover:bg-primary-dark hover:-translate-y-1 transition-all duration-300"
+        class="w-full md:w-auto min-h-[3.25rem] flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 rounded-full bg-primary text-white font-bold text-xs sm:text-sm tracking-widest uppercase shadow-lg shadow-primary/30 hover:bg-primary-dark hover:-translate-y-1 transition-all duration-300 text-center leading-tight"
       >
-        Персональный travel-ассистент
+        <span class="block py-0.5">Персональный travel-ассистент</span>
       </a>
 
       <a
         href="#"
-        class="w-full md:w-auto px-8 py-5 rounded-full border-2 border-primary text-primary font-bold text-sm tracking-widest uppercase hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300"
+        class="w-full md:w-auto min-h-[3.25rem] flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 rounded-full border-2 border-primary text-primary font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300 text-center leading-tight"
       >
-        Ознакомиться с коммерческим предложением
+        <span class="block py-0.5"
+          >Ознакомиться с коммерческим предложением</span
+        >
       </a>
     </div>
 
     <!-- 5. НАПРАВЛЕНИЯ РАБОТЫ (Сетка 2x2) -->
-    <div class="mb-20">
+    <div class="mb-10 md:mb-12">
       <h2
-        class="font-montserrat text-4xl font-extrabold text-center text-gray-900 mb-16 reveal-hidden tracking-wide"
+        class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-10 md:mb-12 reveal-hidden uppercase tracking-wider"
       >
         Направления работы <span class="text-primary">ANRO TRIP</span>
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-10 md:gap-y-12"
+      >
         {
           directions.map((item) => (
-            <div class="flex gap-6 items-start group reveal-hidden">
+            <div class="flex gap-4 sm:gap-6 items-start group reveal-hidden">
               {/* Иконка */}
               <div class="shrink-0 w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-300">
                 <svg
@@ -250,8 +252,8 @@ const { class: classes = '' } = Astro.props;
               </div>
 
               {/* Текст */}
-              <div>
-                <h3 class="font-montserrat text-xl font-bold text-gray-900 mb-3 tracking-wide">
+              <div class="flex-1">
+                <h3 class="font-montserrat text-xl font-bold text-gray-900 mb-4 tracking-wide">
                   {item.title.includes('travel-ассистент') ? (
                     <span>
                       Личный <span class="text-primary">travel-ассистент</span>
@@ -260,7 +262,7 @@ const { class: classes = '' } = Astro.props;
                     item.title
                   )}
                 </h3>
-                <p class="text-gray-600 leading-relaxed text-sm">
+                <p class="text-gray-600 leading-relaxed text-sm mt-2">
                   {item.desc.split('ANRO TRIP').map((part, index, array) => (
                     <>
                       {part}
@@ -277,8 +279,11 @@ const { class: classes = '' } = Astro.props;
       </div>
     </div>
 
-    <!-- 6. РЕЕСТРЫ -->
-    <div class="flex flex-col items-center gap-4 reveal-hidden">
+    <!-- 6. РЕЕСТРЫ (якорь для бейджа «Туроператор» в TrustBadges) -->
+    <div
+      class="flex flex-col items-center gap-4 reveal-hidden"
+      id="registry-rto"
+    >
       <div
         class="px-10 py-4 rounded-full bg-[#0e7490] text-white font-bold text-sm uppercase tracking-wider shadow-md hover:bg-[#155e75] transition-colors cursor-default w-full md:w-auto text-center"
       >

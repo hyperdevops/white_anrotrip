@@ -98,6 +98,15 @@
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
+/* Глобальная утилита: скрытие скроллбара (не реализуется стандартными классами Tailwind) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .reveal-hidden {
   opacity: 0;
   transform: translateY(50px);
@@ -187,13 +196,18 @@
 #about:target,
 #reviews:target,
 #tours:target,
-#awards:target,
 #team:target,
 #team-list:target,
 #contacts:target,
 #partners:target,
 #search:target {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+}
+
+/* Секция «Награды»: прокрутка на 45px ближе к заголовку */
+#awards,
+#awards:target {
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset) - 45px);
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -293,39 +307,16 @@
   }
 }
 
-/* === TOURVISOR FIXES === */
-
-/* Скрываем серую кнопку избранного */
-/* Но оставляем её кликабельной программно! */
+/* === TOURVISOR: СКРЫТИЕ СТИКЕР-КНОПКИ + МОБИЛЬНЫЕ ФИКСЫ === */
+/* Серая кнопка .TVCartStickyButton портит дизайн — скрываем визуально, не ломая скрипт.
+   Важно: не использовать display:none или visibility:hidden на саму кнопку,
+   иначе виджет Турвизора может перестать реагировать на добавление в избранное. */
 .TVCartStickyButton {
   opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  position: absolute !important;
+  position: fixed !important;
   left: -9999px !important;
-  z-index: -1 !important;
-  width: 1px !important;
-  height: 1px !important;
-}
-
-/* На всякий случай скрываем внутренности, чтобы они не вылезли */
-.TVCartStickyButtonLeft,
-.TVCartStickyButtonPreview {
-  display: none !important;
-}
-
-/* === TOURVISOR FIXES === */
-
-/* Скрываем стандартную кнопку мягко, чтобы она осталась рабочей */
-.TVCartStickyButton {
-  opacity: 0 !important; /* Прозрачная */
-  position: fixed !important; /* Фиксируем */
-  left: -9999px !important; /* Отправляем далеко влево */
   top: -9999px !important;
-  z-index: -9999 !important; /* Прячем под всё */
-
-  /* ВАЖНО: Не используем display:none или visibility:hidden,
-     иначе скрипт Турвизора может перестать работать */
+  z-index: -9999 !important;
 }
 
 /* === TOURVISOR MOBILE FIX === */
@@ -344,3 +335,41 @@ iframe[src*='tourvisor'] {
 #tab-tourvisor {
   -webkit-overflow-scrolling: touch;
 }
+
+/* Улучшение качества изображений при масштабировании */
+.image-sharp {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: crisp-edges;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+}
+
+/* Дыхание карточек туров: усиленная амплитуда для маленьких превью (на больших Hero хватает лёгкого) */
+@keyframes breathe-tour {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.07) translate(1.2%, -0.8%);
+  }
+  100% {
+    transform: scale(1.04) translate(-0.8%, 1.2%);
+  }
+}
+
+.tour-card-breathe {
+  animation: breathe-tour 22s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+/* Разные фазы для каждой карточки (не синхронно) */
+[data-reveal-stagger] > *:nth-child(1) .tour-card-breathe { animation-delay: 0s; }
+[data-reveal-stagger] > *:nth-child(2) .tour-card-breathe { animation-delay: -4s; }
+[data-reveal-stagger] > *:nth-child(3) .tour-card-breathe { animation-delay: -9s; }
+[data-reveal-stagger] > *:nth-child(4) .tour-card-breathe { animation-delay: -14s; }
+[data-reveal-stagger] > *:nth-child(5) .tour-card-breathe { animation-delay: -19s; }
+[data-reveal-stagger] > *:nth-child(6) .tour-card-breathe { animation-delay: -23s; }
+[data-reveal-stagger] > *:nth-child(7) .tour-card-breathe { animation-delay: -7s; }
+[data-reveal-stagger] > *:nth-child(8) .tour-card-breathe { animation-delay: -18s; }

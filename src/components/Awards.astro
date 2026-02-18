@@ -38,27 +38,27 @@ const awards = [
 ];
 ---
 
-<section id="awards" class="py-20 bg-white relative overflow-hidden border-t border-gray-100">
-  <div class="container mx-auto px-4 max-w-7xl">
+<section id="awards" class="py-12 md:py-16 bg-gray-50 relative overflow-hidden">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
 
     <!-- Заголовок -->
-    <h2 class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-16 reveal-hidden uppercase tracking-wider">
-      Награды <span class="text-primary">ANRO TRIP 2026</span>
+    <h2 class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-10 md:mb-12 reveal-hidden uppercase tracking-wider">
+      Награды</br> <span class="text-primary">ANRO TRIP 2026</span>
     </h2>
 
     <!-- Сетка наград -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
       {awards.map((item, index) => (
         <div
           class:list={[
-            'group bg-white rounded-3xl p-6 border border-gray-100 transition-all duration-300',
+            'group bg-white rounded-3xl p-4 sm:p-6 border border-gray-100 transition-all duration-300',
             'hover:shadow-2xl hover:border-primary/20 hover:-translate-y-2', // Эффект карточки
             'reveal-hidden',
             index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : ''
           ]}
         >
           <!-- Картинка -->
-          <div class="relative overflow-hidden rounded-2xl mb-6 aspect-square bg-gray-50">
+          <div class="relative overflow-hidden rounded-2xl mb-6 sm:mb-8 aspect-square bg-gray-50">
             <img
               src={item.src}
               alt={item.title}
@@ -70,7 +70,7 @@ const awards = [
           </div>
 
           <!-- Контент -->
-          <div class="space-y-4">
+          <div class="space-y-3">
             <div class="text-sm text-gray-600 leading-relaxed font-inter" set:html={item.description} />
           </div>
         </div>

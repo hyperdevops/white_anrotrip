@@ -1,6 +1,6 @@
 ---
 // src/components/TrustBadges.astro
-// Бейджи доверия (РТО, ТОП-10, Опыт, Клиенты)
+// Бейджи доверия (РТО, ТОП-10, Опыт, Клиенты, Корпоративы)
 
 const badges = [
   {
@@ -9,6 +9,7 @@ const badges = [
     value: 'РТО 022708',
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',
+    href: '#registry-rto',
   },
   {
     icon: 'trophy',
@@ -16,6 +17,7 @@ const badges = [
     value: 'ТОП-10 России',
     colorClass: 'text-cta',
     bgClass: 'bg-cta/10',
+    href: '#awards',
   },
   {
     icon: 'calendar',
@@ -23,6 +25,7 @@ const badges = [
     value: 'Более 18 лет',
     colorClass: 'text-secondary',
     bgClass: 'bg-secondary/10',
+    href: '#awards',
   },
   {
     icon: 'users',
@@ -30,44 +33,64 @@ const badges = [
     value: '14 000+',
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',
+    href: '#reviews',
+  },
+  {
+    icon: 'building',
+    label: 'Корпоративы',
+    value: '700+ компаний',
+    colorClass: 'text-secondary',
+    bgClass: 'bg-secondary/10',
+    href: '#awards',
   },
 ];
 ---
 
-<div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 py-8 reveal-hidden">
-  {badges.map((badge) => (
-    <div
-      class="glass-panel-interactive px-6 py-4 rounded-2xl flex items-center gap-3 group cursor-default"
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 py-6 sm:py-8 reveal-hidden">
+  {badges.map((badge, index) => (
+    <a
+      href={badge.href}
+      class:list={[
+        'glass-panel-interactive px-4 py-3.5 sm:px-5 sm:py-4 rounded-2xl flex items-center gap-2.5 sm:gap-3 group cursor-pointer min-h-20 sm:min-h-0 no-underline text-inherit hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 w-full min-w-0 overflow-hidden',
+        index === badges.length - 1
+          ? 'col-span-2 justify-self-center max-w-[calc(50%-0.5rem)] sm:col-span-1 sm:justify-self-auto sm:max-w-none'
+          : '',
+      ]}
     >
       <!-- Иконка в круге -->
-      <div class={`w-12 h-12 rounded-full ${badge.bgClass} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+      <div class={`w-11 h-11 sm:w-12 sm:h-12 rounded-full ${badge.bgClass} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
         {badge.icon === 'shield' && (
-          <svg class={`w-6 h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
+          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17.93c-3.95-1.19-7-5.19-7-9.93V6.3l7-3.11v15.74z"/>
           </svg>
         )}
         {badge.icon === 'trophy' && (
-          <svg class={`w-6 h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
+          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
             <path d="M20 7h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 17.9V19H8v2h8v-2h-3v-1.1a5.01 5.01 0 0 0 4.61-2.96C20.08 14.63 22 12.55 22 10V9c0-1.1-.9-2-2-2zM6 10V9h2v3.82C6.84 12.4 6 11.3 6 10zm12 0c0 1.3-.84 2.4-2 2.82V9h2v1z"/>
           </svg>
         )}
         {badge.icon === 'calendar' && (
-          <svg class={`w-6 h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
+          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
             <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/>
           </svg>
         )}
         {badge.icon === 'users' && (
-          <svg class={`w-6 h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
+          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
             <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+          </svg>
+        )}
+        {badge.icon === 'building' && (
+          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
           </svg>
         )}
       </div>
 
-      <!-- Текст -->
-      <div>
-        <div class="text-xs text-gray-600 uppercase font-medium tracking-wide">{badge.label}</div>
-        <div class="text-sm font-bold text-gray-900">{badge.value}</div>
+      <!-- Текст: min-w-0 + break-words чтобы надписи переносились и не вылезали -->
+      <div class="min-w-0 flex-1 overflow-hidden">
+        <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide wrap-break-word leading-tight">{badge.label}</div>
+        <div class="text-xs sm:text-sm font-bold text-gray-900 leading-tight wrap-break-word">{badge.value}</div>
       </div>
-    </div>
+    </a>
   ))}
 </div>

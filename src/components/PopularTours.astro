@@ -1,11 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 
-import antalyaImg from '../assets/tours/antalya.avif';
-import dubaiImg from '../assets/tours/dubai.jpg';
-import thailandImg from '../assets/tours/thailand.jpg';
+import antalyaImg from '../assets/tours/antalya.webp';
+import dubaiImg from '../assets/tours/dubai.webp';
+import thailandImg from '../assets/tours/thailand.webp';
 import maldivesImg from '../assets/tours/maldives.webp';
-import egyptImg from '../assets/tours/egypt.avif';
+import egyptImg from '../assets/tours/egypt.webp';
+import vietnamImg from '../assets/tours/vietnam.webp';
 
 export interface Props {
   class?: string;
@@ -15,11 +16,11 @@ const { class: classes = '' } = Astro.props;
 
 const tours = [
   {
-    title: 'Турция, Анталья',
-    price: 'от 45 000 ₽',
-    image: antalyaImg,
+    title: 'Мальдивы',
+    price: 'от 150 000 ₽',
+    image: maldivesImg,
     size: 'large',
-    badge: '🔥 Хит продаж',
+    badge: 'Luxury',
   },
   {
     title: 'ОАЭ, Дубай',
@@ -29,18 +30,18 @@ const tours = [
     badge: 'Shopping',
   },
   {
+    title: 'Турция, Анталья',
+    price: 'от 45 000 ₽',
+    image: antalyaImg,
+    size: 'normal',
+    badge: '🔥 Хит продаж',
+  },
+  {
     title: 'Таиланд, Пхукет',
     price: 'от 95 000 ₽',
     image: thailandImg,
     size: 'normal',
     badge: 'Relax',
-  },
-  {
-    title: 'Мальдивы',
-    price: 'от 150 000 ₽',
-    image: maldivesImg,
-    size: 'normal',
-    badge: 'Luxury',
   },
   {
     title: 'Египет, Шарм',
@@ -49,16 +50,26 @@ const tours = [
     size: 'wide',
     badge: 'Все включено',
   },
+  {
+    title: 'Вьетнам, Нячанг',
+    price: 'от 75 000 ₽',
+    image: vietnamImg,
+    size: 'wide',
+    badge: 'Пляжный отдых',
+  },
 ];
 ---
 
-<section id="tours" class={`py-10 transition-colors ${classes}`}>
+<section
+  id="tours"
+  class={`py-12 md:py-16 bg-white transition-colors ${classes}`}
+>
   <!-- НОВОЕ: @container для Container Queries -->
-  <div class="@container container mx-auto px-4">
+  <div class="@container container mx-auto px-4 sm:px-6 max-w-7xl">
     <!-- Заголовок -->
-    <div class="mb-12 text-center reveal-hidden">
+    <div class="mb-10 md:mb-12 text-center reveal-hidden">
       <h2
-        class="font-montserrat text-3xl font-extrabold text-gray-900 sm:text-4xl md:text-5xl"
+        class="font-montserrat text-3xl font-extrabold text-gray-900 sm:text-4xl md:text-5xl uppercase tracking-wider"
       >
         Популярные <span class="text-primary">Направления</span>
       </h2>
@@ -66,7 +77,10 @@ const tours = [
     </div>
 
     <!-- Bento Grid с Container Queries (@md, @lg вместо md:, lg:) -->
-    <div class="grid grid-cols-1 @md:grid-cols-4 gap-4 auto-rows-[250px]" data-reveal-stagger>
+    <div
+      class="grid grid-cols-1 @md:grid-cols-4 gap-4 auto-rows-[250px]"
+      data-reveal-stagger
+    >
       {
         tours.map((tour, index) => (
           <button
@@ -88,18 +102,18 @@ const tours = [
             ]}
           >
             <div class="absolute inset-0">
-              <Image
-                src={tour.image}
-                alt={tour.title}
-                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                loading="lazy"
-                width="400"
-                height="400"
-              />
+              <div class="absolute inset-0 tour-card-breathe">
+                <Image
+                  src={tour.image}
+                  alt={tour.title}
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-103 image-sharp"
+                  loading="lazy"
+                />
+              </div>
               <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/80%),rgb(0_0_0/20%),transparent)] opacity-80 group-hover:opacity-60 transition-opacity" />
             </div>
             {/* Контент */}
-            <div class="absolute inset-0 p-6 flex flex-col justify-between">
+            <div class="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between">
               <div class="flex justify-between items-start">
                 <span class="inline-block rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold text-white uppercase tracking-wider border border-white/30">
                   {tour.badge}

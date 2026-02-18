@@ -51,16 +51,16 @@ const team = [
 ---
 
 <!-- 1. ТЕМНАЯ СЕКЦИЯ + КНОПКА -->
-<section id="team" class="pt-24 pb-28 bg-[#262626] text-white relative z-10 border-t border-gray-800">
-  <div class="container mx-auto px-4 max-w-7xl relative">
+<section id="team" class="py-12 md:py-16 bg-[#262626] text-white relative z-10">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative">
 
-    <h2 class="font-montserrat text-3xl font-extrabold text-center text-white mb-16 reveal-hidden uppercase tracking-wider">
+    <h2 class="font-montserrat text-3xl font-extrabold text-center text-white mb-10 md:mb-12 reveal-hidden uppercase tracking-wider">
       Команда ANRO TRIP
     </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto reveal-hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto reveal-hidden mb-12">
       {founders.map((person) => (
-        <div class="flex flex-col sm:flex-row items-center gap-6 bg-[#333333] p-6 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 shadow-xl group">
+        <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-[#333333] p-6 sm:p-8 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 shadow-xl group">
           <div class="w-32 h-32 shrink-0 rounded-xl overflow-hidden shadow-lg bg-[#2a2a2a]">
             <img
               src={person.image}
@@ -69,9 +69,9 @@ const team = [
               loading="lazy"
             />
           </div>
-          <div class="text-center sm:text-left">
-            <h3 class="font-montserrat text-xl font-bold text-white mb-1">{person.name}</h3>
-            <p class="text-xs text-gray-400 mb-3 uppercase tracking-wider">{person.role}</p>
+          <div class="text-center sm:text-left flex-1">
+            <h3 class="font-montserrat text-xl font-bold text-white mb-2">{person.name}</h3>
+            <p class="text-xs text-gray-400 mb-4 uppercase tracking-wider">{person.role}</p>
             <a href={`mailto:${person.email}`} class="text-primary font-bold hover:text-white transition-colors text-sm">
               {person.email}
             </a>
@@ -101,14 +101,14 @@ class="relative bg-white overflow-hidden transition-all duration-1000 ease-in-ou
 >
   <!-- Внутренний контейнер -->
   <!-- pt-20 создает отступ сверху ПОСЛЕ раскрытия -->
-  <div class="container mx-auto px-4 max-w-7xl pt-20 pb-20 border-t border-gray-100">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl pt-16 md:pt-20 pb-16 md:pb-20 border-t border-gray-100">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
       {team.map((member) => (
         <div class="flex flex-col items-center text-center group">
 
           <!-- Аватарка -->
-          <div class="w-40 h-40 rounded-full overflow-hidden mb-5 border-4 border-white shadow-xl group-hover:scale-105 transition-all duration-300 relative bg-gray-100 ring-1 ring-gray-100">
+          <div class="w-40 h-40 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl group-hover:scale-105 transition-all duration-300 relative bg-gray-100 ring-1 ring-gray-100">
             {member.img ? (
               <img src={member.img} alt={member.name} class="w-full h-full object-cover" loading="lazy" />
             ) : (
@@ -118,12 +118,12 @@ class="relative bg-white overflow-hidden transition-all duration-1000 ease-in-ou
             )}
           </div>
 
-          <h3 class="font-montserrat text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
+          <h3 class="font-montserrat text-lg font-bold text-gray-900 mb-2">{member.name}</h3>
 
-          {member.dept && <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">{member.dept}</p>}
-          <p class="text-sm text-gray-500 mb-3 font-medium">{member.role}</p>
+          {member.dept && <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-2">{member.dept}</p>}
+          <p class="text-sm text-gray-500 mb-4 font-medium">{member.role}</p>
 
-          <div class="space-y-1 text-sm flex flex-col items-center">
+          <div class="space-y-2 text-sm flex flex-col items-center">
             <a href={`mailto:${member.email}`} class="text-primary hover:text-secondary transition-colors font-medium">{member.email}</a>
             {member.phone && <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`} class="text-secondary hover:text-primary transition-colors font-bold whitespace-nowrap">{member.phone}</a>}
           </div>
