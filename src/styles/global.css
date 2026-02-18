@@ -342,9 +342,12 @@ iframe[src*='tourvisor'] {
   image-rendering: -moz-crisp-edges;
   image-rendering: -o-crisp-edges;
   image-rendering: crisp-edges;
+  transform: translateZ(0);
   -webkit-transform: translateZ(0);
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   -webkit-perspective: 1000;
+  perspective: 1000px;
 }
 
 /* Дыхание карточек туров: усиленная амплитуда для маленьких превью (на больших Hero хватает лёгкого) */

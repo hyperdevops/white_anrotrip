@@ -45,7 +45,10 @@ const reviews = [
 ];
 ---
 
-<section id="reviews" class="py-12 md:py-16 bg-gray-50 relative overflow-hidden">
+<section
+  id="reviews"
+  class="py-12 md:py-16 bg-gray-50 relative overflow-hidden"
+>
   <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
     <h2
       class="font-montserrat text-3xl font-extrabold text-center text-gray-900 mb-10 md:mb-12 reveal-hidden uppercase tracking-wider"
@@ -95,7 +98,7 @@ const reviews = [
   >
     <!-- ПАНЕЛЬ (Зум + Закрыть) -->
     <div
-      class="absolute top-0 right-0 p-6 flex gap-4 z-2147483649"
+      class="absolute top-0 right-0 p-6 flex gap-4 z-[2147483649]"
       onclick="event.stopPropagation()"
     >
       <!-- Кнопка Зум -->
@@ -163,7 +166,7 @@ const reviews = [
     <!-- СТРЕЛКИ НАВИГАЦИИ -->
     <button
       onclick="event.stopPropagation(); changeSlide(-1)"
-      class="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 p-4 z-2147483649 transition-colors hidden md:block focus:outline-none bg-white/20 rounded-full hover:bg-white/50"
+      class="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 p-4 z-[2147483649] transition-colors hidden md:block focus:outline-none bg-white/20 rounded-full hover:bg-white/50"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +182,7 @@ const reviews = [
 
     <button
       onclick="event.stopPropagation(); changeSlide(1)"
-      class="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 p-4 z-2147483649 transition-colors hidden md:block focus:outline-none bg-white/20 rounded-full hover:bg-white/50"
+      class="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 p-4 z-[2147483649] transition-colors hidden md:block focus:outline-none bg-white/20 rounded-full hover:bg-white/50"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
