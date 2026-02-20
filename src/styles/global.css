@@ -12,7 +12,8 @@
   --color-primary-dark: #2f7ebf;
 
   /* НОВЫЙ ЦВЕТ (Бирюзовый/Teal из кнопок) */
-  --color-secondary: #1a6db1;
+  --color-secondary: #2782cc;
+  /* --color-secondary: #1a6db1; */
   --color-secondary-hover: #225d8d;
   /* --color-secondary: #0e7490;
   --color-secondary-hover: #155e75; */
@@ -307,6 +308,46 @@
   }
 }
 
+/* === PARTNERS: MARQUEE + TITLE SHINE === */
+@keyframes marquee-forward {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.partners-track--forward {
+  animation: marquee-forward 32s linear infinite;
+}
+.partners-track--reverse {
+  animation: marquee-reverse 28s linear infinite;
+}
+
+.partners-track--forward:hover,
+.partners-track--reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes partners-title-shine {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.partners-title {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #3fa0f0 60%, #1a1a2e 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: partners-title-shine 4s linear infinite;
+}
+
+.partners-logo-card:hover {
+  transform: translateY(-3px);
+}
+
 /* === TOURVISOR: СКРЫТИЕ СТИКЕР-КНОПКИ + МОБИЛЬНЫЕ ФИКСЫ === */
 /* Серая кнопка .TVCartStickyButton портит дизайн — скрываем визуально, не ломая скрипт.
    Важно: не использовать display:none или visibility:hidden на саму кнопку,
@@ -368,11 +409,27 @@ iframe[src*='tourvisor'] {
 }
 
 /* Разные фазы для каждой карточки (не синхронно) */
-[data-reveal-stagger] > *:nth-child(1) .tour-card-breathe { animation-delay: 0s; }
-[data-reveal-stagger] > *:nth-child(2) .tour-card-breathe { animation-delay: -4s; }
-[data-reveal-stagger] > *:nth-child(3) .tour-card-breathe { animation-delay: -9s; }
-[data-reveal-stagger] > *:nth-child(4) .tour-card-breathe { animation-delay: -14s; }
-[data-reveal-stagger] > *:nth-child(5) .tour-card-breathe { animation-delay: -19s; }
-[data-reveal-stagger] > *:nth-child(6) .tour-card-breathe { animation-delay: -23s; }
-[data-reveal-stagger] > *:nth-child(7) .tour-card-breathe { animation-delay: -7s; }
-[data-reveal-stagger] > *:nth-child(8) .tour-card-breathe { animation-delay: -18s; }
+[data-reveal-stagger] > *:nth-child(1) .tour-card-breathe {
+  animation-delay: 0s;
+}
+[data-reveal-stagger] > *:nth-child(2) .tour-card-breathe {
+  animation-delay: -4s;
+}
+[data-reveal-stagger] > *:nth-child(3) .tour-card-breathe {
+  animation-delay: -9s;
+}
+[data-reveal-stagger] > *:nth-child(4) .tour-card-breathe {
+  animation-delay: -14s;
+}
+[data-reveal-stagger] > *:nth-child(5) .tour-card-breathe {
+  animation-delay: -19s;
+}
+[data-reveal-stagger] > *:nth-child(6) .tour-card-breathe {
+  animation-delay: -23s;
+}
+[data-reveal-stagger] > *:nth-child(7) .tour-card-breathe {
+  animation-delay: -7s;
+}
+[data-reveal-stagger] > *:nth-child(8) .tour-card-breathe {
+  animation-delay: -18s;
+}
