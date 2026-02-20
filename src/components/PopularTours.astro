@@ -1,146 +1,123 @@
 ---
 import { Image } from 'astro:assets';
-
-import antalyaImg from '../assets/tours/antalya.webp';
-import dubaiImg from '../assets/tours/dubai.webp';
+import antalyaImg  from '../assets/tours/antalya.webp';
+import dubaiImg    from '../assets/tours/dubai.webp';
 import thailandImg from '../assets/tours/thailand.webp';
 import maldivesImg from '../assets/tours/maldives.webp';
-import egyptImg from '../assets/tours/egypt.webp';
-import vietnamImg from '../assets/tours/vietnam.webp';
+import egyptImg    from '../assets/tours/egypt.webp';
+import vietnamImg  from '../assets/tours/vietnam.webp';
 
-export interface Props {
-  class?: string;
-}
-
+export interface Props { class?: string; }
 const { class: classes = '' } = Astro.props;
 
 const tours = [
-  {
-    title: 'Мальдивы',
-    price: 'от 150 000 ₽',
-    image: maldivesImg,
-    size: 'large',
-    badge: 'Luxury',
-  },
-  {
-    title: 'ОАЭ, Дубай',
-    price: 'от 80 000 ₽',
-    image: dubaiImg,
-    size: 'tall',
-    badge: 'Shopping',
-  },
-  {
-    title: 'Турция, Анталья',
-    price: 'от 45 000 ₽',
-    image: antalyaImg,
-    size: 'normal',
-    badge: '🔥 Хит продаж',
-  },
-  {
-    title: 'Таиланд, Пхукет',
-    price: 'от 95 000 ₽',
-    image: thailandImg,
-    size: 'normal',
-    badge: 'Relax',
-  },
-  {
-    title: 'Египет, Шарм',
-    price: 'от 55 000 ₽',
-    image: egyptImg,
-    size: 'wide',
-    badge: 'Все включено',
-  },
-  {
-    title: 'Вьетнам, Нячанг',
-    price: 'от 75 000 ₽',
-    image: vietnamImg,
-    size: 'wide',
-    badge: 'Пляжный отдых',
-  },
+  { title: 'Мальдивы',        price: 'от 150 000 ₽', image: maldivesImg, size: 'large',  badge: 'Luxury',        badgeColor: 'bg-amber-400/90 text-amber-950' },
+  { title: 'ОАЭ, Дубай',      price: 'от 80 000 ₽',  image: dubaiImg,    size: 'tall',   badge: 'Shopping',      badgeColor: 'bg-violet-500/80 text-white' },
+  { title: 'Турция, Анталья', price: 'от 45 000 ₽',  image: antalyaImg,  size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white' },
+  { title: 'Таиланд, Пхукет', price: 'от 95 000 ₽',  image: thailandImg, size: 'normal', badge: 'Relax',         badgeColor: 'bg-emerald-500/80 text-white' },
+  { title: 'Египет, Шарм',    price: 'от 55 000 ₽',  image: egyptImg,    size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white' },
+  { title: 'Вьетнам, Нячанг', price: 'от 75 000 ₽',  image: vietnamImg,  size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white' },
 ];
 ---
 
-<section
-  id="tours"
-  class={`py-0 md:py-0 bg-white transition-colors ${classes}`}
->
-  <!-- НОВОЕ: @container для Container Queries -->
+<section id="tours" class={`pt-10 pb-16 md:pb-24 bg-white overflow-hidden ${classes}`}>
   <div class="@container container mx-auto px-4 sm:px-6 max-w-7xl">
-    <!-- Заголовок -->
-    <div class="mb-10 md:mb-12 text-center reveal-hidden">
-      <h2
-        class="font-montserrat text-3xl font-extrabold text-gray-900 sm:text-4xl md:text-5xl uppercase tracking-wider"
-      >
-        Популярные <span class="text-primary">Направления</span>
-      </h2>
-      <p class="mt-4 text-lg text-gray-600">Лучшие предложения этого сезона</p>
+
+    <!-- Асимметричный заголовок -->
+    <div class="flex flex-col @md:flex-row @md:items-end justify-between gap-4 mb-10 md:mb-12 reveal-hidden">
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Горящие туры</span>
+        </div>
+        <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-[1.0]" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
+          Популярные<br /><span class="text-primary">направления</span>
+        </h2>
+      </div>
+      <p class="text-gray-400 text-sm max-w-xs leading-relaxed @md:pb-2 @md:text-right">
+        Лучшие предложения этого сезона.<br />Нажмите на карточку, чтобы узнать подробнее.
+      </p>
     </div>
 
-    <!-- Bento Grid с Container Queries (@md, @lg вместо md:, lg:) -->
-    <div
-      class="grid grid-cols-1 @md:grid-cols-4 gap-4 auto-rows-[250px]"
-      data-reveal-stagger
-    >
-      {
-        tours.map((tour, index) => (
-          <button
-            type="button"
-            data-tour-title={tour.title}
-            class:list={[
-              'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500',
-
-              // ИСПОЛЬЗУЕМ НАШ КЛАСС
-              'deep-shadow border border-white/20',
-
-              // Анимация: добавляем reveal-scale для эффекта масштабирования
-              'reveal-hidden reveal-scale',
-              // Container Queries (@md:) вместо media queries (md:)
-              tour.size === 'large' ? '@md:col-span-2 @md:row-span-2' : '',
-              tour.size === 'tall' ? '@md:col-span-1 @md:row-span-2' : '',
-              tour.size === 'wide' ? '@md:col-span-2 @md:row-span-1' : '',
-              tour.size === 'normal' ? '@md:col-span-1 @md:row-span-1' : '',
-            ]}
-          >
-            <div class="absolute inset-0">
-              <div class="absolute inset-0 tour-card-breathe">
-                <Image
-                  src={tour.image}
-                  alt={tour.title}
-                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-103 image-sharp"
-                  loading="lazy"
-                />
-              </div>
-              <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/80%),rgb(0_0_0/20%),transparent)] opacity-80 group-hover:opacity-60 transition-opacity" />
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 @md:grid-cols-4 gap-3 md:gap-4 auto-rows-[240px] @lg:auto-rows-[270px]" data-reveal-stagger>
+      {tours.map((tour) => (
+        <button
+          type="button"
+          data-tour-title={tour.title}
+          class:list={[
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 deep-shadow border border-white/10 reveal-hidden reveal-scale',
+            tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
+            tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
+            tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',
+            tour.size === 'normal' ? '@md:col-span-1 @md:row-span-1' : '',
+          ]}
+        >
+          <!-- Фото -->
+          <div class="absolute inset-0">
+            <div class="absolute inset-0 tour-card-breathe">
+              <Image src={tour.image} alt={tour.title}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] image-sharp"
+                loading="lazy"
+              />
             </div>
-            {/* Контент */}
-            <div class="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between">
-              <div class="flex justify-between items-start">
-                <span class="inline-block rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold text-white uppercase tracking-wider border border-white/30">
-                  {tour.badge}
-                </span>
-              </div>
+            <!-- Градиент снизу -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/85%)_0%,rgb(0_0_0/25%)_50%,transparent_100%)] opacity-90 group-hover:opacity-70 transition-opacity duration-400"></div>
+            <!-- Легкий оверлей сверху -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgb(0_0_0/20%)_0%,transparent_40%)]"></div>
+          </div>
 
-              <div class="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 text-left">
-                <h3 class="font-montserrat text-2xl font-bold text-white mb-1 group-hover:text-cta transition-colors">
-                  {tour.title}
-                </h3>
-                <p class="text-white/90 font-medium text-lg">{tour.price}</p>
+          <!-- Контент -->
+          <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
+            <!-- Бейдж -->
+            <div class="flex justify-between items-start">
+              <span class:list={['inline-block rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider backdrop-blur-sm', tour.badgeColor]}>
+                {tour.badge}
+              </span>
+              <!-- Иконка-стрелка появляется при hover -->
+              <span class="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-1 group-hover:translate-y-0">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </span>
+            </div>
+
+            <!-- Название и цена -->
+            <div class="transform translate-y-1.5 group-hover:translate-y-0 transition-transform duration-300">
+              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 group-hover:text-cta transition-colors duration-300" style="font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem);">
+                {tour.title}
+              </h3>
+              <div class="flex items-center gap-2">
+                <p class="text-white/75 font-semibold text-sm">{tour.price}</p>
+                <span class="text-white/40 text-xs">· под ключ</span>
               </div>
             </div>
-          </button>
-        ))
-      }
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <!-- CTA под сеткой -->
+    <div class="text-center mt-8 reveal-hidden">
+      <a href="#search" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-200 group">
+        Смотреть все направления
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- Скрипт клика -->
 <script>
-  document.querySelectorAll('button[data-tour-title]').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      // @ts-ignore
-      const tourTitle = event.currentTarget.getAttribute('data-tour-title');
-      alert(`Детали тура: ${tourTitle}`);
+  document.querySelectorAll('button[data-tour-title]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const title = (e.currentTarget as HTMLElement).getAttribute('data-tour-title');
+      const searchAnchor = document.getElementById('search');
+      if (searchAnchor) {
+        const top = searchAnchor.getBoundingClientRect().top + window.pageYOffset - 104;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
     });
   });
 </script>

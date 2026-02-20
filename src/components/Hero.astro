@@ -4,240 +4,140 @@ import { Image } from 'astro:assets';
 import heroBg from '../assets/hero/plane.avif';
 ---
 
-<section
-  id="hero"
-  class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden"
->
+<section id="hero" class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden">
+
+  <!-- Фоновое изображение -->
   <div class="absolute inset-0">
     <Image
       src={heroBg}
-      alt="Вид из самолета"
-      class="h-full w-full object-cover scale-105"
-      style="animation: kenburns 30s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;"
+      alt="Вид из самолёта над облаками"
+      class="h-full w-full object-cover scale-105 hero-kenburns"
       quality={80}
       loading="eager"
     />
-    <!-- Градиент затемнения (динамический, зависит от времени суток) -->
-    <div
-      id="hero-gradient"
-      class="absolute inset-0 bg-linear-to-b transition-colors duration-[3s] ease-in-out"
-    >
-    </div>
+    <!-- Динамический градиент (время суток) -->
+    <div id="hero-gradient" class="absolute inset-0 bg-linear-to-b transition-colors duration-[3s] ease-in-out"></div>
+    <!-- Постоянный нижний затемняющий слой -->
+    <div class="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent pointer-events-none"></div>
   </div>
 
-  <div
-    id="hero-content"
-    class="relative z-10 container mx-auto px-4 text-center text-white mt-16"
-    style="will-change: transform, opacity;"
-  >
-    <h1
-      class="mx-auto max-w-5xl font-montserrat text-4xl font-extrabold uppercase leading-tight tracking-tight drop-shadow-xl sm:text-6xl md:text-7xl lg:text-8xl"
-    >
-      Будь на высоте <br />
-      <span
-        class="text-transparent bg-clip-text bg-linear-to-r from-white via-blue-100 to-blue-200"
-      >
-        с ANRO TRIP!
-      </span>
+  <!-- Контент -->
+  <div id="hero-content" class="relative z-10 container mx-auto px-6 text-white mt-16" style="will-change: transform, opacity;">
+
+    <!-- Верхний бейдж -->
+    <div class="flex justify-center mb-8 reveal-hidden">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest">
+        <span class="w-1.5 h-1.5 rounded-full bg-cta animate-pulse"></span>
+        Туры · Авиабилеты · Визы · Трансфер
+      </div>
+    </div>
+
+    <!-- Заголовок -->
+    <h1 class="mx-auto max-w-5xl font-montserrat font-extrabold uppercase text-center leading-[0.9] tracking-tight drop-shadow-2xl" style="font-size: clamp(2.8rem, 2rem + 6vw, 8rem);">
+      Будь на высоте
+      <br />
+      <span class="hero-gradient-text">с ANRO TRIP</span>
     </h1>
 
-    <p
-      class="mx-auto mt-6 max-w-2xl text-base font-medium text-white/90 sm:text-xl md:text-2xl drop-shadow-md"
-    >
-      Путешествия вашей мечты начинаются здесь
+    <!-- Подзаголовок -->
+    <p class="mx-auto mt-6 max-w-xl text-center text-white/80 leading-relaxed drop-shadow-md" style="font-size: clamp(1rem, 0.8rem + 1vw, 1.35rem);">
+      Путешествия вашей мечты — от авиабилетов до<br class="hidden sm:block" /> полного корпоративного обслуживания
     </p>
 
-    <div class="mt-12 flex flex-col items-center justify-center">
+    <!-- CTA кнопка -->
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a
         id="hero-search-btn"
         href="#search"
-        class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-12 py-6 text-xl font-black text-[#11111b] shadow-[0_0_20px_5px_rgba(255,212,23,0.5)] transition-all duration-300 ease-out hover:shadow-[0_0_30px_5px_rgba(255,212,23,0.7)] hover:-translate-y-1 active:translate-y-0"
+        class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-10 py-5 font-black text-[#11111b] shadow-[0_0_24px_6px_rgba(255,212,23,0.45)] hover:shadow-[0_0_36px_8px_rgba(255,212,23,0.65)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 btn-ripple"
+        style="font-size: clamp(0.9rem, 0.75rem + 0.8vw, 1.1rem);"
       >
-        <!-- Shine effect (движущийся блик) -->
-        <span
-          class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"
-        ></span>
-
-        <!-- Контент кнопки -->
-        <span class="font-extrabold">ПОИСК ТУРОВ</span>
-
-        <!-- Современная стрелка с анимацией -->
-        <span class="relative z-10 flex items-center justify-center w-7 h-7">
-          <svg
-            class="absolute transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-0"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-          <svg
-            class="absolute transition-all duration-300 ease-out -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </span>
+        <!-- Shine sweep -->
+        <span class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/35 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-900 ease-out pointer-events-none"></span>
+        <svg class="w-5 h-5 shrink-0 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/>
+        </svg>
+        <span class="relative z-10 uppercase tracking-wider">Поиск туров</span>
       </a>
+
+      <a
+        href="tel:88002224473"
+        class="inline-flex items-center gap-2 px-7 py-5 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
+        style="font-size: clamp(0.85rem, 0.75rem + 0.5vw, 1rem);"
+      >
+        <svg class="w-4 h-4 text-cta" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        </svg>
+        8 (800) 222-44-73
+      </a>
+    </div>
+
+    <!-- Быстрые стат-пилюли -->
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-3">
+      {[['18', 'лет опыта'], ['14 000+', 'клиентов'], ['ТОП-10', 'России'], ['24/7', 'поддержка']].map(([val, label]) => (
+        <div class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/8 backdrop-blur-sm border border-white/15">
+          <span class="font-montserrat font-black text-cta text-sm">{val}</span>
+          <span class="text-white/60 text-xs">{label}</span>
+        </div>
+      ))}
     </div>
   </div>
 
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-20">
-    <button
-      id="scroll-arrow"
-      aria-label="Скролл вниз"
-      class="text-white/80 hover:text-white transition-colors cursor-pointer"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-10 w-10 drop-shadow-md"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M19 14l-7 7m0 0l-7-7"></path>
-      </svg>
+  <!-- Скролл-стрелка -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
+    <button id="scroll-arrow" aria-label="Скролл вниз"
+      class="flex flex-col items-center gap-1.5 group cursor-pointer text-white/60 hover:text-white transition-colors">
+      <span class="text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-medium">Смотреть</span>
+      <div class="w-8 h-12 rounded-full border border-white/30 flex items-start justify-center pt-2 group-hover:border-white/60 transition-colors">
+        <div class="w-1 h-2.5 bg-white/70 rounded-full animate-hero-scroll"></div>
+      </div>
     </button>
   </div>
 </section>
 
-<style>
-  /* Ken Burns улучшение: добавлены translate для более живого эффекта */
-  @keyframes kenburns {
-    0% {
-      transform: scale(1) translate(0, 0);
-    }
-    50% {
-      transform: scale(1.08) translate(1%, -1%);
-    }
-    100% {
-      transform: scale(1.15) translate(-1%, 1%);
-    }
-  }
-</style>
-
 <script>
-  // Скрипт прокрутки
   const searchBtn = document.getElementById('hero-search-btn');
-  const arrowBtn = document.getElementById('scroll-arrow');
-
-  if (searchBtn) {
-    searchBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      // Находим элемент, к которому нужно проскроллить
-      const searchAnchor = document.getElementById('search');
-      if (searchAnchor) {
-        // Прокручиваем к элементу со смещением вверх на 100px
-        const rect = searchAnchor.getBoundingClientRect();
-        const scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-        const targetPosition = rect.top + scrollTop - 104; // поднимаем на 100px выше
-
-        // Плавная прокрутка к позиции
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth',
-        });
-      }
-    });
-  }
-
-  if (arrowBtn) {
-    arrowBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      document
-        .getElementById('popular-tours')
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  // DYNAMIC GRADIENT на основе времени суток
+  const arrowBtn  = document.getElementById('scroll-arrow');
   const heroGradient = document.getElementById('hero-gradient');
-  const hour = new Date().getHours();
-
-  if (heroGradient) {
-    // Утро (6:00 - 11:59): теплый оранжевый восход
-    if (hour >= 6 && hour < 12) {
-      heroGradient.classList.add(
-        'from-orange-400/30',
-        'via-yellow-200/10',
-        'to-blue-900/50',
-      );
-    }
-    // День (12:00 - 17:59): светло-синий
-    else if (hour >= 12 && hour < 18) {
-      heroGradient.classList.add(
-        'from-blue-400/30',
-        'via-blue-200/10',
-        'to-blue-900/40',
-      );
-    }
-    // Вечер (18:00 - 21:59): фиолетово-розовый закат
-    else if (hour >= 18 && hour < 22) {
-      heroGradient.classList.add(
-        'from-purple-600/40',
-        'via-pink-400/15',
-        'to-black/70',
-      );
-    }
-    // Ночь (22:00 - 5:59): темно-синий (дефолт)
-    else {
-      heroGradient.classList.add(
-        'from-indigo-900/50',
-        'via-black/20',
-        'to-black/80',
-      );
-    }
-  }
-
-  // PARALLAX ЭФФЕКТ
-  const heroContent = document.getElementById('hero-content');
+  const heroContent  = document.getElementById('hero-content');
   const hero = document.getElementById('hero');
 
-  let ticking = false;
-
-  function updateParallax() {
-    const scrollY = window.scrollY;
-    const heroHeight = hero?.offsetHeight || 0;
-
-    // Применяем parallax только к контенту (фон оставляем неподвижным)
-    if (scrollY < heroHeight && heroContent) {
-      // Контент движется вверх медленнее + fade out
-      heroContent.style.transform = `translateY(${scrollY * -0.2}px)`;
-      heroContent.style.opacity = `${Math.max(1 - (scrollY / heroHeight) * 1.5, 0)}`;
+  // Scroll to search
+  searchBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const anchor = document.getElementById('search');
+    if (anchor) {
+      const top = anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
+  });
 
-    ticking = false;
+  arrowBtn?.addEventListener('click', () => {
+    document.getElementById('popular-tours')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Dynamic gradient
+  const h = new Date().getHours();
+  if (heroGradient) {
+    if (h >= 6 && h < 12)       heroGradient.classList.add('from-orange-400/25', 'via-yellow-200/8', 'to-blue-900/40');
+    else if (h >= 12 && h < 18) heroGradient.classList.add('from-blue-400/20', 'via-sky-200/8', 'to-blue-900/35');
+    else if (h >= 18 && h < 22) heroGradient.classList.add('from-purple-700/40', 'via-pink-400/12', 'to-black/65');
+    else                         heroGradient.classList.add('from-indigo-900/45', 'via-black/15', 'to-black/75');
   }
 
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    },
-    { passive: true },
-  );
-
-  // Инициализация
+  // Parallax
+  let ticking = false;
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    const heroH = hero?.offsetHeight || 0;
+    if (scrollY < heroH && heroContent) {
+      heroContent.style.transform = `translateY(${scrollY * -0.18}px)`;
+      heroContent.style.opacity = `${Math.max(1 - (scrollY / heroH) * 1.4, 0)}`;
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+  }, { passive: true });
   updateParallax();
 </script>

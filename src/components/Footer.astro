@@ -3,121 +3,110 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-[#9ca3af] text-white text-xs sm:text-sm">
-  <!-- Основная часть (Реквизиты) -->
-  <div class="container mx-auto px-4 sm:px-6 max-w-7xl py-10 sm:py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-      <!-- Левая колонка: Оплата -->
-      <div class="space-y-4">
-        <h4 class="font-bold text-gray-800 uppercase mb-2">Способы оплаты</h4>
-        <ul class="space-y-1 text-white/90 leading-relaxed list-none">
-          <li>Наличными в офисе Челябинска.</li>
-          <li>Оплата банковской картой через терминал в офисе Челябинска.</li>
-          <li>
-            Оплата банковской картой онлайн через систему интернет-эквайринга.
-          </li>
-          <li>Оплата по QR-коду через мобильное приложение Вашего банка.</li>
-          <li>Оплата с помощью Системы быстрых платежей (СБП).</li>
-          <li>Оплата переводом денежных средств на наш расчетный счет.</li>
-        </ul>
+<footer class="bg-gray-950 text-white">
 
-        <!-- Иконки (Заглушки текстом, можно заменить на SVG) -->
-        <div
-          class="flex items-center gap-4 mt-6 opacity-80 grayscale hover:grayscale-0 transition-all"
-        >
-          <!-- ТКП логотип (условно) -->
-          <div class="font-black text-2xl text-blue-900 tracking-tighter">
-            .:ТКП
+  <!-- Верхняя часть -->
+  <div class="border-b border-white/8">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl py-12 md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+
+        <!-- Колонка 1: Логотип + описание -->
+        <div>
+          <div class="flex items-center gap-2.5 mb-5">
+            <svg width="32" height="32" viewBox="0 0 1080 1080" class="h-8 w-auto text-primary shrink-0" fill="currentColor">
+              <path d="m515.63 1067.3-3.8724-0.3995 0.50515-4.4818c0.27784-2.4649 0.67043-4.6255 0.87243-4.8013 0.202-0.1757 11.392-0.041 24.867 0.2994l24.5 0.619 0.60958 9.5-21.805-0.1681c-11.993-0.092-23.547-0.3479-25.677-0.5677zm96.917-6.8126c-0.38228-2.5492-0.49006-4.8399-0.23951-5.0904 0.25054-0.2506 7.5968-1.541 16.325-2.8676 8.7282-1.3266 19.161-3.1054 23.185-3.9528 10.097-2.1267 9.1225-2.592 10.663 5.0907l0.62808 3.1315-11.303 2.0906c-11.9 2.2011-26.165 4.5583-33.933 5.6076l-4.63 0.6253zm-164.55-2.0309c-14.084-2.9146-33.101-7.4786-34.62-8.3086-0.81278-0.4442-0.74472-1.8848 0.24808-5.2517l1.3681-4.6396 13.094 3.3021c7.202 1.8161 17.514 4.0784 22.916 5.0272s10.368 2.0634 11.038 2.4769c1.5816 0.9775 0.34118 10.016-1.355 9.8733-0.6538-0.055-6.3637-1.1707-12.689-2.4796z"></path>
+            </svg>
+            <div>
+              <div class="font-montserrat font-extrabold text-white text-base tracking-tight">ANRO TRIP</div>
+              <div class="text-[9px] text-white/35 uppercase tracking-widest">Travel &amp; Business</div>
+            </div>
           </div>
-          <!-- IATA логотип (условно) -->
-          <div class="font-black text-2xl text-blue-900 tracking-tighter">
-            IATA
+          <p class="text-white/45 text-sm leading-relaxed mb-6 max-w-xs">
+            Консьерж-сервис по организации путешествий и командировок по всему миру. 18 лет безупречной репутации.
+          </p>
+          <!-- Соцсети -->
+          <div class="flex items-center gap-3">
+            <a href="#" aria-label="VK"
+              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-primary/20 flex items-center justify-center text-white/60 hover:text-primary transition-all duration-200">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 640 640">
+                <path d="M127.5 127.5C96 159 96 209.7 96 311L96 329C96 430.3 96 481 127.5 512.5C159 544 209.7 544 311 544L328.9 544C430.3 544 481 544 512.4 512.5C543.8 481 544 430.3 544 329L544 311.1C544 209.7 544 159 512.5 127.6C481 96.2 430.3 96 329 96L311 96C209.7 96 159 96 127.5 127.5zM171.6 232.3L222.7 232.3C224.4 317.8 262.1 354 292 361.5L292 232.3L340.2 232.3L340.2 306C369.7 302.8 400.7 269.2 411.1 232.3L459.3 232.3C455.4 251.5 447.5 269.6 436.2 285.6C424.9 301.6 410.5 315.1 393.7 325.2C412.4 334.5 428.9 347.6 442.1 363.7C455.3 379.8 465 398.6 470.4 418.7L417.4 418.7C412.5 401.2 402.6 385.6 388.8 373.7C375 361.8 358.1 354.3 340.1 352.1L340.1 418.7L334.3 418.7C232.2 418.7 174 348.7 171.5 232.2z"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/79220267059" aria-label="WhatsApp"
+              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-emerald-500/20 flex items-center justify-center text-white/60 hover:text-emerald-400 transition-all duration-200">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </a>
+            <a href="https://t.me/anrotrip" aria-label="Telegram"
+              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-sky-500/20 flex items-center justify-center text-white/60 hover:text-sky-400 transition-all duration-200">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+            </a>
           </div>
         </div>
-      </div>
 
-      <!-- Правая колонка: Реквизиты -->
-      <div class="space-y-4 text-white/90 leading-relaxed">
-        <h4 class="font-bold text-gray-800 uppercase mb-2">
-          Банковские реквизиты ООО "АНРО"
-        </h4>
-        <p>ИНН 6658540239 КПП 744701001</p>
-        <p>ОГРН 1206600070764</p>
-        <br />
-        <p>Расчетный счет: 40702810802500008845</p>
-        <p>Банк: ТОЧКА ПАО БАНКА "ФК ОТКРЫТИЕ"</p>
-        <p>Кор. счет: 30101810845250000999</p>
-        <p>БИК: 044525999</p>
-        <br />
-        <p>Адрес: 454003 г. Челябинск,</p>
-        <p>ул. 250-летия Челябинска, д. 29, пом. 2</p>
-        <p>Телефон: 8 (800) 222-44-73</p>
-        <p>Электронный адрес: anro@anrotrip.ru</p>
+        <!-- Колонка 2: Способы оплаты -->
+        <div>
+          <h4 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-5">Способы оплаты</h4>
+          <ul class="space-y-2.5 text-white/55 text-sm leading-relaxed">
+            {[
+              'Наличными в офисе Челябинска',
+              'Банковской картой через терминал',
+              'Онлайн через интернет-эквайринг',
+              'По QR-коду через мобильный банк',
+              'Системой быстрых платежей (СБП)',
+              'Переводом на расчётный счёт',
+            ].map(item => (
+              <li class="flex items-start gap-2.5">
+                <span class="w-1 h-1 rounded-full bg-primary/60 mt-2 shrink-0"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <!-- Сертификаты -->
+          <div class="flex items-center gap-4 mt-6">
+            <div class="px-3 py-1.5 rounded-lg bg-white/6 border border-white/10 font-black text-sm text-white/50 tracking-tight">.:ТКП</div>
+            <div class="px-3 py-1.5 rounded-lg bg-white/6 border border-white/10 font-black text-sm text-white/50 tracking-tight">IATA</div>
+          </div>
+        </div>
+
+        <!-- Колонка 3: Реквизиты -->
+        <div>
+          <h4 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-5">Реквизиты ООО «АНРО»</h4>
+          <div class="space-y-2 text-white/45 text-xs leading-relaxed">
+            <p><span class="text-white/25">ИНН</span> 6658540239 &nbsp;<span class="text-white/25">КПП</span> 744701001</p>
+            <p><span class="text-white/25">ОГРН</span> 1206600070764</p>
+            <div class="pt-1 pb-1 border-t border-white/8 space-y-1.5">
+              <p>Р/с: 40702810802500008845</p>
+              <p>Банк: ТОЧКА ПАО «ФК ОТКРЫТИЕ»</p>
+              <p>К/с: 30101810845250000999</p>
+              <p>БИК: 044525999</p>
+            </div>
+            <div class="pt-1 border-t border-white/8 space-y-1.5">
+              <p>454003 г. Челябинск,</p>
+              <p>ул. 250-летия Челябинска, д. 29, пом. 2</p>
+              <a href="tel:88002224473" class="block text-white/60 hover:text-white transition-colors">8 (800) 222-44-73</a>
+              <a href="mailto:anro@anrotrip.ru" class="block text-primary/70 hover:text-primary transition-colors">anro@anrotrip.ru</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Нижняя полоса (Copyright + Соцсети) -->
-  <div class="bg-secondary py-6 sm:py-8">
-    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <!-- Мобильные: стек по центру, Десктоп: Grid 3 колонки -->
-      <div
-        class="flex flex-col items-center gap-4 md:grid md:grid-cols-3 md:items-center md:gap-0"
-      >
-        <!-- Copyright (десктоп: слева, мобильные: центр) -->
-        <div class="text-center md:text-left opacity-80 order-1">
-          <p class="font-bold">© ANRO TRIP</p>
-          <p>Туристическая компания</p>
-          <p class="text-[10px] mt-1">Все права защищены</p>
-        </div>
-
-        <!-- Соцсети (всегда по центру) -->
-        <div class="flex items-center justify-center gap-6 order-2">
-          <!-- VK Icon -->
-          <a
-            href="#"
-            class="hover:opacity-80 transition-opacity"
-            aria-label="VK"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-8 h-8 fill-current"
-              viewBox="0 0 640 640"
-              ><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-              <path
-                d="M127.5 127.5C96 159 96 209.7 96 311L96 329C96 430.3 96 481 127.5 512.5C159 544 209.7 544 311 544L328.9 544C430.3 544 481 544 512.4 512.5C543.8 481 544 430.3 544 329L544 311.1C544 209.7 544 159 512.5 127.6C481 96.2 430.3 96 329 96L311 96C209.7 96 159 96 127.5 127.5zM171.6 232.3L222.7 232.3C224.4 317.8 262.1 354 292 361.5L292 232.3L340.2 232.3L340.2 306C369.7 302.8 400.7 269.2 411.1 232.3L459.3 232.3C455.4 251.5 447.5 269.6 436.2 285.6C424.9 301.6 410.5 315.1 393.7 325.2C412.4 334.5 428.9 347.6 442.1 363.7C455.3 379.8 465 398.6 470.4 418.7L417.4 418.7C412.5 401.2 402.6 385.6 388.8 373.7C375 361.8 358.1 354.3 340.1 352.1L340.1 418.7L334.3 418.7C232.2 418.7 174 348.7 171.5 232.2z"
-              ></path></svg
-            >
-          </a>
-          <!-- WhatsApp Icon -->
-          <a
-            href="#"
-            class="hover:opacity-80 transition-opacity"
-            aria-label="WhatsApp"
-          >
-            <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"
-              ><path
-                d="M12.04 0C5.4 0 .01 5.38.01 12.02c0 2.12.55 4.11 1.52 5.85L.05 23.4l5.65-1.48c1.67.91 3.56 1.39 5.5 1.39 6.64 0 12.03-5.38 12.03-12.02S18.68 0 12.04 0zm0 0"
-              ></path></svg
-            >
-          </a>
-          <!-- Telegram Icon -->
-          <a
-            href="#"
-            class="hover:opacity-80 transition-opacity"
-            aria-label="Telegram"
-          >
-            <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"
-              ><path
-                d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
-              ></path></svg
-            >
-          </a>
-        </div>
-
-        <!-- Третья колонка (пустая на десктопе, скрыта на мобильных) -->
-        <div class="hidden md:block order-3"></div>
+  <!-- Нижняя полоса -->
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl py-5">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-white/25 text-xs">© {currentYear} ANRO TRIP · Туристическая компания · Все права защищены</p>
+      <div class="flex items-center gap-4 text-white/25 text-xs">
+        <a href="#" class="hover:text-white/60 transition-colors">Политика конфиденциальности</a>
+        <span class="w-px h-3 bg-white/15"></span>
+        <a href="#" class="hover:text-white/60 transition-colors">Пользовательское соглашение</a>
       </div>
     </div>
   </div>
+
 </footer>
