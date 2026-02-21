@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 
 import annaRozhkovaImg  from '../assets/team/a_rozhkova.webp';
 import nikitaRozhkovImg from '../assets/team/n_rozhkov.webp';
+import teamGroupImg     from '../assets/team/team.webp';
 
 import eNedelkoImg      from '../assets/team/e_nedelko.jpg';
 import eSherbakovaImg   from '../assets/team/e_sherbakova.png';
@@ -82,37 +83,63 @@ const team = [
       </p>
     </div>
 
-    <!-- Основатели: 2 карточки горизонтально -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto reveal-hidden mb-14">
-      {founders.map((person) => (
-        <div class="group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:bg-white/8 transition-all duration-400 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
-          <!-- Фото -->
-          <div class="shrink-0 w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden ring-2 ring-white/10 group-hover:ring-primary/30 transition-all duration-400">
-            <Image
-              src={person.image}
-              alt={person.name}
-              class="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110 transition-all duration-500"
-              loading="lazy"
-            />
-          </div>
-          <!-- Текст -->
-          <div class="text-center sm:text-left flex-1">
-            <!-- Бейдж роли -->
-            <div class="inline-block px-2.5 py-1 rounded-full bg-primary/15 text-primary text-[10px] font-bold uppercase tracking-widest mb-3">
-              {person.role.includes('Основатель') ? 'Основатель' : 'Директор'}
-            </div>
-            <h3 class="font-montserrat font-extrabold text-white text-xl mb-1">{person.name}</h3>
-            <p class="text-white/40 text-xs mb-4 uppercase tracking-wide">{person.role}</p>
-            <a href={`mailto:${person.email}`}
-              class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-white transition-colors group/mail">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-              </svg>
-              {person.email}
-            </a>
-          </div>
+    <!-- Основатели + групповое фото: 3 карточки в ряд -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 reveal-hidden mb-14" data-reveal-stagger>
+
+      <!-- Анна Рожкова -->
+      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out will-change-transform flex flex-col cursor-default">
+        <!-- Фото — занимает большую часть -->
+        <div class="relative overflow-hidden flex-1 min-h-[320px] sm:min-h-[360px]">
+          <Image
+            src={annaRozhkovaImg}
+            alt="Анна Рожкова"
+            class="w-full h-full object-cover object-center transition-transform duration-600 ease-out group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+          <!-- Градиент снизу -->
+          <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
         </div>
-      ))}
+        <!-- Подпись внизу -->
+        <div class="relative px-5 py-4 bg-white/4">
+          <h3 class="font-montserrat font-extrabold text-white text-lg leading-tight">Анна Рожкова</h3>
+          <p class="text-white/45 text-[10px] uppercase tracking-widest mt-1">Основатель и генеральный директор</p>
+        </div>
+      </div>
+
+      <!-- Никита Рожков -->
+      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out will-change-transform flex flex-col cursor-default">
+        <div class="relative overflow-hidden flex-1 min-h-[320px] sm:min-h-[360px]">
+          <Image
+            src={nikitaRozhkovImg}
+            alt="Никита Рожков"
+            class="w-full h-full object-cover object-center transition-transform duration-600 ease-out group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
+        </div>
+        <div class="relative px-5 py-4 bg-white/4">
+          <h3 class="font-montserrat font-extrabold text-white text-lg leading-tight">Никита Рожков</h3>
+          <p class="text-white/45 text-[10px] uppercase tracking-widest mt-1">Исполнительный директор</p>
+        </div>
+      </div>
+
+      <!-- Групповое фото команды -->
+      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out will-change-transform flex flex-col cursor-default">
+        <div class="relative overflow-hidden flex-1 min-h-[320px] sm:min-h-[360px]">
+          <Image
+            src={teamGroupImg}
+            alt="Команда ANRO TRIP"
+            class="w-full h-full object-cover object-center transition-transform duration-600 group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+        </div>
+        <div class="relative px-5 py-4 bg-white/4">
+          <h3 class="font-montserrat font-extrabold text-white text-lg leading-tight">Наша команда</h3>
+          <p class="text-white/45 text-[10px] uppercase tracking-widest mt-1">21 специалист · Авиа · Туры · Визы</p>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -134,15 +161,15 @@ const team = [
 <section id="team-list" class="relative bg-gray-50 overflow-hidden transition-all duration-1000 ease-in-out max-h-0 opacity-0 hidden border-t border-gray-100">
   <div class="container mx-auto px-4 sm:px-6 max-w-7xl pt-20 pb-16 md:pb-20">
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {team.map((member) => (
-        <div class="flex flex-col items-center text-center group">
+        <div class="flex flex-col items-center text-center group transition-transform duration-500 ease-out hover:-translate-y-1 will-change-transform">
           <!-- Фото -->
-          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden mb-4 ring-2 ring-gray-100 group-hover:ring-primary/30 group-hover:shadow-lg transition-all duration-300 bg-gray-200 shrink-0">
+          <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden mb-4 ring-2 ring-gray-100 group-hover:ring-primary/30 group-hover:shadow-xl transition-all duration-500 ease-out bg-gray-200 shrink-0">
             <Image
               src={member.img}
               alt={member.name}
-              class="w-full h-full object-cover object-top transition-transform duration-400 group-hover:scale-105"
+              class="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.06]"
               loading="lazy"
             />
           </div>

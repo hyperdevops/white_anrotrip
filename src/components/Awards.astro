@@ -67,18 +67,15 @@ const awards = [
     </div>
 
     <!-- Карточки наград -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6" data-reveal-stagger>
-      {awards.map((award, index) => (
-        <div class:list={[
-          'reveal-hidden group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-400',
-          index === 1 ? 'md:mt-8' : '',
-        ]}>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-start" data-reveal-stagger>
+      {awards.map((award) => (
+        <div class="reveal-hidden group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out will-change-transform">
           <!-- Фото -->
           <div class="relative overflow-hidden aspect-[4/3] bg-gray-50">
             <Image
               src={award.image}
               alt={award.title}
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               loading="lazy"
             />
             <!-- Тонкий оверлей -->

@@ -24,6 +24,32 @@ import heroBg from '../assets/hero/plane.avif';
   <!-- Контент -->
   <div id="hero-content" class="relative z-10 container mx-auto px-6 text-white mt-16" style="will-change: transform, opacity;">
 
+    <!-- Логотип ANRO TRIP -->
+    <div class="flex justify-center mb-6 reveal-hidden">
+      <div class="relative flex flex-col items-center">
+        <!-- Круг с пунктиром + самолётик -->
+        <div class="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
+          <!-- Пунктирный круг -->
+          <svg class="absolute inset-0 w-full h-full hero-logo-spin" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="44" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"
+              stroke-dasharray="5 4" stroke-linecap="round"/>
+          </svg>
+          <!-- Самолётик -->
+          <svg class="absolute top-1 left-1 w-7 h-7 sm:w-8 sm:h-8 drop-shadow-md" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="rotate(-40,16,16)">
+              <path d="M4 14 L24 8 L26 14 L17 17 L17 23 L13 22 L13 17 Z" fill="#00abb3"/>
+              <path d="M17 17 L23 20 L22 23 Z" fill="#00abb3"/>
+            </g>
+          </svg>
+          <!-- Текст логотипа в круге -->
+          <div class="flex flex-col items-center leading-none">
+            <span class="font-montserrat font-black text-white text-xl sm:text-2xl tracking-[0.12em] drop-shadow-lg" style="text-shadow: 0 2px 12px rgba(0,0,0,0.4)">ANRO</span>
+            <span class="font-montserrat italic font-semibold text-base sm:text-lg drop-shadow-lg mt-[-2px]" style="color:#00abb3; text-shadow: 0 2px 8px rgba(0,171,179,0.5)">trip</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Верхний бейдж -->
     <div class="flex justify-center mb-8 reveal-hidden">
       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest">

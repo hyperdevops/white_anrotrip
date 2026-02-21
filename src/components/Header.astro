@@ -13,15 +13,33 @@ const navItems = [
     <div id="header-inner" class="relative flex items-center justify-between rounded-2xl glass-panel px-4 py-3 transition-all duration-500">
 
       <!-- Логотип -->
-      <a href="#" id="logo-btn" class="flex items-center gap-2.5 group z-50 cursor-pointer select-none shrink-0">
-        <svg width="36" height="36" viewBox="0 0 1080 1080"
-          class="h-9 w-auto text-primary transition-transform duration-300 group-hover:scale-105 drop-shadow-sm"
-          fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="m515.63 1067.3-3.8724-0.3995 0.50515-4.4818c0.27784-2.4649 0.67043-4.6255 0.87243-4.8013 0.202-0.1757 11.392-0.041 24.867 0.2994l24.5 0.619 0.60958 9.5-21.805-0.1681c-11.993-0.092-23.547-0.3479-25.677-0.5677zm96.917-6.8126c-0.38228-2.5492-0.49006-4.8399-0.23951-5.0904 0.25054-0.2506 7.5968-1.541 16.325-2.8676 8.7282-1.3266 19.161-3.1054 23.185-3.9528 10.097-2.1267 9.1225-2.592 10.663 5.0907l0.62808 3.1315-11.303 2.0906c-11.9 2.2011-26.165 4.5583-33.933 5.6076l-4.63 0.6253zm-164.55-2.0309c-14.084-2.9146-33.101-7.4786-34.62-8.3086-0.81278-0.4442-0.74472-1.8848 0.24808-5.2517l1.3681-4.6396 13.094 3.3021c7.202 1.8161 17.514 4.0784 22.916 5.0272s10.368 2.0634 11.038 2.4769c1.5816 0.9775 0.34118 10.016-1.355 9.8733-0.6538-0.055-6.3637-1.1707-12.689-2.4796zm262.93-18.101c-2.3636-6.2168-2.433-6.1522 12.068-11.224 7.425-2.5967 17.534-6.3806 22.465-8.4087s9.2499-3.6875 9.5981-3.6875c1.2553 0 4.2742 8.0628 3.3536 8.9568-1.8802 1.8263-42.443 17.043-45.431 17.043-0.56951 0-1.494-1.206-2.0544-2.68zm-360.43-11.378c-10.107-4.2006-30.961-13.636-32.439-14.677-0.24123-0.1699 0.53696-2.317 1.7293-4.7712l2.1679-4.4623 7.7707 3.5938c8.7293 4.0371 27.78 12.276 33.593 14.529 2.1024 0.8147 3.7743 1.9007 3.7152 2.4133-0.36379 3.1582-2.526 8.4264-3.4461 8.3965-0.60044-0.02-6.4917-2.2797-13.092-5.0227z"></path>
-        </svg>
+      <a href="#" id="logo-btn" class="flex items-center gap-2 group z-50 cursor-pointer select-none shrink-0">
+        <!-- Иконка: пунктирный круг + самолётик -->
+        <div class="relative w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <svg class="absolute inset-0 w-full h-full header-logo-spin" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="44" stroke="#00abb3" stroke-width="2"
+              stroke-dasharray="5 4" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+          <!-- Самолётик -->
+          <svg class="absolute top-0.5 left-0.5 w-4 h-4" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="rotate(-40,16,16)">
+              <path d="M4 14 L24 8 L26 14 L17 17 L17 23 L13 22 L13 17 Z" fill="#00abb3"/>
+              <path d="M17 17 L23 20 L22 23 Z" fill="#00abb3"/>
+            </g>
+          </svg>
+          <!-- Текст внутри -->
+          <div class="flex flex-col items-center leading-none">
+            <span class="font-montserrat font-black text-gray-900 text-[8px] tracking-[0.1em]">ANRO</span>
+            <span class="font-montserrat italic font-semibold text-[7px] mt-[-1px]" style="color:#00abb3">trip</span>
+          </div>
+        </div>
+        <!-- Текст рядом -->
         <div class="flex flex-col leading-none">
-          <span class="text-base font-extrabold tracking-tight text-primary font-montserrat whitespace-nowrap">ANRO TRIP</span>
-          <span class="text-[9px] text-gray-400 uppercase tracking-widest hidden sm:block">Travel &amp; Business</span>
+          <div class="flex items-baseline gap-0.5">
+            <span class="text-[15px] font-black tracking-tight text-gray-900 font-montserrat">ANRO</span>
+            <span class="text-[15px] font-semibold italic font-montserrat" style="color:#00abb3">trip</span>
+          </div>
+          <span class="text-[8px] text-gray-400 uppercase tracking-widest hidden sm:block">Travel &amp; Business</span>
         </div>
       </a>
 
