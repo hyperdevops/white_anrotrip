@@ -1,0 +1,1104 @@
+---
+import { Image } from 'astro:assets';
+import corpHero from '../assets/corp/corp.webp';
+import corp1 from '../assets/corp/corp1.webp';
+import corp2 from '../assets/corp/corp2.webp';
+import corp3 from '../assets/corp/corp3.webp';
+import corp4 from '../assets/corp/corp4.webp';
+import Header from '../components/Header.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Коммерческое предложение — ANRO TRIP"
+  description="Уникальный сервис для командировок по России и миру. Корпоративное обслуживание, авиабилеты, отели, туры, визы, трансфер."
+>
+  <Header
+    navItems={[
+      { name: 'О компании', href: '#content' },
+      { name: 'Авиабилеты', href: '#corp-avia' },
+      { name: 'Отели', href: '#corp-hotels' },
+      { name: 'Туры', href: '#corp-tours' },
+      { name: 'Трансфер', href: '#corp-transfer' },
+      { name: 'Преимущества', href: '#corp-benefits' },
+      { name: 'Контакты', href: '#corp-contacts' },
+    ]}
+    ctaText="Связаться"
+    ctaHref="#corp-contacts"
+  />
+
+  <main>
+    <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 1 — HERO (Коммерческое предложение)
+         Sticky: фото остаётся на месте, контент наползает сверху
+    ═══════════════════════════════════════════════════════════════ -->
+    <section
+      class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden"
+    >
+      <!-- Фоновое изображение -->
+      <div class="absolute inset-0">
+        <Image
+          src={corpHero}
+          alt="Корпоративный туризм и командировки"
+          class="h-full w-full object-cover"
+          quality={80}
+          loading="eager"
+          fetchpriority="high"
+        />
+        <!-- Затемняющий overlay для читаемости -->
+        <div
+          class="absolute inset-0 bg-linear-to-t from-gray-900/85 via-gray-900/50 to-gray-900/30"
+        >
+        </div>
+        <!-- Декоративные орбы (desktop) -->
+        <div
+          class="absolute -top-32 -left-32 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none hidden md:block"
+        >
+        </div>
+        <div
+          class="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none hidden md:block"
+        >
+        </div>
+      </div>
+
+      <!-- Контент Hero -->
+      <div
+        class="relative z-10 container mx-auto px-4 sm:px-6 max-w-7xl text-white text-center py-20"
+      >
+        <!-- Бейдж -->
+        <div class="reveal-hidden mb-6">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest font-montserrat"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-cta animate-pulse"></span>
+            Для бизнеса
+          </div>
+        </div>
+
+        <!-- Заголовок -->
+        <h1
+          class="font-montserrat font-extrabold uppercase tracking-tight leading-[0.95] drop-shadow-2xl mb-6 reveal-hidden"
+          style="font-size: clamp(2.5rem, 2rem + 5vw, 5rem);"
+        >
+          Коммерческое<br />
+          <span class="text-primary">предложение</span>
+        </h1>
+
+        <!-- Подзаголовок -->
+        <p
+          class="font-montserrat font-semibold text-white/90 uppercase tracking-wider mb-4 text-lg sm:text-xl reveal-hidden"
+        >
+          туристической компании ANRO TRIP
+        </p>
+
+        <p
+          class="max-w-2xl mx-auto text-white/80 text-base sm:text-lg leading-relaxed mb-12 reveal-hidden"
+        >
+          Уникальный сервис для командировок по России и миру
+        </p>
+
+        <!-- CTA-кнопки -->
+        <div
+          class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 reveal-hidden"
+        >
+          <a
+            href="/#contacts"
+            class="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-primary text-white font-bold font-montserrat text-sm uppercase tracking-wider hover:bg-primary-dark hover:-translate-y-0.5 transition-all duration-300 shadow-[0_4px_24px_rgba(0,171,179,0.4)] btn-magnetic btn-ripple"
+          >
+            Связаться
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+          <a
+            href="mailto:anro@anrotrip.ru"
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+            aria-label="Написать на почту"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            Mail
+          </a>
+          <a
+            href="tel:88002224473"
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+            aria-label="Позвонить"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              ></path>
+            </svg>
+            Phone
+          </a>
+          <a
+            href="https://wa.me/79220267059"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+            aria-label="Написать в WhatsApp"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              ></path>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+
+        <!-- Скролл-индикатор -->
+        <div class="mt-16 reveal-hidden animate-hero-scroll">
+          <a
+            href="#content"
+            class="inline-flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
+            aria-label="Прокрутить вниз"
+          >
+            <span class="text-xs font-medium uppercase tracking-widest"
+              >Листать</span
+            >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контент: наползает сверху при скролле (z-10 > z-0 Hero) -->
+    <div
+      class="relative z-10 mt-[20vh] bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.08)]"
+    >
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 2 — ВВОДНЫЙ ТЕКСТ (О корпоративном обслуживании)
+         В стиле About: асимметрия, декор, карточки, теги
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="content"
+        class="relative bg-white py-16 md:py-24 overflow-hidden"
+      >
+        <!-- Декор: большая буква фоном (desktop) -->
+        <div
+          class="absolute right-0 top-1/2 -translate-y-1/2 text-[16rem] md:text-[22rem] font-montserrat font-black text-primary/[0.04] leading-none select-none pointer-events-none -mr-16 hidden lg:block"
+        >
+          B
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16 items-start"
+          >
+            <!-- Левая колонка: основной текст + теги -->
+            <div class="reveal-hidden">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                ></span>
+                <span
+                  class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat"
+                  >Корпоративным клиентам</span
+                >
+              </div>
+
+              <h2
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6 leading-[1.05]"
+                style="font-size: clamp(1.75rem, 1.25rem + 2.5vw, 3rem);"
+              >
+                Профессиональный сервис —<br />
+                <span class="text-primary">ведущее направление</span>
+              </h2>
+
+              <p
+                class="text-gray-600 text-base md:text-lg leading-relaxed mb-6"
+              >
+                Обслуживание корпоративных клиентов – задача для настоящих
+                профессионалов. Сотрудничество на взаимовыгодных условиях: с
+                крупными организациями и небольшими компаниями, с учётом
+                индивидуальных потребностей.
+              </p>
+
+              <div class="flex flex-wrap gap-2">
+                {
+                  [
+                    'Крупные организации',
+                    'Малый бизнес',
+                    'Командировки',
+                    'Конференции',
+                    'Поощрительные поездки',
+                  ].map((tag) => (
+                    <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-primary/10 hover:text-primary transition-colors cursor-default">
+                      {tag}
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+
+            <!-- Правая колонка: карточка-выноска -->
+            <div class="reveal-hidden">
+              <div
+                class="relative rounded-3xl bg-gray-50 border border-gray-100 p-8 md:p-10 overflow-hidden group hover:border-primary/20 hover:shadow-xl transition-all duration-300"
+              >
+                <!-- Акцентная полоса слева -->
+                <div
+                  class="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-primary to-secondary rounded-l-3xl"
+                >
+                </div>
+
+                <div
+                  class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-primary/5 pointer-events-none"
+                >
+                </div>
+
+                <div class="relative">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/15 transition-colors shrink-0"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                  </div>
+
+                  <p
+                    class="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4"
+                  >
+                    Организуем командировку, поездку на конференцию или деловую
+                    встречу партнёров.
+                  </p>
+                  <p class="text-gray-600 text-sm md:text-base leading-relaxed">
+                    Предлагаем актуальные варианты командировочных туров,
+                    поощрительных поездок и отдыха для вашего коллектива.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 3 — ОФОРМЛЕНИЕ АВИА И Ж/Д БИЛЕТОВ
+         Фото corp1, оригинальный текст
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="corp-avia"
+        class="relative z-10 bg-gray-50 py-16 md:py-24 overflow-hidden"
+      >
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center"
+          >
+            <!-- Фото -->
+            <div class="reveal-hidden order-2 lg:order-1">
+              <div class="relative rounded-3xl overflow-hidden shadow-xl group">
+                <Image
+                  src={corp1}
+                  alt="Оформление авиа и ж/д билетов"
+                  class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div
+                  class="absolute inset-0 bg-linear-to-t from-gray-900/40 to-transparent pointer-events-none"
+                >
+                </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <span
+                    class="inline-block px-4 py-2 rounded-full bg-white/90 text-gray-900 text-sm font-bold font-montserrat uppercase tracking-wider"
+                  >
+                    Авиа и ж/д
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Контент -->
+            <div class="reveal-hidden order-1 lg:order-2">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                ></span>
+                <span
+                  class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat"
+                  >Услуги</span
+                >
+              </div>
+
+              <h3
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6"
+                style="font-size: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);"
+              >
+                Оформление авиа и ж/д билетов
+              </h3>
+
+              <p class="text-gray-600 text-base leading-relaxed mb-6">
+                Подбор и оформление авиабилетов - одно из основных направлений
+                деятельности компании ANRO TRIP. Мы готовы предложить Вам весь
+                возможный ассортимент авиапродуктов. <strong
+                  class="text-gray-900 font-semibold"
+                  >СОБСТВЕННАЯ АВИАКАССА</strong
+                > позволяет нам выписать практически любой авиаперелет на планете.
+              </p>
+
+              <ul class="space-y-4 text-gray-600 text-base leading-relaxed">
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-primary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Наши специалисты работают напрямую в системах авиакомпаний, поэтому
+                  <strong class="text-gray-900 font-semibold"
+                    >ОФОРМИТЬ, ПОМЕНЯТЬ, ВЕРНУТЬ</strong
+                  > билет по вашей просьбе мы можем в считанные минуты. Вам не нужно
+                  лично дозваниваться в авиакомпании, чтобы внести изменения в заказ.
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-primary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Регистрация в <strong class="text-gray-900 font-semibold"
+                    >БОНУСНЫХ ПРОГРАММАХ</strong
+                  > авиакомпаний оформляется нашим менеджером корпоративного отдела,
+                  даже если Вы летите первый раз! Это позволит Вам накапливать бонусы,
+                  приобретать авиабилеты за мили, повышать класс обслуживания на борту.
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-primary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Так же специалисты проведут по запросу апгрейд на бизнес-класс,
+                  заказ спецуслуг (питание, перевоз спортинвентаря, оружия, домашних
+                  животных и другое).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 4 — ПРОФЕССИОНАЛЬНЫЙ ПОДБОР ОТЕЛЯ
+         Фото corp.webp, оригинальный текст
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="corp-hotels"
+        class="relative z-10 bg-white py-16 md:py-24 overflow-hidden"
+      >
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center"
+          >
+            <!-- Контент (слева) -->
+            <div class="reveal-hidden order-1">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/8 border border-secondary/15 mb-6"
+              >
+                <span
+                  class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"
+                ></span>
+                <span
+                  class="text-xs font-semibold text-secondary uppercase tracking-widest font-montserrat"
+                  >Услуги</span
+                >
+              </div>
+
+              <h3
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6"
+                style="font-size: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);"
+              >
+                Профессиональный подбор отеля
+              </h3>
+
+              <p class="text-gray-600 text-base md:text-lg leading-relaxed">
+                Наши менеджеры корпоративного отдела знают специфику делового
+                туризма и подберут для Вас лучший вариант размещения. Мы
+                гарантируем выгодные цены на отели.
+              </p>
+            </div>
+
+            <!-- Фото (справа) -->
+            <div class="reveal-hidden order-2">
+              <div class="relative rounded-3xl overflow-hidden shadow-xl group">
+                <Image
+                  src={corpHero}
+                  alt="Профессиональный подбор отеля"
+                  class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div
+                  class="absolute inset-0 bg-linear-to-t from-gray-900/40 to-transparent pointer-events-none"
+                >
+                </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <span
+                    class="inline-block px-4 py-2 rounded-full bg-white/90 text-gray-900 text-sm font-bold font-montserrat uppercase tracking-wider"
+                  >
+                    Отели
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 5 — ИНДИВИДУАЛЬНЫЕ И ПАКЕТНЫЕ ТУРЫ
+         Фото corp2, оригинальный текст
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="corp-tours"
+        class="relative z-10 bg-gray-50 py-16 md:py-24 overflow-hidden"
+      >
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center"
+          >
+            <!-- Фото -->
+            <div class="reveal-hidden order-2 lg:order-1">
+              <div class="relative rounded-3xl overflow-hidden shadow-xl group">
+                <Image
+                  src={corp2}
+                  alt="Индивидуальные и пакетные туры"
+                  class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div
+                  class="absolute inset-0 bg-linear-to-t from-gray-900/40 to-transparent pointer-events-none"
+                >
+                </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <span
+                    class="inline-block px-4 py-2 rounded-full bg-white/90 text-gray-900 text-sm font-bold font-montserrat uppercase tracking-wider"
+                  >
+                    Туры
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Контент -->
+            <div class="reveal-hidden order-1 lg:order-2">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                ></span>
+                <span
+                  class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat"
+                  >Услуги</span
+                >
+              </div>
+
+              <h3
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6"
+                style="font-size: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);"
+              >
+                Индивидуальные и пакетные туры
+              </h3>
+
+              <p class="text-gray-600 text-base leading-relaxed mb-6">
+                Индивидуальный тур – это возможность путешествовать именно так,
+                как вам хочется, и при этом иметь все гарантии качественного и
+                безопасного отдыха. <strong class="text-gray-900 font-semibold"
+                  >Мы с радостью реализуем даже самые смелые планы.</strong
+                > Специально для этого мы оформили ЛИЦЕНЗИЮ ТУРОПЕРАТОРА (РТО 022708).
+              </p>
+
+              <ul class="space-y-4 text-gray-600 text-base leading-relaxed">
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-primary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  <strong class="text-gray-900 font-semibold"
+                    >МЫ СОТРУДНИЧАЕМ С НАДЕЖНЫМИ ТУРОПЕРАТОРАМИ.</strong
+                  > Поможем подобрать пакетный или индивидуальный тур.
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-primary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Так же вы можете самостоятельно воспользоваться УДОБНЫМ <strong
+                    class="text-gray-900 font-semibold"
+                    >ОНЛАЙН ПОИСКОМ ТУРОВ НА НАШЕМ САЙТЕ</strong
+                  > WWW.ANROTRIP.RU
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-primary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Осуществляем <strong class="text-gray-900 font-semibold"
+                    >ВИЗОВУЮ ПОДДЕРЖКУ</strong
+                  > наших клиентов - консультация, подготовка пакета документов для
+                  подачи, запись в консульство и сопровождение до получения визы.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 6 — ТРАНСФЕР И АРЕНДА АВТО
+         Фото corp3, оригинальный текст
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="corp-transfer"
+        class="relative z-10 bg-white py-16 md:py-24 overflow-hidden"
+      >
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center"
+          >
+            <!-- Контент (слева) -->
+            <div class="reveal-hidden order-1">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/8 border border-secondary/15 mb-6"
+              >
+                <span
+                  class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"
+                ></span>
+                <span
+                  class="text-xs font-semibold text-secondary uppercase tracking-widest font-montserrat"
+                  >Услуги</span
+                >
+              </div>
+
+              <h3
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6"
+                style="font-size: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);"
+              >
+                Трансфер и аренда авто
+              </h3>
+
+              <p class="text-gray-600 text-base leading-relaxed mb-6">
+                Мы поможем Вам <strong class="text-gray-900 font-semibold"
+                  >комфортно добраться до отеля в любой точке мира</strong
+                >. ANRO TRIP много лет сотрудничает с проверенными поставщиками
+                трансферов по всему миру. Можем организовать вам как
+                индивидуальный, так и групповой трансфер, подберем класс авто.
+              </p>
+
+              <ul class="space-y-4 text-gray-600 text-base leading-relaxed">
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-secondary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Вас встречают в аэропорту на выходе из зоны прибытия;
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-secondary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Вас провожают к специально зарезервированной только для Вас! машине
+                  с водителем;
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-secondary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Вид автомобиля Вы выбираете сами при оформлении заказа трансфера;
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-secondary"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path></svg
+                    >
+                  </span>
+                  Вы едете в персональном автомобиле по кратчайшему пути к отелю.
+                </li>
+              </ul>
+            </div>
+
+            <!-- Фото (справа) -->
+            <div class="reveal-hidden order-2">
+              <div class="relative rounded-3xl overflow-hidden shadow-xl group">
+                <Image
+                  src={corp3}
+                  alt="Трансфер и аренда авто"
+                  class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div
+                  class="absolute inset-0 bg-linear-to-t from-gray-900/40 to-transparent pointer-events-none"
+                >
+                </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <span
+                    class="inline-block px-4 py-2 rounded-full bg-white/90 text-gray-900 text-sm font-bold font-montserrat uppercase tracking-wider"
+                  >
+                    Трансфер
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 7 — НАША КОМПАНИЯ ЗАБОТИТСЯ О СВОИХ КЛИЕНТАХ
+         Фото corp4, 3 карточки преимуществ
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="corp-benefits"
+        class="relative z-10 bg-gray-50 py-16 md:py-24 overflow-hidden"
+      >
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-16 items-center"
+          >
+            <!-- Фото corp4 — большое, закруглённые углы, без боковых полос (object-cover как в других блоках) -->
+            <div class="reveal-hidden order-2 lg:order-1">
+              <div
+                class="relative w-full h-[480px] md:h-[720px] rounded-3xl overflow-hidden shadow-xl group"
+              >
+                <Image
+                  src={corp4}
+                  alt="ANRO TRIP заботится о клиентах"
+                  class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+
+            <!-- 3 карточки преимуществ -->
+            <div class="reveal-hidden order-1 lg:order-2 space-y-6">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                ></span>
+                <span
+                  class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat"
+                  >Преимущества</span
+                >
+              </div>
+
+              <h3
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-8"
+                style="font-size: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);"
+              >
+                Наша компания заботится о своих клиентах
+              </h3>
+
+              <!-- Карточка 1: 18 лет опыта -->
+              <div
+                class="relative rounded-3xl bg-linear-to-br from-primary to-secondary p-6 md:p-8 text-white overflow-hidden group hover:shadow-xl transition-all duration-300"
+              >
+                <div
+                  class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10 pointer-events-none"
+                >
+                </div>
+                <div class="relative z-10 flex gap-4">
+                  <div
+                    class="shrink-0 w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-montserrat font-bold text-lg mb-2">
+                      18 лет опыта
+                    </h4>
+                    <p class="text-white/85 text-sm leading-relaxed">
+                      Мы работаем на рынке уже более 18 лет, непрерывно
+                      развиваемся, обучаемся и улучшаем сервис нашей компании.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Карточка 2: На связи 24/7 -->
+              <div
+                class="relative rounded-3xl bg-gray-900 p-6 md:p-8 text-white overflow-hidden group hover:shadow-xl transition-all duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-linear-to-br from-gray-900 to-gray-800 pointer-events-none"
+                >
+                </div>
+                <div class="relative z-10 flex gap-4">
+                  <div
+                    class="shrink-0 w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-montserrat font-bold text-lg mb-2">
+                      На связи 24/7
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                      За Вашей компанией закрепляется персональный менеджер,
+                      готовый помочь и ответить на запрос 7 дней в неделю.
+                    </p>
+                  </div>
+                </div>
+                <div class="relative z-10 mt-4">
+                  <span
+                    class="inline-block px-3 py-1 rounded-full bg-primary/15 text-primary text-xs font-bold"
+                    >24 / 7</span
+                  >
+                </div>
+              </div>
+
+              <!-- Карточка 3: ЭДО -->
+              <div
+                class="relative rounded-3xl bg-white border border-gray-100 p-6 md:p-8 overflow-hidden group hover:border-primary/20 hover:shadow-xl transition-all duration-300"
+              >
+                <div class="flex gap-4">
+                  <div
+                    class="shrink-0 w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4
+                      class="font-montserrat font-bold text-lg text-gray-900 mb-2"
+                    >
+                      ЭДО
+                    </h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                      Мы ценим Ваше время, поэтому Вы получаете закрывающие
+                      документы максимально быстро и удобным для Вас способом
+                      (электронный документооборот или почта).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+         БЛОК 8 — ФУТЕР / КОНТАКТЫ (как на оригинале, в нашем стиле)
+         Свяжитесь с нами: Телефон, Почта, Офисы
+    ═══════════════════════════════════════════════════════════════ -->
+      <section
+        id="corp-contacts"
+        class="relative z-10 bg-gray-950 py-16 md:py-24 overflow-hidden"
+      >
+        <div
+          class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2"
+        >
+        </div>
+        <div
+          class="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none translate-y-1/2"
+        >
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
+          <p
+            class="text-center text-white/70 text-base md:text-lg leading-relaxed max-w-3xl mx-auto mb-12 md:mb-16 reveal-hidden"
+          >
+            Cвяжитесь с нами любым удобным способом для получения коммерческого
+            предложения и составления договора на индивидуальных условиях:
+          </p>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 reveal-hidden"
+            data-reveal-stagger
+          >
+            <!-- Телефон -->
+            <div
+              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300"
+            >
+              <div
+                class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
+              >
+                <svg
+                  class="w-6 h-6 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  ></path>
+                </svg>
+              </div>
+              <h4
+                class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+              >
+                Телефон
+              </h4>
+              <a
+                href="tel:88002224473"
+                class="block text-xl font-bold text-white hover:text-primary transition-colors mb-2"
+                >8 (800) 222 44 73</a
+              >
+              <a
+                href="https://wa.me/79220267059"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block text-white/70 hover:text-primary transition-colors text-sm"
+              >
+                +7 922 026 70 59 <span class="text-white/40"
+                  >(WhatsApp, Viber, Telegram)</span
+                >
+              </a>
+            </div>
+
+            <!-- Почта -->
+            <div
+              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300"
+            >
+              <div
+                class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
+              >
+                <svg
+                  class="w-6 h-6 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <h4
+                class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+              >
+                Почта
+              </h4>
+              <a
+                href="mailto:anro@anrotrip.ru"
+                class="block text-lg font-semibold text-primary hover:text-primary-light transition-colors"
+                >anro@anrotrip.ru</a
+              >
+            </div>
+
+            <!-- Офисы -->
+            <div
+              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300"
+            >
+              <div
+                class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
+              >
+                <svg
+                  class="w-6 h-6 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              <h4
+                class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+              >
+                Офисы
+              </h4>
+              <div class="space-y-3 text-white/80 text-sm leading-relaxed">
+                <p class="font-semibold text-white">г. Челябинск</p>
+                <p>ул. 250-летия Челябинска, д. 29</p>
+                <p class="pt-2">
+                  <span class="font-semibold text-white">г. Москва</span>
+                  <span class="text-white/50">(представительство)</span>
+                </p>
+                <p>
+                  <span class="font-semibold text-white">г. Екатеринбург</span>
+                  <span class="text-white/50">(представительство)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>

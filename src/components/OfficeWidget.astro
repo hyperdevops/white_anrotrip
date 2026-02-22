@@ -107,99 +107,91 @@
 </div>
 
 <script>
-  const btn = document.getElementById('office-toggle-btn');
-  const list = document.getElementById('social-list');
-  const iconMsg = document.getElementById('icon-msg');
-  const iconClose = document.getElementById('icon-close');
-  const container = document.getElementById('office-widget-container');
-  let isOpen = false;
+  let scrollHandler: (() => void) | null = null;
 
-  // 1. Открытие/Закрытие меню
-  btn?.addEventListener('click', () => {
-    isOpen = !isOpen;
-    if (isOpen) {
-      // Открываем
-      list?.classList.remove(
-        'opacity-0',
-        'translate-y-4',
-        'pointer-events-none',
-        'scale-90',
-      );
+  function initOfficeWidget() {
+    const btn = document.getElementById('office-toggle-btn');
+    const list = document.getElementById('social-list');
+    const iconMsg = document.getElementById('icon-msg');
+    const iconClose = document.getElementById('icon-close');
+    const container = document.getElementById('office-widget-container');
 
-      // Иконки
-      iconMsg?.classList.add('opacity-0', '-rotate-90');
-      iconClose?.classList.remove('opacity-0', 'rotate-90');
-    } else {
-      // Закрываем
-      list?.classList.add(
-        'opacity-0',
-        'translate-y-4',
-        'pointer-events-none',
-        'scale-90',
-      );
+    if (!btn) return;
 
-      // Иконки
-      iconMsg?.classList.remove('opacity-0', '-rotate-90');
-      iconClose?.classList.add('opacity-0', 'rotate-90');
+    let isOpen = false;
+
+    // Удаляем старый scroll listener (важно при View Transitions)
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
+    }
+
+    btn.onclick = () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        list?.classList.remove(
+          'opacity-0',
+          'translate-y-4',
+          'pointer-events-none',
+          'scale-90',
+        );
+        iconMsg?.classList.add('opacity-0', '-rotate-90');
+        iconClose?.classList.remove('opacity-0', 'rotate-90');
+        // Убираем пульсацию при открытии виджета
+        btn.classList.remove('animate-pulse-slow');
+        btn.classList.add('pulse-disabled');
+      } else {
+        list?.classList.add(
+          'opacity-0',
+          'translate-y-4',
+          'pointer-events-none',
+          'scale-90',
+        );
+        iconMsg?.classList.remove('opacity-0', '-rotate-90');
+        iconClose?.classList.add('opacity-0', 'rotate-90');
+        // Возвращаем пульсацию при закрытии виджета
+        btn.classList.remove('pulse-disabled');
+        btn.classList.add('animate-pulse-slow');
+      }
+    };
+
+    let ticking = false;
+    function updateWidgetPosition() {
+      if (!container) return;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const bottomOfScreen = scrollY + window.innerHeight;
+      const distanceFromBottom =
+        document.documentElement.scrollHeight - bottomOfScreen;
+      const stopDistance = 130;
+      if (distanceFromBottom < stopDistance) {
+        container.style.transform = `translateY(-${stopDistance - distanceFromBottom}px)`;
+      } else {
+        container.style.transform = 'translateY(0)';
+      }
+      ticking = false;
+    }
+
+    scrollHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateWidgetPosition);
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', scrollHandler);
+    updateWidgetPosition();
+  }
+
+  // Инициализация виджета с добавлением класса пульсации при загрузке
+  initOfficeWidget();
+  // Убедимся, что класс пульсации установлен при инициализации
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('office-toggle-btn');
+    if (btn && !btn.classList.contains('pulse-disabled') && !btn.classList.contains('animate-pulse-slow')) {
+      btn.classList.add('animate-pulse-slow');
     }
   });
+  document.addEventListener('astro:page-load', initOfficeWidget);
 
-  // 2. ЛОГИКА остановки на 200px от низа страницы
-  let ticking = false;
-
-  function updateWidgetPosition() {
-    if (!container) return;
-
-    const scrollY = window.scrollY || window.pageYOffset;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-
-    // Расстояние от низа страницы, на котором кнопка должна остановиться
-    const stopDistance = 130;
-
-    // Позиция низа экрана относительно документа
-    const bottomOfScreen = scrollY + windowHeight;
-
-    // Вычисляем, насколько нужно сдвинуть кнопку вверх
-    const distanceFromBottom = documentHeight - bottomOfScreen;
-
-    // Если мы близко к концу страницы
-    if (distanceFromBottom < stopDistance) {
-      // Сдвигаем кнопку вверх на разницу
-      const offset = stopDistance - distanceFromBottom;
-      container.style.transform = `translateY(-${offset}px)`;
-    } else {
-      // Возвращаем в исходную позицию
-      container.style.transform = 'translateY(0)';
-    }
-
-    ticking = false;
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      window.requestAnimationFrame(updateWidgetPosition);
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Проверяем начальное состояние
-  updateWidgetPosition();
+  (window as unknown as { initOfficeWidget?: () => void }).initOfficeWidget =
+    initOfficeWidget;
 </script>
-
-<style>
-  @keyframes pulse-slow {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(63, 160, 240, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 15px rgba(14, 116, 144, 0);
-    }
-  }
-  .animate-pulse-slow {
-    animation: pulse-slow 2.5s infinite;
-  }
-</style>

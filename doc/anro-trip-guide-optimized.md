@@ -21,153 +21,203 @@
 3. **Единственный CSS файл:** `src/styles/global.css`
    - Только для: глобальных утилит, сторонних библиотек, базовых стилей
 
+---
+
 ## 🏗️ АРХИТЕКТУРА ПРОЕКТА
 
 ### Структура файлов (ключевая)
 
 ```
 white_anrotrip/
-├── .specify/memory/constitution.md       # ⭐ Конституция
+├── .specify/memory/constitution.md
 ├── src/
 │   ├── assets/
-│   │   └── hero/plane.avif              # Hero фон (AVIF, оптимизирован)
+│   │   ├── hero/plane.avif
+│   │   ├── tours/          # antalya, dubai, thailand, maldives, egypt, vietnam .webp
+│   │   ├── awards/         # left_awards, center_awards, right_awards .webp
+│   │   ├── certif/         # certif.webp — подарочный сертификат
+│   │   ├── partners/       # 10 логотипов партнёров .webp
+│   │   ├── corp/           # corp.webp, corp1–4.webp — страница КП
+│   │   └── team/           # 23 фото команды + team.webp (групповое)
 │   ├── components/
-│   │   ├── ui/Modal.astro               # Базовый модал
-│   │   ├── widgets/
-│   │   │   ├── NemoSearch.astro         # Авиабилеты
-│   │   │   └── TourvisorSearch.astro    # Туры
-│   │   ├── Hero.astro                   # ⭐ Главный экран
-│   │   ├── Header.astro                 # Навигация
-│   │   ├── SearchWidget.astro           # Поисковая форма
-│   │   ├── ScrollProgress.astro         # Индикатор прогресса
-│   │   ├── TrustBadges.astro            # Бейджи доверия
-│   │   └── [другие компоненты]
-│   ├── layouts/Layout.astro             # ⭐ Главный Layout
-│   ├── pages/index.astro                # Главная страница
-│   ├── styles/global.css                # ⭐ Единственный CSS
-│   └── types/
-├── astro.config.mjs
+│   │   ├── Header.astro        # Floating pill nav, scroll shrink
+│   │   ├── Hero.astro          # Fullscreen, kenburns, parallax (desktop only)
+│   │   ├── SearchWidget.astro  # Табы: Авиабилеты / Туры и Отели
+│   │   ├── PopularTours.astro  # Bento grid с реальными фото
+│   │   ├── About.astro         # 5 блоков: заявление, услуги, bento, направления, CTA
+│   │   ├── Partners.astro      # Marquee (desktop) / grid (mobile)
+│   │   ├── Reviews.astro       # Карусель + lightbox + форма отзыва
+│   │   ├── Awards.astro        # 3 карточки с реальными фото наград
+│   │   ├── GiftSection.astro   # Сертификат с реальным фото certif.webp
+│   │   ├── Team.astro          # 3 hero-карточки + раскрываемая сетка команды
+│   │   ├── Contacts.astro      # 3 карточки (тёмная / синяя / светлая)
+│   │   ├── Footer.astro        # Тёмный, 3 колонки + соцсети
+│   │   ├── TrustBadges.astro   # Бейджи доверия
+│   │   ├── ScrollProgress.astro
+│   │   ├── ui/Modal.astro
+│   │   └── widgets/
+│   │       ├── NemoSearch.astro
+│   │       └── TourvisorSearch.astro
+│   ├── layouts/Layout.astro
+│   ├── pages/
+│   │   ├── index.astro
+│   │   └── corp.astro      # Коммерческое предложение (/corp)
+│   └── styles/global.css
+├── public/favicon.svg           # Логотип с пунктирным кругом + самолётик
+├── doc/anro-trip-guide-optimized.md
 └── package.json
 ```
 
 ### Sticky Hero + Content Overlay
 
-**Ключевая особенность:** Hero фиксирован, контент "наползает" сверху
+**Ключевая особенность:** Hero sticky z-0, контент наползает сверху
 
 ```astro
 <Hero />
-<!-- sticky, z-0 -->
-<div class="mt-[90vh]">
-  <!-- Контент, z-10 -->
-  <div class="-translate-y-24">
-    <!-- SearchWidget выезжает -->
+<div id="content" class="relative z-10 mt-[20vh] bg-white">
+  <div id="search" class="absolute -top-32 w-full h-1"></div>
+  <div class="relative z-20 -translate-y-24 px-4 sm:px-6 max-w-7xl mx-auto">
     <SearchWidget />
   </div>
+  ...остальные секции...
 </div>
 ```
 
-💡 **Для быстрого появления формы:** `mt-[90vh]` → `mt-[70vh]` и `-translate-y-24` → `-translate-y-40`
-
 ### Z-Index иерархия (НЕ МЕНЯТЬ!)
 
-```css
-z-[2147483647]  /* Модальные окна */
-z-[2147483646]  /* ScrollToTop */
-z-[2147483630]  /* OfficeWidget, FavoritesWidget */
-z-9999          /* ScrollProgress */
-z-50            /* Header */
-z-20            /* SearchWidget */
-z-10            /* Content */
-z-0             /* Hero */
+```
+z-[2147483647]  Модальные окна
+z-[2147483646]  ScrollToTop
+z-[2147483630]  OfficeWidget, FavoritesWidget
+z-9999          ScrollProgress
+z-50            Header
+z-20            SearchWidget
+z-10            Content
+z-0             Hero
 ```
 
 ---
 
 ## 🎨 DESIGN SYSTEM
 
-### Цвета
+### Цвета бренда (ОБНОВЛЕНО в феврале 2026)
 
 ```css
 @theme {
-  --color-primary: #3fa0f0; /* Голубой (основной) */
-  --color-secondary: #1a6db1; /* Бирюзовый */
-  --color-cta: #ffd417; /* Желтый (CTA) */
-  --color-cta-hover: #e5be14;
+  --color-primary:         #00abb3;  /* ⭐ Бренд-тил (цвет «trip» в логотипе) */
+  --color-primary-light:   #33bfc6;
+  --color-primary-dark:    #008a91;
+  --color-secondary:       #006d73;  /* Глубокий тил */
+  --color-secondary-hover: #00585d;
+  --color-cta:             #ffd417;  /* Янтарный (CTA, контраст к тилу) */
+  --color-cta-hover:       #e5be14;
   --font-montserrat: 'Montserrat', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-inter:      'Inter', sans-serif;
 }
 ```
 
-### Типографика
+⚠️ **Старые цвета (`#3fa0f0`, `#1a6db1`) — заменены. Не использовать!**
 
-**Fluid Typography (clamp):**
+### Логотип (favicon + компоненты)
+
+Логотип — SVG inline: пунктирный круг (медленно вращается на десктопе) + самолётик `#00abb3` + текст "ANRO" чёрным + "trip" бирюзовым курсивом.
+
+- **Hero:** крупный логотип над заголовком, класс `hero-logo-spin` (20s, только `@media hover`)
+- **Header:** компактный логотип, `header-logo-spin` (30s, только `@media hover`)
+- **Footer:** такой же как в хедере
+- **Вкладка браузера:** `public/favicon.svg` — рукописный SVG с тем же стилем
+
+### Glassmorphism (ОПТИМИЗИРОВАНО)
 
 ```css
-h1 {
-  font-size: clamp(2rem, 1rem + 5vw, 4.5rem);
-}
-h2 {
-  font-size: clamp(1.75rem, 1rem + 3vw, 3rem);
-}
-```
-
-**Шрифты:**
-
-- **Montserrat:** Заголовки, кнопки, логотип
-- **Inter:** Основной текст, параграфы
-
-**CDN:**
-
-```html
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap"
-  rel="stylesheet"
-/>
-```
-
-### Glassmorphism
-
-```css
+/* backdrop-filter blur — ТОЛЬКО на десктопе! На мобайле дорого. */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15);
+  background: rgba(255,255,255,0.85);  /* мобайл — без blur */
 }
-
-.glass-panel-interactive:hover {
-  background: rgba(255, 255, 255, 0.85);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .glass-panel {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(20px);
+  }
 }
 ```
 
 ### Скругления 2026
 
-- `rounded-full` — Кнопки, аватары
-- `rounded-3xl` (24px) — Карточки, виджеты
-- `rounded-t-[40px]` — Content блок
+- `rounded-full` — кнопки, аватары, пилюли
+- `rounded-3xl` — карточки, виджеты
+- `rounded-2xl` — фото команды, карточки
+- Content блок — **без скруглений** (прямые углы, белый стыкуется с Hero без `rounded-t`)
+
+### Типографика
+
+Fluid Typography через `clamp()` — без media queries. Стили в `global.css` на `h1`–`h6`.
+Монтсеррат — заголовки, кнопки. Inter — текст.
+
+Шрифты загружаются через `media="print" onload="this.media='all'"` (не блокируют рендер).
 
 ---
 
-## ⚡ МОДЕРНИЗАЦИЯ 2026 (ЗАВЕРШЕНА)
-
-### Реализовано (15/13 задач)
+## ⚡ РЕАЛИЗОВАННЫЕ ФИЧИ (актуальный список)
 
 ✅ View Transitions API (`ClientRouter`)
-✅ Scroll Progress Bar (градиентная полоса)
+✅ Scroll Progress Bar (градиент primary→secondary→cta)
 ✅ Fluid Typography (clamp)
-✅ Staggered Animations (последовательное появление)
-✅ Trust Badges + Stats Hero Block
+✅ Staggered Animations (появление с задержкой)
+✅ Trust Badges + Stats (РТО, Топ-10, 14 000+, 18 лет)
 ✅ Micro-interactions (ripple, magnetic, shake)
-✅ Container Queries (`@container`)
-✅ Responsive Images (Astro `<Image />`)
-✅ Parallax Scroll (Hero контент)
-✅ Dynamic Gradients (время суток)
-✅ Glass Panel Interactive (hover эффекты)
-✅ Ken Burns улучшение (translate анимация)
-✅ Супер-современная Hero CTA (shine effect, 3% scale)
-✅ Модернизация Scroll Arrow
-❌ Dark Mode (отменен — не подходит для туристического сайта)
+✅ Container Queries (`@container`, `@md:`)
+✅ Responsive Images (Astro `<Image />`, webp, lazy)
+✅ Parallax Scroll — **только десктоп** `matchMedia('hover: hover')`
+✅ Dynamic Gradients Hero (4 времени суток)
+✅ Ken Burns — **только десктоп**
+✅ Hero CTA (shine effect, glow)
+✅ Бренд-логотип в Hero, Header, Footer, favicon
+✅ Marquee лента партнёров — **только десктоп**, на мобайле grid
+✅ Lightbox для отзывов (zoom, swipe, ←→ клавиши, счётчик)
+✅ Team раскрывается — 3 hero-карточки + кнопка «Вся команда»
+✅ Реальные фото: команда (23 чел.), награды, сертификат
+✅ Бento-сетка туров с цветными бейджами
+✅ prefers-reduced-motion (полное отключение анимаций)
+✅ `meta theme-color`, Open Graph
+✅ `fetchpriority="high"` на hero-изображении
+✅ Страница `/corp` — Коммерческое предложение (Hero-блок, фото corp.webp)
+✅ About CTA «Коммерческое Предложение» → `/corp`
+❌ Dark Mode (отменён)
+
+---
+
+## 📱 МОБИЛЬНАЯ ОПТИМИЗАЦИЯ (критично!)
+
+Главное правило: **тяжёлые эффекты только на `@media (hover: hover)`** (= десктоп с мышью).
+
+| Эффект | Мобайл | Десктоп |
+|--------|--------|---------|
+| `backdrop-filter blur` | ❌ нет | ✅ есть |
+| `blur-3xl` декор-орбы | ❌ скрыты | ✅ видны |
+| Ken Burns | ❌ статично | ✅ 30s анимация |
+| Parallax Hero | ❌ нет | ✅ 0.15 коэф. |
+| Marquee партнёры | ❌ grid-cols-2 | ✅ marquee |
+| Tour card breathe | ❌ нет | ✅ 24s анимация |
+| Logo spin | ❌ нет | ✅ 20-30s |
+| hero-gradient-text | ❌ просто белый | ✅ shine анимация |
+
+```css
+/* Паттерн для всех тяжёлых эффектов */
+.my-animation { animation: none; }
+@media (hover: hover) {
+  .my-animation { animation: my-anim 20s linear infinite; }
+}
+```
+
+Декоративные blur-орбы скрыты глобально:
+```css
+@media (max-width: 767px) {
+  .blur-3xl, .blur-2xl { display: none !important; }
+}
+```
+
+`will-change` — только на `#lightbox-track`. На карточках НЕ использовать!
 
 ---
 
@@ -175,300 +225,222 @@ h2 {
 
 ### Hero.astro
 
-**Особенности:**
+- `loading="eager"` + `fetchpriority="high"` + `quality={75}` на фоне
+- Логотип поверх страницы (первый элемент)
+- Бейдж + h1 + подзаголовок + 2 CTA кнопки + стат-пилюли + scroll-индикатор
+- Parallax: `scrollY * -0.15`, только десктоп
 
-- Ken Burns Effect (30s, scale + translate)
-- Dynamic Gradients (4 времени суток)
-- Parallax (только контент, `-0.2` коэффициент)
-- CTA кнопка: shine effect, 3% scale, glow
+### Header.astro
+
+- Floating pill, scroll shrink (py-3 → py-2 при scrollY > 60)
+- Логотип: пунктирный круг + самолётик + ANRO**trip**
+- **Пропсы (опционально):** `navItems`, `ctaText`, `ctaHref` — для corp-страницы свой нав и CTA
+- **Логотип:** клик → всегда на главную `/`; с corp — fade-out → переход; на главной — fade-out → scroll to top → fade-in
+- Телефон на xl, кнопка CTA, бургер → X анимация
+- Мобильное меню: opacity + translateY transition
 
 ### SearchWidget.astro
 
-**Интеграции:**
+- Табы с bg-highlight (не underline)
+- `sw-fade-in` при переключении
+- Нет `<style>` блоков
 
-- Tab 1: NemoSearch (авиабилеты)
-- Tab 2: TourvisorSearch (туры)
-- Glassmorphism фон
+### PopularTours.astro
 
-### ScrollProgress.astro
+- Bento grid, Container Queries `@md:col-span-2`
+- Цветные бейджи для каждого направления
+- Клик → scroll to SearchWidget (не alert)
+- `aria-hidden="true"` на дублированных marquee-строках
 
-**Z-index:** `z-9999`
-**Градиент:** `from-primary via-secondary to-cta`
+### Partners.astro
 
-### TrustBadges.astro
+- Desktop: двойная marquee-лента (forward 36s, reverse 30s)
+- Mobile: `grid grid-cols-2` статично
+- Hover-пауза marquee
 
-**Показатели:**
+### Reviews.astro
 
-- Членство РТО
-- Топ-10 России
-- 4+ года опыта
-- 14 000+ клиентов
+- Тёмный фон `gray-950` + сеточная текстура
+- Lightbox: swipe touch, ←→ клавиши, zoom ×2.5, счётчик
+- Форма: поля rounded-xl, focus:ring-primary
+
+### Awards.astro
+
+- Реальные фото из `assets/awards/`
+- `items-start` — все карточки на одном уровне (НЕ mt-8!)
+- Бейджи с результатами поверх фото
+
+### Team.astro
+
+- **Основатели:** 3 hero-карточки (Анна / Никита / групповое фото team.webp), `sm:grid-cols-3`
+- **Вся команда:** `lg:grid-cols-3`, фото `w-48 h-48`, `object-center`
+- Кнопка «Вся команда» — плавное раскрытие через `scrollHeight`
+
+### Contacts.astro
+
+- 3 карточки разных стилей:
+  1. Тёмная `gray-900` — телефоны 24/7
+  2. Gradient синяя `from-primary to-secondary` — офис
+  3. Светлая `gray-50` — представительства
+
+### Footer.astro
+
+- Фон `gray-950`, 3 колонки
+- Логотип идентичен хедерному
+- Иконки соцсети с цветным hover (VK, WhatsApp, Telegram)
+
+### corp.astro (страница /corp)
+
+**Структура (8 блоков):**
+1. **Hero** — `sticky top-0 z-0`, фон corp.webp; при скролле фото фиксировано, контент наползает
+2. **#content** — вводный текст (бейдж, заголовок, теги, карточка)
+3. **#corp-avia** — Авиа и ж/д билеты (corp1.webp, слева фото)
+4. **#corp-hotels** — Подбор отеля (corp.webp, справа фото)
+5. **#corp-tours** — Туры (corp2.webp, слева фото)
+6. **#corp-transfer** — Трансфер (corp3.webp, справа фото)
+7. **#corp-benefits** — Преимущества (corp4.webp, 3 карточки: 18 лет, 24/7, ЭДО)
+8. **#corp-contacts** — Контакты (телефон, почта, офисы) перед Footer
+
+**Header на corp:** `navItems` (О компании, Авиабилеты, Отели, Туры, Трансфер, Преимущества, Контакты), `ctaText="Связаться"`, `ctaHref="#corp-contacts"`
+
+**Обёртка контента:** `div` с `z-10 mt-[20vh]` — контент наползает на sticky Hero. Тексты — оригинал anrotrip.ru.
+
+### GiftSection.astro
+
+- Фон `gray-950` с сеткой и орбами
+- Реальное фото `certif.webp`
+- Shine sweep при hover на карте
 
 ---
 
 ## 🔌 ИНТЕГРАЦИИ
 
-### Tourvisor (Туры и отели)
-
-**Проблема:** Серая кнопка `.TVCartStickyButton` портит дизайн
-**Решение:**
+### Tourvisor (НЕ ТРОГАТЬ!)
 
 ```css
-.TVCartStickyButton {
-  opacity: 0 !important;
-  position: fixed !important;
-  left: -9999px !important;
-}
+.TVCartStickyButton { opacity:0!important; left:-9999px!important; }
+iframe[src*='tourvisor'] { width:100%!important; min-height:500px!important; }
 ```
++ `window.dispatchEvent(new Event('resize'))` при переключении таба.
 
-**Мобильный фикс:**
+### Nemo Travel
 
-```css
-iframe[src*='tourvisor'] {
-  width: 100% !important;
-  min-height: 400px !important;
-}
-```
-
-- Dispatch `resize` при переключении таба
-
-### Nemo Travel (Авиабилеты)
-
-Работает "из коробки", без кастомизации.
+Работает из коробки, без кастомизации.
 
 ---
 
-## 🚨 РЕШЕННЫЕ ПРОБЛЕМЫ
+## 🚨 РЕШЁННЫЕ ПРОБЛЕМЫ
 
-### 1. Parallax + Animation Conflict
-
-**Решение:** Parallax к контенту, animation к фону (раздельно)
-
-### 2. Scale 110% → 103%
-
-**Причина:** 10% слишком агрессивно
-**Решение:** 3% subtle scale (тренд 2026)
-
-### 3. Tourvisor серая кнопка
-
-**Решение:** Скрываем визуально, кликабельность программная
-
-### 4. Tourvisor мобильный "сплющивание"
-
-**Решение:** `min-height: 400px !important` + `resize` event
-
-### 5. Scroll Offset для якорей
-
-```css
-:target {
-  scroll-margin-top: calc(4rem + 40px);
-}
-```
+1. **Параллакс + анимации** — параллакс к контенту, kenburns к фону
+2. **Мобайл тормозит** — все тяжёлые анимации за `@media (hover: hover)`
+3. **Орбы blur на мобайле** — `display:none` через `max-width:767px`
+4. **will-change на карточках** — убраны, остался только на lightbox-track
+5. **scroll-snap на html** — убран (вызывал дёрганье)
+6. **backdrop-blur везде** — только там где реально нужно, и только десктоп
+7. **Tourvisor серая кнопка** — скрыта визуально
+8. **Tourvisor мобайл** — `min-height:500px` + resize event
+9. **Голова на фото обрезана** — `object-center` (не `object-top`)
+10. **Средняя карточка наград смещена** — убран `md:mt-8`, добавлен `items-start`
+11. **Шрифты блокируют рендер** — `media="print" onload`
+12. **Content блок: округлости по бокам** — убран `rounded-t-[40px]`, стык Hero/контент прямой
 
 ---
 
-## 📊 SEO, GEO, AEO СТРАТЕГИЯ
+## 📊 SEO / GEO / AEO
 
-### E-E-A-T (Google 2026)
-
-- **Experience:** 18+ лет, 14 000+ клиентов
-- **Expertise:** Членство РТО, Топ-10 России
-- **Authoritativeness:** Mercedes, Napoleon, NIAGARA (партнеры)
-- **Trustworthiness:** Полные реквизиты, SSL, прозрачность
-
-### GEO (Generative Engine Optimization)
-
-✅ Короткие определения
-✅ Списки и таблицы (способы оплаты, реквизиты)
-⚠️ Добавить: FAQ секцию, таблицу направлений с ценами
-
-### AEO (Answer Engine Optimization)
-
-⚠️ Нужно:
-
-1. Микроразметка Schema.org (TravelAgency, Review, FAQPage)
-2. Отдельные страницы под направления `/tours/maldives`
-3. Хлебные крошки (Breadcrumbs)
-
-**Schema.org пример:**
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "TravelAgency",
-  "name": "ANRO TRIP",
-  "legalName": "ООО АНРО",
-  "telephone": "+78002224473",
-  "email": "anro@anrotrip.ru"
-}
-```
-
----
-
-## 🎯 ТРЕНДЫ ДИЗАЙНА 2026
-
-### Ключевые принципы
-
-1. **Subtle Scale:** 3-5% вместо 10%
-2. **Shine Effects:** Движущиеся блики (Apple, Tesla)
-3. **Fluid Typography:** clamp() без media queries
-4. **Staggered Animations:** Последовательное появление
-5. **Container Queries:** Адаптивность по контейнеру
-6. **Glassmorphism:** Apple Liquid Glass адаптация
-
-### Источники вдохновения
-
-- **Material Design 3:** https://m3.material.io/
-- **Apple HIG:** https://developer.apple.com/design/human-interface-guidelines/
-- **LandingFolio:** https://www.landingfolio.com/inspiration
-- **Uprock (UX):** https://www.uprock.ru/
-- **Web Design Trends:** https://media.contented.ru/osnovy/napravleniya/trendy-web-design/
-
----
-
-## 📚 КРИТИЧНАЯ ДОКУМЕНТАЦИЯ
-
-### Официальная документация
-
-**Astro:**
-
-- https://docs.astro.build/
-- https://docs.astro.build/en/guides/view-transitions/
-- https://docs.astro.build/en/guides/images/
-
-**Tailwind CSS v4:**
-
-- https://tailwindcss.com/
-- https://tailwindcss.com/blog/tailwindcss-v4-beta
-- https://tailwindcss.com/docs/container-queries
-
-**Material Design 3:**
-
-- https://m3.material.io/
-- https://m3.material.io/foundations/interaction/states/overview
-
-**Apple HIG:**
-
-- https://developer.apple.com/design/human-interface-guidelines/
-
-### SEO и Schema.org
-
-**Google Search Central:**
-
-- https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
-- https://developers.google.com/search/docs/fundamentals/creating-helpful-content
-
-**Schema.org:**
-
-- https://schema.org/TravelAgency
-- https://schema.org/Review
-
-### Performance
-
-**Lighthouse:**
-
-- https://developers.google.com/web/tools/lighthouse
-
-**Core Web Vitals:**
-
-- https://web.dev/vitals/
+- E-E-A-T: 18 лет, 14 000+ клиентов, РТО 022708, Топ-10 России
+- `meta theme-color: #00abb3`, Open Graph теги добавлены
+- **Ещё не сделано:** Schema.org, FAQ секция, страницы направлений, Breadcrumbs
 
 ---
 
 ## 🛠️ РАЗРАБОТКА
 
-### Команды
-
 ```bash
-# Разработка
-npm run dev             # или: bun dev
-
-# Сборка
-npm run build           # или: bun build
-
-# Форматирование
-npx prettier --write "src/**/*.astro"
-
-# Linter
+npm run dev    # localhost:4321
+npm run build  # dist/
 npm run lint
+npx prettier --write "src/**/*.astro"
 ```
 
 ### Git Workflow
 
-**Правила:**
-
 - ❌ НЕ обновлять git config
-- ❌ НЕ запускать деструктивные команды (push --force, hard reset)
+- ❌ НЕ push --force, hard reset
 - ❌ НЕ коммитить без запроса пользователя
-- ✅ Создавать коммиты только по запросу
-
-### Collaboration с AI
-
-1. **ВСЕГДА читать файл перед редактированием**
-2. Проверять авторство изменений
-3. Не удалять работающий код
-4. Не трогать Tourvisor/Nemo без причины
-5. Не менять z-index иерархию
+- ✅ Коммиты только по явному запросу
 
 ---
 
 ## 📝 СЛЕДУЮЩИЕ ШАГИ
 
-### Краткосрочные (1-2 месяца)
+### Краткосрочные
 
-- [ ] Добавить Schema.org микроразметку
-- [ ] Создать FAQ секцию
+- [ ] Schema.org микроразметка (TravelAgency, FAQPage)
+- [ ] FAQ секция
+- [ ] Lighthouse audit (цель: 90+ mobile)
 - [ ] Оптимизировать meta-описания
-- [ ] Lighthouse audit
 
-### Среднесрочные (3-6 месяцев)
+### Среднесрочные
 
-- [ ] Отдельные страницы под направления
-- [ ] Блог (кейсы, советы)
-- [ ] Google Search Console интеграция
+- [ ] Отдельные страницы направлений `/tours/maldives`
+- [ ] Блог / кейсы
+- [ ] Google Search Console
 
-### Долгосрочные (6-12 месяцев)
+### Долгосрочные
 
+- [ ] Мультиязычность (EN)
 - [ ] База знаний (GEO)
-- [ ] Видеоконтент (YouTube)
-- [ ] Мультиязычность (английский)
 
 ---
 
 ## 📌 ДЛЯ СЛЕДУЮЩЕГО AI
 
-### Обязательно прочитать ПЕРВЫМ:
+### Читай ПЕРВЫМ:
 
-1. `.specify/memory/constitution.md` — Конституция (ВЫСШИЙ ПРИОРИТЕТ)
-2. Этот файл — Компактное руководство
+1. `.specify/memory/constitution.md` — Конституция
+2. Этот файл
 
-### Перед редактированием файла:
+### Перед редактированием:
 
-1. Прочитать актуальное состояние
-2. Проверить авторство изменений
-3. Не перезаписывать ручные правки
+1. Прочитать файл через Read tool
+2. Не перезаписывать ручные правки
+3. Не трогать Tourvisor/Nemo без причины
+4. Не менять z-index иерархию
 
 ### Железные правила:
 
 - ❌ НЕ создавать `.css` файлы
-- ❌ НЕ использовать `<style>` блоки
-- ✅ ТОЛЬКО Tailwind утилиты + JIT
-- ✅ Tailwind v4 синтаксис: `bg-linear-to-r`, `z-9999`
+- ❌ НЕ использовать `<style>` блоки в компонентах
+- ❌ НЕ использовать старые цвета `#3fa0f0`, `#1a6db1`
+- ✅ ТОЛЬКО Tailwind утилиты + JIT + global.css
+- ✅ Tailwind v4: `bg-linear-to-r`, `z-9999`
+- ✅ Тяжёлые анимации — только `@media (hover: hover)`
+- ✅ Цвет бренда: `primary: #00abb3`
 
 ---
 
-**КОНЕЦ ДОКУМЕНТА**
+**Версия:** 3.1
+**Дата:** 22 февраля 2026
+**Автор:** AI Senior Fullstack Developer + hyper
+**Статус:** Актуально
 
-**Версия:** 2.0 (Оптимизированная)
-**Дата:** 16 февраля 2026
-**Автор:** AI Senior Fullstack Developer (Sonnet) + Главный разработчик (hyper)
-**Статус:** Актуально, готово к использованию
+**Изменения от v3.1 (22.02.2026):**
+- **corp.astro** — 8 блоков: Hero (sticky), вводный текст, Авиабилеты (corp1), Отели (corp), Туры (corp2), Трансфер (corp3), Преимущества (corp4, 3 карточки), Контакты. Sticky Hero — фото corp.webp фиксировано, контент наползает при скролле.
+- **Header.astro** — пропсы `navItems`, `ctaText`, `ctaHref` для corp-навигации; логотип всегда ведёт на `/` с эффектом fade-out.
+- **Логотип** — клик: с corp → fade → переход на главную; на главной → fade → scroll to top → fade-in.
 
-**Изменения от v1.0:**
+**Изменения от v3.0 (21.02.2026):**
+- Страница `/corp` — Коммерческое предложение (Hero-блок, corp.webp)
+- About CTA «Коммерческое Предложение» → `/corp`
+- Content блок: убран `rounded-t-[40px]` — прямой стык Hero/контент
 
-- Сокращено с 2356 → ~500 строк (78% компактнее)
-- Сохранены ВСЕ ссылки и контакты
-- Сохранен весь смысл и критичная информация
-- Убрана избыточность и дублирование кода
-
-**Для следующего чата:** Прочитай этот документ + constitution.md! 🚀
+**Изменения от v2.0:**
+- Полный редизайн всех компонентов в стиле 2026
+- Новая цветовая схема бренда (#00abb3)
+- Логотип в Hero, Header, Footer, favicon
+- Реальные фото команды, наград, сертификата
+- Мобильная оптимизация: убраны тяжёлые GPU-эффекты
+- Partners: marquee desktop / grid mobile
+- Team: 3 hero-карточки + раскрываемая сетка lg:grid-cols-3
+- prefers-reduced-motion, Open Graph, fetchpriority

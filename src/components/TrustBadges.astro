@@ -96,9 +96,9 @@ const badges = [
         )}
       </div>
 
-      <!-- Текст: на мобильном — под иконкой по центру, на sm+ — в ряд; break-words для переноса -->
-      <div class="min-w-0 flex-1 w-full overflow-visible break-words">
-        <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide leading-tight">{badge.label}</div>
+      <!-- Текст: на мобильном — под иконкой по центру, на sm+ — в ряд -->
+      <div class="min-w-0 flex-1 w-full overflow-visible">
+        <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide leading-tight sm:whitespace-nowrap">{badge.label}</div>
         <div class="text-[11px] sm:text-sm font-bold text-gray-900 leading-tight">{badge.value}</div>
       </div>
     </a>

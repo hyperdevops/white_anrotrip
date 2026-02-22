@@ -107,18 +107,15 @@ const { class: classes = '' }: Props = Astro.props;
       ))}
     </div>
 
-    <!-- ===== ЛЕНТА ЛОГОТИПОВ ===== -->
-    <div class="reveal-hidden">
-      <div class="relative">
-        <!-- Fade-маски по краям -->
-        <div class="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
+    <!-- ===== ЛЕНТА ЛОГОТИПОВ (marquee на всех устройствах) ===== -->
+    <div class="reveal-hidden relative">
+      <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-        <!-- Строка 1: слева направо -->
         <div class="overflow-hidden mb-4">
-          <div class="partners-track partners-track--forward flex gap-4 w-max">
+          <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
             {row1.map((partner) => (
-              <div class="partners-logo-card flex-shrink-0 w-36 h-20 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-lg transition-all duration-300">
+              <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
                 <Image
                   src={partner.logo}
                   alt={partner.name}
@@ -130,11 +127,10 @@ const { class: classes = '' }: Props = Astro.props;
           </div>
         </div>
 
-        <!-- Строка 2: справа налево -->
         <div class="overflow-hidden">
-          <div class="partners-track partners-track--reverse flex gap-4 w-max">
+          <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
             {row2doubled.map((partner) => (
-              <div class="partners-logo-card flex-shrink-0 w-36 h-20 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-lg transition-all duration-300">
+              <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
                 <Image
                   src={partner.logo}
                   alt={partner.name}
@@ -145,7 +141,6 @@ const { class: classes = '' }: Props = Astro.props;
             ))}
           </div>
         </div>
-      </div>
     </div>
 
     <!-- ===== CTA ===== -->

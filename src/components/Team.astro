@@ -87,7 +87,7 @@ const team = [
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 reveal-hidden mb-14" data-reveal-stagger>
 
       <!-- Анна Рожкова -->
-      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out will-change-transform flex flex-col cursor-default">
+      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out flex flex-col cursor-default">
         <!-- Фото — занимает большую часть -->
         <div class="relative overflow-hidden flex-1 min-h-[320px] sm:min-h-[360px]">
           <Image
@@ -107,7 +107,7 @@ const team = [
       </div>
 
       <!-- Никита Рожков -->
-      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out will-change-transform flex flex-col cursor-default">
+      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out flex flex-col cursor-default">
         <div class="relative overflow-hidden flex-1 min-h-[320px] sm:min-h-[360px]">
           <Image
             src={nikitaRozhkovImg}
@@ -124,7 +124,7 @@ const team = [
       </div>
 
       <!-- Групповое фото команды -->
-      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out will-change-transform flex flex-col cursor-default">
+      <div class="reveal-hidden group relative overflow-hidden rounded-3xl bg-white/5 border border-white/8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 ease-out flex flex-col cursor-default">
         <div class="relative overflow-hidden flex-1 min-h-[320px] sm:min-h-[360px]">
           <Image
             src={teamGroupImg}
@@ -147,7 +147,7 @@ const team = [
   <!-- Кнопка "Показать всю команду" -->
   <div class="flex justify-center relative z-20 -mb-6" id="team-btn-wrapper">
     <button id="toggle-team-btn"
-      class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/8 border border-white/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/15 hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm btn-magnetic cursor-pointer"
+      class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-white/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 hover:-translate-y-0.5 transition-all duration-300 btn-magnetic cursor-pointer"
     >
       <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -163,7 +163,7 @@ const team = [
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {team.map((member) => (
-        <div class="flex flex-col items-center text-center group transition-transform duration-500 ease-out hover:-translate-y-1 will-change-transform">
+        <div class="flex flex-col items-center text-center group transition-transform duration-500 ease-out hover:-translate-y-1">
           <!-- Фото -->
           <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden mb-4 ring-2 ring-gray-100 group-hover:ring-primary/30 group-hover:shadow-xl transition-all duration-500 ease-out bg-gray-200 shrink-0">
             <Image

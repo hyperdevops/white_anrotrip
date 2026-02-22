@@ -1,106 +1,212 @@
 ---
-const navItems = [
-  { name: 'О нас',    href: '#about' },
-  { name: 'Туры',     href: '#search' },
-  { name: 'Отзывы',  href: '#reviews' },
+export interface Props {
+  navItems?: { name: string; href: string }[];
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const defaultNavItems = [
+  { name: 'О нас', href: '#about' },
+  { name: 'Туры', href: '#search' },
+  { name: 'Отзывы', href: '#reviews' },
   { name: 'Команда', href: '#team' },
-  { name: 'Контакты',href: '#contacts' },
+  { name: 'Контакты', href: '#contacts' },
 ];
+
+const {
+  navItems = defaultNavItems,
+  ctaText = 'Личный кабинет',
+  ctaHref = '#contacts',
+} = Astro.props;
 ---
 
-<header id="site-header" class="fixed top-3 left-0 right-0 z-50 px-4 sm:px-6 md:top-4 transition-all duration-500">
-  <div class="mx-auto max-w-7xl">
-    <div id="header-inner" class="relative flex items-center justify-between rounded-2xl glass-panel px-4 py-3 transition-all duration-500">
-
-      <!-- Логотип -->
-      <a href="#" id="logo-btn" class="flex items-center gap-2 group z-50 cursor-pointer select-none shrink-0">
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div class="mx-auto max-w-7xl px-3 sm:px-4 pt-3 md:pt-4">
+    <div
+      id="header-inner"
+      class="relative flex items-center justify-between rounded-2xl glass-panel px-4 py-3 transition-all duration-300"
+    >
+      <!-- Логотип — на главную страницу, в самый верх -->
+      <a
+        href="/"
+        id="logo-btn"
+        class="flex items-center gap-2 group z-50 cursor-pointer select-none shrink-0"
+      >
         <!-- Иконка: пунктирный круг + самолётик -->
-        <div class="relative w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <svg class="absolute inset-0 w-full h-full header-logo-spin" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="44" stroke="#00abb3" stroke-width="2"
-              stroke-dasharray="5 4" stroke-linecap="round" opacity="0.5"/>
+        <div
+          class="relative w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+        >
+          <svg
+            class="absolute inset-0 w-full h-full header-logo-spin"
+            viewBox="0 0 100 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="50"
+              cy="50"
+              r="44"
+              stroke="#00abb3"
+              stroke-width="2"
+              stroke-dasharray="5 4"
+              stroke-linecap="round"
+              opacity="0.5"></circle>
           </svg>
           <!-- Самолётик -->
-          <svg class="absolute top-0.5 left-0.5 w-4 h-4" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="absolute top-0.5 left-0.5 w-4 h-4"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <g transform="rotate(-40,16,16)">
-              <path d="M4 14 L24 8 L26 14 L17 17 L17 23 L13 22 L13 17 Z" fill="#00abb3"/>
-              <path d="M17 17 L23 20 L22 23 Z" fill="#00abb3"/>
+              <path
+                d="M4 14 L24 8 L26 14 L17 17 L17 23 L13 22 L13 17 Z"
+                fill="#00abb3"></path>
+              <path d="M17 17 L23 20 L22 23 Z" fill="#00abb3"></path>
             </g>
           </svg>
           <!-- Текст внутри -->
           <div class="flex flex-col items-center leading-none">
-            <span class="font-montserrat font-black text-gray-900 text-[8px] tracking-[0.1em]">ANRO</span>
-            <span class="font-montserrat italic font-semibold text-[7px] mt-[-1px]" style="color:#00abb3">trip</span>
+            <span
+              class="font-montserrat font-black text-gray-900 text-[8px] tracking-[0.1em]"
+              >ANRO</span
+            >
+            <span
+              class="font-montserrat italic font-semibold text-[7px] mt-[-1px]"
+              style="color:#00abb3">trip</span
+            >
           </div>
         </div>
         <!-- Текст рядом -->
         <div class="flex flex-col leading-none">
           <div class="flex items-baseline gap-0.5">
-            <span class="text-[15px] font-black tracking-tight text-gray-900 font-montserrat">ANRO</span>
-            <span class="text-[15px] font-semibold italic font-montserrat" style="color:#00abb3">trip</span>
+            <span
+              class="text-[15px] font-black tracking-tight text-gray-900 font-montserrat"
+              >ANRO</span
+            >
+            <span
+              class="text-[15px] font-semibold italic font-montserrat"
+              style="color:#00abb3">trip</span
+            >
           </div>
-          <span class="text-[8px] text-gray-400 uppercase tracking-widest hidden sm:block">Travel &amp; Business</span>
+          <span
+            class="text-[8px] text-gray-400 uppercase tracking-widest hidden sm:block"
+            >Travel &amp; Business</span
+          >
         </div>
       </a>
 
       <!-- Навигация (desktop) -->
       <nav class="hidden lg:flex items-center gap-1">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class="relative px-3 py-2 text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-[0.12em] transition-colors duration-200 rounded-lg hover:bg-primary/5 group"
-          >
-            {item.name}
-            <span class="absolute bottom-1 left-3 right-3 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-          </a>
-        ))}
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class="relative px-3 py-2 text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-[0.12em] transition-colors duration-200 rounded-lg hover:bg-primary/5 group"
+            >
+              {item.name}
+              <span class="absolute bottom-1 left-3 right-3 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            </a>
+          ))
+        }
       </nav>
 
       <!-- Правая часть -->
       <div class="flex items-center gap-2 z-50">
         <!-- Телефон (desktop) -->
-        <a href="tel:88002224473" class="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-all duration-200">
-          <svg class="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        <a
+          href="tel:88002224473"
+          class="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-all duration-200"
+        >
+          <svg
+            class="w-3.5 h-3.5 text-primary"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+            ></path>
           </svg>
           8 (800) 222-44-73
         </a>
 
-        <a href="#contacts" class="hidden lg:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-95 transition-all duration-300 uppercase tracking-wider shadow-md btn-magnetic">
-          Связаться
+        <a
+          href={ctaHref}
+          class="hidden lg:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-95 transition-all duration-300 uppercase tracking-wider shadow-md btn-magnetic"
+        >
+          {ctaText}
         </a>
 
         <!-- Бургер (mobile) -->
-        <button id="menu-toggle" class="lg:hidden flex flex-col gap-[5px] p-2 group focus:outline-none" aria-label="Меню" aria-expanded="false">
-          <span class="h-0.5 w-5 bg-gray-700 rounded-full transition-all duration-300 origin-center"></span>
-          <span class="h-0.5 w-5 bg-gray-700 rounded-full transition-all duration-300"></span>
-          <span class="h-0.5 w-3.5 bg-gray-700 rounded-full transition-all duration-300 origin-center self-end"></span>
+        <button
+          id="menu-toggle"
+          class="lg:hidden flex flex-col gap-[5px] p-2 group focus:outline-none"
+          aria-label="Меню"
+          aria-expanded="false"
+        >
+          <span
+            class="h-0.5 w-5 bg-gray-700 rounded-full transition-all duration-300 origin-center"
+          ></span>
+          <span
+            class="h-0.5 w-5 bg-gray-700 rounded-full transition-all duration-300"
+          ></span>
+          <span
+            class="h-0.5 w-3.5 bg-gray-700 rounded-full transition-all duration-300 origin-center self-end"
+          ></span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu"
-    class="fixed top-20 right-4 w-56 bg-white/95 backdrop-blur-xl rounded-2xl border border-gray-100 shadow-2xl shadow-black/15 lg:hidden z-40 transition-all duration-400 ease-out opacity-0 -translate-y-3 pointer-events-none"
+  <div
+    id="mobile-menu"
+    class="fixed top-[80px] right-4 w-56 bg-white/75 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl shadow-black/15 lg:hidden z-40 transition-all duration-300 ease-out opacity-0 -translate-y-3 pointer-events-none"
   >
     <nav class="flex flex-col p-2">
-      {navItems.map((item) => (
-        <a href={item.href}
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-200"
-        >
-          {item.name}
-        </a>
-      ))}
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-200"
+          >
+            {item.name}
+          </a>
+        ))
+      }
       <div class="my-1.5 h-px bg-gray-100 mx-2"></div>
-      <a href="tel:88002224473" class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-200">
-        <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+      <a
+        href="tel:88002224473"
+        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-200"
+      >
+        <svg
+          class="w-4 h-4 text-primary shrink-0"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+          ></path>
         </svg>
         8 (800) 222-44-73
       </a>
-      <a href="#contacts" class="mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark transition-colors">
-        Связаться
+      <a
+        href={ctaHref}
+        class="mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark transition-colors"
+      >
+        {ctaText}
       </a>
     </nav>
   </div>
@@ -113,33 +219,56 @@ const navItems = [
   const headerInner = document.getElementById('header-inner') as HTMLElement;
   let menuOpen = false;
 
-  // Scroll shrink effect
+  // При скролле — усиливаем тень, без изменения размеров
   const onScroll = () => {
-    if (window.scrollY > 60) {
-      headerInner?.classList.add('py-2');
-      headerInner?.classList.remove('py-3');
+    if (window.scrollY > 40) {
+      headerInner?.classList.add('shadow-xl', 'shadow-black/10');
+      headerInner?.classList.remove('shadow-none');
     } else {
-      headerInner?.classList.remove('py-2');
-      headerInner?.classList.add('py-3');
+      headerInner?.classList.remove('shadow-xl', 'shadow-black/10');
+      headerInner?.classList.add('shadow-none');
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  // Логотип — скролл наверх
-  logoBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.body.style.transition = 'opacity 0.5s ease';
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      document.querySelectorAll('.reveal-visible').forEach(el => el.classList.remove('reveal-visible'));
-      if ((window as any).initScrollReveal) (window as any).initScrollReveal();
-      setTimeout(() => {
-        document.body.style.opacity = '1';
-        setTimeout(() => { document.body.style.transition = ''; document.body.style.opacity = ''; }, 500);
-      }, 80);
-    }, 500);
-  });
+  // Логотип — на главную в самый верх (эффект вспышки: затемнение → действие → появление)
+  const initLogoClick = () => {
+    const logo = document.getElementById('logo-btn');
+    logo?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const path = window.location.pathname.replace(/\/$/, '') || '/';
+      document.documentElement.style.transition = 'opacity 0.5s ease';
+      document.body.style.transition = 'opacity 0.5s ease';
+      document.documentElement.style.opacity = '0';
+      document.body.style.opacity = '0';
+      if (path !== '/' && path !== '/index.html') {
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 500);
+      } else {
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          document
+            .querySelectorAll('.reveal-visible')
+            .forEach((el) => el.classList.remove('reveal-visible'));
+          if (window.initScrollReveal) window.initScrollReveal();
+          setTimeout(() => {
+            document.documentElement.style.opacity = '1';
+            document.body.style.opacity = '1';
+            setTimeout(() => {
+              document.documentElement.style.transition = '';
+              document.documentElement.style.opacity = '';
+              document.body.style.transition = '';
+              document.body.style.opacity = '';
+            }, 500);
+          }, 80);
+        }, 500);
+      }
+    });
+  };
+  initLogoClick();
+  document.addEventListener('astro:page-load', initLogoClick);
 
   const openMenu = () => {
     menuOpen = true;
@@ -150,7 +279,12 @@ const navItems = [
     const bars = toggleBtn.querySelectorAll('span');
     bars[0]?.classList.add('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.add('opacity-0', 'scale-x-0');
-    bars[2]?.classList.add('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
+    bars[2]?.classList.add(
+      '-rotate-45',
+      '-translate-y-[7px]',
+      'w-5',
+      'self-auto',
+    );
   };
 
   const closeMenu = () => {
@@ -161,12 +295,27 @@ const navItems = [
     const bars = toggleBtn.querySelectorAll('span');
     bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.remove('opacity-0', 'scale-x-0');
-    bars[2]?.classList.remove('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
+    bars[2]?.classList.remove(
+      '-rotate-45',
+      '-translate-y-[7px]',
+      'w-5',
+      'self-auto',
+    );
   };
 
-  toggleBtn?.addEventListener('click', (e) => { e.stopPropagation(); menuOpen ? closeMenu() : openMenu(); });
-  document.addEventListener('click', (e) => {
-    if (menuOpen && menu && !menu.contains(e.target as Node) && !toggleBtn?.contains(e.target as Node)) closeMenu();
+  toggleBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuOpen ? closeMenu() : openMenu();
   });
-  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (menuOpen && menu && target instanceof Node) {
+      if (!menu.contains(target) && !toggleBtn?.contains(target)) {
+        closeMenu();
+      }
+    }
+  });
+  menu
+    ?.querySelectorAll('a')
+    .forEach((link) => link.addEventListener('click', closeMenu));
 </script>

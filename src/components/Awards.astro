@@ -1,9 +1,9 @@
 ---
 // src/components/Awards.astro
 import { Image } from 'astro:assets';
-import leftAward   from '../assets/awards/left_awards.webp';
 import centerAward from '../assets/awards/center_awards.webp';
-import rightAward  from '../assets/awards/right_awards.webp';
+import leftAward from '../assets/awards/left_awards.webp';
+import rightAward from '../assets/awards/right_awards.webp';
 
 const awards = [
   {
@@ -69,9 +69,9 @@ const awards = [
     <!-- Карточки наград -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-start" data-reveal-stagger>
       {awards.map((award) => (
-        <div class="reveal-hidden group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out will-change-transform">
+        <div class="reveal-hidden group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out">
           <!-- Фото -->
-          <div class="relative overflow-hidden aspect-[4/3] bg-gray-50">
+          <div class="relative overflow-hidden aspect-[3/3] bg-gray-50">
             <Image
               src={award.image}
               alt={award.title}

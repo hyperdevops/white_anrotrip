@@ -27,15 +27,13 @@ import Layout from '../layouts/Layout.astro';
 
     <!--
       Блок контента.
-      mt-[90vh] сдвигает его вниз, открывая картинку Hero.
+      mt-[20vh] сдвигает его вниз, открывая картинку Hero.
       bg-white — белый фон
-      rounded-t-[40px] — скругление верхних углов (40px)
-      shadow-[0_-10px_40px_rgba(0,0,0,0.1)] — тень сверху
-      transition-colors duration-700 ease-in-out — плавный переход цветов
+      shadow — тень сверху
     -->
     <div
       id="content"
-      class="relative z-10 mt-[20vh] bg-white rounded-t-[40px] shadow-[0_-10px_40px_rgba(15,76,129,0.12)] transition-colors duration-700 ease-in-out pb-12 md:pb-20"
+      class="relative z-10 mt-[20vh] bg-white shadow-[0_-10px_40px_rgba(15,76,129,0.12)] transition-colors duration-700 ease-in-out pb-12 md:pb-20"
     >
       <!-- Якорь для кнопки "Поиск туров" (невидимый) -->
       <div id="search" class="absolute -top-32 w-full h-1"></div>

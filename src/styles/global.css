@@ -1,106 +1,135 @@
 @import 'tailwindcss';
 
-/* Подключаем плагин typography напрямую в CSS */
 @plugin "@tailwindcss/typography";
 
+/* View Transitions: не блокировать клики после анимации */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS — ANRO TRIP BRAND 2026
+   Основной: #00abb3 (тил — цвет «trip» в логотипе)
+═══════════════════════════════════════════════ */
 @theme {
-  /* ── БРЕНД ANRO TRIP ──────────────────────────────
-     Основной: #00abb3 (тил/бирюза — цвет "trip" в логотипе)
-     Тренд 2026: насыщенный тил как hero-акцент,
-     светлые варианты для glassmorphism,
-     тёмный для hover/depth
-  ──────────────────────────────────────────────── */
-  --color-primary:       #00abb3;   /* бренд тил */
-  --color-primary-light: #33bfc6;   /* светлее +30% */
-  --color-primary-dark:  #008a91;   /* темнее  −20% */
-
-  /* Вторичный — глубокий тил для контраста */
-  --color-secondary:       #006d73;
+  --color-primary: #00abb3;
+  --color-primary-light: #33bfc6;
+  --color-primary-dark: #008a91;
+  --color-secondary: #006d73;
   --color-secondary-hover: #00585d;
-
-  /* CTA — янтарно-жёлтый (контраст к тилу, тренд 2026) */
-  --color-cta:       #ffd417;
+  --color-cta: #ffd417;
   --color-cta-hover: #e5be14;
-
   --font-montserrat: 'Montserrat', sans-serif;
   --font-inter: 'Inter', sans-serif;
 }
 
+/* ═══════════════════════════════════════════════
+   BASE LAYER
+═══════════════════════════════════════════════ */
 @layer base {
   html {
     @apply font-sans antialiased scroll-smooth;
-    background-color: transparent !important;
-    scroll-snap-type: y proximity;
-
-    /* Fluid font-size базовый (адаптивный размер без media queries) */
+    /* НЕ используем scroll-snap-type на уровне html — тормозит мобайл */
     font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
   }
 
   body {
-    background-color: transparent !important;
-    @apply text-gray-900 transition-colors duration-700 ease-in-out;
-
-    /* Оптимизация рендеринга шрифтов для современных браузеров */
+    @apply text-gray-900;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings:
       'kern' 1,
       'liga' 1;
+    /* Предотвращаем горизонтальный скролл */
+    overflow-x: hidden;
   }
 
-  /* Fluid Typography для заголовков (адаптивные размеры через clamp) */
+  /* Fluid Typography — без media queries */
   h1 {
     @apply font-montserrat font-bold;
     font-size: clamp(2rem, 1rem + 5vw, 4.5rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
-
   h2 {
     @apply font-montserrat font-bold;
     font-size: clamp(1.75rem, 1rem + 3vw, 3rem);
     line-height: 1.2;
     letter-spacing: -0.01em;
   }
-
   h3 {
     @apply font-montserrat font-bold;
     font-size: clamp(1.25rem, 0.875rem + 1.5vw, 1.875rem);
     line-height: 1.3;
   }
-
   h4 {
     @apply font-montserrat font-bold;
     font-size: clamp(1.125rem, 0.875rem + 1vw, 1.5rem);
     line-height: 1.4;
   }
-
   h5,
   h6 {
     @apply font-montserrat font-bold;
     font-size: clamp(1rem, 0.875rem + 0.5vw, 1.25rem);
     line-height: 1.5;
   }
+
+  /* Скроллбар — только десктоп */
+  @media (hover: hover) {
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b0b0b0;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #888;
+    }
+  }
 }
 
-/* === СТЕКЛО (ТЕНИ УСИЛЕНЫ) === */
+/* ═══════════════════════════════════════════════
+   GLASSMORPHISM (blur на всех устройствах)
+═══════════════════════════════════════════════ */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  @apply transition-colors duration-700 ease-in-out;
-  /* Усиленная тень для светлой темы */
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  @apply transition-colors duration-500 ease-in-out;
 }
 
-/* Остальные стили */
+.glass-panel-interactive {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (hover: hover) {
+  .glass-panel-interactive:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════ */
 .deep-shadow {
-  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Глобальная утилита: скрытие скроллбара (не реализуется стандартными классами Tailwind) */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -109,73 +138,71 @@
   display: none;
 }
 
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL — оптимизировано
+═══════════════════════════════════════════════ */
 .reveal-hidden {
   opacity: 0;
-  transform: translateY(50px);
-  transition: 0.8s;
+  transform: translateY(32px); /* было 50px — меньше = быстрее */
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
 }
 .reveal-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* === STAGGERED ANIMATIONS === */
-/* Контейнер для последовательной анимации дочерних элементов */
+/* Staggered — сокращаем задержки на мобайле */
 [data-reveal-stagger] > * {
   transition:
-    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* Задержки для каждого элемента (последовательное появление) */
 [data-reveal-stagger] > *:nth-child(1) {
   transition-delay: 0ms;
 }
 [data-reveal-stagger] > *:nth-child(2) {
-  transition-delay: 100ms;
+  transition-delay: 80ms;
 }
 [data-reveal-stagger] > *:nth-child(3) {
-  transition-delay: 200ms;
+  transition-delay: 160ms;
 }
 [data-reveal-stagger] > *:nth-child(4) {
-  transition-delay: 300ms;
+  transition-delay: 240ms;
 }
 [data-reveal-stagger] > *:nth-child(5) {
-  transition-delay: 400ms;
+  transition-delay: 320ms;
 }
 [data-reveal-stagger] > *:nth-child(6) {
-  transition-delay: 500ms;
+  transition-delay: 400ms;
 }
 [data-reveal-stagger] > *:nth-child(7) {
-  transition-delay: 600ms;
+  transition-delay: 480ms;
 }
 [data-reveal-stagger] > *:nth-child(8) {
-  transition-delay: 700ms;
+  transition-delay: 540ms;
 }
 [data-reveal-stagger] > *:nth-child(9) {
-  transition-delay: 800ms;
+  transition-delay: 600ms;
 }
 [data-reveal-stagger] > *:nth-child(10) {
-  transition-delay: 900ms;
+  transition-delay: 660ms;
 }
 
-/* Разные направления появления элементов */
 .reveal-from-left {
   opacity: 0;
-  transform: translateX(-50px);
+  transform: translateX(-32px);
 }
-
 .reveal-from-right {
   opacity: 0;
-  transform: translateX(50px);
+  transform: translateX(32px);
 }
-
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
-/* Состояние видимости для всех типов анимаций */
 .reveal-visible.reveal-from-left,
 .reveal-visible.reveal-from-right,
 .reveal-visible.reveal-scale {
@@ -183,18 +210,16 @@
   transform: translateX(0) scale(1);
 }
 
-/* Переменные для отступов */
+/* ═══════════════════════════════════════════════
+   SCROLL ANCHORS
+═══════════════════════════════════════════════ */
 :root {
-  --header-height: 4rem; /* Примерная высота хедера */
-  --scroll-offset: 40px; /* Желаемый отступ между хедером и заголовком блока */
+  --header-height: 4rem;
+  --scroll-offset: 40px;
 }
-
-/* Отступы для прокрутки к якорям с учетом высоты хедера */
 :target {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
-
-/* Конкретные отступы для секций */
 #about:target,
 #reviews:target,
 #tours:target,
@@ -205,205 +230,307 @@
 #search:target {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
-
-/* Секция «Награды»: прокрутка на 45px ближе к заголовку */
 #awards,
 #awards:target {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset) - 45px);
 }
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
-}
 
-/* === MICRO-INTERACTIONS === */
+/* ═══════════════════════════════════════════════
+   MICRO-INTERACTIONS
+   Только на устройствах с hover (не мобайл)
+═══════════════════════════════════════════════ */
 @layer utilities {
-  /* Ripple effect для кнопок (волновой эффект при клике) */
   .btn-ripple {
     position: relative;
     overflow: hidden;
   }
-
   .btn-ripple::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(
       circle,
-      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.35) 0%,
       transparent 70%
     );
     transform: scale(0);
     opacity: 0;
     transition:
-      transform 0.6s ease-out,
-      opacity 0.6s ease-out;
+      transform 0.5s ease-out,
+      opacity 0.5s ease-out;
   }
-
   .btn-ripple:active::before {
     transform: scale(2.5);
     opacity: 1;
     transition:
       transform 0s,
-      opacity 0.1s;
+      opacity 0.08s;
   }
 
-  /* Magnetic effect для кнопок (подъем при hover) */
   .btn-magnetic {
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-
-  .btn-magnetic:hover {
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    .btn-magnetic:hover {
+      transform: translateY(-2px);
+    }
   }
-
   .btn-magnetic:active {
     transform: translateY(0) scale(0.98);
   }
 
-  /* Shake animation для ошибок валидации */
   @keyframes shake {
     0%,
     100% {
       transform: translateX(0);
     }
-    10%,
-    30%,
-    50%,
-    70%,
-    90% {
+    20%,
+    60% {
       transform: translateX(-4px);
     }
-    20%,
     40%,
-    60%,
     80% {
       transform: translateX(4px);
     }
   }
-
   .shake-error {
-    animation: shake 0.5s ease-in-out;
-  }
-
-  /* Glass panel с hover эффектом (интерактивная версия) */
-  .glass-panel-interactive {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .glass-panel-interactive:hover {
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 20px 45px -5px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    animation: shake 0.45s ease-in-out;
   }
 }
 
-/* === LOGO: пунктирный круг медленно вращается === */
+/* ═══════════════════════════════════════════════
+   LOGO ANIMATIONS
+   Отключаем на мобайле — экономим GPU
+═══════════════════════════════════════════════ */
 @keyframes logo-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
-.hero-logo-spin {
-  animation: logo-spin 20s linear infinite;
-}
-/* Медленнее для хедера */
+
+/* По умолчанию — без анимации (мобайл) */
+.hero-logo-spin,
 .header-logo-spin {
-  animation: logo-spin 30s linear infinite;
+  animation: none;
 }
 
-/* === HERO: KENBURNS + GRADIENT TEXT + SCROLL INDICATOR === */
+/* Включаем только там где есть hover-устройство (десктоп) */
+@media (hover: hover) {
+  .hero-logo-spin {
+    animation: logo-spin 20s linear infinite;
+  }
+  .header-logo-spin {
+    animation: logo-spin 30s linear infinite;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   HERO ANIMATIONS
+═══════════════════════════════════════════════ */
 @keyframes hero-kenburns {
-  0%   { transform: scale(1.05) translate(0, 0); }
-  50%  { transform: scale(1.12) translate(1%, -1%); }
-  100% { transform: scale(1.18) translate(-1%, 1%); }
+  0% {
+    transform: scale(1.03) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate(0.8%, -0.8%);
+  }
+  100% {
+    transform: scale(1.12) translate(-0.8%, 0.8%);
+  }
 }
 
+/* kenburns — только десктоп */
 .hero-kenburns {
-  animation: hero-kenburns 30s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  animation: none; /* мобайл — статичное фото */
+}
+@media (hover: hover) {
+  .hero-kenburns {
+    animation: hero-kenburns 30s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  }
 }
 
+/* Gradient text — только десктоп, на мобайле просто белый */
 .hero-gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #bfdbfe 40%, #3fa0f0 70%, #ffffff 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: partners-title-shine 5s linear infinite;
+  color: #ffffff;
+}
+@media (hover: hover) {
+  .hero-gradient-text {
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #b2f0f3 40%,
+      #00abb3 70%,
+      #ffffff 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: partners-title-shine 5s linear infinite;
+  }
 }
 
 @keyframes hero-scroll-bounce {
-  0%, 100% { transform: translateY(0); opacity: 0.8; }
-  50%       { transform: translateY(6px); opacity: 0.4; }
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.35;
+  }
 }
-
 .animate-hero-scroll {
-  animation: hero-scroll-bounce 1.6s ease-in-out infinite;
+  animation: hero-scroll-bounce 1.8s ease-in-out infinite;
 }
 
-/* === SEARCHWIDGET: FADE-IN === */
+/* ═══════════════════════════════════════════════
+   SEARCHWIDGET FADE-IN
+═══════════════════════════════════════════════ */
 @keyframes sw-fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .sw-fade-in {
-  animation: sw-fade-in 0.3s ease-out;
+  animation: sw-fade-in 0.25s ease-out;
 }
 
-/* === PARTNERS: MARQUEE + TITLE SHINE === */
+/* ═══════════════════════════════════════════════
+   PARTNERS — MARQUEE (на всех устройствах)
+═══════════════════════════════════════════════ */
 @keyframes marquee-forward {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @keyframes marquee-reverse {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .partners-track--forward {
-  animation: marquee-forward 32s linear infinite;
+  animation: marquee-forward 36s linear infinite;
 }
 .partners-track--reverse {
-  animation: marquee-reverse 28s linear infinite;
+  animation: marquee-reverse 30s linear infinite;
 }
-
-.partners-track--forward:hover,
-.partners-track--reverse:hover {
-  animation-play-state: paused;
+@media (hover: hover) {
+  .partners-track--forward:hover,
+  .partners-track--reverse:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes partners-title-shine {
-  0%   { background-position: 200% center; }
-  100% { background-position: -200% center; }
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
 }
 
 .partners-title {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #3fa0f0 60%, #1a1a2e 100%);
+  background: linear-gradient(
+    135deg,
+    #1a1a2e 0%,
+    #003d3f 40%,
+    #00abb3 60%,
+    #1a1a2e 100%
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: partners-title-shine 4s linear infinite;
+}
+@media (hover: hover) {
+  .partners-title {
+    animation: partners-title-shine 4s linear infinite;
+  }
 }
 
 .partners-logo-card:hover {
   transform: translateY(-3px);
 }
 
-/* === TOURVISOR: СКРЫТИЕ СТИКЕР-КНОПКИ + МОБИЛЬНЫЕ ФИКСЫ === */
-/* Серая кнопка .TVCartStickyButton портит дизайн — скрываем визуально, не ломая скрипт.
-   Важно: не использовать display:none или visibility:hidden на саму кнопку,
-   иначе виджет Турвизора может перестать реагировать на добавление в избранное. */
+/* ═══════════════════════════════════════════════
+   TOUR CARDS — BREATHE ANIMATION
+   На мобайле отключаем — главный тормоз
+═══════════════════════════════════════════════ */
+@keyframes breathe-tour {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.05) translate(0.8%, -0.6%);
+  }
+  100% {
+    transform: scale(1.03) translate(-0.6%, 0.8%);
+  }
+}
+
+/* По умолчанию — без анимации */
+.tour-card-breathe {
+  animation: none;
+}
+
+@media (hover: hover) {
+  .tour-card-breathe {
+    animation: breathe-tour 24s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  }
+  [data-reveal-stagger] > *:nth-child(1) .tour-card-breathe {
+    animation-delay: 0s;
+  }
+  [data-reveal-stagger] > *:nth-child(2) .tour-card-breathe {
+    animation-delay: -5s;
+  }
+  [data-reveal-stagger] > *:nth-child(3) .tour-card-breathe {
+    animation-delay: -10s;
+  }
+  [data-reveal-stagger] > *:nth-child(4) .tour-card-breathe {
+    animation-delay: -15s;
+  }
+  [data-reveal-stagger] > *:nth-child(5) .tour-card-breathe {
+    animation-delay: -20s;
+  }
+  [data-reveal-stagger] > *:nth-child(6) .tour-card-breathe {
+    animation-delay: -12s;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   IMAGE RENDERING
+═══════════════════════════════════════════════ */
+.image-sharp {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  /* crisp-edges убираем — ухудшает качество на Retina */
+}
+
+/* ═══════════════════════════════════════════════
+   DECORATIVE ORBS — blur на всех устройствах
+═══════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════
+   TOURVISOR FIXES
+═══════════════════════════════════════════════ */
 .TVCartStickyButton {
   opacity: 0 !important;
   position: fixed !important;
@@ -412,76 +539,56 @@
   z-index: -9999 !important;
 }
 
-/* === TOURVISOR MOBILE FIX === */
-/* Принудительно растягиваем контейнеры Турвизора */
 .tv-search-form,
 .tv-content,
 .tv-container,
 iframe[src*='tourvisor'] {
   width: 100% !important;
-  min-height: 500px !important; /* Гарантируем высоту */
+  min-height: 400px !important;
   height: auto !important;
   display: block !important;
 }
 
-/* Фикс для iOS Safari, чтобы iframe не сплющивался */
 #tab-tourvisor {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Улучшение качества изображений при масштабировании */
-.image-sharp {
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: crisp-edges;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000px;
+/* ═══════════════════════════════════════════════
+   PREFERS-REDUCED-MOTION
+   Уважаем настройки пользователя
+═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* Дыхание карточек туров: усиленная амплитуда для маленьких превью (на больших Hero хватает лёгкого) */
-@keyframes breathe-tour {
-  0% {
-    transform: scale(1) translate(0, 0);
+/* ═══════════════════════════════════════════════
+   PULSE ANIMATION FOR OFFICE WIDGET
+═══════════════════════════════════════════════ */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 171, 179, 0.4);
   }
   50% {
-    transform: scale(1.07) translate(1.2%, -0.8%);
-  }
-  100% {
-    transform: scale(1.04) translate(-0.8%, 1.2%);
+    box-shadow: 0 0 0 12px rgba(0, 171, 179, 0);
   }
 }
 
-.tour-card-breathe {
-  animation: breathe-tour 22s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+.animate-pulse-slow {
+  animation: pulse-slow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Разные фазы для каждой карточки (не синхронно) */
-[data-reveal-stagger] > *:nth-child(1) .tour-card-breathe {
-  animation-delay: 0s;
-}
-[data-reveal-stagger] > *:nth-child(2) .tour-card-breathe {
-  animation-delay: -4s;
-}
-[data-reveal-stagger] > *:nth-child(3) .tour-card-breathe {
-  animation-delay: -9s;
-}
-[data-reveal-stagger] > *:nth-child(4) .tour-card-breathe {
-  animation-delay: -14s;
-}
-[data-reveal-stagger] > *:nth-child(5) .tour-card-breathe {
-  animation-delay: -19s;
-}
-[data-reveal-stagger] > *:nth-child(6) .tour-card-breathe {
-  animation-delay: -23s;
-}
-[data-reveal-stagger] > *:nth-child(7) .tour-card-breathe {
-  animation-delay: -7s;
-}
-[data-reveal-stagger] > *:nth-child(8) .tour-card-breathe {
-  animation-delay: -18s;
+/* Пульсация отключается при открытии виджета */
+.pulse-disabled {
+  animation: none !important;
 }
