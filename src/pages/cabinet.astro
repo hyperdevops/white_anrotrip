@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets';
+import welcomeImg from '../assets/welcome/welcome.webp';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Личный кабинет — ANRO TRIP"
+  description="Вход в личный кабинет туриста ANRO TRIP. Управление бронированиями и документами."
+  showScrollProgress={false}
+  showScrollToTop={false}
+  showFavorites={false}
+  showOfficeWidget={false}
+>
+  <main class="fixed inset-0 z-0">
+    <!-- Полноэкранное фото без отступов -->
+    <Image
+      src={welcomeImg}
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover"
+      quality={85}
+      loading="eager"
+      fetchpriority="high"
+    />
+
+    <!-- Форма: 70px от верха, как на скриншоте -->
+    <div class="absolute inset-0 flex flex-col items-center pt-[90px] px-4">
+      <div
+        class="w-full max-w-[400px] rounded-2xl bg-white/85 shadow-[0_4px_24px_rgba(0,0,0,0.12)] p-6 sm:p-8"
+      >
+        <h1
+          class="text-gray-800 text-xl sm:text-2xl font-bold pb-4 border-b border-gray-200"
+        >
+          Личный кабинет туриста
+        </h1>
+
+        <form
+          action="https://lk.anrotrip.ru/index/welcome"
+          method="post"
+          class="mt-5 space-y-5"
+        >
+          <!-- Радио: Телефон / Email -->
+          <div
+            class="flex items-center gap-2 text-base"
+            id="cabinet-radio-group"
+          >
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input
+                type="radio"
+                name="inputType"
+                value="phone"
+                checked
+                class="w-4 h-4 accent-secondary cabinet-radio"
+              />
+              <span id="cabinet-label-phone" class="font-bold text-gray-800"
+                >Телефон</span
+              >
+            </label>
+            <span class="text-gray-500 font-medium">/</span>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input
+                type="radio"
+                name="inputType"
+                value="email"
+                class="w-4 h-4 accent-secondary cabinet-radio"
+              />
+              <span id="cabinet-label-email" class="text-gray-500">Email</span>
+            </label>
+          </div>
+
+          <input
+            id="cabinet-login"
+            type="text"
+            name="login"
+            placeholder=""
+            required
+            autocomplete="username"
+            class="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-900 text-base placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          />
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-primary-dark py-3.5 text-base font-bold text-white hover:bg-secondary transition-colors shadow-md"
+          >
+            Войти
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Подпись: 2 строки, чёрная тень по контуру букв для читаемости -->
+    <div class="absolute bottom-4 left-0 right-0 text-center text-sm">
+      <p
+        class="text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_0_4px_rgba(0,0,0,0.6)]"
+      >
+        © 2009–2026 ООО «МоиДокументы.ру»
+      </p>
+      <a
+        href="https://www.moidokumenti.ru"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[var(--color-primary)] hover:underline [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_0_4px_rgba(0,0,0,0.6)]"
+      >
+        www.moidokumenti.ru
+      </a>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.cabinet-radio').forEach((r) => {
+      r.addEventListener('change', () => {
+        const radio = r as HTMLInputElement;
+        const phone = document.getElementById('cabinet-label-phone');
+        const email = document.getElementById('cabinet-label-email');
+        if (radio.value === 'phone') {
+          phone?.classList.add('font-bold', 'text-gray-800');
+          phone?.classList.remove('text-gray-500');
+          email?.classList.remove('font-bold', 'text-gray-800');
+          email?.classList.add('text-gray-500');
+        } else {
+          email?.classList.add('font-bold', 'text-gray-800');
+          email?.classList.remove('text-gray-500');
+          phone?.classList.remove('font-bold', 'text-gray-800');
+          phone?.classList.add('text-gray-500');
+        }
+      });
+    });
+  </script>
+</Layout>

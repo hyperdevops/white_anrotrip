@@ -14,12 +14,18 @@ interface Props {
   title: string;
   description?: string;
   showFavorites?: boolean;
+  showScrollProgress?: boolean;
+  showScrollToTop?: boolean;
+  showOfficeWidget?: boolean;
 }
 
 const {
   title,
   description = 'ANRO TRIP — Путешествия, которые меняют жизнь.',
   showFavorites = true,
+  showScrollProgress = true,
+  showScrollToTop = true,
+  showOfficeWidget = true,
 } = Astro.props;
 ---
 
@@ -66,11 +72,11 @@ const {
   <body
     class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary-dark"
   >
-    <ScrollProgress />
+    {showScrollProgress && <ScrollProgress />}
     <slot />
-    <ScrollToTop />
+    {showScrollToTop && <ScrollToTop />}
     {showFavorites && <FavoritesWidget />}
-    <OfficeWidget />
+    {showOfficeWidget && <OfficeWidget />}
     <CookieBanner />
     <GiftModal />
     <CallbackModal />
