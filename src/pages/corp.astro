@@ -75,18 +75,17 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
 
-        <!-- Заголовок -->
+        <!-- Заголовок: обычный текст, шире на десктопе чтобы вмещался по ширине -->
         <h1
-          class="font-montserrat font-extrabold uppercase tracking-tight leading-[0.95] drop-shadow-2xl mb-6 reveal-hidden"
-          style="font-size: clamp(2.5rem, 2rem + 5vw, 5rem);"
+          class="font-montserrat font-extrabold uppercase tracking-tight leading-[1.15] drop-shadow-2xl mb-6 reveal-hidden max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto px-1"
+          style="font-size: clamp(1.875rem, 1.5rem + 2.5vw, 4rem);"
         >
-          Коммерческое<br />
-          <span class="text-primary">предложение</span>
+          Коммерческое <span class="text-primary">предложение</span>
         </h1>
 
-        <!-- Подзаголовок -->
+        <!-- Подзаголовок: обычный регистр на мобиле, uppercase на десктопе -->
         <p
-          class="font-montserrat font-semibold text-white/90 uppercase tracking-wider mb-4 text-lg sm:text-xl reveal-hidden"
+          class="font-montserrat font-semibold text-white/90 sm:uppercase sm:tracking-wider mb-4 text-base sm:text-xl reveal-hidden"
         >
           туристической компании ANRO TRIP
         </p>
@@ -239,11 +238,10 @@ import Layout from '../layouts/Layout.astro';
               </div>
 
               <h2
-                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6 leading-[1.05]"
+                class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6 leading-[1.2]"
                 style="font-size: clamp(1.75rem, 1.25rem + 2.5vw, 3rem);"
               >
-                Профессиональный сервис —<br />
-                <span class="text-primary">ведущее направление</span>
+                Профессиональный сервис — <span class="text-primary">ведущее направление</span>
               </h2>
 
               <p
@@ -380,16 +378,16 @@ import Layout from '../layouts/Layout.astro';
               </h3>
 
               <p class="text-gray-600 text-base leading-relaxed mb-6">
-                Подбор и оформление авиабилетов - одно из основных направлений
+                Подбор и оформление авиабилетов — одно из основных направлений
                 деятельности компании ANRO TRIP. Мы готовы предложить Вам весь
                 возможный ассортимент авиапродуктов. <strong
                   class="text-gray-900 font-semibold"
-                  >СОБСТВЕННАЯ АВИАКАССА</strong
-                > позволяет нам выписать практически любой авиаперелет на планете.
+                  >Собственная авиакасса</strong
+                > позволяет нам выписать практически любой авиаперелёт на планете.
               </p>
 
               <ul class="space-y-4 text-gray-600 text-base leading-relaxed">
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
                   >
@@ -403,13 +401,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Наши специалисты работают напрямую в системах авиакомпаний, поэтому
-                  <strong class="text-gray-900 font-semibold"
-                    >ОФОРМИТЬ, ПОМЕНЯТЬ, ВЕРНУТЬ</strong
-                  > билет по вашей просьбе мы можем в считанные минуты. Вам не нужно
-                  лично дозваниваться в авиакомпании, чтобы внести изменения в заказ.
+                  <span class="min-w-0 break-words">Наши специалисты работают напрямую в системах авиакомпаний, поэтому <strong class="text-gray-900 font-semibold">оформить, поменять, вернуть</strong> билет по вашей просьбе мы можем в считанные минуты. Вам не нужно лично дозваниваться в авиакомпании, чтобы внести изменения в заказ.</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
                   >
@@ -423,13 +417,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Регистрация в <strong class="text-gray-900 font-semibold"
-                    >БОНУСНЫХ ПРОГРАММАХ</strong
-                  > авиакомпаний оформляется нашим менеджером корпоративного отдела,
-                  даже если Вы летите первый раз! Это позволит Вам накапливать бонусы,
-                  приобретать авиабилеты за мили, повышать класс обслуживания на борту.
+                  <span class="min-w-0 break-words">Регистрация в <strong class="text-gray-900 font-semibold">бонусных программах</strong> авиакомпаний оформляется нашим менеджером корпоративного отдела, даже если Вы летите первый раз! Это позволит Вам накапливать бонусы, приобретать авиабилеты за мили, повышать класс обслуживания на борту.</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
                   >
@@ -443,9 +433,7 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Так же специалисты проведут по запросу апгрейд на бизнес-класс,
-                  заказ спецуслуг (питание, перевоз спортинвентаря, оружия, домашних
-                  животных и другое).
+                  <span class="min-w-0 break-words">Так же специалисты проведут по запросу апгрейд на бизнес-класс, заказ спецуслуг (питание, перевоз спортинвентаря, оружия, домашних животных и другое).</span>
                 </li>
               </ul>
             </div>
@@ -573,15 +561,15 @@ import Layout from '../layouts/Layout.astro';
               </h3>
 
               <p class="text-gray-600 text-base leading-relaxed mb-6">
-                Индивидуальный тур – это возможность путешествовать именно так,
+                Индивидуальный тур — это возможность путешествовать именно так,
                 как вам хочется, и при этом иметь все гарантии качественного и
                 безопасного отдыха. <strong class="text-gray-900 font-semibold"
                   >Мы с радостью реализуем даже самые смелые планы.</strong
-                > Специально для этого мы оформили ЛИЦЕНЗИЮ ТУРОПЕРАТОРА (РТО 022708).
+                > Специально для этого мы оформили лицензию туроператора (РТО 022708).
               </p>
 
               <ul class="space-y-4 text-gray-600 text-base leading-relaxed">
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
                   >
@@ -595,11 +583,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  <strong class="text-gray-900 font-semibold"
-                    >МЫ СОТРУДНИЧАЕМ С НАДЕЖНЫМИ ТУРОПЕРАТОРАМИ.</strong
-                  > Поможем подобрать пакетный или индивидуальный тур.
+                  <span class="min-w-0 break-words"><strong class="text-gray-900 font-semibold">Мы сотрудничаем с надёжными туроператорами.</strong> Поможем подобрать пакетный или индивидуальный тур.</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
                   >
@@ -613,12 +599,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Так же вы можете самостоятельно воспользоваться УДОБНЫМ <strong
-                    class="text-gray-900 font-semibold"
-                    >ОНЛАЙН ПОИСКОМ ТУРОВ НА НАШЕМ САЙТЕ</strong
-                  > WWW.ANROTRIP.RU
+                  <span class="min-w-0 break-words">Так же вы можете самостоятельно воспользоваться удобным <strong class="text-gray-900 font-semibold">онлайн-поиском туров на нашем сайте</strong> anrotrip.ru</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center mt-0.5"
                   >
@@ -632,10 +615,7 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Осуществляем <strong class="text-gray-900 font-semibold"
-                    >ВИЗОВУЮ ПОДДЕРЖКУ</strong
-                  > наших клиентов - консультация, подготовка пакета документов для
-                  подачи, запись в консульство и сопровождение до получения визы.
+                  <span class="min-w-0 break-words">Осуществляем <strong class="text-gray-900 font-semibold">визовую поддержку</strong> наших клиентов: консультация, подготовка пакета документов для подачи, запись в консульство и сопровождение до получения визы.</span>
                 </li>
               </ul>
             </div>
@@ -685,7 +665,7 @@ import Layout from '../layouts/Layout.astro';
               </p>
 
               <ul class="space-y-4 text-gray-600 text-base leading-relaxed">
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
                   >
@@ -699,9 +679,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Вас встречают в аэропорту на выходе из зоны прибытия;
+                  <span class="min-w-0 break-words">Вас встречают в аэропорту на выходе из зоны прибытия;</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
                   >
@@ -715,10 +695,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Вас провожают к специально зарезервированной только для Вас! машине
-                  с водителем;
+                  <span class="min-w-0 break-words">Вас провожают к специально зарезервированной только для Вас машине с водителем;</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
                   >
@@ -732,9 +711,9 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Вид автомобиля Вы выбираете сами при оформлении заказа трансфера;
+                  <span class="min-w-0 break-words">Вид автомобиля Вы выбираете сами при оформлении заказа трансфера;</span>
                 </li>
-                <li class="flex gap-3">
+                <li class="flex gap-3 min-w-0">
                   <span
                     class="shrink-0 w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center mt-0.5"
                   >
@@ -748,7 +727,7 @@ import Layout from '../layouts/Layout.astro';
                         clip-rule="evenodd"></path></svg
                     >
                   </span>
-                  Вы едете в персональном автомобиле по кратчайшему пути к отелю.
+                  <span class="min-w-0 break-words">Вы едете в персональном автомобиле по кратчайшему пути к отелю.</span>
                 </li>
               </ul>
             </div>
@@ -979,7 +958,7 @@ import Layout from '../layouts/Layout.astro';
           >
             <!-- Телефон -->
             <div
-              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300"
+              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300 min-w-0 break-words"
             >
               <div
                 class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
@@ -1022,7 +1001,7 @@ import Layout from '../layouts/Layout.astro';
 
             <!-- Почта -->
             <div
-              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300"
+              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300 min-w-0 break-words"
             >
               <div
                 class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
@@ -1055,7 +1034,7 @@ import Layout from '../layouts/Layout.astro';
 
             <!-- Офисы -->
             <div
-              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300"
+              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-300 min-w-0 break-words"
             >
               <div
                 class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"

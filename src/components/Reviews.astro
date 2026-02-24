@@ -1,15 +1,18 @@
 ---
 // src/components/Reviews.astro
 
+// Локальный placeholder до загрузки реальных фото отзывов
+const reviewPlaceholder = '/images/review-placeholder.svg';
+
 const reviews = [
-  { id: 1, title: 'Молодежь Южного Урала', src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+1' },
-  { id: 2, title: 'Ниагара',               src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+2' },
-  { id: 3, title: 'Мерседес',              src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+3' },
-  { id: 4, title: 'Никс',                  src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+4' },
-  { id: 5, title: 'Письмо Аня Усманова',   src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+5' },
-  { id: 6, title: 'Napoleon',              src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+6' },
-  { id: 7, title: 'Проектное бюро',        src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+7' },
-  { id: 8, title: 'Урал НИИ СТРОЙ',        src: 'https://placehold.co/600x800/EEE/31343C?text=Doc+8' },
+  { id: 1, title: 'Молодежь Южного Урала', src: reviewPlaceholder },
+  { id: 2, title: 'Ниагара',               src: reviewPlaceholder },
+  { id: 3, title: 'Мерседес',              src: reviewPlaceholder },
+  { id: 4, title: 'Никс',                  src: reviewPlaceholder },
+  { id: 5, title: 'Письмо Аня Усманова',   src: reviewPlaceholder },
+  { id: 6, title: 'Napoleon',              src: reviewPlaceholder },
+  { id: 7, title: 'Проектное бюро',        src: reviewPlaceholder },
+  { id: 8, title: 'Урал НИИ СТРОЙ',        src: reviewPlaceholder },
 ];
 ---
 
@@ -71,7 +74,7 @@ const reviews = [
                 </div>
               </div>
             </div>
-            <p class="text-center text-[11px] text-white/40 mt-2 truncate px-1">{item.title}</p>
+            <p class="text-center text-[11px] text-white/40 mt-2 truncate px-1" title={item.title}>{item.title}</p>
           </div>
         ))}
       </div>

@@ -182,12 +182,14 @@ const team = [
 
           <div class="space-y-1 w-full">
             <a href={`mailto:${member.email}`}
-              class="block text-[10px] text-primary hover:text-secondary transition-colors font-medium truncate px-1">
+              class="block text-[10px] text-primary hover:text-secondary transition-colors font-medium truncate px-1"
+              title={member.email}>
               {member.email}
             </a>
             {member.phone && (
               <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`}
-                class="block text-[10px] text-gray-400 hover:text-primary transition-colors whitespace-nowrap">
+                class="block text-[10px] text-gray-400 hover:text-primary transition-colors truncate px-1"
+                title={member.phone}>
                 {member.phone}
               </a>
             )}

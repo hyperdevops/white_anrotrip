@@ -38,7 +38,8 @@ white_anrotrip/
 │   │   ├── certif/         # certif.webp — подарочный сертификат
 │   │   ├── partners/       # 10 логотипов партнёров .webp
 │   │   ├── corp/           # corp.webp, corp1–4.webp — страница КП
-│   │   └── team/           # 23 фото команды + team.webp (групповое)
+│   │   ├── team/           # 23 фото команды + team.webp (групповое)
+│   │   └── welcome/        # welcome.webp — страница Cabinet
 │   ├── components/
 │   │   ├── Header.astro        # Floating pill nav, scroll shrink
 │   │   ├── Hero.astro          # Fullscreen, kenburns, parallax (desktop only)
@@ -61,10 +62,11 @@ white_anrotrip/
 │   ├── layouts/Layout.astro
 │   ├── pages/
 │   │   ├── index.astro
-│   │   └── corp.astro      # Коммерческое предложение (/corp)
+│   │   ├── corp.astro      # Коммерческое предложение (/corp)
+│   │   └── cabinet.astro   # Личный кабинет туриста (/cabinet)
 │   └── styles/global.css
 ├── public/favicon.svg           # Логотип с пунктирным кругом + самолётик
-├── doc/anro-trip-guide-optimized.md
+├── .doc/anro-trip-guide-optimized.md
 └── package.json
 ```
 
@@ -104,15 +106,15 @@ z-0             Hero
 
 ```css
 @theme {
-  --color-primary:         #00abb3;  /* ⭐ Бренд-тил (цвет «trip» в логотипе) */
-  --color-primary-light:   #33bfc6;
-  --color-primary-dark:    #008a91;
-  --color-secondary:       #006d73;  /* Глубокий тил */
+  --color-primary: #00abb3; /* ⭐ Бренд-тил (цвет «trip» в логотипе) */
+  --color-primary-light: #33bfc6;
+  --color-primary-dark: #008a91;
+  --color-secondary: #006d73; /* Глубокий тил */
   --color-secondary-hover: #00585d;
-  --color-cta:             #ffd417;  /* Янтарный (CTA, контраст к тилу) */
-  --color-cta-hover:       #e5be14;
+  --color-cta: #ffd417; /* Янтарный (CTA, контраст к тилу) */
+  --color-cta-hover: #e5be14;
   --font-montserrat: 'Montserrat', sans-serif;
-  --font-inter:      'Inter', sans-serif;
+  --font-inter: 'Inter', sans-serif;
 }
 ```
 
@@ -122,25 +124,14 @@ z-0             Hero
 
 Логотип — SVG inline: пунктирный круг (медленно вращается на десктопе) + самолётик `#00abb3` + текст "ANRO" чёрным + "trip" бирюзовым курсивом.
 
-- **Hero:** крупный логотип над заголовком, класс `hero-logo-spin` (20s, только `@media hover`)
+- **Hero:** бренд «ANRO TRIP» в тексте h1 (класс `hero-gradient-text`), отдельного SVG-логотипа нет
 - **Header:** компактный логотип, `header-logo-spin` (30s, только `@media hover`)
 - **Footer:** такой же как в хедере
 - **Вкладка браузера:** `public/favicon.svg` — рукописный SVG с тем же стилем
 
-### Glassmorphism (ОПТИМИЗИРОВАНО)
+### Glassmorphism
 
-```css
-/* backdrop-filter blur — ТОЛЬКО на десктопе! На мобайле дорого. */
-.glass-panel {
-  background: rgba(255,255,255,0.85);  /* мобайл — без blur */
-}
-@media (hover: hover) {
-  .glass-panel {
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px);
-  }
-}
-```
+`.glass-panel` и `.glass-panel-interactive` используют `backdrop-filter` **везде** (включая мобайл). В коде blur не ограничен `@media (hover: hover)`.
 
 ### Скругления 2026
 
@@ -182,6 +173,7 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 ✅ `meta theme-color`, Open Graph
 ✅ `fetchpriority="high"` на hero-изображении
 ✅ Страница `/corp` — Коммерческое предложение (Hero-блок, фото corp.webp)
+✅ Страница `/cabinet` — Личный кабинет туриста (форма входа, welcome.webp)
 ✅ About CTA «Коммерческое Предложение» → `/corp`
 ❌ Dark Mode (отменён)
 
@@ -191,29 +183,25 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 
 Главное правило: **тяжёлые эффекты только на `@media (hover: hover)`** (= десктоп с мышью).
 
-| Эффект | Мобайл | Десктоп |
-|--------|--------|---------|
-| `backdrop-filter blur` | ❌ нет | ✅ есть |
-| `blur-3xl` декор-орбы | ❌ скрыты | ✅ видны |
-| Ken Burns | ❌ статично | ✅ 30s анимация |
-| Parallax Hero | ❌ нет | ✅ 0.15 коэф. |
-| Marquee партнёры | ❌ grid-cols-2 | ✅ marquee |
-| Tour card breathe | ❌ нет | ✅ 24s анимация |
-| Logo spin | ❌ нет | ✅ 20-30s |
-| hero-gradient-text | ❌ просто белый | ✅ shine анимация |
+| Эффект                 | Мобайл          | Десктоп           |
+| ---------------------- | --------------- | ----------------- |
+| `backdrop-filter blur` | ✅ есть         | ✅ есть           |
+| Ken Burns              | ❌ статично     | ✅ 30s анимация   |
+| Parallax Hero          | ❌ нет          | ✅ 0.15 коэф.     |
+| Marquee партнёры       | ❌ grid-cols-2  | ✅ marquee        |
+| Tour card breathe      | ❌ нет          | ✅ 24s анимация   |
+| Logo spin              | ❌ нет          | ✅ 20-30s         |
+| hero-gradient-text     | ❌ просто белый | ✅ shine анимация |
 
 ```css
 /* Паттерн для всех тяжёлых эффектов */
-.my-animation { animation: none; }
-@media (hover: hover) {
-  .my-animation { animation: my-anim 20s linear infinite; }
+.my-animation {
+  animation: none;
 }
-```
-
-Декоративные blur-орбы скрыты глобально:
-```css
-@media (max-width: 767px) {
-  .blur-3xl, .blur-2xl { display: none !important; }
+@media (hover: hover) {
+  .my-animation {
+    animation: my-anim 20s linear infinite;
+  }
 }
 ```
 
@@ -223,11 +211,15 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 
 ## 🔧 КЛЮЧЕВЫЕ КОМПОНЕНТЫ
 
+### Layout.astro
+
+- **Пропсы (по умолчанию true):** `showScrollProgress`, `showScrollToTop`, `showFavorites`, `showOfficeWidget` — управляют отображением виджетов.
+- На странице cabinet все четыре отключены.
+
 ### Hero.astro
 
 - `loading="eager"` + `fetchpriority="high"` + `quality={75}` на фоне
-- Логотип поверх страницы (первый элемент)
-- Бейдж + h1 + подзаголовок + 2 CTA кнопки + стат-пилюли + scroll-индикатор
+- Бейдж + h1 (бренд «ANRO TRIP» в hero-gradient-text) + подзаголовок + 2 CTA кнопки + scroll-индикатор
 - Parallax: `scrollY * -0.15`, только десктоп
 
 ### Header.astro
@@ -292,6 +284,7 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 ### corp.astro (страница /corp)
 
 **Структура (8 блоков):**
+
 1. **Hero** — `sticky top-0 z-0`, фон corp.webp; при скролле фото фиксировано, контент наползает
 2. **#content** — вводный текст (бейдж, заголовок, теги, карточка)
 3. **#corp-avia** — Авиа и ж/д билеты (corp1.webp, слева фото)
@@ -304,6 +297,15 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 **Header на corp:** `navItems` (О компании, Авиабилеты, Отели, Туры, Трансфер, Преимущества, Контакты), `ctaText="Связаться"`, `ctaHref="#corp-contacts"`
 
 **Обёртка контента:** `div` с `z-10 mt-[20vh]` — контент наползает на sticky Hero. Тексты — оригинал anrotrip.ru.
+
+### cabinet.astro (страница /cabinet)
+
+- Страница входа в Личный кабинет туриста
+- Без Header; Layout с `showScrollProgress`/`showScrollToTop`/`showFavorites`/`showOfficeWidget` = false
+- Форма: radio Телефон/Email, поле ввода, кнопка «Войти»
+- `action="https://lk.anrotrip.ru/index/welcome"`
+- Фон `welcome.webp` из `assets/welcome/`
+- Подпись: «© 2009–2026 ООО «МоиДокументы.ру»», ссылка moidokumenti.ru
 
 ### GiftSection.astro
 
@@ -318,10 +320,17 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 ### Tourvisor (НЕ ТРОГАТЬ!)
 
 ```css
-.TVCartStickyButton { opacity:0!important; left:-9999px!important; }
-iframe[src*='tourvisor'] { width:100%!important; min-height:500px!important; }
+.TVCartStickyButton {
+  opacity: 0 !important;
+  left: -9999px !important;
+}
+iframe[src*='tourvisor'] {
+  width: 100% !important;
+  min-height: 500px !important;
+}
 ```
-+ `window.dispatchEvent(new Event('resize'))` при переключении таба.
+
+- `window.dispatchEvent(new Event('resize'))` при переключении таба.
 
 ### Nemo Travel
 
@@ -420,22 +429,33 @@ npx prettier --write "src/**/*.astro"
 
 ---
 
-**Версия:** 3.1
+**Версия:** 3.2
 **Дата:** 22 февраля 2026
 **Автор:** AI Senior Fullstack Developer + hyper
 **Статус:** Актуально
 
+**Изменения от v3.2 (22.02.2026):**
+
+- Страница `/cabinet` — Личный кабинет туриста (форма входа, welcome.webp, без Header)
+- **Layout.astro** — пропсы `showScrollProgress`, `showScrollToTop`, `showFavorites`, `showOfficeWidget` (по умолчанию true)
+- **Hero** — уточнение: бренд «ANRO TRIP» в h1 (hero-gradient-text), без отдельного SVG-логотипа
+- **glass-panel** — blur включён везде (без `@media (hover: hover)`)
+- Удаление несуществующего правила blur-орбов (display:none на мобайле)
+
 **Изменения от v3.1 (22.02.2026):**
+
 - **corp.astro** — 8 блоков: Hero (sticky), вводный текст, Авиабилеты (corp1), Отели (corp), Туры (corp2), Трансфер (corp3), Преимущества (corp4, 3 карточки), Контакты. Sticky Hero — фото corp.webp фиксировано, контент наползает при скролле.
 - **Header.astro** — пропсы `navItems`, `ctaText`, `ctaHref` для corp-навигации; логотип всегда ведёт на `/` с эффектом fade-out.
 - **Логотип** — клик: с corp → fade → переход на главную; на главной → fade → scroll to top → fade-in.
 
 **Изменения от v3.0 (21.02.2026):**
+
 - Страница `/corp` — Коммерческое предложение (Hero-блок, corp.webp)
 - About CTA «Коммерческое Предложение» → `/corp`
 - Content блок: убран `rounded-t-[40px]` — прямой стык Hero/контент
 
 **Изменения от v2.0:**
+
 - Полный редизайн всех компонентов в стиле 2026
 - Новая цветовая схема бренда (#00abb3)
 - Логотип в Hero, Header, Footer, favicon
