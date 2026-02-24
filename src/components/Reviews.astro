@@ -356,4 +356,25 @@ const reviews = [
       if (e.key === 'ArrowLeft')  window.changeSlide(-1);
     }
   });
+
+  function initReviewsCyclicScroll() {
+    const el = document.getElementById('reviews-scroller');
+    if (!el || window.innerWidth >= 768) return;
+    let ticking = false;
+    const loop = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return;
+      const left = el.scrollLeft;
+      if (left <= 20) el.scrollLeft = maxScroll;
+      else if (left >= maxScroll - 20) el.scrollLeft = 0;
+      ticking = false;
+    };
+    el.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(loop);
+    });
+  }
+  initReviewsCyclicScroll();
+  document.addEventListener('astro:page-load', initReviewsCyclicScroll);
 </script>

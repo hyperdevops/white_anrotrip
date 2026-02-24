@@ -13,7 +13,7 @@ const { id, title } = Astro.props;
   class="modal bg-transparent p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
 >
   <div
-    class="modal-box relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-auto mt-20 transform transition-all scale-95 opacity-0 open:scale-100 open:opacity-100"
+    class="modal-box relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-auto mt-20 max-h-[90dvh] overflow-y-auto transform transition-all scale-95 opacity-0 open:scale-100 open:opacity-100"
   >
     <!-- Кнопка закрытия -->
     <button
@@ -51,9 +51,8 @@ const { id, title } = Astro.props;
 
   // Логика открытия (слушаем события на document)
   document.addEventListener(`open-modal-${id}`, () => {
-    dialog.showModal();
-    (d as HTMLDialogElement).showModal();
-    d.querySelector('.modal-box')?.classList.remove('scale-95', 'opacity-0');
+    (dialog as HTMLDialogElement)?.showModal();
+    dialog?.querySelector('.modal-box')?.classList.remove('scale-95', 'opacity-0');
   });
 
   document.addEventListener('click', (e) => {
@@ -86,11 +85,5 @@ const { id, title } = Astro.props;
   }
   dialog::backdrop {
     transition: background-color 0.2s;
-  }
-
-  /* Стили скроллбара */
-  .modal-box {
-    max-height: 90vh;
-    overflow-y: auto;
   }
 </style>

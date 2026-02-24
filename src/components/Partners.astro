@@ -107,40 +107,60 @@ const { class: classes = '' }: Props = Astro.props;
       ))}
     </div>
 
-    <!-- ===== ЛЕНТА ЛОГОТИПОВ (marquee на всех устройствах) ===== -->
-    <div class="reveal-hidden relative">
+    <!-- ===== ЛЕНТА ЛОГОТИПОВ ===== -->
+    <!-- Мобилка: один ряд, прокрутка пальцем, fade-маски как в Отзывах -->
+    <div class="reveal-hidden relative md:hidden">
+      <div class="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-slate-50 to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-blue-50/60 to-transparent z-10 pointer-events-none"></div>
+      <div
+        class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4"
+        style="-webkit-overflow-scrolling: touch;"
+      >
+        {partners.map((partner) => (
+          <div class="snap-start shrink-0 w-40 min-h-[7.5rem] rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-4 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
+            <Image
+              src={partner.logo}
+              alt={partner.name}
+              class="max-h-full w-auto max-w-full object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-300"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Десктоп: marquee, без изменений -->
+    <div class="reveal-hidden relative hidden md:block">
       <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
-
-        <div class="overflow-hidden mb-4">
-          <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
-            {row1.map((partner) => (
-              <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  class="max-h-full w-auto object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300 group-hover:grayscale-0"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
+      <div class="overflow-hidden mb-4">
+        <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
+          {row1.map((partner) => (
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                class="max-h-full w-auto object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-300 group-hover:grayscale-0"
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
-
-        <div class="overflow-hidden">
-          <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
-            {row2doubled.map((partner) => (
-              <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  class="max-h-full w-auto object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300 group-hover:grayscale-0"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
+      </div>
+      <div class="overflow-hidden">
+        <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
+          {row2doubled.map((partner) => (
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                class="max-h-full w-auto object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-300 group-hover:grayscale-0"
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
+      </div>
     </div>
 
     <!-- ===== CTA ===== -->
@@ -159,4 +179,27 @@ const { class: classes = '' }: Props = Astro.props;
 
   </div>
 </section>
+
+<script>
+  function initPartnersCyclicScroll() {
+    const el = document.getElementById('partners-cyclic-scroll');
+    if (!el || window.innerWidth >= 768) return;
+    let ticking = false;
+    const loop = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return;
+      const left = el.scrollLeft;
+      if (left <= 20) el.scrollLeft = maxScroll;
+      else if (left >= maxScroll - 20) el.scrollLeft = 0;
+      ticking = false;
+    };
+    el.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(loop);
+    });
+  }
+  initPartnersCyclicScroll();
+  document.addEventListener('astro:page-load', initPartnersCyclicScroll);
+</script>
 
