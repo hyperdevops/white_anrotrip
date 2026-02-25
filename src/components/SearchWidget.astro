@@ -9,10 +9,20 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
   class="glass-panel bg-white rounded-3xl shadow-2xl border border-white/30 overflow-visible"
 >
   <!-- Переключатель вкладок -->
-  <div class="flex p-2 gap-1.5 border-b border-gray-100">
+  <div
+    class="flex p-2 gap-1.5 border-b border-gray-100"
+    role="tablist"
+    aria-label="Поиск: Авиабилеты или Туры и Отели"
+  >
     <!-- Tab: Авиабилеты -->
     <button
-      class="tab-btn flex-1 flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-gray-500 hover:text-gray-800 transition-all duration-250 relative active-tab"
+      id="search-tab-nemo"
+      type="button"
+      role="tab"
+      aria-selected="true"
+      aria-controls="tab-nemo"
+      tabindex="0"
+      class="tab-btn flex-1 flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-gray-500 hover:text-gray-800 transition-all duration-250 relative active-tab focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       data-target="nemo"
     >
       <svg
@@ -36,7 +46,13 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
 
     <!-- Tab: Туры и Отели -->
     <button
-      class="tab-btn flex-1 flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-gray-500 hover:text-gray-800 transition-all duration-250 relative"
+      id="search-tab-tourvisor"
+      type="button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="tab-tourvisor"
+      tabindex="-1"
+      class="tab-btn flex-1 flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-gray-500 hover:text-gray-800 transition-all duration-250 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       data-target="tourvisor"
     >
       <svg
@@ -61,13 +77,20 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
 
   <!-- Контент -->
   <div class="p-4 sm:p-6 min-h-37.5 relative z-30">
-    <div id="tab-nemo" class="tab-content block sw-fade-in">
+    <div
+      id="tab-nemo"
+      role="tabpanel"
+      aria-labelledby="search-tab-nemo"
+      class="tab-content block sw-fade-in"
+    >
       <NemoSearch />
     </div>
     <div
       id="tab-tourvisor"
-      class="tab-content sw-fade-in"
-      style="min-height: 400px; width: 100%; display: none;"
+      role="tabpanel"
+      aria-labelledby="search-tab-tourvisor"
+      class="tab-content sw-fade-in hidden"
+      style="min-height: 400px; width: 100%;"
     >
       <TourvisorSearch />
     </div>
@@ -75,10 +98,11 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
 </section>
 
 <script>
-  const tabs = document.querySelectorAll('.tab-btn');
+  const tabList = document.querySelector('[role="tablist"]');
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn[role="tab"]'));
   const contents = document.querySelectorAll<HTMLElement>('.tab-content');
 
-  const switchTab = (targetId: string) => {
+  const switchTab = (targetId: string, focusActive = false) => {
     contents.forEach((c) => {
       c.classList.add('hidden');
       c.style.display = 'none';
@@ -86,15 +110,20 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
 
     tabs.forEach((t) => {
       t.classList.remove('text-primary', 'active-tab');
+      t.setAttribute('aria-selected', 'false');
+      t.setAttribute('tabindex', '-1');
       const ind = t.querySelector('.active-indicator') as HTMLElement | null;
       if (ind) ind.classList.replace('scale-100', 'scale-0');
     });
 
-    const activeBtn = document.querySelector(
+    const activeBtn = document.querySelector<HTMLButtonElement>(
       `.tab-btn[data-target="${targetId}"]`,
     );
     if (activeBtn) {
       activeBtn.classList.add('text-primary', 'active-tab');
+      activeBtn.setAttribute('aria-selected', 'true');
+      activeBtn.setAttribute('tabindex', '0');
+      if (focusActive) activeBtn.focus();
       const ind = activeBtn.querySelector('.active-indicator');
       if (ind) {
         ind.classList.replace('scale-0', 'scale-100');
@@ -111,7 +140,30 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
     }
   };
 
-  // Init first tab
+  // Клавиатура: стрелки влево/вправо, Home, End
+  tabList?.addEventListener('keydown', (e) => {
+    const ev = e as KeyboardEvent;
+    const currentIndex = tabs.findIndex((t) => t.getAttribute('tabindex') === '0');
+    if (currentIndex === -1) return;
+    let nextIndex = currentIndex;
+    if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+      nextIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+    } else if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') {
+      ev.preventDefault();
+      nextIndex = currentIndex === tabs.length - 1 ? 0 : currentIndex + 1;
+    } else if (ev.key === 'Home') {
+      ev.preventDefault();
+      nextIndex = 0;
+    } else if (ev.key === 'End') {
+      ev.preventDefault();
+      nextIndex = tabs.length - 1;
+    } else return;
+    const target = tabs[nextIndex]?.getAttribute('data-target');
+    if (target) switchTab(target, true);
+  });
+
+  // Init first tab (aria and tabindex already set in HTML; ensure panel state)
   const firstBtn = document.querySelector('.tab-btn.active-tab');
   if (firstBtn) {
     const ind = firstBtn.querySelector('.active-indicator');

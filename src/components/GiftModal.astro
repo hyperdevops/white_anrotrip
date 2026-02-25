@@ -17,7 +17,9 @@ import certifImg from '../assets/certif/certif.webp';
     <!-- Крестик закрытия -->
     <button
       id="close-gift-modal"
-      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none bg-gray-50 rounded-full hover:bg-gray-100 transition-colors z-10"
+      type="button"
+      aria-label="Закрыть окно подарочного сертификата"
+      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors z-10"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -132,20 +134,55 @@ import certifImg from '../assets/certif/certif.webp';
     }
   }
 
+  let previousActiveElement = null as HTMLElement | null;
+
+  function getFocusables(container: HTMLElement) {
+    const sel =
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(container.querySelectorAll<HTMLElement>(sel)).filter(
+      (el) => el.offsetParent !== null && !el.hasAttribute('aria-hidden'),
+    );
+  }
+
+  function trapFocus(e: KeyboardEvent) {
+    if (e.key !== 'Tab') return;
+    const content = document.getElementById('gift-modal-content');
+    if (!content) return;
+    const focusables = getFocusables(content);
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   function openGiftModal() {
     const overlay = document.getElementById('gift-modal-overlay');
     const content = document.getElementById('gift-modal-content');
+    const closeBtn = document.getElementById('close-gift-modal');
 
     if (overlay && content) {
+      previousActiveElement = document.activeElement as HTMLElement | null;
       overlay.classList.remove('hidden');
       overlay.style.display = 'flex';
 
-      toggleHeader(true); // Скрываем хедер
+      toggleHeader(true);
 
       setTimeout(() => {
         overlay.classList.remove('opacity-0');
         content.classList.remove('translate-y-20');
         content.classList.add('translate-y-0');
+        closeBtn?.focus();
+        content.addEventListener('keydown', trapFocus);
       }, 10);
       window.lockScroll();
     }
@@ -156,6 +193,7 @@ import certifImg from '../assets/certif/certif.webp';
     const content = document.getElementById('gift-modal-content');
 
     if (overlay && content) {
+      content.removeEventListener('keydown', trapFocus);
       overlay.classList.add('opacity-0');
       content.classList.remove('translate-y-0');
       content.classList.add('translate-y-20');
@@ -164,12 +202,13 @@ import certifImg from '../assets/certif/certif.webp';
         overlay.classList.add('hidden');
         overlay.style.display = 'none';
         window.unlockScroll();
-        toggleHeader(false); // Возвращаем хедер
+        toggleHeader(false);
+        previousActiveElement?.focus();
+        previousActiveElement = null;
       }, 500);
     }
   }
 
-  // Добавляем функции в глобальный объект window
   window.openGiftModal = openGiftModal;
   window.closeGiftModal = closeGiftModal;
 

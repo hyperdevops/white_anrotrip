@@ -84,7 +84,7 @@ const reviews = [
     <div class="text-center mt-10 reveal-hidden">
       <button
         id="open-review-form"
-        class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-white/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 hover:-translate-y-0.5 transition-all duration-300 btn-magnetic"
+        class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-white/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 hover:-translate-y-0.5 transition-all duration-300 btn-magnetic focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
       >
         <svg class="w-4 h-4 text-cta" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -102,8 +102,13 @@ const reviews = [
   >
     <!-- Панель управления -->
     <div class="absolute top-0 right-0 p-5 flex gap-3 z-2147483649" onclick="event.stopPropagation()">
-      <button onclick="toggleZoom(event)"
-        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors" id="zoom-btn">
+      <button
+        type="button"
+        aria-label="Увеличить или уменьшить"
+        onclick="toggleZoom(event)"
+        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        id="zoom-btn"
+      >
         <svg id="icon-zoom-in" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
         </svg>
@@ -111,8 +116,13 @@ const reviews = [
           <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M8 11h6"/>
         </svg>
       </button>
-      <button onclick="closeLightbox()"
-        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+      <button
+        id="lightbox-close-btn"
+        type="button"
+        aria-label="Закрыть просмотр"
+        onclick="closeLightbox()"
+        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+      >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -125,14 +135,22 @@ const reviews = [
     </div>
 
     <!-- Стрелки -->
-    <button onclick="event.stopPropagation(); changeSlide(-1)"
-      class="absolute left-4 top-1/2 -translate-y-1/2 z-2147483649 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors hidden md:flex focus:outline-none">
+    <button
+      type="button"
+      aria-label="Предыдущий отзыв"
+      onclick="event.stopPropagation(); changeSlide(-1)"
+      class="absolute left-4 top-1/2 -translate-y-1/2 z-2147483649 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors hidden md:flex focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+    >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
       </svg>
     </button>
-    <button onclick="event.stopPropagation(); changeSlide(1)"
-      class="absolute right-4 top-1/2 -translate-y-1/2 z-2147483649 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors hidden md:flex focus:outline-none">
+    <button
+      type="button"
+      aria-label="Следующий отзыв"
+      onclick="event.stopPropagation(); changeSlide(1)"
+      class="absolute right-4 top-1/2 -translate-y-1/2 z-2147483649 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors hidden md:flex focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+    >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
       </svg>
@@ -239,6 +257,34 @@ const reviews = [
   const openFormBtn  = document.getElementById('open-review-form');
   const closeFormBtn = document.getElementById('close-review-form');
 
+  let lightboxPreviousFocus = null;
+
+  function getLightboxFocusables() {
+    if (!lightbox) return [];
+    const sel = 'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
+    return Array.from(lightbox.querySelectorAll(sel)).filter(el => el.offsetParent !== null);
+  }
+
+  function trapLightboxFocus(ev) {
+    const e = ev;
+    if (e.key !== 'Tab') return;
+    const focusables = getLightboxFocusables();
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   function togglePageElements(hide) {
     [document.querySelector('header'), document.getElementById('scroll-to-top'), document.getElementById('favorites-widget')].forEach(el => {
       if (!el) return;
@@ -255,6 +301,7 @@ const reviews = [
   }
 
   window.openLightbox = (index) => {
+    lightboxPreviousFocus = document.activeElement;
     currentIndex = index;
     updateTrackPosition(false);
     updateCounter();
@@ -262,10 +309,15 @@ const reviews = [
     lightbox.style.display = 'flex';
     if (window.lockScroll) window.lockScroll();
     togglePageElements(true);
-    setTimeout(() => lightbox.classList.remove('opacity-0'), 10);
+    lightbox.addEventListener('keydown', trapLightboxFocus);
+    setTimeout(() => {
+      lightbox.classList.remove('opacity-0');
+      document.getElementById('lightbox-close-btn')?.focus();
+    }, 10);
   };
 
   window.closeLightbox = () => {
+    lightbox.removeEventListener('keydown', trapLightboxFocus);
     lightbox.classList.add('opacity-0');
     setTimeout(() => {
       lightbox.classList.add('hidden');
@@ -273,6 +325,8 @@ const reviews = [
       if (window.unlockScroll) window.unlockScroll();
       resetZoom();
       togglePageElements(false);
+      lightboxPreviousFocus?.focus();
+      lightboxPreviousFocus = null;
     }, 300);
   };
 

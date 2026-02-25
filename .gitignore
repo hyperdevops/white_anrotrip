@@ -48,6 +48,8 @@ Thumbs.db
 
 # Project-specific
 .doc/
+.qwen/
+QWEN.md
 .cspell.json
 .editorconfig
 .eslint*
@@ -62,6 +64,7 @@ pnpm-lock.json
 pnpm-workspace.yaml
 yarn.lock
 package-lock.json
+
 
 # Test files
 coverage/

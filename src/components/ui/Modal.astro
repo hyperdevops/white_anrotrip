@@ -17,7 +17,9 @@ const { id, title } = Astro.props;
   >
     <!-- Кнопка закрытия -->
     <button
-      class="close-modal absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+      type="button"
+      class="close-modal absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+      aria-label="Закрыть окно"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -47,32 +49,48 @@ const { id, title } = Astro.props;
 </dialog>
 
 <script define:vars={{ id }}>
-  const dialog = document.getElementById(id);
+  const dialog = document.getElementById(id) as HTMLDialogElement | null;
+  let previousActiveElement: HTMLElement | null = null;
 
-  // Логика открытия (слушаем события на document)
+  function closeWithAnimation() {
+    if (!dialog) return;
+    const box = dialog.querySelector('.modal-box') as HTMLElement | null;
+    if (box) {
+      box.classList.add('scale-95', 'opacity-0');
+    }
+    setTimeout(() => {
+      dialog.close();
+    }, 200);
+  }
+
   document.addEventListener(`open-modal-${id}`, () => {
-    (dialog as HTMLDialogElement)?.showModal();
-    dialog?.querySelector('.modal-box')?.classList.remove('scale-95', 'opacity-0');
+    if (!dialog) return;
+    previousActiveElement = document.activeElement as HTMLElement | null;
+    dialog.showModal();
+    const box = dialog.querySelector('.modal-box');
+    box?.classList.remove('scale-95', 'opacity-0');
+    const firstFocusable = dialog.querySelector<HTMLElement>('.close-modal');
+    firstFocusable?.focus();
+  });
+
+  dialog?.addEventListener('close', () => {
+    previousActiveElement?.focus();
+    previousActiveElement = null;
+  });
+
+  dialog?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeWithAnimation();
+    }
   });
 
   document.addEventListener('click', (e) => {
     const t = e.target as HTMLElement;
-    const d = document.getElementById(id);
+    const d = document.getElementById(id) as HTMLDialogElement | null;
     if (!d) return;
-    if (t.closest(`#${id} .close-modal`)) {
-      (d.querySelector('.modal-box') as HTMLElement)?.classList.add(
-        'scale-95',
-        'opacity-0',
-      );
-      setTimeout(() => (d as HTMLDialogElement).close(), 200);
-    }
-    if (t === d) {
-      (d.querySelector('.modal-box') as HTMLElement)?.classList.add(
-        'scale-95',
-        'opacity-0',
-      );
-      setTimeout(() => (d as HTMLDialogElement).close(), 200);
-    }
+    if (t.closest(`#${id} .close-modal`)) closeWithAnimation();
+    if (t === d) closeWithAnimation();
   });
 </script>
 

@@ -211,7 +211,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   SCROLL ANCHORS
+   SCROLL ANCHORS — фиксированный header не перекрывает заголовки
 ═══════════════════════════════════════════════ */
 :root {
   --header-height: 4rem;
@@ -220,14 +220,25 @@
 :target {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
-#about:target,
-#reviews:target,
-#tours:target,
-#team:target,
-#team-list:target,
-#contacts:target,
-#partners:target,
-#search:target {
+/* Главная: контент и секции (якорь + scrollIntoView) */
+#content,
+#search,
+#about,
+#reviews,
+#tours,
+#team,
+#team-list,
+#contacts,
+#partners {
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+}
+/* Страница corp: якоря секций */
+#corp-avia,
+#corp-hotels,
+#corp-tours,
+#corp-transfer,
+#corp-benefits,
+#corp-contacts {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
 #awards,

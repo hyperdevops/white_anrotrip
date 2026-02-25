@@ -47,7 +47,7 @@ const tours = [
           data-tour-title={tour.title}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 deep-shadow border border-white/10 reveal-hidden reveal-scale',
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 deep-shadow border border-white/10 reveal-hidden reveal-scale focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
             tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
             tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',

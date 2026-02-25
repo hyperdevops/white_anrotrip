@@ -15,7 +15,9 @@
     <!-- Крестик закрытия -->
     <button
       id="close-callback-modal"
-      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none bg-gray-50 rounded-full hover:bg-gray-100 transition-colors z-10"
+      type="button"
+      aria-label="Закрыть окно заказа звонка"
+      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors z-10"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -94,6 +96,34 @@
   const content = document.getElementById('callback-modal-content');
   const closeBtn = document.getElementById('close-callback-modal');
 
+  let previousActiveElement: HTMLElement | null = null;
+
+  function getFocusables(container: HTMLElement): HTMLElement[] {
+    const sel = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(container.querySelectorAll<HTMLElement>(sel)).filter(
+      (el) => el.offsetParent !== null && !el.hasAttribute('aria-hidden')
+    );
+  }
+
+  function trapFocus(e: KeyboardEvent) {
+    if (e.key !== 'Tab' || !content) return;
+    const focusables = getFocusables(content);
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   // Утилита скрытия хедера (чтобы не перекрывал)
   function toggleHeader(hide: boolean) {
     const header = document.querySelector('header');
@@ -107,6 +137,7 @@
   // Глобальная функция открытия
   window.openCallbackModal = () => {
     if (overlay && content) {
+      previousActiveElement = document.activeElement as HTMLElement | null;
       overlay.classList.remove('hidden');
       overlay.style.display = 'flex';
 
@@ -116,14 +147,17 @@
         overlay.classList.remove('opacity-0');
         content.classList.remove('translate-y-20');
         content.classList.add('translate-y-0');
+        closeBtn?.focus();
+        content.addEventListener('keydown', trapFocus);
       }, 10);
       window.lockScroll();
     }
   };
 
   // Глобальная функция закрытия
-  window.closeCallbackModal = (event) => {
+  window.closeCallbackModal = () => {
     if (overlay && content) {
+      content.removeEventListener('keydown', trapFocus);
       overlay.classList.add('opacity-0');
       content.classList.remove('translate-y-0');
       content.classList.add('translate-y-20');
@@ -133,6 +167,8 @@
         overlay.style.display = 'none';
         window.unlockScroll();
         toggleHeader(false);
+        previousActiveElement?.focus();
+        previousActiveElement = null;
       }, 500);
     }
   };
