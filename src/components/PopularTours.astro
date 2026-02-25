@@ -35,7 +35,7 @@ const tours = [
         </h2>
       </div>
       <p class="text-gray-400 text-sm max-w-xs leading-relaxed @md:pb-2 @md:text-right">
-        Лучшие предложения этого сезона.<br />Нажмите на карточку, чтобы узнать подробнее.
+        Лучшие предложения этого сезона.<br />Нажмите на карточку, чтобы подобрать тур.
       </p>
     </div>
 
@@ -45,6 +45,7 @@ const tours = [
         <button
           type="button"
           data-tour-title={tour.title}
+          aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
             'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 deep-shadow border border-white/10 reveal-hidden reveal-scale',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',

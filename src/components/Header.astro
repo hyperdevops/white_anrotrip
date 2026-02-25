@@ -3,6 +3,8 @@ export interface Props {
   navItems?: { name: string; href: string }[];
   ctaText?: string;
   ctaHref?: string;
+  /** 'corp' — на странице corp: нав выровнен по ширине (flex-1 justify-between). По умолчанию — как на главной. */
+  navVariant?: 'default' | 'corp';
 }
 
 const defaultNavItems = [
@@ -17,6 +19,7 @@ const {
   navItems = defaultNavItems,
   ctaText = 'Личный кабинет',
   ctaHref = '/cabinet',
+  navVariant = 'default',
 } = Astro.props;
 ---
 
@@ -100,8 +103,15 @@ const {
         </div>
       </a>
 
-      <!-- Навигация (desktop) -->
-      <nav class="hidden lg:flex items-center gap-1">
+      <!-- Навигация (desktop): на главной — фикс. позиция, на corp — ровное распределение по ширине -->
+      <nav
+        class:list={[
+          'hidden lg:flex items-center',
+          navVariant === 'corp'
+            ? 'flex-1 min-w-0 justify-between px-2'
+            : 'gap-1 absolute left-[420px] w-[415px]',
+        ]}
+      >
         {
           navItems.map((item) => (
             <a

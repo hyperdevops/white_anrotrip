@@ -1,0 +1,53 @@
+---
+// import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Политика конфиденциальности — ANRO TRIP"
+  description="Политика конфиденциальности туристической компании ANRO TRIP."
+  showFavorites={false}
+  showOfficeWidget={false}
+  showScrollToTop={false}
+>
+  <!-- <Header /> -->
+  <main class="min-h-dvh pt-24 pb-16">
+    <div class="container mx-auto px-4 sm:px-6 max-w-3xl">
+      <h1
+        class="font-montserrat font-extrabold text-gray-900 text-2xl md:text-3xl mb-6"
+      >
+        Политика конфиденциальности
+      </h1>
+      <p class="text-gray-500 leading-relaxed">
+        Раздел готовится к публикации. Обратитесь к нам по телефону <a
+          href="tel:88002224473"
+          class="text-primary hover:underline">8 (800) 222-44-73</a
+        > или по email <a
+          href="mailto:anro@anrotrip.ru"
+          class="text-primary hover:underline">anro@anrotrip.ru</a
+        > за актуальной информацией.
+      </p>
+      <p class="mt-8">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg
+          >
+          На главную
+        </a>
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Layout>

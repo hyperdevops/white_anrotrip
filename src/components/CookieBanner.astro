@@ -1,60 +1,105 @@
 ---
-// src/components/CookieBanner.astro
+// src/components/CookieBanner.astro — простая карточка: белый фон, blur, зелёная кнопка
 ---
 
 <div
   id="cookie-banner"
-  class="fixed bottom-0 left-0 w-full max-h-[85dvh] overflow-y-auto bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-2147483640 py-4 px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 transition-transform duration-500 translate-y-full"
+  class="fixed bottom-4 right-4 z-[2147483640] w-full max-w-[360px] rounded-2xl overflow-hidden bg-white/85 backdrop-blur-md border border-white/60 shadow-xl transition-all duration-500 translate-y-full opacity-0 pointer-events-none"
+  role="dialog"
+  aria-labelledby="cookie-banner-title"
+  aria-describedby="cookie-banner-desc"
 >
-  <div
-    class="text-xs md:text-sm text-gray-600 text-center md:text-left font-inter"
-  >
-    <span class="font-bold text-gray-800">Мы используем файлы cookie</span>,
-    чтобы сайт работал лучше. Продолжая использовать сайт, вы соглашаетесь с
-    нашей
-    <a href="#" class="text-secondary hover:underline font-medium"
-      >Политикой конфиденциальности</a
-    >.
-  </div>
+  <div class="relative px-5 pt-5 pb-5">
+    <!-- КРЕСТИК ЗАКРЫТИЯ - ДОБАВЛЕН ID -->
+    <button
+      type="button"
+      id="close-cookie-banner"
+      aria-label="Закрыть"
+      class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100/80 transition-colors"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
 
-  <button
-    id="accept-cookies"
-    class="shrink-0 bg-secondary text-white text-xs font-bold uppercase tracking-wider px-8 py-3 rounded-full hover:bg-white hover:text-secondary border-2 border-secondary transition-colors cursor-pointer"
-  >
-    Хорошо
-  </button>
+    <h2
+      id="cookie-banner-title"
+      class="font-montserrat font-bold text-gray-900 text-sm pr-8 mb-2"
+    >
+      Мы используем cookie
+    </h2>
+    <p
+      id="cookie-banner-desc"
+      class="text-gray-600 text-xs leading-relaxed font-inter mb-4"
+    >
+      Чтобы сайт работал лучше. Продолжая, вы соглашаетесь с
+      <a href="/privacy" class="text-primary hover:underline font-medium"
+        >Политикой конфиденциальности</a
+      >.
+    </p>
+    <button
+      type="button"
+      id="accept-cookies"
+      class="w-full py-3 rounded-xl bg-primary text-white font-montserrat font-bold text-xs uppercase tracking-wider border-2 border-primary hover:bg-white hover:text-primary transition-colors"
+    >
+      Принять
+    </button>
+  </div>
 </div>
 
 <script>
   const banner = document.getElementById('cookie-banner');
-  const btn = document.getElementById('accept-cookies');
-
-  // Ключ в памяти браузера
+  const acceptBtn = document.getElementById('accept-cookies');
+  const closeBtn = document.getElementById('close-cookie-banner'); // <-- ПОЛУЧАЕМ КРЕСТИК
   const STORAGE_KEY = 'anro_cookies_accepted';
+
+  // Функция для закрытия баннера (универсальная)
+  const hideCookieBanner = () => {
+    localStorage.setItem(STORAGE_KEY, 'true'); // Ставим метку
+
+    if (banner) {
+      // Прячем баннер с анимацией
+      banner.classList.add(
+        'translate-y-full',
+        'opacity-0',
+        'pointer-events-none',
+      );
+    }
+
+    // Удаляем из DOM только ПОСЛЕ завершения анимации
+    setTimeout(() => {
+      banner?.remove();
+    }, 300); // Длительность анимации
+  };
 
   // Проверяем при загрузке
   if (!localStorage.getItem(STORAGE_KEY)) {
-    // Если метки нет — показываем баннер (убираем сдвиг вниз)
-    // Небольшая задержка для анимации появления
     setTimeout(() => {
-      banner?.classList.remove('translate-y-full');
-    }, 1000);
+      if (banner) {
+        banner.classList.remove(
+          'translate-y-full',
+          'opacity-0',
+          'pointer-events-none',
+        );
+        banner.classList.add('opacity-100'); // Делаем полностью видимым
+      }
+    }, 1000); // Задержка 1 секунда, чтобы баннер появился не сразу
   } else {
-    // Если метка есть — удаляем баннер из DOM, чтобы не мешался
+    // Если метка есть — удаляем баннер из DOM
     banner?.remove();
   }
 
-  // При клике
-  btn?.addEventListener('click', () => {
-    // 1. Ставим метку
-    localStorage.setItem(STORAGE_KEY, 'true');
-
-    // 2. Прячем баннер (уезжает вниз)
-    banner?.classList.add('translate-y-full');
-
-    // 3. Удаляем совсем через 0.5 сек
-    setTimeout(() => {
-      banner?.remove();
-    }, 500);
-  });
+  // ОБРАБОТЧИКИ СОБЫТИЙ
+  acceptBtn?.addEventListener('click', hideCookieBanner); // Кнопка "Принять"
+  closeBtn?.addEventListener('click', hideCookieBanner); // <-- КНОПКА "КРЕСТИК"
 </script>
