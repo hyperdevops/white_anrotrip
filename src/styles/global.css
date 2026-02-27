@@ -45,6 +45,8 @@
       'liga' 1;
     /* Предотвращаем горизонтальный скролл */
     overflow-x: hidden;
+    /* Меньше «висячих» коротких слов в конце строки (предлоги, союзы). Поддержка: Chrome 114+, Safari 17+ */
+    text-wrap: pretty;
   }
 
   /* Fluid Typography — без media queries */

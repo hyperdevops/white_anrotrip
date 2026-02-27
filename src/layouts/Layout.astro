@@ -36,7 +36,9 @@ const {
 
 const baseUrl = Astro.url.origin;
 const canonical = canonicalURL ?? Astro.url.href;
-const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, baseUrl).href;
+const ogImageUrl = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, baseUrl).href;
 ---
 
 <!doctype html>
