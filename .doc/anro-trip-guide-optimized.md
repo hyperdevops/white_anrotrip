@@ -3,6 +3,7 @@
 ## 📌 БЫСТРЫЙ СТАРТ
 
 **Конституция:** `.specify/memory/constitution.md` — ЧИТАТЬ ПЕРВЫМ ДЕЛОМ!
+**Анализ сайта:** `.doc/site-analysis-full.md` — приоритеты, Lighthouse, тесты
 **Технологии:** Astro 5.16.13 + Tailwind CSS 4.1.18
 **Порт разработки:** http://localhost:4321
 
@@ -131,7 +132,8 @@ z-0             Hero
 
 ### Glassmorphism
 
-`.glass-panel` и `.glass-panel-interactive` используют `backdrop-filter` **везде** (включая мобайл). В коде blur не ограничен `@media (hover: hover)`.
+- **`.glass-panel`** и **`.glass-panel-interactive`** — backdrop-filter на десктопе.
+- **`.glass-panel-mobile-solid`** — для TrustBadges и Partners stats: на мобиле `backdrop-filter` отключён, фон непрозрачный (экономия GPU, стабильность).
 
 ### Скругления 2026
 
@@ -175,6 +177,10 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 ✅ Страница `/corp` — Коммерческое предложение (Hero-блок, фото corp.webp)
 ✅ Страница `/cabinet` — Личный кабинет туриста (форма входа, welcome.webp)
 ✅ About CTA «Коммерческое Предложение» → `/corp`
+✅ Skip Link — «Перейти к содержимому» в Layout.astro
+✅ Модалки: Escape, focus trap, возврат фокуса (CallbackModal, GiftModal, ReviewModal, lightbox Reviews)
+✅ scroll-margin-top для якорей (#content, #corp-avia и др.)
+✅ Corp: break-words, min-w-0 в списках; контент -translate-y-[20vh] при скролле
 ❌ Dark Mode (отменён)
 
 ---
@@ -183,15 +189,16 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 
 Главное правило: **тяжёлые эффекты только на `@media (hover: hover)`** (= десктоп с мышью).
 
-| Эффект                 | Мобайл          | Десктоп           |
-| ---------------------- | --------------- | ----------------- |
-| `backdrop-filter blur` | ✅ есть         | ✅ есть           |
-| Ken Burns              | ❌ статично     | ✅ 30s анимация   |
-| Parallax Hero          | ❌ нет          | ✅ 0.15 коэф.     |
-| Marquee партнёры       | ❌ grid-cols-2  | ✅ marquee        |
-| Tour card breathe      | ❌ нет          | ✅ 24s анимация   |
-| Logo spin              | ❌ нет          | ✅ 20-30s         |
-| hero-gradient-text     | ❌ просто белый | ✅ shine анимация |
+| Эффект                 | Мобайл                    | Десктоп           |
+| ---------------------- | ------------------------- | ----------------- |
+| Орбы (blur)            | `blur-0`                  | `md:blur-3xl`     |
+| glass-panel (TrustBadges, Partners stats) | solid (без blur) | ✅ backdrop-filter |
+| Ken Burns              | ❌ статично               | ✅ 30s анимация   |
+| Parallax Hero          | ❌ нет                    | ✅ 0.15 коэф.     |
+| Marquee партнёры       | ❌ grid-cols-2            | ✅ marquee        |
+| Tour card breathe      | ❌ нет                    | ✅ 24s анимация   |
+| Logo spin              | ❌ нет                    | ✅ 20-30s         |
+| hero-gradient-text     | ❌ просто белый           | ✅ shine анимация |
 
 ```css
 /* Паттерн для всех тяжёлых эффектов */
@@ -205,7 +212,9 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 }
 ```
 
-`will-change` — только на `#lightbox-track`. На карточках НЕ использовать!
+- **Карточки:** `transition-[transform,box-shadow]` вместо `transition-all` — меньше нагрузки.
+- **Карусели (Reviews, Partners):** `-webkit-overflow-scrolling: touch` для плавного скролла на iOS.
+- **will-change** — только на `#lightbox-track`. На карточках НЕ использовать!
 
 ---
 
@@ -224,6 +233,7 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 
 ### Header.astro
 
+- **Сетка:** главная — `grid-cols-[1fr_auto_1fr]`, corp — `grid-cols-[auto_minmax(0,1fr)_auto]`; бургер на mobile — `col-start-3` (всегда справа).
 - Floating pill, scroll shrink (py-3 → py-2 при scrollY > 60)
 - Логотип: пунктирный круг + самолётик + ANRO**trip**
 - **Пропсы (опционально):** `navItems`, `ctaText`, `ctaHref` — для corp-страницы свой нав и CTA
@@ -296,7 +306,7 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 
 **Header на corp:** `navItems` (О компании, Авиабилеты, Отели, Туры, Трансфер, Преимущества, Контакты), `ctaText="Связаться"`, `ctaHref="#corp-contacts"`
 
-**Обёртка контента:** `div` с `z-10 mt-[20vh]` — контент наползает на sticky Hero. Тексты — оригинал anrotrip.ru.
+**Обёртка контента:** `div` с `z-10 mt-0 -translate-y-[20vh]` — контент появляется сразу при первом скролле. Тексты — оригинал anrotrip.ru. `break-words`, `min-w-0` в абзацах и списках. Якоря `#content`, `#corp-avia`, `#corp-hotels` и др. имеют `scroll-margin-top` в global.css.
 
 ### cabinet.astro (страница /cabinet)
 
@@ -306,6 +316,8 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 - `action="https://lk.anrotrip.ru/index/welcome"`
 - Фон `welcome.webp` из `assets/welcome/`
 - Подпись: «© 2009–2026 ООО «МоиДокументы.ру»», ссылка moidokumenti.ru
+
+**Из анализа (см. site-analysis-full.md):** рекомендуется добавить Header или ссылку «На главную», placeholder и `type` (tel/email) для поля ввода, `noindex` для страницы входа, fieldset/legend для radio-группы, focus-visible на кнопке.
 
 ### GiftSection.astro
 
@@ -341,17 +353,19 @@ iframe[src*='tourvisor'] {
 ## 🚨 РЕШЁННЫЕ ПРОБЛЕМЫ
 
 1. **Параллакс + анимации** — параллакс к контенту, kenburns к фону
-2. **Мобайл тормозит** — все тяжёлые анимации за `@media (hover: hover)`
-3. **Орбы blur на мобайле** — `display:none` через `max-width:767px`
-4. **will-change на карточках** — убраны, остался только на lightbox-track
-5. **scroll-snap на html** — убран (вызывал дёрганье)
-6. **backdrop-blur везде** — только там где реально нужно, и только десктоп
-7. **Tourvisor серая кнопка** — скрыта визуально
-8. **Tourvisor мобайл** — `min-height:500px` + resize event
-9. **Голова на фото обрезана** — `object-center` (не `object-top`)
-10. **Средняя карточка наград смещена** — убран `md:mt-8`, добавлен `items-start`
-11. **Шрифты блокируют рендер** — `media="print" onload`
-12. **Content блок: округлости по бокам** — убран `rounded-t-[40px]`, стык Hero/контент прямой
+2. **Мобайл тормозит** — тяжёлые анимации за `@media (hover: hover)`; орбы `blur-0 md:blur-3xl`; glass-panel-mobile-solid для TrustBadges/Partners; transition-all → конкретные свойства на карточках
+3. **will-change на карточках** — убраны, остался только на lightbox-track
+4. **scroll-snap на html** — убран (вызывал дёрганье)
+5. **Tourvisor серая кнопка** — скрыта визуально
+6. **Tourvisor мобайл** — `min-height:500px` + resize event
+7. **Голова на фото обрезана** — `object-center` (не `object-top`)
+8. **Средняя карточка наград смещена** — убран `md:mt-8`, добавлен `items-start`
+9. **Шрифты блокируют рендер** — `media="print" onload`
+10. **Content блок: округлости по бокам** — убран `rounded-t-[40px]`, стык Hero/контент прямой
+11. **Skip Link** — добавлен в Layout.astro
+12. **Модалки** — Escape, focus trap, возврат фокуса (CallbackModal, GiftModal, ReviewModal, lightbox Reviews)
+13. **Corp: мобильный текст** — break-words, min-w-0 в списках; scroll-margin-top для якорей; контент -translate-y-[20vh] при скролле
+14. **Header** — бургер col-start-3 на mobile; сетка для corp vs main
 
 ---
 
@@ -359,7 +373,9 @@ iframe[src*='tourvisor'] {
 
 - E-E-A-T: 18 лет, 14 000+ клиентов, РТО 022708, Топ-10 России
 - `meta theme-color: #00abb3`, Open Graph теги добавлены
-- **Ещё не сделано:** Schema.org, FAQ секция, страницы направлений, Breadcrumbs
+- **Критично (перед продакшеном):** og:image, placeholder Reviews → реальные фото, GiftModal `<Image />`
+- **Важно:** Schema.org (LocalBusiness/TravelAgency), canonical URL, og:url, robots.txt
+- **Желательно:** FAQ секция, страницы направлений, Breadcrumbs
 
 ---
 
@@ -383,23 +399,28 @@ npx prettier --write "src/**/*.astro"
 
 ## 📝 СЛЕДУЮЩИЕ ШАГИ
 
-### Краткосрочные
+> **Полный план и приоритеты** — `.doc/site-analysis-full.md` (Часть 5, Часть 6).
 
-- [ ] Schema.org микроразметка (TravelAgency, FAQPage)
-- [ ] FAQ секция
-- [ ] Lighthouse audit (цель: 90+ mobile)
-- [ ] Оптимизировать meta-описания
+### Критично (перед продакшеном)
 
-### Среднесрочные
+- [ ] og:image (главная, corp)
+- [ ] Reviews: заменить placeholder на реальные фото
+- [ ] GiftModal: перевести `<img>` на `<Image />`
 
-- [ ] Отдельные страницы направлений `/tours/maldives`
-- [ ] Блог / кейсы
-- [ ] Google Search Console
+### Важно
 
-### Долгосрочные
+- [ ] Schema.org (LocalBusiness/TravelAgency)
+- [ ] canonical URL, og:url, robots.txt
+- [ ] focus-visible:ring-2 — унифицировать у всех интерактивных элементов
+- [ ] Контраст тёмных секций (Reviews, Team, GiftSection) — WCAG AA
+- [ ] Lighthouse: CSS/JS, ошибки консоли, deprecated API
+- [ ] Cabinet: Header или «На главную»; placeholder и type для input; noindex
 
-- [ ] Мультиязычность (EN)
-- [ ] База знаний (GEO)
+### Желательно
+
+- [ ] FAQ секция (главная или corp)
+- [ ] SearchWidget табы: role="tablist", стрелки
+- [ ] Бургер-меню: закрытие по Escape
 
 ---
 
@@ -409,6 +430,7 @@ npx prettier --write "src/**/*.astro"
 
 1. `.specify/memory/constitution.md` — Конституция
 2. Этот файл
+3. `.doc/site-analysis-full.md` — полный анализ сайта (приоритеты, Lighthouse, тесты)
 
 ### Перед редактированием:
 
@@ -429,18 +451,26 @@ npx prettier --write "src/**/*.astro"
 
 ---
 
-**Версия:** 3.2
+**Версия:** 3.3
 **Дата:** 22 февраля 2026
 **Автор:** AI Senior Fullstack Developer + hyper
 **Статус:** Актуально
+
+**Изменения от v3.3 (22.02.2026) — по site-analysis-full.md:**
+
+- **Glassmorphism:** glass-panel-mobile-solid для TrustBadges и Partners (blur отключён на мобайле)
+- **Мобильная оптимизация:** орбы blur-0 md:blur-3xl; transition конкретные свойства; -webkit-overflow-scrolling: touch
+- **Header:** сетка corp vs main; бургер col-start-3
+- **Corp:** -translate-y-[20vh], break-words, scroll-margin-top
+- **Реализовано:** Skip Link, модалки (Escape, focus trap), scroll-margin-top
+- **Следующие шаги** и **SEO** — выровнены с приоритетами анализа
+- Добавлена ссылка на `.doc/site-analysis-full.md`
 
 **Изменения от v3.2 (22.02.2026):**
 
 - Страница `/cabinet` — Личный кабинет туриста (форма входа, welcome.webp, без Header)
 - **Layout.astro** — пропсы `showScrollProgress`, `showScrollToTop`, `showFavorites`, `showOfficeWidget` (по умолчанию true)
 - **Hero** — уточнение: бренд «ANRO TRIP» в h1 (hero-gradient-text), без отдельного SVG-логотипа
-- **glass-panel** — blur включён везде (без `@media (hover: hover)`)
-- Удаление несуществующего правила blur-орбов (display:none на мобайле)
 
 **Изменения от v3.1 (22.02.2026):**
 
