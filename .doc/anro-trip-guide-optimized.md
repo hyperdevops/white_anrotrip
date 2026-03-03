@@ -149,6 +149,21 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 
 Шрифты загружаются через `media="print" onload="this.media='all'"` (не блокируют рендер).
 
+### Anti-Generic Guardrails (качество визуала)
+
+Правила, чтобы интерфейс не выглядел как типичный «ИИ-шаблон» (см. `.doc/audit-ai-design-habr.md`, [Habr](https://habr.com/ru/articles/1004960/)).
+
+| Правило | Как делать |
+|--------|------------|
+| **Цвета** | Только из `@theme` (primary, secondary, cta). Не использовать дефолтные Tailwind: `indigo-*`, `blue-600`, `sky-*`, `emerald-*` как основные. Hero по времени суток, Footer соцсети, кнопки — только токены или свои hex в @theme. |
+| **Тени** | Не плоский `shadow-md`. Использовать двухслойные тени с оттенком: `shadow-[0_4px_24px_rgba(0,171,179,0.35)]`, `hover:shadow-xl hover:shadow-primary/20`. |
+| **Анимации** | Не `transition-all`. Только явные свойства: `transition-[transform,box-shadow]`, `transition-[transform,opacity]`. Easing — предпочтительно `ease-out`/`ease-in` или cubic-bezier. |
+| **Типографика тела** | Для основного текста (body/параграфы) — `line-height: 1.7` (в base или утилита). Заголовки — уже Montserrat + tracking-tight. |
+| **Глубина** | Слои: base (фон) → elevated (карточки, панели) → floating (модалки, виджеты). Не держать все элементы на одной z-плоскости. |
+| **Интерактив** | У каждого кликабельного: hover, focus-visible, active (уже в конституции). |
+
+При рефакторинге и добавлении новых компонентов проверять список в `.doc/audit-ai-design-habr.md`.
+
 ---
 
 ## ⚡ РЕАЛИЗОВАННЫЕ ФИЧИ (актуальный список)
@@ -212,7 +227,7 @@ Fluid Typography через `clamp()` — без media queries. Стили в `g
 }
 ```
 
-- **Карточки:** `transition-[transform,box-shadow]` вместо `transition-all` — меньше нагрузки.
+- **Карточки:** `transition-[transform,box-shadow]` вместо `transition-all` — меньше нагрузки и соответствие Anti-Generic Guardrails (см. раздел DESIGN SYSTEM выше).
 - **Карусели (Reviews, Partners):** `-webkit-overflow-scrolling: touch` для плавного скролла на iOS.
 - **will-change** — только на `#lightbox-track`. На карточках НЕ использовать!
 
@@ -376,6 +391,7 @@ iframe[src*='tourvisor'] {
 - **Критично (перед продакшеном):** og:image, placeholder Reviews → реальные фото, GiftModal `<Image />`
 - **Важно:** Schema.org (LocalBusiness/TravelAgency), canonical URL, og:url, robots.txt
 - **Желательно:** FAQ секция, страницы направлений, Breadcrumbs
+- **Качество визуала (анти-ИИ-шаблон):** см. `.doc/audit-ai-design-habr.md` и раздел «Anti-Generic Guardrails» в DESIGN SYSTEM — замена transition-all, цвета только @theme, тени с оттенком, body line-height
 
 ---
 
