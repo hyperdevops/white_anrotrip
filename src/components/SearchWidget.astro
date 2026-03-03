@@ -99,7 +99,9 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
 
 <script>
   const tabList = document.querySelector('[role="tablist"]');
-  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn[role="tab"]'));
+  const tabs = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('.tab-btn[role="tab"]'),
+  );
   const contents = document.querySelectorAll<HTMLElement>('.tab-content');
 
   const switchTab = (targetId: string, focusActive = false) => {
@@ -143,7 +145,9 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
   // Клавиатура: стрелки влево/вправо, Home, End
   tabList?.addEventListener('keydown', (e) => {
     const ev = e as KeyboardEvent;
-    const currentIndex = tabs.findIndex((t) => t.getAttribute('tabindex') === '0');
+    const currentIndex = tabs.findIndex(
+      (t) => t.getAttribute('tabindex') === '0',
+    );
     if (currentIndex === -1) return;
     let nextIndex = currentIndex;
     if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {

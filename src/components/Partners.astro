@@ -73,7 +73,11 @@ const { class: classes = '' }: Props = Astro.props;
     <!-- ===== СТАТЫ ===== -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-14 md:mb-18" data-reveal-stagger>
       {stats.map((stat) => (
-        <div class="reveal-hidden glass-panel-interactive rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center group">
+        <div
+          class="reveal-hidden glass-panel-interactive rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center group
+                 max-sm:[contain:layout] max-sm:transition-[box-shadow] max-sm:duration-200 max-sm:hover:translate-y-0
+                 sm:transition-all"
+        >
           <!-- Иконка -->
           <div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors duration-300">
             {stat.icon === 'building' && (
@@ -112,15 +116,15 @@ const { class: classes = '' }: Props = Astro.props;
       <div class="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-slate-50 to-transparent z-10 pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-blue-50/60 to-transparent z-10 pointer-events-none"></div>
       <div
-        class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4"
+        class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 overscroll-contain scroll-smooth max-sm:[contain:layout] [touch-action:pan-x]"
         style="-webkit-overflow-scrolling: touch;"
       >
         {partners.map((partner) => (
-          <div class="snap-start shrink-0 w-40 min-h-[7.5rem] rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-4 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
+          <div class="snap-start shrink-0 w-40 min-h-[7.5rem] rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-4 transition-[box-shadow,border-color] duration-200">
             <Image
               src={partner.logo}
               alt={partner.name}
-              class="max-h-full w-auto max-w-full object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-300"
+              class="max-h-full w-auto max-w-full object-contain"
               loading="lazy"
             />
           </div>

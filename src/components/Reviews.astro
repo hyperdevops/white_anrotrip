@@ -11,14 +11,14 @@ import r1projectImg from '../assets/reviews/r1project.webp';
 import uralniiImg from '../assets/reviews/uralnii.webp';
 
 const reviews = [
-  { id: 1, title: 'Молодежь Южного Урала', image: molodezhImg },
-  { id: 2, title: 'Ниагара', image: niagaraImg },
-  { id: 3, title: 'Мерседес', image: mercedesImg },
-  { id: 4, title: 'Никс', image: niksImg },
-  { id: 5, title: 'Письмо Аня Усманова', image: usmanovaImg },
-  { id: 6, title: 'Napoleon', image: napoleonImg },
-  { id: 7, title: 'Проектное бюро', image: r1projectImg },
-  { id: 8, title: 'Урал НИИ СТРОЙ', image: uralniiImg },
+  { id: 1, title: '"МОЛОДЕЖЬ ЮЖНОГО УРАЛА"', image: molodezhImg },
+  { id: 2, title: '"Ниагара"', image: niagaraImg },
+  { id: 3, title: '"ОМЕГА Mercedes Benz"', image: mercedesImg },
+  { id: 4, title: '"НИКС"', image: niksImg },
+  { id: 5, title: '"Аня Усманова"', image: usmanovaImg },
+  { id: 6, title: '"Napoleon IT"', image: napoleonImg },
+  { id: 7, title: '"Проектное бюро R1"', image: r1projectImg },
+  { id: 8, title: '"Урал НИИ СТРОМ"', image: uralniiImg },
 ];
 
 const reviewTitles = reviews.map((r) => r.title);
@@ -58,7 +58,7 @@ const reviewCount = reviews.length;
       <div class="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-gray-950 to-transparent z-10 pointer-events-none"></div>
 
       <div
-        class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 sm:-mx-6 px-4 sm:px-6 md:mx-0 md:px-0"
+        class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 sm:-mx-6 px-4 sm:px-6 md:mx-0 md:px-0 overscroll-contain scroll-smooth [touch-action:pan-x_pan-y]"
         id="reviews-scroller"
       >
         {reviews.map((item, index) => (
@@ -109,8 +109,9 @@ const reviewCount = reviews.length;
 
   <!-- ══════ LIGHTBOX ══════ -->
   <style is:global>
-    /* iOS: плавная прокрутка в лайтбоксе (веб-стандарт для touch) */
-    #lightbox .slide-item {
+    /* iOS: плавная прокрутка (веб-стандарт для touch) */
+    #lightbox .slide-item,
+    #reviews-scroller {
       -webkit-overflow-scrolling: touch;
     }
   </style>
@@ -199,11 +200,11 @@ const reviewCount = reviews.length;
     </div>
   </div>
 
-  <!-- ══════ ФОРМА ОТЗЫВА ══════ -->
+  <!-- ══════ ФОРМА ОТЗЫВА ══════ (по аналогии с CallbackModal / GiftModal: плавное открытие/закрытие, виджет офиса за блюром) -->
   <div id="review-modal-overlay"
-    class="fixed inset-0 z-2147483647 bg-black/70 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-400">
+    class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-500">
     <div id="review-modal-content"
-      class="bg-white rounded-3xl shadow-2xl shadow-black/20 w-full max-w-md mx-4 relative transform translate-y-6 transition-[transform,opacity] duration-400 ease-out max-h-[90vh] overflow-y-auto">
+      class="bg-white rounded-3xl shadow-2xl shadow-black/20 w-full max-w-md mx-4 relative transform translate-y-20 transition-all duration-500 ease-out max-h-[90vh] overflow-y-auto">
       <button id="close-review-form"
         type="button"
         aria-label="Закрыть форму отзыва"
@@ -314,12 +315,12 @@ const reviewCount = reviews.length;
   }
 
   function togglePageElements(hide) {
-    [document.querySelector('header'), document.getElementById('scroll-to-top'), document.getElementById('favorites-widget')].forEach(el => {
+    [document.querySelector('header'), document.getElementById('scroll-to-top'), document.getElementById('favorites-widget'), document.getElementById('office-widget-container')].forEach(el => {
       if (!el) return;
-      el.style.transition = 'opacity 0.4s ease';
+      el.style.transition = 'opacity 0.5s ease';
       el.style.opacity = hide ? '0' : '1';
       el.style.pointerEvents = hide ? 'none' : 'auto';
-      if (!hide) setTimeout(() => { el.style.transition = ''; el.style.opacity = ''; el.style.pointerEvents = ''; }, 400);
+      if (!hide) setTimeout(() => { el.style.transition = ''; el.style.opacity = ''; el.style.pointerEvents = ''; }, 500);
     });
   }
 
@@ -456,27 +457,33 @@ const reviewCount = reviews.length;
     if (Math.abs(dx) > 50) window.changeSlide(dx < 0 ? 1 : -1);
   });
 
-  // Form
+  // Form — плавное открытие/закрытие по аналогии с CallbackModal / GiftModal
   openFormBtn?.addEventListener('click', () => {
+    if (!formOverlay || !formContent) return;
     formOverlay.classList.remove('hidden');
     formOverlay.style.display = 'flex';
     if (window.lockScroll) window.lockScroll();
     togglePageElements(true);
-    setTimeout(() => {
-      formOverlay.classList.remove('opacity-0');
-      formContent.classList.remove('translate-y-6');
-    }, 10);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        formOverlay.classList.remove('opacity-0');
+        formContent.classList.remove('translate-y-20');
+        formContent.classList.add('translate-y-0');
+      });
+    });
   });
 
   window.closeReviewForm = () => {
+    if (!formOverlay || !formContent) return;
     formOverlay.classList.add('opacity-0');
-    formContent.classList.add('translate-y-6');
+    formContent.classList.remove('translate-y-0');
+    formContent.classList.add('translate-y-20');
     setTimeout(() => {
       formOverlay.classList.add('hidden');
       formOverlay.style.display = 'none';
       if (window.unlockScroll) window.unlockScroll();
       togglePageElements(false);
-    }, 400);
+    }, 500);
   };
 
   closeFormBtn?.addEventListener('click', closeReviewForm);
@@ -493,24 +500,15 @@ const reviewCount = reviews.length;
     }
   });
 
-  function initReviewsCyclicScroll() {
+  function initReviewsScroller() {
     const el = document.getElementById('reviews-scroller');
-    if (!el || window.innerWidth >= 768) return;
-    let ticking = false;
-    const loop = () => {
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      if (maxScroll <= 0) return;
-      const left = el.scrollLeft;
-      if (left <= 20) el.scrollLeft = maxScroll;
-      else if (left >= maxScroll - 20) el.scrollLeft = 0;
-      ticking = false;
-    };
-    el.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(loop);
-    });
+    if (!el) return;
+    el.scrollLeft = 0;
   }
-  initReviewsCyclicScroll();
-  document.addEventListener('astro:page-load', initReviewsCyclicScroll);
+  initReviewsScroller();
+  document.addEventListener('astro:page-load', initReviewsScroller);
+  window.addEventListener('load', () => {
+    const el = document.getElementById('reviews-scroller');
+    if (el) el.scrollLeft = 0;
+  });
 </script>

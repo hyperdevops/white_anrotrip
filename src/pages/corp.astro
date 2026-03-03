@@ -178,6 +178,7 @@ import Layout from '../layouts/Layout.astro';
         <!-- Скролл-индикатор -->
         <div class="mt-16 reveal-hidden animate-hero-scroll">
           <a
+            id="corp-scroll-arrow"
             href="#content"
             class="inline-flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
             aria-label="Прокрутить вниз"
@@ -1142,3 +1143,21 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </main>
 </Layout>
+
+<script>
+  // Стрелка «Листать»: прокрутка к блоку «О компании» — зазор 22px между низом хедера и верхом контента
+  const corpArrow = document.getElementById('corp-scroll-arrow');
+  const siteHeader = document.getElementById('site-header');
+  const headerHeight = siteHeader ? siteHeader.offsetHeight : 64;
+  const GAP_PX = 22; // отступ от хедера до тела контента (по веб-стандартам — явная константа, не «минус минус»)
+  const offsetPx = headerHeight + GAP_PX;
+
+  corpArrow?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const anchor = document.getElementById('content');
+    if (!anchor) return;
+    const top =
+      anchor.getBoundingClientRect().top + window.pageYOffset - offsetPx;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+</script>

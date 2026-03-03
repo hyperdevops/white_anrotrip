@@ -205,6 +205,39 @@ const {
   const headerInner = document.getElementById('header-inner') as HTMLElement;
   let menuOpen = false;
 
+  // Прокрутка к якорям: «Туры» — как кнопка «Поиск туров» в Hero (offset 104); «О компании» на corp — хедер заходит на контент на 22px
+  const initAnchorScroll = () => {
+    const headerEl = document.getElementById('site-header');
+    const headerHeight = headerEl ? headerEl.offsetHeight : 64;
+
+    document.querySelectorAll<HTMLAnchorElement>('header a[href="#search"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const anchor = document.getElementById('search');
+        if (anchor) {
+          const top = anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // corp: зазор 22px между хедером и контентом (то же поведение, что у стрелки «Листать»)
+    const GAP_PX = 22;
+    document.querySelectorAll<HTMLAnchorElement>('header a[href="#content"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const anchor = document.getElementById('content');
+        if (anchor) {
+          const offset = headerHeight + GAP_PX;
+          const top = anchor.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  };
+  initAnchorScroll();
+  document.addEventListener('astro:page-load', initAnchorScroll);
+
   // При скролле — усиливаем тень, без изменения размеров
   const onScroll = () => {
     if (window.scrollY > 40) {
