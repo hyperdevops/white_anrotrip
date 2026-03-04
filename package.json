@@ -20,6 +20,7 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "cspell": "^9.7.0",
     "prettier-plugin-astro": "^0.14.1"
   }
 }
