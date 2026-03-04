@@ -20,12 +20,15 @@
 ></script>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initNemoWidget() {
+    const root = document.getElementById('nemo-root');
+    if (!root) return;
+
     const initNemo = () => {
       if (typeof FlightsSearchWidget !== 'undefined') {
         FlightsSearchWidget.init({
           nemoURL: 'https://ticket.anrotrip.ru',
-          rootElement: document.getElementById('nemo-root'),
+          rootElement: root,
           locale: 'ru',
         });
       } else {
@@ -33,7 +36,15 @@
       }
     };
     initNemo();
-  });
+  }
+
+  window.initNemoWidget = initNemoWidget;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNemoWidget);
+  } else {
+    initNemoWidget();
+  }
 </script>
 
 <style is:global>
