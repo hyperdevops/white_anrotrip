@@ -43,7 +43,7 @@ import Layout from '../layouts/Layout.astro';
     -->
     <div
       id="content"
-      class="relative z-10 mt-[20vh] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(15,76,129,0.12)] transition-colors duration-700 ease-in-out pb-12 md:pb-20"
+      class="relative z-10 mt-[20vh] bg-[linear-gradient(to_bottom,rgb(255_255_255)_0px,rgb(255_255_255)_60px,rgb(248_252_255)_120px,rgb(240_249_255)_180px,rgb(255_255_255)_100%)] rounded-t-3xl shadow-[0_-10px_40px_rgba(15,76,129,0.12)] transition-colors duration-700 ease-in-out pb-12 md:pb-20"
     >
       <!-- Якорь для кнопки "Поиск туров" (невидимый) -->
       <div id="search" class="absolute -top-32 w-full h-1"></div>
@@ -57,12 +57,12 @@ import Layout from '../layouts/Layout.astro';
         <SearchWidget />
       </div>
 
-      <!-- Остальной контент: единый горизонтальный ритм px-4 sm:px-6 -->
       <div class="space-y-0">
         <!-- Якорь для стрелочки "Популярные туры" -->
+        <!-- Отрицательный margin подтягивает блок к форме поиска, не меняя внутренние отступы PopularTours -->
         <div
           id="popular-tours"
-          class="scroll-mt-[calc(4rem+40px)] pt-2 md:pt-4"
+          class="scroll-mt-[calc(4rem+40px)] -mt-26 pt-2 md:pt-4"
         >
           <PopularTours />
         </div>
