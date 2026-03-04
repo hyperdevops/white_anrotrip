@@ -38,7 +38,7 @@
   }
 
   body {
-    @apply text-gray-900 break-words;
+    @apply text-gray-900 wrap-break-word;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

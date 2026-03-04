@@ -60,7 +60,7 @@ const badges = [
       href={badge.href}
       class:list={[
         'glass-panel-interactive px-3 py-3 sm:px-5 sm:py-4 rounded-2xl flex flex-col sm:flex-row items-center gap-2 sm:gap-3 group cursor-pointer min-h-0 no-underline text-inherit hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 w-full min-w-0 text-center sm:text-left overflow-visible',
-        'max-sm:[contain:layout] max-sm:transition-[box-shadow] max-sm:duration-200 max-sm:hover:translate-y-0',
+        'max-sm:contain-[layout] max-sm:transition-shadow max-sm:duration-200 max-sm:hover:translate-y-0',
         'sm:transition-all sm:hover:shadow-lg',
       ]}
     >
@@ -99,7 +99,7 @@ const badges = [
       </div>
 
       <!-- Текст: на мобильном — под иконкой по центру, на sm+ — в ряд -->
-      <div class="min-w-0 flex-1 w-full overflow-visible break-words">
+      <div class="min-w-0 flex-1 w-full overflow-visible wrap-break-word">
         <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide leading-tight sm:whitespace-nowrap">{badge.label}</div>
         <div class="text-[11px] sm:text-sm font-bold text-gray-900 leading-tight">{badge.value}</div>
       </div>
