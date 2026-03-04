@@ -7,6 +7,7 @@ export interface Props {
   navVariant?: 'default' | 'corp';
 }
 
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 const defaultNavItems = [
   { name: 'О нас', href: '#about' },
   { name: 'Туры', href: '#search' },
@@ -37,11 +38,12 @@ const {
           : 'grid-cols-[1fr_auto_1fr]',
       ]}
     >
-      <!-- Логотип: на главной прижат к леву (1fr колонка), на corp — как есть -->
+      <!-- Логотип: на главной — scroll to top; на corp/cabinet — href="/" data-astro-reload (полная перезагрузка для Tourvisor) -->
       <a
-        href="#"
+        href={isHome ? '#' : '/'}
         id="logo-btn"
         class="flex items-center gap-3 group z-50 cursor-pointer select-none"
+        {...(isHome ? {} : { 'data-astro-reload': true })}
       >
         <!-- SVG Логотип -->
         <svg
@@ -257,9 +259,10 @@ const {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Логотип — на главную в самый верх (эффект вспышки: затемнение → действие → появление)
+  // Логотип — на главной scroll to top; на других страницах — data-astro-reload, нативный переход
   const initLogoClick = () => {
     const logo = document.getElementById('logo-btn');
+    if (logo?.hasAttribute('data-astro-reload')) return;
     logo?.addEventListener('click', (e) => {
       e.preventDefault();
       const path = window.location.pathname.replace(/\/$/, '') || '/';

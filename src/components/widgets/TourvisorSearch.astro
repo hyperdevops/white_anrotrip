@@ -1,10 +1,35 @@
 ---
 // src/components/widgets/TourvisorSearch.astro
 // Виджет поиска туров Tourvisor (ID: 192367)
+// Решение по веб-стандартам: Astro docs + GitHub #9359 — динамическая загрузка при astro:page-load
 ---
 
 <div class="tv-wrapper w-full bg-white rounded-xl min-h-112.5">
   <div class="tv-search-form tv-moduleid-192367"></div>
 </div>
 
-<script is:inline src="https://tourvisor.ru/module/init.js"></script>
+<!-- Первая загрузка: скрипт в HTML выполняется при парсинге -->
+<script
+  is:inline
+  src="https://tourvisor.ru/module/init.js"
+></script>
+<script is:inline>
+  const TOURVISOR_SCRIPT_URL = 'https://tourvisor.ru/module/init.js';
+
+  function initTourvisorWidget() {
+    const container = document.querySelector('.tv-search-form.tv-moduleid-192367');
+    if (!container) return;
+
+    requestAnimationFrame(function () {
+      if (!container.children.length) {
+        var s = document.createElement('script');
+        s.src = TOURVISOR_SCRIPT_URL;
+        s.async = false;
+        document.body.appendChild(s);
+      }
+      window.dispatchEvent(new Event('resize'));
+    });
+  }
+
+  window.initTourvisorWidget = initTourvisorWidget;
+</script>

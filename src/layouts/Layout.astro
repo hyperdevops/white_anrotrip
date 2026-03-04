@@ -107,6 +107,18 @@ const ogImageUrl = ogImage.startsWith('http')
     <CallbackModal />
     <ReviewModal />
 
+    <!-- Tourvisor не поддерживает View Transition — при переходе на главную делаем полную загрузку (astro:before-swap) -->
+    <script is:inline>
+      document.addEventListener('astro:before-swap', function (e) {
+        // Проверяем по наличию виджета Tourvisor (только на главной), а не по documentURI — он может быть пустым при fetch
+        var isMainPage = e.newDocument.querySelector('.tv-search-form.tv-moduleid-192367');
+        if (isMainPage) {
+          e.swap = function () {
+            window.location.href = window.location.origin + '/';
+          };
+        }
+      });
+    </script>
     <!-- ОБНОВЛЕННЫЙ СКРИПТ АНИМАЦИИ -->
     <script is:inline>
       // Создаем глобальную функцию для запуска/перезапуска анимаций
