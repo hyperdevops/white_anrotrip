@@ -100,7 +100,11 @@ const tours = [
 
     <!-- CTA под сеткой -->
     <div class="text-center mt-8 reveal-hidden">
-      <a href="#search" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast group">
+      <a
+        id="popular-tours-all-btn"
+        href="#search"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast group"
+      >
         Смотреть все направления
         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -111,14 +115,21 @@ const tours = [
 </section>
 
 <script>
+  // Прокрутка к форме поиска (как в Hero)
+  const scrollToSearch = () => {
+    const anchor = document.getElementById('search');
+    if (anchor) {
+      const top = anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   document.querySelectorAll('button[data-tour-title]').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const title = (e.currentTarget as HTMLElement).getAttribute('data-tour-title');
-      const searchAnchor = document.getElementById('search');
-      if (searchAnchor) {
-        const top = searchAnchor.getBoundingClientRect().top + window.pageYOffset - 104;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-    });
+    btn.addEventListener('click', () => scrollToSearch());
+  });
+
+  document.getElementById('popular-tours-all-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    scrollToSearch();
   });
 </script>

@@ -305,7 +305,8 @@
   }
 
   .btn-magnetic {
-    transition: transform var(--motion-duration-fast) var(--motion-easing-bounce);
+    transition: transform var(--motion-duration-fast)
+      var(--motion-easing-bounce);
   }
   @media (hover: hover) {
     .btn-magnetic:hover {
