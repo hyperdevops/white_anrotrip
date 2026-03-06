@@ -481,25 +481,27 @@
 ═══════════════════════════════════════════════ */
 @keyframes marquee-forward {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(var(--marquee-offset, -50%), 0, 0);
   }
 }
 @keyframes marquee-reverse {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(var(--marquee-offset, -50%), 0, 0);
   }
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .partners-track--forward {
+  will-change: transform;
   animation: marquee-forward 36s linear infinite;
 }
 .partners-track--reverse {
+  will-change: transform;
   animation: marquee-reverse 30s linear infinite;
 }
 @media (hover: hover) {
