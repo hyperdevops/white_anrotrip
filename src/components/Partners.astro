@@ -75,11 +75,11 @@ const { class: classes = '' }: Props = Astro.props;
       {stats.map((stat) => (
         <div
           class="reveal-hidden glass-panel-interactive rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center group
-                 max-sm:contain-[layout] max-sm:transition-shadow max-sm:duration-200 max-sm:hover:translate-y-0
+                 max-sm:contain-[layout] max-sm:transition-shadow max-sm:duration-fast max-sm:hover:translate-y-0
                  sm:transition-all"
         >
           <!-- Иконка -->
-          <div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors duration-300">
+          <div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors duration-normal">
             {stat.icon === 'building' && (
               <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
@@ -120,7 +120,7 @@ const { class: classes = '' }: Props = Astro.props;
         style="-webkit-overflow-scrolling: touch;"
       >
         {partners.map((partner) => (
-          <div class="snap-start shrink-0 w-40 min-h-30 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-4 transition-[box-shadow,border-color] duration-200">
+          <div class="snap-start shrink-0 w-40 min-h-30 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-4 transition-[box-shadow,border-color] duration-fast">
             <Image
               src={partner.logo}
               alt={partner.name}
@@ -139,11 +139,11 @@ const { class: classes = '' }: Props = Astro.props;
       <div class="overflow-hidden mb-4">
         <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
           {row1.map((partner) => (
-            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-normal">
               <Image
                 src={partner.logo}
                 alt={partner.name}
-                class="max-h-full w-auto object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-300 group-hover:grayscale-0"
+                class="max-h-full w-auto object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-normal group-hover:grayscale-0"
                 loading="lazy"
               />
             </div>
@@ -153,11 +153,11 @@ const { class: classes = '' }: Props = Astro.props;
       <!-- <div class="overflow-hidden">
         <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
           {row2doubled.map((partner) => (
-            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-300">
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-normal">
               <Image
                 src={partner.logo}
                 alt={partner.name}
-                class="max-h-full w-auto object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-300 group-hover:grayscale-0"
+                class="max-h-full w-auto object-contain opacity-100 group-hover:opacity-100 transition-opacity duration-normal group-hover:grayscale-0"
                 loading="lazy"
               />
             </div>
@@ -171,7 +171,7 @@ const { class: classes = '' }: Props = Astro.props;
       <p class="text-sm text-gray-400 mb-4 uppercase tracking-widest font-medium font-montserrat">Ваша компания могла быть здесь</p>
       <a
         href="#contacts"
-        class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-white font-semibold font-montserrat text-sm hover:bg-primary-dark transition-all duration-300 btn-magnetic btn-ripple shadow-[0_4px_20px_rgba(0,171,179,0.35)] hover:shadow-[0_6px_28px_rgba(0,171,179,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-white font-semibold font-montserrat text-sm hover:bg-primary-dark transition-all duration-normal btn-magnetic btn-ripple shadow-[0_4px_20px_rgba(0,171,179,0.35)] hover:shadow-[0_6px_28px_rgba(0,171,179,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
         Стать партнёром
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">

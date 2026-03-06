@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import favicon from '../assets/favicon.png';
 import welcomeImg from '../assets/welcome/welcome.webp';
 import Layout from '../layouts/Layout.astro';
 ---
@@ -13,6 +14,26 @@ import Layout from '../layouts/Layout.astro';
   showOfficeWidget={false}
 >
   <main id="content" class="fixed inset-0 z-0">
+    <!-- Логотип «На главную» — favicon из assets как в Header -->
+    <a
+      href="/"
+      data-astro-reload
+      class="reveal-hidden absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-shadow duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      aria-label="На главную"
+    >
+      <Image
+        src={favicon}
+        alt=""
+        width={40}
+        height={40}
+        format="png"
+        densities={[2, 3, 4]}
+        quality="max"
+        decoding="async"
+        class="h-10 w-10 object-contain drop-shadow-sm"
+      />
+    </a>
+
     <!-- Полноэкранное фото без отступов -->
     <Image
       src={welcomeImg}
@@ -23,10 +44,10 @@ import Layout from '../layouts/Layout.astro';
       fetchpriority="high"
     />
 
-    <!-- Форма: 70px от верха, как на скриншоте -->
+    <!-- Форма: 70px от верха, reveal-эффект как на corp -->
     <div class="absolute inset-0 flex flex-col items-center pt-[90px] px-4">
       <div
-        class="w-full max-w-[400px] rounded-2xl bg-white/85 shadow-[0_4px_24px_rgba(0,0,0,0.12)] p-6 sm:p-8"
+        class="w-full max-w-[400px] rounded-2xl bg-white/85 shadow-[0_4px_24px_rgba(0,0,0,0.12)] p-6 sm:p-8 reveal-hidden"
       >
         <h1
           class="text-gray-800 text-xl sm:text-2xl font-bold pb-4 border-b border-gray-200"
@@ -88,8 +109,10 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <!-- Подпись: 2 строки, чёрная тень по контуру букв для читаемости -->
-    <div class="absolute bottom-4 left-0 right-0 text-center text-sm">
+    <!-- Подпись: 2 строки, reveal-эффект с небольшой задержкой после формы -->
+    <div
+      class="absolute bottom-4 left-0 right-0 text-center text-sm reveal-hidden delay-200"
+    >
       <p
         class="text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_0_4px_rgba(0,0,0,0.6)]"
       >
@@ -99,7 +122,7 @@ import Layout from '../layouts/Layout.astro';
         href="https://www.moidokumenti.ru"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-[var(--color-primary)] hover:underline [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_0_4px_rgba(0,0,0,0.6)]"
+        class="text-(--color-primary) hover:underline [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_0_4px_rgba(0,0,0,0.6)]"
       >
         www.moidokumenti.ru
       </a>

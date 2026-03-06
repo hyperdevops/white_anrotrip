@@ -95,13 +95,13 @@ const { id, title } = Astro.props;
 </script>
 
 <style>
-  /* Анимация диалога */
+  /* Анимация диалога — единый ритм (duration-fast = 200ms) */
   dialog {
     transition:
-      display 0.2s allow-discrete,
-      overlay 0.2s allow-discrete;
+      display var(--motion-duration-fast) allow-discrete,
+      overlay var(--motion-duration-fast) allow-discrete;
   }
   dialog::backdrop {
-    transition: background-color 0.2s;
+    transition: background-color var(--motion-duration-fast);
   }
 </style>

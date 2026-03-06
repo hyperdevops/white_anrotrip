@@ -47,7 +47,7 @@ const tours = [
           data-tour-title={tour.title}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 deep-shadow border border-white/10 reveal-hidden reveal-scale focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-slow deep-shadow border border-white/10 reveal-hidden reveal-scale focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
             tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
             tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',
@@ -58,12 +58,12 @@ const tours = [
           <div class="absolute inset-0">
             <div class="absolute inset-0 tour-card-breathe">
               <Image src={tour.image} alt={tour.title}
-                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] image-sharp"
+                class="h-full w-full object-cover transition-transform duration-slow group-hover:scale-[1.04] image-sharp"
                 loading="lazy"
               />
             </div>
             <!-- Градиент снизу -->
-            <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/85%)_0%,rgb(0_0_0/25%)_50%,transparent_100%)] opacity-90 group-hover:opacity-70 transition-opacity duration-400"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/85%)_0%,rgb(0_0_0/25%)_50%,transparent_100%)] opacity-90 group-hover:opacity-70 transition-opacity duration-normal"></div>
             <!-- Легкий оверлей сверху -->
             <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgb(0_0_0/20%)_0%,transparent_40%)]"></div>
           </div>
@@ -76,7 +76,7 @@ const tours = [
                 {tour.badge}
               </span>
               <!-- Иконка-стрелка появляется при hover (только десктоп) -->
-              <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-1 group-hover:translate-y-0">
+              <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-normal -translate-y-1 group-hover:translate-y-0">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
@@ -84,8 +84,8 @@ const tours = [
             </div>
 
             <!-- Название и цена -->
-            <div class="transform translate-y-1.5 group-hover:translate-y-0 transition-transform duration-300">
-              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 group-hover:text-cta transition-colors duration-300" style="font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem);">
+            <div class="transform translate-y-1.5 group-hover:translate-y-0 transition-transform duration-normal">
+              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 group-hover:text-cta transition-colors duration-normal" style="font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem);">
                 {tour.title}
               </h3>
               <div class="flex items-center gap-2">
@@ -100,7 +100,7 @@ const tours = [
 
     <!-- CTA под сеткой -->
     <div class="text-center mt-8 reveal-hidden">
-      <a href="#search" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-200 group">
+      <a href="#search" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast group">
         Смотреть все направления
         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>

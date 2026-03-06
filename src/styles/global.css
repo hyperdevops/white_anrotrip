@@ -2,11 +2,16 @@
 
 @plugin "@tailwindcss/typography";
 
-/* View Transitions: не блокировать клики после анимации */
+/* View Transitions: не блокировать клики после анимации + плавная длительность */
 ::view-transition-group(*),
 ::view-transition-old(*),
 ::view-transition-new(*) {
   pointer-events: none;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--motion-duration-slow);
+  animation-timing-function: var(--motion-easing);
 }
 
 /* ═══════════════════════════════════════════════
@@ -23,6 +28,13 @@
   --color-cta-hover: #e5be14;
   --font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Motion — единый ритм анимаций (Web Standards 2026) */
+  --transition-duration-fast: 200ms; /* микро: hover цвет, focus, табы */
+  --transition-duration-normal: 300ms; /* кнопки, карточки, hover transform */
+  --transition-duration-slow: 500ms; /* модалки, overlay, reveal */
+  --transition-timing-function-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-timing-function-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ═══════════════════════════════════════════════
@@ -108,7 +120,10 @@
   box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  @apply transition-colors duration-500 ease-in-out;
+  transition:
+    background-color var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .glass-panel-interactive {
@@ -117,7 +132,7 @@
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--motion-duration-fast) var(--motion-easing);
 }
 @media (hover: hover) {
   .glass-panel-interactive:hover {
@@ -147,21 +162,23 @@
 ═══════════════════════════════════════════════ */
 .reveal-hidden {
   opacity: 0;
-  transform: translateY(32px); /* было 50px — меньше = быстрее */
+  transform: translate3d(0, 32px, 0); /* translate3d — GPU-ускорение */
   transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+    opacity var(--motion-duration-slow) var(--motion-easing),
+    transform var(--motion-duration-slow) var(--motion-easing);
+  will-change: transform, opacity;
 }
 .reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 /* Staggered — сокращаем задержки на мобайле */
 [data-reveal-stagger] > * {
   transition:
-    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity var(--motion-duration-slow) var(--motion-easing),
+    transform var(--motion-duration-slow) var(--motion-easing);
 }
 [data-reveal-stagger] > *:nth-child(1) {
   transition-delay: 0ms;
@@ -211,7 +228,7 @@
 .reveal-visible.reveal-from-right,
 .reveal-visible.reveal-scale {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* ═══════════════════════════════════════════════
@@ -221,6 +238,12 @@
 :root {
   --header-height: 1rem;
   --scroll-offset: 1px;
+  /* Motion — единый ритм (используется в custom CSS и @theme) */
+  --motion-duration-fast: 200ms;
+  --motion-duration-normal: 300ms;
+  --motion-duration-slow: 500ms;
+  --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 :target {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
@@ -270,8 +293,8 @@
     transform: scale(0);
     opacity: 0;
     transition:
-      transform 0.5s ease-out,
-      opacity 0.5s ease-out;
+      transform var(--motion-duration-slow) var(--motion-easing),
+      opacity var(--motion-duration-slow) var(--motion-easing);
   }
   .btn-ripple:active::before {
     transform: scale(2.5);
@@ -282,7 +305,7 @@
   }
 
   .btn-magnetic {
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--motion-duration-fast) var(--motion-easing-bounce);
   }
   @media (hover: hover) {
     .btn-magnetic:hover {
@@ -308,7 +331,7 @@
     }
   }
   .shake-error {
-    animation: shake 0.45s ease-in-out;
+    animation: shake var(--motion-duration-slow) ease-in-out;
   }
 }
 
@@ -375,15 +398,48 @@
     background: linear-gradient(
       135deg,
       #ffffff 0%,
+      #fafdfe 1.5%,
+      #f5fcfd 3%,
+      #eef9fb 5%,
+      #e8f8fa 7%,
+      #ddf4f7 10%,
+      #d4f2f6 13%,
+      #c4eef3 16%,
+      #a8e4ed 20%,
+      #8adceb 22%,
+      #6ed4e6 25%,
+      #5acee2 27%,
+      #4ac6de 29%,
+      #46c3db 30%,
+      #42c0d9 31%,
+      #3ebdd8 32%,
+      #3ab9d7 33%,
+      #36b6d5 34%,
+      #2ab8d0 36%,
+      #1ab5c4 40%,
+      #0ab0b8 44%,
       #00abb3 50%,
-      #38bdf8 70%,
+      #00b5bc 60%,
+      #1abfc6 68%,
+      #33bfc6 72%,
+      #4dc9ce 76%,
+      #66cdd3 80%,
+      #82d7db 83%,
+      #99dde0 86%,
+      #aee4e8 88%,
+      #bbe8eb 90%,
+      #cceef1 92%,
+      #ddf4f7 94%,
+      #e8f7f9 96%,
+      #f0f9fa 98%,
+      #fafdfe 99.5%,
       #ffffff 100%
     );
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: partners-title-shine 5s linear infinite;
+    animation: partners-title-shine 7s ease-in-out infinite alternate;
   }
 }
 

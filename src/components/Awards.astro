@@ -56,7 +56,7 @@ const awards = [
           </svg>
           <span class="text-xs font-semibold text-yellow-600 uppercase tracking-widest font-montserrat">Награды</span>
         </div>
-        <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-[1.0]" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
+        <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
           Награды<br />
           <span class="text-primary">ANRO TRIP 2026</span>
         </h2>
@@ -70,13 +70,13 @@ const awards = [
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-start" data-reveal-stagger>
       {awards.map((award) => (
         <div class="reveal-hidden">
-          <div class="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out">
+          <div class="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-slow ease-out">
           <!-- Фото -->
-          <div class="relative overflow-hidden aspect-[3/3] bg-gray-50">
+          <div class="relative overflow-hidden aspect-3/3 bg-gray-50">
             <Image
               src={award.image}
               alt={award.title}
-              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              class="w-full h-full object-cover transition-transform duration-slow ease-out group-hover:scale-[1.04]"
               loading="lazy"
             />
             <!-- Тонкий оверлей -->

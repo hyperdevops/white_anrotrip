@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import favicon from '../assets/favicon.png';
 import { ClientRouter } from 'astro:transitions';
 import ScrollProgress from '../components/ScrollProgress.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
@@ -15,7 +16,7 @@ interface Props {
   description?: string;
   /** Полный URL страницы для canonical и og:url (если не задан — берётся из Astro.url) */
   canonicalURL?: string;
-  /** Путь или URL картинки для превью в соцсетях (рекомендуется 1200×630). По умолчанию /favicon.svg */
+  /** Путь или URL картинки для превью в соцсетях (рекомендуется 1200×630). По умолчанию favicon из assets */
   ogImage?: string;
   showFavorites?: boolean;
   showScrollProgress?: boolean;
@@ -27,7 +28,7 @@ const {
   title,
   description = 'ANRO TRIP — Путешествия, которые меняют жизнь.',
   canonicalURL,
-  ogImage = '/favicon.png',
+  ogImage = favicon.src,
   showFavorites = true,
   showScrollProgress = true,
   showScrollToTop = true,
@@ -49,9 +50,9 @@ const ogImageUrl = ogImage.startsWith('http')
     <meta name="description" content={description} />
     <meta name="theme-color" content="#00abb3" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- Favicon (из assets — оптимизируется при сборке) -->
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="apple-touch-icon" href={favicon.src} />
 
     <!-- Canonical -->
     <link rel="canonical" href={canonical} />
@@ -90,10 +91,39 @@ const ogImageUrl = ogImage.startsWith('http')
   <body
     class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary-dark"
   >
+    <!-- Вспышка при загрузке — тот же эффект, что при клике по логотипу (fade-in 0.5s). Учитываем prefers-reduced-motion -->
+    <script is:inline>
+      (function () {
+        var d = document;
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced) {
+          d.documentElement.style.opacity = '0';
+          d.body.style.opacity = '0';
+          d.documentElement.style.transition = 'opacity 0.5s ease';
+          d.body.style.transition = 'opacity 0.5s ease';
+        }
+        function fadeIn() {
+          if (prefersReduced) return;
+          d.documentElement.style.opacity = '1';
+          d.body.style.opacity = '1';
+          setTimeout(function () {
+            d.documentElement.style.transition = '';
+            d.documentElement.style.opacity = '';
+            d.body.style.transition = '';
+            d.body.style.opacity = '';
+          }, 500);
+        }
+        if (d.readyState === 'loading') {
+          d.addEventListener('DOMContentLoaded', fadeIn);
+        } else {
+          fadeIn();
+        }
+      })();
+    </script>
     <!-- Skip Link: виден при фокусе (Tab), для клавиатуры и скринридеров -->
     <a
       href="#content"
-      class="fixed left-4 top-0 z-[9999] -translate-y-full rounded-b-md bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform duration-200 focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      class="fixed left-4 top-0 z-9999 -translate-y-full rounded-b-md bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform duration-fast focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       Перейти к содержимому
     </a>
@@ -111,7 +141,9 @@ const ogImageUrl = ogImage.startsWith('http')
     <script is:inline>
       document.addEventListener('astro:before-swap', function (e) {
         // Проверяем по наличию виджета Tourvisor (только на главной), а не по documentURI — он может быть пустым при fetch
-        var isMainPage = e.newDocument.querySelector('.tv-search-form.tv-moduleid-192367');
+        var isMainPage = e.newDocument.querySelector(
+          '.tv-search-form.tv-moduleid-192367',
+        );
         if (isMainPage) {
           e.swap = function () {
             window.location.href = window.location.origin + '/';

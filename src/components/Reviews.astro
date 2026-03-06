@@ -67,7 +67,7 @@ const reviewCount = reviews.length;
             onclick={`openLightbox(${index})`}
           >
             <!-- Карточка документа -->
-            <div class="relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-[transform,box-shadow] duration-300 hover:-translate-y-2 border border-white/10">
+            <div class="relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-[transform,box-shadow] duration-normal hover:-translate-y-2 border border-white/10">
               <Image
                 src={item.image}
                 alt={item.title}
@@ -78,8 +78,8 @@ const reviewCount = reviews.length;
                 sizes="(max-width: 640px) 128px, 144px"
               />
               <!-- Hover overlay -->
-              <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300 flex items-center justify-center">
-                <div class="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+              <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-normal flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-normal shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
                   <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
                   </svg>
@@ -97,7 +97,7 @@ const reviewCount = reviews.length;
       <button
         id="open-review-form"
         type="button"
-        class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-white/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 hover:-translate-y-0.5 transition-[transform,background-color,border-color] duration-300 btn-magnetic focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+        class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-white/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 hover:-translate-y-0.5 transition-[transform,background-color,border-color] duration-normal btn-magnetic focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
       >
         <svg class="w-4 h-4 text-cta" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -117,7 +117,7 @@ const reviewCount = reviews.length;
   </style>
   <div
     id="lightbox"
-    class="fixed inset-0 z-2147483647 bg-black/95 hidden items-center justify-center opacity-0 transition-opacity duration-300 select-none backdrop-blur-sm cursor-zoom-in overflow-hidden"
+    class="fixed inset-0 z-2147483647 bg-black/95 hidden items-center justify-center opacity-0 transition-opacity duration-normal select-none backdrop-blur-sm cursor-zoom-in overflow-hidden"
     onclick="toggleZoom(event)"
   >
     <!-- Панель управления -->
@@ -177,7 +177,7 @@ const reviewCount = reviews.length;
     </button>
 
     <!-- Трек -->
-    <div id="lightbox-track" class="flex h-full w-full transition-transform duration-300 ease-out will-change-transform">
+    <div id="lightbox-track" class="flex h-full w-full transition-transform duration-normal ease-out will-change-transform">
       {reviews.map((item) => (
         <div class="w-full h-full shrink-0 slide-item overflow-x-hidden overflow-y-auto min-h-0 py-6 flex flex-col items-center overscroll-contain [touch-action:pan-x_pan-y]">
           <div class="lightbox-slide-inner flex items-center justify-center min-h-full w-full shrink-0 mx-auto">
@@ -202,9 +202,9 @@ const reviewCount = reviews.length;
 
   <!-- ══════ ФОРМА ОТЗЫВА ══════ (по аналогии с CallbackModal / GiftModal: плавное открытие/закрытие, виджет офиса за блюром) -->
   <div id="review-modal-overlay"
-    class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-500">
+    class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-slow">
     <div id="review-modal-content"
-      class="bg-white rounded-3xl shadow-2xl shadow-black/20 w-full max-w-md mx-4 relative transform translate-y-20 transition-all duration-500 ease-out max-h-[90vh] overflow-y-auto">
+      class="bg-white rounded-3xl shadow-2xl shadow-black/20 w-full max-w-md mx-4 relative transform translate-y-20 transition-all duration-slow ease-out max-h-[90vh] overflow-y-auto">
       <button id="close-review-form"
         type="button"
         aria-label="Закрыть форму отзыва"

@@ -16,7 +16,7 @@ import certifImg from '../assets/certif/certif.webp';
   </div>
   <!-- Сеточный фон -->
   <div
-    class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none"
+    class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-size-[60px_60px] pointer-events-none"
   >
   </div>
 
@@ -115,13 +115,13 @@ import certifImg from '../assets/certif/certif.webp';
         <div class="relative w-full max-w-[480px] cursor-pointer group">
           <!-- Тень/свечение -->
           <div
-            class="absolute -inset-4 bg-cta/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            class="absolute -inset-4 bg-cta/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-slow pointer-events-none"
           >
           </div>
 
           <!-- Карта -->
           <div
-            class="relative rounded-2xl overflow-hidden shadow-2xl group-hover:scale-[1.02] group-hover:-translate-y-2 transition-transform duration-500"
+            class="relative rounded-2xl overflow-hidden shadow-2xl group-hover:scale-[1.02] group-hover:-translate-y-2 transition-transform duration-slow"
           >
             <Image
               src={certifImg}
@@ -131,7 +131,7 @@ import certifImg from '../assets/certif/certif.webp';
             />
             <!-- Shine sweep -->
             <div
-              class="absolute inset-0 bg-linear-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-900 ease-in-out pointer-events-none"
+              class="absolute inset-0 bg-linear-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-in-out pointer-events-none"
             >
             </div>
           </div>
