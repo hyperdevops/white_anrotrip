@@ -82,3 +82,5 @@ coverage/
 # Media files (only exclude if they are large generated files)
 # Currently keeping image assets as they appear to be part of the project
 # *.png, *.jpg, etc. removed from ignore as they seem to be used in the project
+/.doc/site-analysis-full.md
+/AGENTS.md

@@ -100,7 +100,7 @@ npm run dev
 ## Документация
 
 - [Конституция проекта](.specify/memory/constitution.md) — правила и стандарты
-- [Руководство ANRO TRIP](.doc/anro-trip-guide-optimized.md) — архитектура, z-index, компоненты
+- [AGENTS.md](AGENTS.md) — архитектура, z-index, компоненты, правила для AI
 
 ## Лицензия
 
