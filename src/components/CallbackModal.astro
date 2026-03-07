@@ -45,12 +45,14 @@
       </p>
 
       <form
+        id="callback-form"
         class="space-y-4"
-        onsubmit="event.preventDefault(); alert('Спасибо! Мы перезвоним.'); window.closeCallbackModal();"
+        onsubmit="event.preventDefault();"
       >
         <div class="space-y-1">
           <label class="text-xs text-gray-500 ml-1">Ваше имя</label>
           <input
+            name="name"
             type="text"
             placeholder="Имя"
             required
@@ -61,6 +63,7 @@
         <div class="space-y-1">
           <label class="text-xs text-gray-500 ml-1">Ваш телефон</label>
           <input
+            name="phone"
             type="tel"
             placeholder="+7 (999) 000-00-00"
             required
@@ -69,7 +72,7 @@
         </div>
 
         <div class="flex items-start gap-2 pt-2">
-          <input type="checkbox" id="agree-callback" class="mt-1" />
+          <input name="agree" type="checkbox" id="agree-callback" class="mt-1" />
           <label
             for="agree-callback"
             class="text-[10px] text-gray-500 leading-tight"
@@ -178,6 +181,16 @@
   closeBtn?.addEventListener('click', window.closeCallbackModal);
   overlay?.addEventListener('click', (e) => {
     if (e.target === overlay) window.closeCallbackModal();
+  });
+
+  // Обработка отправки формы (временно — console.log, готово к интеграции Netlify Forms/Formspree)
+  const callbackForm = document.getElementById('callback-form');
+  callbackForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const data = Object.fromEntries(new FormData(form).entries());
+    console.log('Form submitted', data);
+    window.closeCallbackModal();
   });
 
   window.addEventListener('keydown', (e) => {

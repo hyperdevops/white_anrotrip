@@ -45,19 +45,20 @@ import certifImg from '../assets/certif/certif.webp';
         Лучший подарок — это путешествие!
       </p>
 
-      <!-- Картинка сертификата (Astro Image — оптимизация, lazy) -->
-      <!-- <div class="w-full aspect-[1.58/1] rounded-xl overflow-hidden mb-8 shadow-md">
+      <!-- Картинка сертификата (Astro Image — оптимизация, lazy, только desktop) -->
+      <div class="hidden md:block w-full aspect-[1.58/1] rounded-xl overflow-hidden mb-8 shadow-md">
         <Image
           src={certifImg}
           alt="Подарочный сертификат ANRO TRIP"
           class="w-full h-full object-cover"
           loading="lazy"
         />
-      </div> -->
+      </div>
 
       <form
+        id="gift-form"
         class="space-y-4"
-        onsubmit="event.preventDefault(); closeGiftModal();"
+        onsubmit="event.preventDefault();"
       >
         <p class="text-xs text-center text-gray-500 mb-5 font-inter">
           <i
@@ -69,6 +70,7 @@ import certifImg from '../assets/certif/certif.webp';
         <div class="space-y-1">
           <label class="text-xs text-gray-500 ml-1">Фамилия Имя Отчество</label>
           <input
+            name="fio"
             type="text"
             placeholder="ФИО"
             required
@@ -79,6 +81,7 @@ import certifImg from '../assets/certif/certif.webp';
         <div class="space-y-1">
           <label class="text-xs text-gray-500 ml-1">Ваш телефон</label>
           <input
+            name="phone"
             type="tel"
             placeholder="+7 (999) 000-00-00"
             required
@@ -89,6 +92,7 @@ import certifImg from '../assets/certif/certif.webp';
         <div class="space-y-1">
           <label class="text-xs text-gray-500 ml-1">Ваш e-mail</label>
           <input
+            name="email"
             type="email"
             placeholder="example@mail.ru"
             required
@@ -97,7 +101,7 @@ import certifImg from '../assets/certif/certif.webp';
         </div>
 
         <div class="flex items-start gap-2 pt-2">
-          <input type="checkbox" id="agree-gift" class="mt-1" />
+          <input name="agree" type="checkbox" id="agree-gift" class="mt-1" />
           <label
             for="agree-gift"
             class="text-[10px] text-gray-500 leading-tight"
@@ -218,6 +222,16 @@ import certifImg from '../assets/certif/certif.webp';
   closeBtn?.addEventListener('click', closeGiftModal);
   overlay?.addEventListener('click', (e) => {
     if (e.target === overlay) closeGiftModal();
+  });
+
+  // Обработка отправки формы (временно — console.log, готово к интеграции Netlify Forms/Formspree)
+  const giftForm = document.getElementById('gift-form');
+  giftForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const data = Object.fromEntries(new FormData(form).entries());
+    console.log('Form submitted', data);
+    closeGiftModal();
   });
 
   window.addEventListener('keydown', (e) => {

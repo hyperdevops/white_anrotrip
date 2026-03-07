@@ -28,7 +28,7 @@ const {
   title,
   description = 'ANRO TRIP — Путешествия, которые меняют жизнь.',
   canonicalURL,
-  ogImage = favicon.src,
+  ogImage = '/favicon.src',
   showFavorites = true,
   showScrollProgress = true,
   showScrollToTop = true,
@@ -95,7 +95,9 @@ const ogImageUrl = ogImage.startsWith('http')
     <script is:inline>
       (function () {
         var d = document;
-        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var prefersReduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
         if (!prefersReduced) {
           d.documentElement.style.opacity = '0';
           d.body.style.opacity = '0';
