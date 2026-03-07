@@ -35,7 +35,7 @@ import heroBg from '../assets/hero/plane.avif';
   <!-- Контент: 3 группы вместо 5 — меньше одновременных анимаций -->
   <div
     id="hero-content"
-    class="reveal-hidden relative z-10 container mx-auto px-6 text-white mt-8"
+    class="relative z-10 container mx-auto px-6 text-white mt-8"
   >
     <!-- Группа 1: бейдж + заголовок -->
     <div class="">
@@ -122,7 +122,9 @@ import heroBg from '../assets/hero/plane.avif';
     </div>
 
     <!-- Быстрые стат-пилюли -->
-    <!-- <div class="mt-12 flex flex-wrap items-center justify-center gap-3">
+    <div
+      class="reveal-hidden mt-12 flex flex-wrap items-center justify-center gap-3"
+    >
       {
         [
           ['18', 'лет опыта'],
@@ -139,100 +141,98 @@ import heroBg from '../assets/hero/plane.avif';
         ))
       }
     </div>
-  </div> -->
-
-    <!-- Скролл-стрелка -->
-    <!-- <div class="absolute mt-8 left-1/2 -translate-x-1/2 z-20">
-      <button
-        id="scroll-arrow"
-        aria-label="Скролл вниз"
-        class="flex flex-col items-center gap-1.5 group cursor-pointer text-white/60 hover:text-white transition-colors"
-      >
-        <span
-          class="text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-medium"
-          >Смотреть</span
-        >
-        <div
-          class="w-8 h-12 rounded-full border border-white/30 flex items-start justify-center pt-2 group-hover:border-white/60 transition-colors"
-        >
-          <div class="w-1 h-2.5 bg-white/70 rounded-full animate-hero-scroll">
-          </div>
-        </div>
-      </button>
-    </div> -->
-    <div
-      class="absolute mt-12 left-1/2 -translate-x-1/2 z-20 reveal-hidden delay-200 animate-hero-scroll"
-    >
-      <button
-        id="scroll-arrow"
-        aria-label="Скролл вниз"
-        class="text-white/80 hover:text-white transition-colors cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-10 w-10 drop-shadow-md"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 14l-7 7m0 0l-7-7"></path>
-        </svg>
-      </button>
-    </div>
   </div>
 
-  <script>
-    const searchBtn = document.getElementById('hero-search-btn');
-    const arrowBtn = document.getElementById('scroll-arrow');
-
-    // Scroll to search
-    searchBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const anchor = document.getElementById('search');
-      if (anchor) {
-        const top =
-          anchor.getBoundingClientRect().top + window.pageYOffset - 104;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-    });
-
-    arrowBtn?.addEventListener('click', () => {
-      document
-        .getElementById('popular-tours')
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    // Dynamic gradient
-    // const h = new Date().getHours();
-    // if (heroGradient) {
-    //   if (h >= 6 && h < 12)
-    //     heroGradient.classList.add(
-    //       'from-orange-400/25',
-    //       'via-yellow-200/8',
-    //       'to-blue-900/40',
-    //     );
-    //   else if (h >= 12 && h < 18)
-    //     heroGradient.classList.add(
-    //       'from-blue-400/20',
-    //       'via-sky-200/8',
-    //       'to-blue-900/35',
-    //     );
-    //   else if (h >= 18 && h < 22)
-    //     heroGradient.classList.add(
-    //       'from-purple-700/40',
-    //       'via-pink-400/12',
-    //       'to-black/65',
-    //     );
-    //   else
-    //     heroGradient.classList.add(
-    //       'from-indigo-900/45',
-    //       'via-black/15',
-    //       'to-black/75',
-    //     );
-    // }
-  </script>
+  <!-- Скролл-стрелка — внизу Hero -->
+  <div
+    class="reveal-hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-20 delay-200 animate-hero-scroll"
+  >
+    <button
+      id="scroll-arrow"
+      aria-label="Скролл вниз"
+      class="text-white/80 hover:text-white transition-colors cursor-pointer"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-10 w-10 drop-shadow-md"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 14l-7 7m0 0l-7-7"></path>
+      </svg>
+    </button>
+  </div>
 </section>
+
+<script>
+  const searchBtn = document.getElementById('hero-search-btn');
+  const arrowBtn = document.getElementById('scroll-arrow');
+  const heroContent = document.getElementById('hero-content');
+  const hero = document.getElementById('hero');
+
+  // Hero content — плавно уплывает вверх и исчезает при прокрутке
+  if (heroContent && hero) {
+    const heroH = (hero as HTMLElement).offsetHeight;
+
+    function update() {
+      const scrollY = window.scrollY;
+      const progress = Math.min(1, scrollY / (heroH * 0.96)); // исчезает за 35% высоты Hero
+      const moveUp = progress * 120;
+      (heroContent as HTMLElement).style.transform = `translateY(${-moveUp}px)`;
+      (heroContent as HTMLElement).style.opacity = `${1 - progress}`;
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  // Scroll to search
+  searchBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const anchor = document.getElementById('search');
+    if (anchor) {
+      const top = anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+
+  arrowBtn?.addEventListener('click', () => {
+    document
+      .getElementById('popular-tours')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Dynamic gradient
+  // const h = new Date().getHours();
+  // if (heroGradient) {
+  //   if (h >= 6 && h < 12)
+  //     heroGradient.classList.add(
+  //       'from-orange-400/25',
+  //       'via-yellow-200/8',
+  //       'to-blue-900/40',
+  //     );
+  //   else if (h >= 12 && h < 18)
+  //     heroGradient.classList.add(
+  //       'from-blue-400/20',
+  //       'via-sky-200/8',
+  //       'to-blue-900/35',
+  //     );
+  //   else if (h >= 18 && h < 22)
+  //     heroGradient.classList.add(
+  //       'from-purple-700/40',
+  //       'via-pink-400/12',
+  //       'to-black/65',
+  //     );
+  //   else
+  //     heroGradient.classList.add(
+  //       'from-indigo-900/45',
+  //       'via-black/15',
+  //       'to-black/75',
+  //     );
+  // }
+</script>
