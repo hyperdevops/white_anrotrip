@@ -19,7 +19,7 @@ import certifImg from '../assets/certif/certif.webp';
       id="close-gift-modal"
       type="button"
       aria-label="Закрыть окно подарочного сертификата"
-      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors z-10"
+      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 bg-gray-50 rounded-full hover:bg-gray-100 active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,transform] duration-normal z-10"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,9 @@ import certifImg from '../assets/certif/certif.webp';
       </p>
 
       <!-- Картинка сертификата (Astro Image — оптимизация, lazy, только desktop) -->
-      <div class="hidden md:block w-full aspect-[1.58/1] rounded-xl overflow-hidden mb-8 shadow-md">
+      <div
+        class="hidden md:block w-full aspect-[1.58/1] rounded-xl overflow-hidden mb-8 shadow-md"
+      >
         <Image
           src={certifImg}
           alt="Подарочный сертификат ANRO TRIP"
@@ -55,11 +57,7 @@ import certifImg from '../assets/certif/certif.webp';
         />
       </div>
 
-      <form
-        id="gift-form"
-        class="space-y-4"
-        onsubmit="event.preventDefault();"
-      >
+      <form id="gift-form" class="space-y-4" onsubmit="event.preventDefault();">
         <p class="text-xs text-center text-gray-500 mb-5 font-inter">
           <i
             >Вы можете приобрести <strong>Подарочный сертификат</strong> на любые
@@ -101,21 +99,21 @@ import certifImg from '../assets/certif/certif.webp';
         </div>
 
         <div class="flex items-start gap-2 pt-2">
-          <input name="agree" type="checkbox" id="agree-gift" class="mt-1" />
+          <input name="agree" type="checkbox" id="agree-gift" class="mt-1 cursor-pointer" />
           <label
             for="agree-gift"
-            class="text-[10px] text-gray-500 leading-tight"
+            class="text-[10px] text-gray-500 leading-tight cursor-pointer"
           >
             Даю свое согласие на обработку персональных данных в соответствии с <a
-              href="#"
-              class="text-secondary font-bold hover:underline"
+              href="/privacy"
+              class="text-secondary font-bold hover:underline cursor-pointer"
               >Политикой конфиденциальности</a
             >
           </label>
         </div>
 
         <button
-          class="cursor-pointer w-full bg-secondary text-white border-2 border-secondary font-bold py-3 rounded-md mt-4 hover:bg-white hover:text-secondary transition-all uppercase tracking-wider shadow-lg shadow-cyan-900/20"
+          class="cursor-pointer w-full bg-secondary text-white border-2 border-secondary font-bold py-3 rounded-md mt-4 hover:bg-white hover:text-secondary active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,border-color,transform] duration-normal uppercase tracking-wider shadow-lg shadow-cyan-900/20"
         >
           Отправить
         </button>

@@ -142,7 +142,7 @@ const { class: classes = '' }: Props = Astro.props;
       <div class="overflow-hidden mb-4">
         <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
           {row1.map((partner) => (
-            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-normal">
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
               <Image
                 src={partner.logo}
                 alt={partner.name}
@@ -156,7 +156,7 @@ const { class: classes = '' }: Props = Astro.props;
       <!-- <div class="overflow-hidden">
         <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
           {row2doubled.map((partner) => (
-            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group hover:border-primary/25 hover:shadow-md transition-all duration-normal">
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
               <Image
                 src={partner.logo}
                 alt={partner.name}
@@ -174,7 +174,7 @@ const { class: classes = '' }: Props = Astro.props;
       <p class="text-sm text-gray-400 mb-4 uppercase tracking-widest font-medium font-montserrat">Ваша компания могла быть здесь</p>
       <a
         href="#contacts"
-        class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-white font-semibold font-montserrat text-sm hover:bg-primary-dark transition-all duration-normal btn-magnetic btn-ripple shadow-[0_4px_20px_rgba(0,171,179,0.35)] hover:shadow-[0_6px_28px_rgba(0,171,179,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        class="partners-cta-btn inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-white font-semibold font-montserrat text-sm hover:bg-primary-dark active:scale-[0.98] active:translate-y-0.5 btn-magnetic btn-ripple shadow-[0_4px_20px_rgba(0,171,179,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 cursor-pointer"
       >
         Стать партнёром
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">

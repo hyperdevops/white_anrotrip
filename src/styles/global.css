@@ -49,8 +49,22 @@
     scroll-padding-top: calc(var(--header-height) + var(--scroll-offset));
   }
 
+  /* Чекбоксы и радиокнопки: pointer + цвет из @theme (primary) */
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+    accent-color: var(--color-primary);
+  }
+
+  /* label, связанный с checkbox/radio — pointer при клике по подписи */
+  label:has(input[type='checkbox']),
+  label:has(input[type='radio']) {
+    cursor: pointer;
+  }
+
   body {
     @apply text-gray-900 wrap-break-word;
+    line-height: 1.7;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -134,10 +148,18 @@
   -webkit-backdrop-filter: blur(20px);
   transition: all var(--motion-duration-fast) var(--motion-easing);
 }
+
+/* TrustBadges — изначальная тень primary */
+.trust-badges-card {
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+}
 @media (hover: hover) {
   .glass-panel-interactive:hover {
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.15);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
     transform: translateY(-2px);
   }
 }
@@ -476,6 +498,11 @@
   animation: sw-fade-in 0.25s ease-out;
 }
 
+/* Форма поиска туров — тень primary */
+.search-widget-panel {
+  box-shadow: 0 25px 50px -12px rgb(0 171 179 / 0.25);
+}
+
 /* ═══════════════════════════════════════════════
    PARTNERS — MARQUEE (на всех устройствах)
 ═══════════════════════════════════════════════ */
@@ -539,8 +566,254 @@
   }
 }
 
-.partners-logo-card:hover {
-  transform: translateY(-3px);
+@media (hover: hover) {
+  .partners-logo-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   TEAM CARDS — анимация подъёма как в Awards
+   Через CSS (не Tailwind) — надёжная работа hover
+═══════════════════════════════════════════════ */
+.team-founder-card {
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.team-toggle-btn {
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+/* Reviews — документы и кнопка «Оставить отзыв» (подъём как Team) */
+.reviews-doc-card {
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.reviews-cta-btn {
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.partners-cta-btn {
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+/* 2026: active = scale 0.98 + translateY 2px, spring bounce на отпускании */
+.about-cta-btn {
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.gift-cta-btn {
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.about-services-pill {
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+/* Contacts — карточки и кнопка (подъём + тень primary) */
+.contacts-card {
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.contacts-cta-btn {
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.header-cta-btn {
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.header-logo-text {
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.office-toggle-btn {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 28px rgb(0 171 179 / 0.7));
+}
+
+.corp-hero-cta-btn {
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.25);
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.scroll-to-top-btn {
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-easing),
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing);
+}
+
+.favorites-widget-btn {
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing),
+    color var(--motion-duration-slow) var(--motion-easing);
+}
+
+.about-avia-card {
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
+}
+@media (hover: hover) {
+  .about-avia-card:hover {
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .awards-card:hover {
+    box-shadow:
+      0 25px 50px -12px
+        color-mix(in srgb, var(--award-shadow, #00abb3) 35%, transparent),
+      0 0 0 1px
+        color-mix(in srgb, var(--award-shadow, #00abb3) 15%, transparent);
+    border-color: color-mix(
+      in srgb,
+      var(--award-shadow, #00abb3) 30%,
+      transparent
+    );
+  }
+  .team-founder-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .team-toggle-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .reviews-doc-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .reviews-cta-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .partners-cta-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+  }
+  .about-cta-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .gift-cta-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(255 212 23 / 0.4),
+      0 0 0 1px rgb(255 212 23 / 0.2);
+  }
+  .about-services-pill:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .contacts-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .contacts-cta-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+  }
+  .corp-hero-cta-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+  }
+  .scroll-to-top-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+  }
+  .favorites-widget-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+    background-color: rgb(255 255 255);
+    color: var(--color-primary);
+  }
 }
 
 /* ═══════════════════════════════════════════════

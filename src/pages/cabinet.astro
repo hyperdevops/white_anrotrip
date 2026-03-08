@@ -13,12 +13,15 @@ import Layout from '../layouts/Layout.astro';
   showFavorites={false}
   showOfficeWidget={false}
 >
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
   <main id="content" class="fixed inset-0 z-0">
     <!-- Логотип «На главную» — favicon из assets как в Header -->
     <a
       href="/"
       data-astro-reload
-      class="reveal-hidden absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-shadow duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      class="reveal-hidden absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] active:scale-[0.98] active:translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       aria-label="На главную"
     >
       <Image
@@ -58,50 +61,54 @@ import Layout from '../layouts/Layout.astro';
         <form
           action="https://lk.anrotrip.ru/index/welcome"
           method="post"
-          class="mt-5 space-y-5"
+          class="mt-6 space-y-6"
         >
           <!-- Радио: Телефон / Email -->
-          <div
-            class="flex items-center gap-2 text-base"
-            id="cabinet-radio-group"
-          >
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input
-                type="radio"
-                name="inputType"
-                value="phone"
-                checked
-                class="w-4 h-4 accent-secondary cabinet-radio"
-              />
-              <span id="cabinet-label-phone" class="font-bold text-gray-800"
-                >Телефон</span
-              >
-            </label>
-            <span class="text-gray-500 font-medium">/</span>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input
-                type="radio"
-                name="inputType"
-                value="email"
-                class="w-4 h-4 accent-secondary cabinet-radio"
-              />
-              <span id="cabinet-label-email" class="text-gray-500">Email</span>
-            </label>
-          </div>
+          <fieldset class="border-0 p-0 m-0 min-w-0 mb-3">
+            <legend class="sr-only">Способ входа: телефон или email</legend>
+            <div
+              class="flex items-center gap-2 text-base"
+              id="cabinet-radio-group"
+            >
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="radio"
+                  name="inputType"
+                  value="phone"
+                  checked
+                  class="w-4 h-4 accent-secondary cabinet-radio cursor-pointer"
+                />
+                <span id="cabinet-label-phone" class="font-bold text-gray-800"
+                  >Телефон</span
+                >
+              </label>
+              <span class="text-gray-500 font-medium">/</span>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="radio"
+                  name="inputType"
+                  value="email"
+                  class="w-4 h-4 accent-secondary cabinet-radio cursor-pointer"
+                />
+                <span id="cabinet-label-email" class="text-gray-500">Email</span
+                >
+              </label>
+            </div>
+          </fieldset>
 
           <input
             id="cabinet-login"
-            type="text"
+            type="tel"
             name="login"
-            placeholder=""
+            placeholder="+7 (999) 000-00-00"
             required
             autocomplete="username"
-            class="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-900 text-base placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 text-base placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
           />
 
           <button
             type="submit"
-            class="w-full rounded-lg bg-primary-dark py-3.5 text-base font-bold text-white hover:bg-secondary transition-colors shadow-md"
+            class="w-full rounded-lg bg-primary-dark py-3.5 text-base font-bold text-white hover:bg-secondary active:scale-[0.98] active:translate-y-0.5 transition-[background-color,transform] duration-normal shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Войти
           </button>
@@ -130,17 +137,24 @@ import Layout from '../layouts/Layout.astro';
   </main>
 
   <script>
+    const loginInput = document.getElementById(
+      'cabinet-login',
+    ) as HTMLInputElement;
     document.querySelectorAll('.cabinet-radio').forEach((r) => {
       r.addEventListener('change', () => {
         const radio = r as HTMLInputElement;
         const phone = document.getElementById('cabinet-label-phone');
         const email = document.getElementById('cabinet-label-email');
         if (radio.value === 'phone') {
+          loginInput.type = 'tel';
+          loginInput.placeholder = '+7 (999) 000-00-00';
           phone?.classList.add('font-bold', 'text-gray-800');
           phone?.classList.remove('text-gray-500');
           email?.classList.remove('font-bold', 'text-gray-800');
           email?.classList.add('text-gray-500');
         } else {
+          loginInput.type = 'email';
+          loginInput.placeholder = 'example@mail.ru';
           email?.classList.add('font-bold', 'text-gray-800');
           email?.classList.remove('text-gray-500');
           phone?.classList.remove('font-bold', 'text-gray-800');

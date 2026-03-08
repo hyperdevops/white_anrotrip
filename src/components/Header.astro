@@ -63,7 +63,7 @@ const {
 
         <!-- Текст рядом -->
         <div
-          class="flex flex-col leading-none transition-colors duration-normal group-hover:scale-105 origin-left"
+          class="header-logo-text flex flex-col leading-none group-hover:scale-105 origin-left"
         >
           <div class="flex items-baseline gap-0.5">
             <span
@@ -90,7 +90,7 @@ const {
           navItems.map((item) => (
             <a
               href={item.href}
-              class="relative px-3 py-2 text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-[0.12em] transition-colors duration-fast rounded-lg hover:bg-primary/5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              class="relative px-3 py-2 text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-[0.12em] transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               {item.name}
               <span class="absolute bottom-1 left-3 right-3 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-normal origin-left" />
@@ -106,7 +106,7 @@ const {
         <!-- Телефон (desktop): whitespace-nowrap — номер в одну строку -->
         <a
           href="tel:88002224473"
-          class="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-all duration-fast whitespace-nowrap"
+          class="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-all duration-fast whitespace-nowrap cursor-pointer"
         >
           <svg
             class="w-3.5 h-3.5 text-primary"
@@ -126,7 +126,7 @@ const {
 
         <a
           href={ctaHref}
-          class="hidden lg:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-95 transition-[transform,box-shadow] duration-normal uppercase tracking-wider shadow-md btn-magnetic focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          class="header-cta-btn hidden lg:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-[0.98] active:translate-y-0.5 uppercase tracking-wider shadow-md btn-magnetic cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           {...ctaHref.startsWith('/')
             ? { 'data-astro-transition-prefetch': '' }
             : {}}
@@ -137,7 +137,7 @@ const {
         <!-- Бургер (mobile) -->
         <button
           id="menu-toggle"
-          class="lg:hidden flex flex-col gap-[5px] p-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+          class="lg:hidden flex flex-col gap-[5px] p-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
           aria-label="Меню"
           aria-expanded="false"
         >
@@ -167,7 +167,7 @@ const {
             <li>
               <a
                 href={item.href}
-                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 {item.name}
               </a>
@@ -178,7 +178,7 @@ const {
       <div class="my-1.5 h-px bg-gray-100 mx-2"></div>
       <a
         href="tel:88002224473"
-        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-fast"
+        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-fast cursor-pointer"
       >
         <svg
           class="w-4 h-4 text-primary shrink-0"
@@ -197,7 +197,7 @@ const {
       </a>
       <a
         href={ctaHref}
-        class="mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark transition-colors"
+        class="header-cta-btn mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark active:scale-[0.98] active:translate-y-0.5 cursor-pointer"
         {...ctaHref.startsWith('/')
           ? { 'data-astro-transition-prefetch': '' }
           : {}}

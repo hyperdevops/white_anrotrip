@@ -12,6 +12,7 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="Коммерческое предложение — ANRO TRIP"
   description="Уникальный сервис для командировок по России и миру. Корпоративное обслуживание, авиабилеты, отели, туры, визы, трансфер."
+  showFavorites={false}
 >
   <Header
     navItems={[
@@ -102,9 +103,8 @@ import Layout from '../layouts/Layout.astro';
           class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 reveal-hidden"
         >
           <a
-            href="/#contacts"
-            data-astro-reload
-            class="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-primary text-white font-bold font-montserrat text-sm uppercase tracking-wider hover:bg-primary-dark hover:-translate-y-0.5 transition-all duration-normal shadow-[0_4px_24px_rgba(0,171,179,0.4)] btn-magnetic btn-ripple"
+            href="#corp-contacts"
+            class="corp-hero-cta-btn inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-primary text-white font-bold font-montserrat text-sm uppercase tracking-wider hover:bg-primary-dark active:scale-[0.98] active:translate-y-0.5 btn-magnetic btn-ripple cursor-pointer"
           >
             Связаться
             <svg
@@ -122,7 +122,7 @@ import Layout from '../layouts/Layout.astro';
           </a>
           <a
             href="mailto:anro@anrotrip.ru"
-            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all duration-normal"
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 active:scale-[0.98] active:translate-y-0.5 transition-all duration-normal cursor-pointer"
             aria-label="Написать на почту"
           >
             <svg
@@ -142,7 +142,7 @@ import Layout from '../layouts/Layout.astro';
           </a>
           <a
             href="tel:88002224473"
-            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all duration-normal"
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 active:scale-[0.98] active:translate-y-0.5 transition-all duration-normal cursor-pointer"
             aria-label="Позвонить"
           >
             <svg
@@ -164,7 +164,7 @@ import Layout from '../layouts/Layout.astro';
             href="https://wa.me/79220267059"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all duration-normal"
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full border border-white/30 text-white font-semibold font-montserrat text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/50 active:scale-[0.98] active:translate-y-0.5 transition-all duration-normal cursor-pointer"
             aria-label="Написать в WhatsApp"
           >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -181,7 +181,7 @@ import Layout from '../layouts/Layout.astro';
           <a
             id="corp-scroll-arrow"
             href="#content"
-            class="inline-flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
+            class="inline-flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors cursor-pointer"
             aria-label="Прокрутить вниз"
           >
             <span class="text-xs font-medium uppercase tracking-widest"

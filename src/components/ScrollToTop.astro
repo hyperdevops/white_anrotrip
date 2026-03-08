@@ -2,12 +2,11 @@
 // src/components/ScrollToTop.astro
 ---
 
-<!-- Кнопка "Наверх" - изначально скрыта -->
+<!-- Кнопка "Наверх" - изначально скрыта. Без backdrop-blur и filter — остаётся чёткой при scale -->
 <button
   id="scroll-to-top"
   aria-label="Вернуться наверх"
-  class="fixed bottom-5 right-4 z-2147483646 pointer-events-none opacity-0 translate-y-20 transition-all duration-slow rounded-full bg-white/20 backdrop-blur p-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 hover:-translate-y-1 hover:scale-110 active:scale-95 cursor-pointer"
-  style="filter: drop-shadow(0 10px 10px rgba(0,0,0,0.6));"
+  class="scroll-to-top-btn fixed bottom-5 right-4 z-2147483646 pointer-events-none opacity-0 translate-y-20 rounded-full bg-gray-900/95 p-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 active:scale-[0.98] active:translate-y-0.5 cursor-pointer"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -26,26 +25,30 @@
 
 <script is:inline>
   (function () {
-    // Ждем загрузки DOM
+    let scrollHandler = null;
+    let clickHandler = null;
+
     function initScrollToTop() {
       const scrollBtn = document.getElementById('scroll-to-top');
 
       if (!scrollBtn) {
-        console.warn('ScrollToTop: кнопка не найдена');
         return;
+      }
+
+      // Удаляем старые обработчики при повторной инициализации (astro:page-load)
+      if (scrollHandler) {
+        window.removeEventListener('scroll', scrollHandler, { passive: true });
+      }
+      if (clickHandler) {
+        scrollBtn.removeEventListener('click', clickHandler);
       }
 
       let ticking = false;
 
-      // Функция обновления видимости кнопки
       function updateButtonVisibility() {
-        // Высота всего документа
         const docHeight = document.documentElement.scrollHeight;
-        // Текущая позиция низа экрана (scrollY + высота окна)
         const scrollPos = window.scrollY + window.innerHeight;
 
-        // Порог срабатывания: 50px до самого конца страницы
-        // Если разница меньше 50px — значит мы в самом низу
         if (docHeight - scrollPos < 50) {
           scrollBtn.classList.remove(
             'opacity-0',
@@ -73,41 +76,51 @@
         ticking = false;
       }
 
-      // Обработчик скролла с throttling
-      function onScroll() {
+      scrollHandler = function onScroll() {
         if (!ticking) {
           window.requestAnimationFrame(updateButtonVisibility);
           ticking = true;
         }
-      }
+      };
 
-      // Обработчик клика
-      function onClick() {
+      clickHandler = function onClick() {
         if (navigator.vibrate) {
           navigator.vibrate(10);
         }
 
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      }
+        // Плавная прокрутка с ease-out — быстрый отклик
+        const start = window.scrollY;
+        const startTime = performance.now();
+        const duration = 0;
 
-      // Подключаем обработчики
-      window.addEventListener('scroll', onScroll, { passive: true });
-      scrollBtn.addEventListener('click', onClick);
+        function easeOutCubic(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
 
-      // Проверяем начальное состояние
+        function step() {
+          const elapsed = performance.now() - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          const eased = easeOutCubic(progress);
+          window.scrollTo(0, start * (1 - eased));
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      };
+
+      window.addEventListener('scroll', scrollHandler, { passive: true });
+      scrollBtn.addEventListener('click', clickHandler);
+
       updateButtonVisibility();
-
-      console.log('ScrollToTop: инициализирован');
     }
 
-    // Запускаем инициализацию
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initScrollToTop);
     } else {
       initScrollToTop();
     }
+
+    document.addEventListener('astro:page-load', () => {
+      requestAnimationFrame(initScrollToTop);
+    });
   })();
 </script>

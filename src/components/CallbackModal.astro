@@ -17,7 +17,7 @@
       id="close-callback-modal"
       type="button"
       aria-label="Закрыть окно заказа звонка"
-      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors z-10"
+      class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 bg-gray-50 rounded-full hover:bg-gray-100 active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,transform] duration-normal z-10"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -72,21 +72,26 @@
         </div>
 
         <div class="flex items-start gap-2 pt-2">
-          <input name="agree" type="checkbox" id="agree-callback" class="mt-1" />
+          <input
+            name="agree"
+            type="checkbox"
+            id="agree-callback"
+            class="mt-1 cursor-pointer"
+          />
           <label
             for="agree-callback"
-            class="text-[10px] text-gray-500 leading-tight"
+            class="text-[10px] text-gray-500 leading-tight cursor-pointer"
           >
             Даю свое согласие на обработку персональных данных в соответствии с <a
-              href="#"
-              class="text-secondary font-bold hover:underline"
+              href="/privacy"
+              class="text-secondary font-bold hover:underline cursor-pointer"
               >Политикой конфиденциальности</a
             >
           </label>
         </div>
 
         <button
-          class="cursor-pointer w-full bg-secondary text-white border-2 border-secondary font-bold py-3 rounded-md mt-4 hover:bg-white hover:text-secondary transition-all uppercase tracking-wider shadow-lg shadow-cyan-900/20"
+          class="cursor-pointer w-full bg-secondary text-white border-2 border-secondary font-bold py-3 rounded-md mt-4 hover:bg-white hover:text-secondary active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,border-color,transform] duration-normal uppercase tracking-wider shadow-lg shadow-cyan-900/20"
         >
           Заказать звонок
         </button>

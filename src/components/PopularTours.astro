@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import antalyaImg  from '../assets/tours/antalya.webp';
-import dubaiImg    from '../assets/tours/dubai.webp';
+import japanImg    from '../assets/tours/japan.webp';
 import thailandImg from '../assets/tours/thailand.webp';
 import maldivesImg from '../assets/tours/maldives.webp';
 import egyptImg    from '../assets/tours/egypt.webp';
@@ -12,7 +12,7 @@ const { class: classes = '' } = Astro.props;
 
 const tours = [
   { title: 'Мальдивы',        price: 'от 150 000 ₽', image: maldivesImg, size: 'large',  badge: 'Luxury',        badgeColor: 'bg-amber-400/90 text-amber-950' },
-  { title: 'ОАЭ, Дубай',      price: 'от 80 000 ₽',  image: dubaiImg,    size: 'tall',   badge: 'Shopping',      badgeColor: 'bg-violet-500/80 text-white' },
+  { title: 'Япония, Окинава',  price: 'от 120 000 ₽', image: japanImg,    size: 'tall',   badge: 'Острова',       badgeColor: 'bg-[#0d9488]/85 text-white' },
   { title: 'Турция, Анталья', price: 'от 45 000 ₽',  image: antalyaImg,  size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white' },
   { title: 'Таиланд, Пхукет', price: 'от 95 000 ₽',  image: thailandImg, size: 'normal', badge: 'Relax',         badgeColor: 'bg-emerald-500/80 text-white' },
   { title: 'Египет, Шарм',    price: 'от 55 000 ₽',  image: egyptImg,    size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white' },
@@ -47,7 +47,7 @@ const tours = [
           data-tour-title={tour.title}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-slow deep-shadow border border-white/10 reveal-hidden reveal-scale focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-slow deep-shadow border border-white/10 reveal-hidden reveal-scale active:scale-[0.98] active:translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
             tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
             tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',
@@ -90,7 +90,7 @@ const tours = [
               </h3>
               <div class="flex items-center gap-2">
                 <p class="text-white/75 font-semibold text-sm">{tour.price}</p>
-                <span class="text-white/40 text-xs">· под ключ</span>
+                <span class="text-white/70 text-xs">· под ключ</span>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@ const tours = [
       <a
         id="popular-tours-all-btn"
         href="#search"
-        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast group"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary active:scale-[0.98] active:translate-y-0.5 transition-[color,transform] duration-fast group cursor-pointer"
       >
         Смотреть все направления
         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
