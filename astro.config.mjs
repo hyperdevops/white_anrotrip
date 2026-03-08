@@ -10,7 +10,10 @@ import compressor from 'astro-compressor';
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      cssMinify: false
+    }
   },
 
   integrations: [sitemap(), compressor()]

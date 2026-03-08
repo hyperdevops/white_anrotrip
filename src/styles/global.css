@@ -141,12 +141,13 @@
 
 /* ═══════════════════════════════════════════════
    GLASSMORPHISM
-   Мобайл: непрозрачный фон без blur (экономия GPU)
-   Десктоп: полный glassmorphism с backdrop-filter
+   Production build: backdrop-filter в базе (media query может теряться при minify)
+   Мобайл: убираем blur для экономии GPU
 ═══════════════════════════════════════════════ */
 .glass-panel {
-  /* Мобайл: solid фон — нет backdrop-filter, нет compositing layer */
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
   transition:
@@ -154,18 +155,18 @@
     border-color var(--motion-duration-slow) var(--motion-easing),
     color var(--motion-duration-slow) var(--motion-easing);
 }
-/* Десктоп: полный glassmorphism */
-@media (hover: hover) {
+@media (max-width: 767px) {
   .glass-panel {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
 .glass-panel-interactive {
-  /* Мобайл: solid фон */
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
   transition:
@@ -174,12 +175,11 @@
     border-color var(--motion-duration-fast) var(--motion-easing),
     background-color var(--motion-duration-fast) var(--motion-easing);
 }
-/* Десктоп: glassmorphism + transition-all заменён на конкретные свойства */
-@media (hover: hover) {
+@media (max-width: 767px) {
   .glass-panel-interactive {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
