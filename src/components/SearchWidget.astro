@@ -1,7 +1,7 @@
 ---
 // src/components/SearchWidget.astro
 import NemoSearch from './widgets/NemoSearch.astro';
-import TourvisorSearch from './widgets/TourvisorSearch.astro';
+// Tourvisor — lazy-load при переключении на вкладку (экономия ~890 KiB JS на первом рендере)
 ---
 
 <section
@@ -92,7 +92,10 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
       class="tab-content sw-fade-in hidden"
       style="min-height: 400px; width: 100%;"
     >
-      <TourvisorSearch />
+      <!-- Placeholder: Tourvisor загружается при первом переключении на вкладку -->
+      <div class="tv-wrapper w-full bg-white rounded-xl min-h-112.5">
+        <div id="tourvisor-container" class="tv-search-form tv-moduleid-192367"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -138,10 +141,24 @@ import TourvisorSearch from './widgets/TourvisorSearch.astro';
         targetContent.classList.remove('hidden');
         targetContent.style.display = 'block';
         if (targetId === 'tourvisor') {
-          setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+          loadTourvisor();
         }
       }
     };
+
+    function loadTourvisor() {
+      if (window.__tourvisorLoaded) return;
+      window.__tourvisorLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://tourvisor.ru/module/init.js';
+      s.async = false;
+      document.body.appendChild(s);
+      s.onload = function () {
+        setTimeout(function () {
+          window.dispatchEvent(new Event('resize'));
+        }, 100);
+      };
+    }
 
     tabList.addEventListener('keydown', (e) => {
       const currentIndex = tabs.findIndex((t) => t.getAttribute('tabindex') === '0');

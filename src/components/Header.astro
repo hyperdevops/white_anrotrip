@@ -29,13 +29,13 @@ const {
 
 <header
   id="site-header"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-normal"
+  class="fixed top-0 left-0 right-0 z-50 transition-[transform,opacity] duration-normal"
 >
   <div class="mx-auto max-w-7xl px-3 sm:px-4 pt-3 md:pt-4">
     <div
       id="header-inner"
       class:list={[
-        'relative grid items-center gap-4 lg:gap-6 rounded-2xl glass-panel px-4 py-3 transition-all duration-normal',
+        'relative grid items-center gap-4 lg:gap-6 rounded-2xl glass-panel px-4 py-3 transition-[background-color,border-color,box-shadow] duration-normal',
         navVariant === 'corp'
           ? 'grid-cols-[auto_minmax(0,1fr)_auto]'
           : 'grid-cols-[1fr_auto_1fr]',
@@ -142,23 +142,23 @@ const {
           aria-expanded="false"
         >
           <span
-            class="h-0.5 w-5 bg-gray-700 rounded-full transition-all duration-normal origin-center"
+            class="h-0.5 w-5 bg-gray-700 rounded-full transition-[transform,opacity] duration-fast origin-center"
           ></span>
           <span
-            class="h-0.5 w-5 bg-gray-700 rounded-full transition-all duration-normal"
+            class="h-0.5 w-5 bg-gray-700 rounded-full transition-[transform,opacity] duration-fast"
           ></span>
           <span
-            class="h-0.5 w-3.5 bg-gray-700 rounded-full transition-all duration-normal origin-center self-end"
+            class="h-0.5 w-3.5 bg-gray-700 rounded-full transition-[transform,opacity] duration-fast origin-center self-end"
           ></span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu: solid bg, transition 250ms (чуть дольше = плавнее) -->
   <div
     id="mobile-menu"
-    class="fixed top-[80px] right-4 w-56 bg-white/75 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl shadow-black/15 lg:hidden z-40 transition-all duration-normal ease-out opacity-0 -translate-y-3 pointer-events-none"
+    class="fixed top-[80px] right-4 w-56 bg-white/95 rounded-2xl border border-white/40 shadow-2xl shadow-black/15 lg:hidden z-40 transition-[opacity,transform] duration-[250ms] ease-out opacity-0 -translate-y-3 pointer-events-none"
   >
     <nav class="flex flex-col p-2" aria-label="Меню">
       <ul class="flex flex-col gap-0.5">
@@ -167,7 +167,7 @@ const {
             <li>
               <a
                 href={item.href}
-                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 {item.name}
               </a>
@@ -178,7 +178,7 @@ const {
       <div class="my-1.5 h-px bg-gray-100 mx-2"></div>
       <a
         href="tel:88002224473"
-        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-all duration-fast cursor-pointer"
+        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer"
       >
         <svg
           class="w-4 h-4 text-primary shrink-0"
@@ -209,11 +209,12 @@ const {
 </header>
 
 <script>
-  const toggleBtn = document.getElementById('menu-toggle') as HTMLButtonElement;
-  const menu = document.getElementById('mobile-menu') as HTMLElement;
-  const logoBtn = document.getElementById('logo-btn') as HTMLAnchorElement;
-  const headerInner = document.getElementById('header-inner') as HTMLElement;
+  let toggleBtn = document.getElementById('menu-toggle') as HTMLButtonElement | null;
+  let menu = document.getElementById('mobile-menu') as HTMLElement | null;
+  const logoBtn = document.getElementById('logo-btn') as HTMLAnchorElement | null;
+  let headerInner = document.getElementById('header-inner') as HTMLElement | null;
   let menuOpen = false;
+  let toggleClickHandler: ((e: Event) => void) | null = null;
 
   // Прокрутка к якорям: «Туры» — как кнопка «Поиск туров» в Hero (offset 104); «О компании» на corp — хедер заходит на контент на 22px
   const initAnchorScroll = () => {
@@ -307,23 +308,43 @@ const {
   document.addEventListener('astro:page-load', initLogoClick);
 
   const openMenu = () => {
+    if (!menu || !toggleBtn) return;
     menuOpen = true;
     menu.classList.remove('opacity-0', '-translate-y-3', 'pointer-events-none');
     menu.classList.add('opacity-100', 'translate-y-0');
     toggleBtn.setAttribute('aria-expanded', 'true');
-    // Animate bars to X
     const bars = toggleBtn.querySelectorAll('span');
     bars[0]?.classList.add('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.add('opacity-0', 'scale-x-0');
-    bars[2]?.classList.add(
-      '-rotate-45',
-      '-translate-y-[7px]',
-      'w-5',
-      'self-auto',
-    );
+    bars[2]?.classList.add('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
   };
 
   const closeMenu = () => {
+    if (!menu || !toggleBtn) return;
+    menuOpen = false;
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    menu.style.transition = 'none';
+    menu.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
+    menu.classList.remove('opacity-100', 'translate-y-0');
+    requestAnimationFrame(() => { menu.style.transition = ''; });
+    const bars = toggleBtn.querySelectorAll('span');
+    bars.forEach((b) => ((b as HTMLElement).style.transition = 'none'));
+    bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
+    bars[1]?.classList.remove('opacity-0', 'scale-x-0');
+    bars[2]?.classList.remove('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
+    requestAnimationFrame(() => {
+      bars.forEach((b) => ((b as HTMLElement).style.transition = ''));
+    });
+  };
+
+  const initMobileMenu = () => {
+    toggleBtn = document.getElementById('menu-toggle') as HTMLButtonElement | null;
+    menu = document.getElementById('mobile-menu') as HTMLElement | null;
+    headerInner = document.getElementById('header-inner') as HTMLElement | null;
+    onScroll();
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
+    if (!toggleBtn || !menu) return;
+
     menuOpen = false;
     menu.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
     menu.classList.remove('opacity-100', 'translate-y-0');
@@ -331,18 +352,22 @@ const {
     const bars = toggleBtn.querySelectorAll('span');
     bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.remove('opacity-0', 'scale-x-0');
-    bars[2]?.classList.remove(
-      '-rotate-45',
-      '-translate-y-[7px]',
-      'w-5',
-      'self-auto',
-    );
-  };
+    bars[2]?.classList.remove('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
 
-  toggleBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    menuOpen ? closeMenu() : openMenu();
-  });
+    if (toggleClickHandler) toggleBtn.removeEventListener('click', toggleClickHandler);
+    toggleClickHandler = (e: Event) => {
+      e.stopPropagation();
+      menuOpen ? closeMenu() : openMenu();
+    };
+    toggleBtn.addEventListener('click', toggleClickHandler);
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => closeMenu());
+    });
+  };
+  initMobileMenu();
+  document.addEventListener('astro:page-load', initMobileMenu);
+
   document.addEventListener('click', (e) => {
     const target = e.target;
     if (menuOpen && menu && target instanceof Node) {
@@ -357,7 +382,4 @@ const {
       toggleBtn?.focus();
     }
   });
-  menu
-    ?.querySelectorAll('a')
-    .forEach((link) => link.addEventListener('click', closeMenu));
 </script>

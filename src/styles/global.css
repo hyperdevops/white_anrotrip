@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@plugin "@tailwindcss/typography";
-
 /* View Transitions: не блокировать клики после анимации + плавная длительность */
 ::view-transition-group(*),
 ::view-transition-old(*),
@@ -42,7 +40,8 @@
 ═══════════════════════════════════════════════ */
 @layer base {
   html {
-    @apply font-sans antialiased scroll-smooth;
+    @apply font-sans antialiased;
+    /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
     /* НЕ используем scroll-snap-type на уровне html — тормозит мобайл */
     font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
     /* Единый отступ при прокрутке к якорям: хедер не перекрывает блок (см. :root и SCROLL ANCHORS) */
@@ -65,16 +64,24 @@
   body {
     @apply text-gray-900 wrap-break-word;
     line-height: 1.7;
-    text-rendering: optimizeLegibility;
+    /* text-rendering: optimizeLegibility — только для заголовков (см. h1-h6), не для body */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings:
-      'kern' 1,
-      'liga' 1;
+    /* font-feature-settings убраны из body — лишняя нагрузка на text layout engine мобайла */
     /* Предотвращаем горизонтальный скролл */
     overflow-x: hidden;
     /* Меньше «висячих» коротких слов в конце строки (предлоги, союзы). Поддержка: Chrome 114+, Safari 17+ */
     text-wrap: pretty;
+  }
+
+  /* text-rendering: optimizeLegibility только для заголовков — там важен kerning */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-rendering: optimizeLegibility;
   }
 
   /* Fluid Typography — без media queries */
@@ -123,30 +130,57 @@
       background: #888;
     }
   }
+
+  /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
+  @media (hover: hover) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }
 
 /* ═══════════════════════════════════════════════
-   GLASSMORPHISM (blur на всех устройствах)
+   GLASSMORPHISM
+   Мобайл: непрозрачный фон без blur (экономия GPU)
+   Десктоп: полный glassmorphism с backdrop-filter
 ═══════════════════════════════════════════════ */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.72);
+  /* Мобайл: solid фон — нет backdrop-filter, нет compositing layer */
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   transition:
     background-color var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing),
     color var(--motion-duration-slow) var(--motion-easing);
 }
+/* Десктоп: полный glassmorphism */
+@media (hover: hover) {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
 
 .glass-panel-interactive {
-  background: rgba(255, 255, 255, 0.72);
+  /* Мобайл: solid фон */
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transition: all var(--motion-duration-fast) var(--motion-easing);
+  transition:
+    transform var(--motion-duration-fast) var(--motion-easing),
+    box-shadow var(--motion-duration-fast) var(--motion-easing),
+    border-color var(--motion-duration-fast) var(--motion-easing),
+    background-color var(--motion-duration-fast) var(--motion-easing);
+}
+/* Десктоп: glassmorphism + transition-all заменён на конкретные свойства */
+@media (hover: hover) {
+  .glass-panel-interactive {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
 }
 
 /* TrustBadges — изначальная тень primary */
@@ -188,12 +222,12 @@
   transition:
     opacity var(--motion-duration-slow) var(--motion-easing),
     transform var(--motion-duration-slow) var(--motion-easing);
-  will-change: transform, opacity;
+  /* will-change убран: не нужен до начала анимации, создаёт лишние compositing layers на мобиле */
 }
 .reveal-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  will-change: auto;
+  /* will-change: auto — уже дефолт, явно не нужен */
 }
 
 /* Staggered — сокращаем задержки на мобайле */
@@ -477,8 +511,10 @@
     opacity: 0.35;
   }
 }
-.animate-hero-scroll {
-  animation: hero-scroll-bounce 1.8s ease-in-out infinite;
+@media (hover: hover) {
+  .animate-hero-scroll {
+    animation: hero-scroll-bounce 1.8s ease-in-out infinite;
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -524,12 +560,16 @@
 }
 
 .partners-track--forward {
-  will-change: transform;
   animation: marquee-forward 36s linear infinite;
 }
 .partners-track--reverse {
-  will-change: transform;
   animation: marquee-reverse 30s linear infinite;
+}
+@media (min-width: 768px) {
+  .partners-track--forward,
+  .partners-track--reverse {
+    will-change: transform;
+  }
 }
 @media (hover: hover) {
   .partners-track--forward:hover,
@@ -589,7 +629,8 @@
 
 .team-toggle-btn {
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
@@ -605,7 +646,8 @@
 
 .reviews-cta-btn {
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
@@ -613,7 +655,8 @@
 
 .partners-cta-btn {
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -621,7 +664,8 @@
 /* 2026: active = scale 0.98 + translateY 2px, spring bounce на отпускании */
 .about-cta-btn {
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
@@ -629,7 +673,8 @@
 
 .gift-cta-btn {
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -653,14 +698,16 @@
 .contacts-cta-btn {
   box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .header-cta-btn {
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -679,7 +726,8 @@
 .corp-hero-cta-btn {
   box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.25);
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -688,14 +736,16 @@
   box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
   transition:
     opacity var(--motion-duration-slow) var(--motion-easing),
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing);
 }
 
 .favorites-widget-btn {
   box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
   transition:
-    transform var(--motion-duration-slow) var(--transition-timing-function-bounce),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing),
     background-color var(--motion-duration-slow) var(--motion-easing),
@@ -706,6 +756,11 @@
   transition:
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing);
+}
+@media (hover: none) {
+  .about-avia-card {
+    transition: none;
+  }
 }
 @media (hover: hover) {
   .about-avia-card:hover {
@@ -837,6 +892,28 @@
   animation: none;
 }
 
+/* Breathe: пауза когда секция вне viewport — меньше нагрузки при прокрутке */
+.tours-out-of-view .tour-card-breathe {
+  animation-play-state: paused;
+}
+/* Карточки туров: на мобайле — без reveal (всегда видимы), на десктопе — плавный reveal */
+#tours [data-reveal-stagger] > * {
+  transition-duration: var(--motion-duration-slow);
+  transition-timing-function: var(--motion-easing);
+}
+@media (hover: none) {
+  #tours [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  /* About bento-карточки: без reveal на мобайле — меньше нагрузки при прокрутке */
+  #about [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 @media (hover: hover) {
   .tour-card-breathe {
     animation: breathe-tour 24s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;

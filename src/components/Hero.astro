@@ -13,7 +13,7 @@ import heroBg from '../assets/hero/plane.avif';
     <Image
       src={heroBg}
       alt="Вид из самолёта над облаками"
-      class="h-full w-full object-cover scale-105 hero-kenburns"
+      class="h-full w-full object-cover scale-100 md:scale-105 hero-kenburns"
       quality={75}
       loading="eager"
       fetchpriority="high"
@@ -43,7 +43,7 @@ import heroBg from '../assets/hero/plane.avif';
         <div
           class="reveal-hidden inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/12 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest"
         >
-          <span class="w-1.5 h-1.5 rounded-full bg-cta animate-pulse"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-cta md:animate-pulse"></span>
           Туры · Авиабилеты · Визы · Трансфер
         </div>
       </div>
@@ -75,7 +75,7 @@ import heroBg from '../assets/hero/plane.avif';
         <a
           id="hero-search-btn"
           href="#search"
-          class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-10 py-5 font-black text-[#11111b] shadow-[0_0_24px_6px_rgba(255,212,23,0.45)] hover:shadow-[0_0_36px_8px_rgba(255,212,23,0.65)] hover:-translate-y-1 active:scale-[0.98] active:translate-y-0.5 transition-all duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-10 py-5 font-black text-[#11111b] shadow-[0_0_24px_6px_rgba(255,212,23,0.45)] hover:shadow-[0_0_36px_8px_rgba(255,212,23,0.65)] hover:-translate-y-1 active:scale-[0.98] active:translate-y-0.5 transition-[transform,box-shadow] duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           style="font-size: clamp(0.9rem, 0.75rem + 0.8vw, 1.1rem);"
         >
           <!-- Shine sweep -->
@@ -100,7 +100,7 @@ import heroBg from '../assets/hero/plane.avif';
 
         <a
           href="tel:88002224473"
-          class="inline-flex items-center gap-2 px-7 py-5 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0.5 transition-all duration-normal cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          class="inline-flex items-center gap-2 px-7 py-5 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0.5 transition-[transform,background-color] duration-normal cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           style="font-size: clamp(0.85rem, 0.75rem + 0.5vw, 1rem);"
         >
           <svg
@@ -175,8 +175,9 @@ import heroBg from '../assets/hero/plane.avif';
   const heroContent = document.getElementById('hero-content');
   const hero = document.getElementById('hero');
 
-  // Hero content — плавно уплывает вверх и исчезает при прокрутке
-  if (heroContent && hero) {
+  // Hero content — плавно уплывает вверх и исчезает при прокрутке (только десктоп — на мобайле jank)
+  const isDesktop = window.matchMedia('(hover: hover) and (min-width: 768px)').matches;
+  if (heroContent && hero && isDesktop) {
     const heroH = (hero as HTMLElement).offsetHeight;
 
     function update() {
