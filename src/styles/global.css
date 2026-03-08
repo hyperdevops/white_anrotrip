@@ -41,6 +41,9 @@
 @layer base {
   html {
     @apply font-sans antialiased;
+    /* Принудительно светлая тема — иначе при тёмной теме ОС браузер подхватывает prefers-color-scheme: dark */
+    color-scheme: light;
+    background-color: #ffffff;
     /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
     /* НЕ используем scroll-snap-type на уровне html — тормозит мобайл */
     font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
@@ -62,7 +65,7 @@
   }
 
   body {
-    @apply text-gray-900 wrap-break-word;
+    @apply text-gray-900 wrap-break-word bg-white;
     line-height: 1.7;
     /* text-rendering: optimizeLegibility — только для заголовков (см. h1-h6), не для body */
     -webkit-font-smoothing: antialiased;
