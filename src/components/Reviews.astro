@@ -142,7 +142,7 @@ const reviewCount = reviews.length;
         type="button"
         aria-label="Закрыть просмотр"
         onclick="closeLightbox()"
-        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer focus:outline-none"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -155,30 +155,44 @@ const reviewCount = reviews.length;
       <span class="text-white/50 text-sm font-medium"></span>
     </div>
 
-    <!-- Стрелки -->
+    <!-- Стрелки: зона клика только в области стрелок, не перекрывает кнопки закрытия/зума -->
+    <div
+      class="absolute left-0 top-24 bottom-16 w-20 z-2147483649 cursor-pointer"
+      onclick="event.stopPropagation(); changeSlide(-1)"
+      role="button"
+      tabindex="-1"
+      aria-label="Предыдущий отзыв"
+    >
       <button
         type="button"
         aria-label="Предыдущий отзыв"
-        onclick="event.stopPropagation(); changeSlide(-1)"
-        class="absolute left-4 top-1/2 -translate-y-1/2 z-2147483649 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 active:scale-[0.98] active:translate-y-0.5 flex items-center justify-center text-white transition-[background-color,transform] md:flex cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center text-white/90 transition-colors cursor-pointer focus:outline-none"
       >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-      </svg>
-    </button>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+    </div>
+    <div
+      class="absolute right-0 top-24 bottom-16 w-20 z-2147483649 cursor-pointer"
+      onclick="event.stopPropagation(); changeSlide(1)"
+      role="button"
+      tabindex="-1"
+      aria-label="Следующий отзыв"
+    >
       <button
         type="button"
         aria-label="Следующий отзыв"
-        onclick="event.stopPropagation(); changeSlide(1)"
-        class="absolute right-4 top-1/2 -translate-y-1/2 z-2147483649 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 active:scale-[0.98] active:translate-y-0.5 flex items-center justify-center text-white transition-[background-color,transform] md:flex cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center text-white/90 transition-colors cursor-pointer focus:outline-none"
       >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-      </svg>
-    </button>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
 
-    <!-- Трек -->
-    <div id="lightbox-track" class="flex h-full w-full transition-transform duration-normal ease-out will-change-transform">
+    <!-- Трек (z-0 — под стрелками) -->
+    <div id="lightbox-track" class="flex h-full w-full transition-transform duration-normal ease-out will-change-transform relative z-0">
       {reviews.map((item) => (
         <div class="w-full h-full shrink-0 slide-item overflow-x-hidden overflow-y-auto min-h-0 py-6 flex flex-col items-center overscroll-contain [touch-action:pan-x_pan-y]">
           <div class="lightbox-slide-inner flex items-center justify-center min-h-full w-full shrink-0 mx-auto">
@@ -205,7 +219,7 @@ const reviewCount = reviews.length;
   <div id="review-modal-overlay"
     class="fixed inset-0 z-2147483647 flex bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]">
     <div id="review-modal-content"
-      class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90vh] overflow-y-auto contain-[layout_paint]
+      class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90vh] overflow-y-auto scrollbar-hide contain-[layout_paint]
         translate-y-20 max-md:translate-y-8
         transition-transform duration-slow ease-out max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]
         [&.modal-open]:translate-y-0">
@@ -290,9 +304,12 @@ const reviewCount = reviews.length;
   const openFormBtn  = document.getElementById('open-review-form');
   const closeFormBtn = document.getElementById('close-review-form');
 
-  // Перенос модалки в body — иначе она под хедером (section overflow-hidden + z-index контента)
+  // Перенос модалки и лайтбокса в body — иначе под хедером (section overflow-hidden + stacking context)
   if (formOverlay && formOverlay.parentElement !== document.body) {
     document.body.appendChild(formOverlay);
+  }
+  if (lightbox && lightbox.parentElement !== document.body) {
+    document.body.appendChild(lightbox);
   }
 
   let lightboxPreviousFocus = null;
