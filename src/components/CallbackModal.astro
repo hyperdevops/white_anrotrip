@@ -5,10 +5,11 @@
 <!-- ФОН (Оверлей) -->
 <div
   id="callback-modal-overlay"
-  class="fixed inset-0 z-2147483647 flex bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]"
+  class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]"
 >
-  <!-- КОНТЕНТ: desktop — slide up, mobile — лёгкое всплытие (translate-y-8, ease-out) -->
-  <div
+  <div class="flex min-h-full min-w-full items-center justify-center">
+    <!-- КОНТЕНТ: desktop — slide up, mobile — лёгкое всплытие (translate-y-8, ease-out) -->
+    <div
     class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90dvh] overflow-y-auto contain-[layout_paint]
       translate-y-20 max-md:translate-y-8
       transition-transform duration-slow ease-out max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]
@@ -105,6 +106,7 @@
       </form>
     </div>
   </div>
+  </div>
 </div>
 
 <script>
@@ -146,7 +148,7 @@
     if (overlay && content) {
       previousActiveElement = document.activeElement as HTMLElement | null;
       overlay.classList.remove('hidden');
-      overlay.style.display = 'flex';
+      overlay.style.display = 'block';
       window.lockScroll();
 
       requestAnimationFrame(() => {
@@ -178,7 +180,7 @@
         if (!overlay.classList.contains('opacity-0')) return;
         content.style.willChange = '';
         overlay.classList.add('hidden');
-        overlay.style.display = 'none';
+        overlay.style.display = '';
         requestAnimationFrame(() => {
           window.unlockScroll();
           previousActiveElement?.focus();
