@@ -88,7 +88,26 @@
           navigator.vibrate(10);
         }
 
-        // Плавная прокрутка с ease-out — быстрый отклик
+        // Mobile: плавная медленная прокрутка наверх (700ms)
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          const start = window.scrollY;
+          const startTime = performance.now();
+          const duration = 700;
+          const easeInOutCubic = function (t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          };
+          const step = function () {
+            const elapsed = performance.now() - startTime;
+            const progress = Math.min(1, elapsed / duration);
+            const eased = easeInOutCubic(progress);
+            window.scrollTo(0, start * (1 - eased));
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          return;
+        }
+
+        // Desktop: без изменений (как было)
         const start = window.scrollY;
         const startTime = performance.now();
         const duration = 0;

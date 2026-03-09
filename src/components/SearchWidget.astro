@@ -94,7 +94,8 @@ import NemoSearch from './widgets/NemoSearch.astro';
     >
       <!-- Placeholder: Tourvisor загружается при первом переключении на вкладку -->
       <div class="tv-wrapper w-full bg-white rounded-xl min-h-112.5">
-        <div id="tourvisor-container" class="tv-search-form tv-moduleid-192367"></div>
+        <div id="tourvisor-container" class="tv-search-form tv-moduleid-192367">
+        </div>
       </div>
     </div>
   </div>
@@ -126,7 +127,9 @@ import NemoSearch from './widgets/NemoSearch.astro';
         if (ind) ind.classList.replace('scale-100', 'scale-0');
       });
 
-      const activeBtn = tabList.querySelector('.tab-btn[data-target="' + targetId + '"]');
+      const activeBtn = tabList.querySelector(
+        '.tab-btn[data-target="' + targetId + '"]',
+      );
       if (activeBtn) {
         activeBtn.classList.add('text-primary', 'active-tab');
         activeBtn.setAttribute('aria-selected', 'true');
@@ -161,7 +164,9 @@ import NemoSearch from './widgets/NemoSearch.astro';
     }
 
     tabList.addEventListener('keydown', (e) => {
-      const currentIndex = tabs.findIndex((t) => t.getAttribute('tabindex') === '0');
+      const currentIndex = tabs.findIndex(
+        (t) => t.getAttribute('tabindex') === '0',
+      );
       if (currentIndex === -1) return;
       let nextIndex = currentIndex;
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {

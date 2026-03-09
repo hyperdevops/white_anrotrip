@@ -215,47 +215,87 @@ const {
 </header>
 
 <script>
-  let toggleBtn = document.getElementById('menu-toggle') as HTMLButtonElement | null;
+  let toggleBtn = document.getElementById(
+    'menu-toggle',
+  ) as HTMLButtonElement | null;
   let menu = document.getElementById('mobile-menu') as HTMLElement | null;
-  const logoBtn = document.getElementById('logo-btn') as HTMLAnchorElement | null;
-  let headerInner = document.getElementById('header-inner') as HTMLElement | null;
+  const logoBtn = document.getElementById(
+    'logo-btn',
+  ) as HTMLAnchorElement | null;
+  let headerInner = document.getElementById(
+    'header-inner',
+  ) as HTMLElement | null;
   let menuOpen = false;
   let toggleClickHandler: ((e: Event) => void) | null = null;
 
-  // Прокрутка к якорям: «Туры» — как кнопка «Поиск туров» в Hero (offset 104); «О компании» на corp — хедер заходит на контент на 22px
+  // Прокрутка к якорям: Desktop — только #search и #content; Mobile — все пункты меню
   const initAnchorScroll = () => {
     const headerEl = document.getElementById('site-header');
     const headerHeight = headerEl ? headerEl.offsetHeight : 64;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    // Desktop: как было — только #search и #content
+    if (!isMobile) {
+      document
+        .querySelectorAll<HTMLAnchorElement>('header a[href="#search"]')
+        .forEach((link) => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const anchor = document.getElementById('search');
+            if (anchor) {
+              const top =
+                anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
+          });
+        });
+
+      const GAP_PX = 22;
+      document
+        .querySelectorAll<HTMLAnchorElement>('header a[href="#content"]')
+        .forEach((link) => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const anchor = document.getElementById('content');
+            if (anchor) {
+              const offset = headerHeight + GAP_PX;
+              const top =
+                anchor.getBoundingClientRect().top +
+                window.pageYOffset -
+                offset;
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
+          });
+        });
+      return;
+    }
+
+    // Mobile: все пункты меню — прокрутка к якорям
+    const GAP_PX = -28;
+    const SEARCH_GAP = -6; // хедер + минимальный зазор до search widget
+    const CORP_CONTENT_GAP = -28;
+
+    const scrollToAnchor = (e: Event, href: string) => {
+      const id = href.replace(/^#/, '');
+      if (!id) return;
+      const anchor = document.getElementById(id);
+      if (!anchor) return;
+      e.preventDefault();
+      let offset: number;
+      if (id === 'search') offset = headerHeight + SEARCH_GAP;
+      else if (id === 'content') offset = headerHeight + CORP_CONTENT_GAP;
+      else offset = headerHeight + GAP_PX;
+      const top =
+        anchor.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+      if (menuOpen && menu) closeMenu();
+    };
 
     document
-      .querySelectorAll<HTMLAnchorElement>('header a[href="#search"]')
+      .querySelectorAll<HTMLAnchorElement>('header a[href^="#"]:not(#logo-btn)')
       .forEach((link) => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const anchor = document.getElementById('search');
-          if (anchor) {
-            const top =
-              anchor.getBoundingClientRect().top + window.pageYOffset - 104;
-            window.scrollTo({ top, behavior: 'smooth' });
-          }
-        });
-      });
-
-    // corp: зазор 22px между хедером и контентом (то же поведение, что у стрелки «Листать»)
-    const GAP_PX = 22;
-    document
-      .querySelectorAll<HTMLAnchorElement>('header a[href="#content"]')
-      .forEach((link) => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const anchor = document.getElementById('content');
-          if (anchor) {
-            const offset = headerHeight + GAP_PX;
-            const top =
-              anchor.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top, behavior: 'smooth' });
-          }
-        });
+        const href = link.getAttribute('href') || '';
+        link.addEventListener('click', (e) => scrollToAnchor(e, href));
       });
   };
   initAnchorScroll();
@@ -328,7 +368,12 @@ const {
     const bars = toggleBtn.querySelectorAll('span');
     bars[0]?.classList.add('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.add('opacity-0', 'scale-x-0');
-    bars[2]?.classList.add('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
+    bars[2]?.classList.add(
+      '-rotate-45',
+      '-translate-y-[7px]',
+      'w-5',
+      'self-auto',
+    );
   };
 
   const closeMenu = () => {
@@ -339,19 +384,28 @@ const {
     menuEl.style.transition = 'none';
     menuEl.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
     menuEl.classList.remove('opacity-100', 'translate-y-0');
-    requestAnimationFrame(() => { menuEl.style.transition = ''; });
+    requestAnimationFrame(() => {
+      menuEl.style.transition = '';
+    });
     const bars = toggleBtn.querySelectorAll('span');
     bars.forEach((b) => ((b as HTMLElement).style.transition = 'none'));
     bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.remove('opacity-0', 'scale-x-0');
-    bars[2]?.classList.remove('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
+    bars[2]?.classList.remove(
+      '-rotate-45',
+      '-translate-y-[7px]',
+      'w-5',
+      'self-auto',
+    );
     requestAnimationFrame(() => {
       bars.forEach((b) => ((b as HTMLElement).style.transition = ''));
     });
   };
 
   const initMobileMenu = () => {
-    toggleBtn = document.getElementById('menu-toggle') as HTMLButtonElement | null;
+    toggleBtn = document.getElementById(
+      'menu-toggle',
+    ) as HTMLButtonElement | null;
     menu = document.getElementById('mobile-menu') as HTMLElement | null;
     headerInner = document.getElementById('header-inner') as HTMLElement | null;
     onScroll();
@@ -365,9 +419,15 @@ const {
     const bars = toggleBtn.querySelectorAll('span');
     bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
     bars[1]?.classList.remove('opacity-0', 'scale-x-0');
-    bars[2]?.classList.remove('-rotate-45', '-translate-y-[7px]', 'w-5', 'self-auto');
+    bars[2]?.classList.remove(
+      '-rotate-45',
+      '-translate-y-[7px]',
+      'w-5',
+      'self-auto',
+    );
 
-    if (toggleClickHandler) toggleBtn.removeEventListener('click', toggleClickHandler);
+    if (toggleClickHandler)
+      toggleBtn.removeEventListener('click', toggleClickHandler);
     toggleClickHandler = (e: Event) => {
       e.stopPropagation();
       menuOpen ? closeMenu() : openMenu();

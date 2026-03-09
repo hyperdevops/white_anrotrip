@@ -176,7 +176,9 @@ import heroBg from '../assets/hero/plane.avif';
   const hero = document.getElementById('hero');
 
   // Hero content — плавно уплывает вверх и исчезает при прокрутке (только десктоп — на мобайле jank)
-  const isDesktop = window.matchMedia('(hover: hover) and (min-width: 768px)').matches;
+  const isDesktop = window.matchMedia(
+    '(hover: hover) and (min-width: 768px)',
+  ).matches;
   if (heroContent && hero && isDesktop) {
     const heroH = (hero as HTMLElement).offsetHeight;
 
@@ -192,14 +194,18 @@ import heroBg from '../assets/hero/plane.avif';
     update();
   }
 
-  // Scroll to search
+  // Scroll to search: mobile — headerHeight - 6 (как в меню, SEARCH_GAP = -6); desktop — 104
   searchBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     const anchor = document.getElementById('search');
-    if (anchor) {
-      const top = anchor.getBoundingClientRect().top + window.pageYOffset - 104;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    if (!anchor) return;
+    const headerEl = document.getElementById('site-header');
+    const headerHeight = headerEl ? headerEl.offsetHeight : 64;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const offset = isMobile ? headerHeight - 6 : 104;
+    const top =
+      anchor.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
   });
 
   arrowBtn?.addEventListener('click', () => {
