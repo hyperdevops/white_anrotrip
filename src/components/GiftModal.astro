@@ -7,11 +7,14 @@ import certifImg from '../assets/certif/certif.webp';
 <!-- ФОН (Оверлей) --><!-- z-index максимальный, чтобы перекрывать всё -->
 <div
   id="gift-modal-overlay"
-  class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-slow"
+  class="fixed inset-0 z-2147483647 flex bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]"
 >
-  <!-- КОНТЕНТ (Выплывает снизу) -->
+  <!-- КОНТЕНТ: desktop — slide up, mobile — лёгкое всплытие (translate-y-8, ease-out-expo) -->
   <div
-    class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 relative transform translate-y-20 transition-all duration-slow ease-out max-h-[90dvh] overflow-y-auto border border-gray-100"
+    class="bg-white rounded-2xl shadow-2xl max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90dvh] overflow-y-auto border border-gray-100 contain-[layout_paint]
+      translate-y-20 max-md:translate-y-8
+      transition-transform duration-slow ease-out max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]
+      [&.modal-open]:translate-y-0"
     id="gift-modal-content"
   >
     <!-- Крестик закрытия -->
@@ -46,7 +49,7 @@ import certifImg from '../assets/certif/certif.webp';
       </p>
 
       <!-- Картинка сертификата (Astro Image — оптимизация, lazy, только desktop) -->
-      <div
+      <!-- <div
         class="hidden md:block w-full aspect-[1.58/1] rounded-xl overflow-hidden mb-8 shadow-md"
       >
         <Image
@@ -55,7 +58,7 @@ import certifImg from '../assets/certif/certif.webp';
           class="w-full h-full object-cover"
           loading="lazy"
         />
-      </div>
+      </div> -->
 
       <form id="gift-form" class="space-y-4" onsubmit="event.preventDefault();">
         <p class="text-xs text-center text-gray-500 mb-5 font-inter">
@@ -99,7 +102,12 @@ import certifImg from '../assets/certif/certif.webp';
         </div>
 
         <div class="flex items-start gap-2 pt-2">
-          <input name="agree" type="checkbox" id="agree-gift" class="mt-1 cursor-pointer" />
+          <input
+            name="agree"
+            type="checkbox"
+            id="agree-gift"
+            class="mt-1 cursor-pointer"
+          />
           <label
             for="agree-gift"
             class="text-[10px] text-gray-500 leading-tight cursor-pointer"
@@ -123,19 +131,6 @@ import certifImg from '../assets/certif/certif.webp';
 </div>
 
 <script>
-  /**
-   * Утилита скрытия хедера (такая же, как в Reviews, чтобы не было наложения)
-   * @param {boolean} hide - Показать или скрыть хедер
-   */
-  function toggleHeader(hide: boolean) {
-    const header = document.querySelector('header');
-    if (header) {
-      header.style.transition = 'opacity 0.5s';
-      header.style.opacity = hide ? '0' : '1';
-      header.style.pointerEvents = hide ? 'none' : 'auto';
-    }
-  }
-
   let previousActiveElement = null as HTMLElement | null;
 
   function getFocusables(container: HTMLElement) {
@@ -176,17 +171,22 @@ import certifImg from '../assets/certif/certif.webp';
       previousActiveElement = document.activeElement as HTMLElement | null;
       overlay.classList.remove('hidden');
       overlay.style.display = 'flex';
-
-      toggleHeader(true);
-
-      setTimeout(() => {
-        overlay.classList.remove('opacity-0');
-        content.classList.remove('translate-y-20');
-        content.classList.add('translate-y-0');
-        closeBtn?.focus();
-        content.addEventListener('keydown', trapFocus);
-      }, 10);
       window.lockScroll();
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          content.style.willChange = 'transform';
+          overlay.classList.remove('opacity-0');
+          content.classList.add('modal-open');
+          closeBtn?.focus();
+          content.addEventListener('keydown', trapFocus);
+
+          const onOpenEnd = () => {
+            content.style.willChange = '';
+          };
+          content.addEventListener('transitionend', onOpenEnd, { once: true });
+        });
+      });
     }
   }
 
@@ -196,18 +196,22 @@ import certifImg from '../assets/certif/certif.webp';
 
     if (overlay && content) {
       content.removeEventListener('keydown', trapFocus);
+      content.style.willChange = 'transform';
       overlay.classList.add('opacity-0');
-      content.classList.remove('translate-y-0');
-      content.classList.add('translate-y-20');
+      content.classList.remove('modal-open');
 
-      setTimeout(() => {
+      const onCloseEnd = () => {
+        if (!overlay.classList.contains('opacity-0')) return;
+        content.style.willChange = '';
         overlay.classList.add('hidden');
         overlay.style.display = 'none';
-        window.unlockScroll();
-        toggleHeader(false);
-        previousActiveElement?.focus();
-        previousActiveElement = null;
-      }, 500);
+        requestAnimationFrame(() => {
+          window.unlockScroll();
+          previousActiveElement?.focus();
+          previousActiveElement = null;
+        });
+      };
+      content.addEventListener('transitionend', onCloseEnd, { once: true });
     }
   }
 

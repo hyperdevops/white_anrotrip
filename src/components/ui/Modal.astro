@@ -10,10 +10,13 @@ const { id, title } = Astro.props;
 
 <dialog
   id={id}
-  class="modal bg-transparent p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+  class="modal bg-transparent p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm backdrop:max-md:backdrop-blur-none"
 >
   <div
-    class="modal-box relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-auto mt-20 max-h-[90dvh] overflow-y-auto transform transition-all scale-95 opacity-0 open:scale-100 open:opacity-100"
+    class="modal-box relative bg-white rounded-2xl shadow-2xl max-md:shadow-lg p-8 max-w-md w-full mx-auto mt-20 max-h-[90dvh] overflow-y-auto transform contain-[layout_paint]
+      scale-95 opacity-0 open:scale-100 open:opacity-100 transition-[opacity,transform] duration-fast
+      max-md:scale-100 max-md:opacity-100 max-md:translate-y-8 max-md:transition-transform max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]
+      max-md:[&.modal-open]:translate-y-0"
   >
     <!-- Кнопка закрытия -->
     <button
@@ -56,19 +59,33 @@ const { id, title } = Astro.props;
     if (!dialog) return;
     const box = dialog.querySelector('.modal-box') as HTMLElement | null;
     if (box) {
+      box.style.willChange = 'opacity, transform';
+      box.classList.remove('modal-open');
       box.classList.add('scale-95', 'opacity-0');
-    }
-    setTimeout(() => {
+      const onCloseEnd = () => {
+        box.style.willChange = '';
+        dialog.close();
+      };
+      box.addEventListener('transitionend', onCloseEnd, { once: true });
+    } else {
       dialog.close();
-    }, 200);
+    }
   }
 
   document.addEventListener(`open-modal-${id}`, () => {
     if (!dialog) return;
     previousActiveElement = document.activeElement as HTMLElement | null;
     dialog.showModal();
-    const box = dialog.querySelector('.modal-box');
-    box?.classList.remove('scale-95', 'opacity-0');
+    const box = dialog.querySelector('.modal-box') as HTMLElement | null;
+    if (box) {
+      box.style.willChange = 'opacity, transform';
+      box.classList.remove('scale-95', 'opacity-0');
+      box.classList.add('modal-open');
+      const onOpenEnd = () => {
+        box.style.willChange = '';
+      };
+      box.addEventListener('transitionend', onOpenEnd, { once: true });
+    }
     const firstFocusable = dialog.querySelector<HTMLElement>('.close-modal');
     firstFocusable?.focus();
   });

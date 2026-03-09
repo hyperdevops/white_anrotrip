@@ -203,9 +203,12 @@ const reviewCount = reviews.length;
 
   <!-- ══════ ФОРМА ОТЗЫВА ══════ (по аналогии с CallbackModal / GiftModal: плавное открытие/закрытие, виджет офиса за блюром) -->
   <div id="review-modal-overlay"
-    class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm hidden items-center justify-center opacity-0 transition-opacity duration-slow">
+    class="fixed inset-0 z-2147483647 flex bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]">
     <div id="review-modal-content"
-      class="bg-white rounded-3xl shadow-2xl shadow-black/20 w-full max-w-md mx-4 relative transform translate-y-20 transition-all duration-slow ease-out max-h-[90vh] overflow-y-auto">
+      class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90vh] overflow-y-auto contain-[layout_paint]
+        translate-y-20 max-md:translate-y-8
+        transition-transform duration-slow ease-out max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]
+        [&.modal-open]:translate-y-0">
       <button id="close-review-form"
         type="button"
         aria-label="Закрыть форму отзыва"
@@ -287,6 +290,11 @@ const reviewCount = reviews.length;
   const openFormBtn  = document.getElementById('open-review-form');
   const closeFormBtn = document.getElementById('close-review-form');
 
+  // Перенос модалки в body — иначе она под хедером (section overflow-hidden + z-index контента)
+  if (formOverlay && formOverlay.parentElement !== document.body) {
+    document.body.appendChild(formOverlay);
+  }
+
   let lightboxPreviousFocus = null;
 
   function getLightboxFocusables() {
@@ -316,12 +324,14 @@ const reviewCount = reviews.length;
   }
 
   function togglePageElements(hide) {
-    [document.querySelector('header'), document.getElementById('scroll-to-top'), document.getElementById('favorites-widget'), document.getElementById('office-widget-container')].forEach(el => {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const duration = isMobile ? 200 : 500;
+    [document.getElementById('scroll-to-top'), document.getElementById('favorites-widget'), document.getElementById('office-widget-container')].forEach(el => {
       if (!el) return;
-      el.style.transition = 'opacity 0.5s ease';
+      el.style.transition = `opacity ${duration}ms ease-out`;
       el.style.opacity = hide ? '0' : '1';
       el.style.pointerEvents = hide ? 'none' : 'auto';
-      if (!hide) setTimeout(() => { el.style.transition = ''; el.style.opacity = ''; el.style.pointerEvents = ''; }, 500);
+      if (!hide) setTimeout(() => { el.style.transition = ''; el.style.opacity = ''; el.style.pointerEvents = ''; }, duration);
     });
   }
 
@@ -458,7 +468,7 @@ const reviewCount = reviews.length;
     if (Math.abs(dx) > 50) window.changeSlide(dx < 0 ? 1 : -1);
   });
 
-  // Form — плавное открытие/закрытие по аналогии с CallbackModal / GiftModal
+  // Form — плавное открытие/закрытие (оптимизация как CallbackModal/GiftModal)
   openFormBtn?.addEventListener('click', () => {
     if (!formOverlay || !formContent) return;
     formOverlay.classList.remove('hidden');
@@ -467,24 +477,28 @@ const reviewCount = reviews.length;
     togglePageElements(true);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        formContent.style.willChange = 'transform';
         formOverlay.classList.remove('opacity-0');
-        formContent.classList.remove('translate-y-20');
-        formContent.classList.add('translate-y-0');
+        formContent.classList.add('modal-open');
       });
     });
   });
 
   window.closeReviewForm = () => {
     if (!formOverlay || !formContent) return;
+    formContent.style.willChange = 'transform';
     formOverlay.classList.add('opacity-0');
-    formContent.classList.remove('translate-y-0');
-    formContent.classList.add('translate-y-20');
-    setTimeout(() => {
+    formContent.classList.remove('modal-open');
+
+    const onCloseEnd = () => {
+      if (!formOverlay.classList.contains('opacity-0')) return;
+      formContent.style.willChange = '';
       formOverlay.classList.add('hidden');
       formOverlay.style.display = 'none';
       if (window.unlockScroll) window.unlockScroll();
       togglePageElements(false);
-    }, 500);
+    };
+    formContent.addEventListener('transitionend', onCloseEnd, { once: true });
   };
 
   closeFormBtn?.addEventListener('click', closeReviewForm);
@@ -493,7 +507,7 @@ const reviewCount = reviews.length;
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       if (!lightbox.classList.contains('hidden')) closeLightbox();
-      if (!formOverlay.classList.contains('hidden')) closeReviewForm();
+      if (formOverlay && !formOverlay.classList.contains('hidden')) closeReviewForm();
     }
     if (!lightbox.classList.contains('hidden')) {
       if (e.key === 'ArrowRight') window.changeSlide(1);
