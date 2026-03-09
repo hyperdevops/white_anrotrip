@@ -143,9 +143,9 @@ const ogImageUrl = ogImage.startsWith('http')
     <ReviewModal />
 
     <!-- Tourvisor не поддерживает View Transition — при переходе на главную делаем полную загрузку (astro:before-swap) -->
+    <!-- При «Назад» из bfcache главная может восстановиться сломанной — перезагружаем -->
     <script is:inline>
       document.addEventListener('astro:before-swap', function (e) {
-        // Проверяем по наличию виджета Tourvisor (только на главной), а не по documentURI — он может быть пустым при fetch
         var isMainPage = e.newDocument.querySelector(
           '.tv-search-form.tv-moduleid-192367',
         );
@@ -154,6 +154,11 @@ const ogImageUrl = ogImage.startsWith('http')
             var b = document.body.dataset.base || '/';
             window.location.href = window.location.origin + b;
           };
+        }
+      });
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted && document.querySelector('#search-widget')) {
+          window.location.reload();
         }
       });
     </script>
