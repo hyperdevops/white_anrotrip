@@ -10,7 +10,13 @@ export interface Props {
   navVariant?: 'default' | 'corp';
 }
 
-const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const base = import.meta.env.BASE_URL;
+const baseTrimmed = base.replace(/\/$/, '');
+const isHome =
+  Astro.url.pathname === '/' ||
+  Astro.url.pathname === '' ||
+  Astro.url.pathname === baseTrimmed ||
+  Astro.url.pathname === baseTrimmed + '/';
 const defaultNavItems = [
   { name: 'О нас', href: '#about' },
   { name: 'Туры', href: '#search' },
@@ -18,8 +24,6 @@ const defaultNavItems = [
   { name: 'Команда', href: '#team' },
   { name: 'Контакты', href: '#contacts' },
 ];
-
-const base = import.meta.env.BASE_URL;
 
 const {
   navItems = defaultNavItems,
@@ -160,7 +164,7 @@ const {
   <!-- Mobile menu: solid bg, transition 250ms (чуть дольше = плавнее) -->
   <div
     id="mobile-menu"
-    class="fixed top-[80px] right-4 w-56 bg-white/95 rounded-2xl border border-white/40 shadow-2xl shadow-black/15 lg:hidden z-40 transition-[opacity,transform] duration-[250ms] ease-out opacity-0 -translate-y-3 pointer-events-none"
+    class="fixed top-[80px] right-4 w-56 bg-white/95 rounded-2xl border border-white/40 shadow-2xl shadow-black/15 lg:hidden z-40 transition-[opacity,transform] duration-250 ease-out opacity-0 -translate-y-3 pointer-events-none"
   >
     <nav class="flex flex-col p-2" aria-label="Меню">
       <ul class="flex flex-col gap-0.5">
@@ -277,13 +281,19 @@ const {
     logo?.addEventListener('click', (e) => {
       e.preventDefault();
       const path = window.location.pathname.replace(/\/$/, '') || '/';
+      const basePath = document.body.dataset.base?.replace(/\/$/, '') || '/';
       document.documentElement.style.transition = 'opacity 0.5s ease';
       document.body.style.transition = 'opacity 0.5s ease';
       document.documentElement.style.opacity = '0';
       document.body.style.opacity = '0';
-      if (path !== '/' && path !== '/index.html') {
+      const isHomePath =
+        path === '/' ||
+        path === '/index.html' ||
+        path === basePath ||
+        path === basePath + '/';
+      if (!isHomePath) {
         setTimeout(() => {
-          window.location.href = '/';
+          window.location.href = document.body.dataset.base || '/';
         }, 500);
       } else {
         setTimeout(() => {
@@ -323,12 +333,13 @@ const {
 
   const closeMenu = () => {
     if (!menu || !toggleBtn) return;
+    const menuEl = menu;
     menuOpen = false;
     toggleBtn.setAttribute('aria-expanded', 'false');
-    menu.style.transition = 'none';
-    menu.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
-    menu.classList.remove('opacity-100', 'translate-y-0');
-    requestAnimationFrame(() => { menu.style.transition = ''; });
+    menuEl.style.transition = 'none';
+    menuEl.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
+    menuEl.classList.remove('opacity-100', 'translate-y-0');
+    requestAnimationFrame(() => { menuEl.style.transition = ''; });
     const bars = toggleBtn.querySelectorAll('span');
     bars.forEach((b) => ((b as HTMLElement).style.transition = 'none'));
     bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');

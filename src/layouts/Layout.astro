@@ -36,6 +36,7 @@ const {
 } = Astro.props;
 
 const baseUrl = Astro.url.origin;
+const base = import.meta.env.BASE_URL;
 const canonical = canonicalURL ?? Astro.url.href;
 const ogImageUrl = ogImage.startsWith('http')
   ? ogImage
@@ -91,6 +92,7 @@ const ogImageUrl = ogImage.startsWith('http')
   </head>
   <body
     class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary-dark"
+    data-base={base}
   >
     <!-- Вспышка при загрузке — тот же эффект, что при клике по логотипу (fade-in 0.5s). Учитываем prefers-reduced-motion -->
     <script is:inline>
@@ -149,7 +151,8 @@ const ogImageUrl = ogImage.startsWith('http')
         );
         if (isMainPage) {
           e.swap = function () {
-            window.location.href = window.location.origin + '/';
+            var b = document.body.dataset.base || '/';
+            window.location.href = window.location.origin + b;
           };
         }
       });
