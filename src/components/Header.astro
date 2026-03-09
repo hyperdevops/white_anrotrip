@@ -19,10 +19,12 @@ const defaultNavItems = [
   { name: 'Контакты', href: '#contacts' },
 ];
 
+const base = import.meta.env.BASE_URL;
+
 const {
   navItems = defaultNavItems,
   ctaText = 'Личный кабинет',
-  ctaHref = '/cabinet',
+  ctaHref = `${base}cabinet`,
   navVariant = 'default',
 } = Astro.props;
 ---
@@ -43,7 +45,7 @@ const {
     >
       <!-- Логотип: на главной — scroll to top; на corp/cabinet — href="/" data-astro-reload (полная перезагрузка для Tourvisor) -->
       <a
-        href={isHome ? '#' : '/'}
+        href={isHome ? '#' : base}
         id="logo-btn"
         class="flex items-center gap-3 group z-50 cursor-pointer select-none"
         {...isHome ? {} : { 'data-astro-reload': true }}

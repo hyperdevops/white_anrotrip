@@ -293,7 +293,7 @@ const { class: classes = '' } = Astro.props;
             </svg>
           </a>
           <a
-            href="/corp"
+            href={`${import.meta.env.BASE_URL}corp`}
             class="about-cta-btn inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-white/20 text-white font-semibold font-montserrat text-sm uppercase tracking-wider shadow-[0_4px_24px_rgba(0,171,179,0.4)] hover:bg-white/10 active:scale-[0.98] active:translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 cursor-pointer"
           >
             Коммерческое Предложение
