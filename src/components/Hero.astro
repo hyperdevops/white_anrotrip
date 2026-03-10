@@ -214,32 +214,33 @@ import heroBg from '../assets/hero/plane.avif';
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  // Dynamic gradient
-  // const h = new Date().getHours();
-  // if (heroGradient) {
-  //   if (h >= 6 && h < 12)
-  //     heroGradient.classList.add(
-  //       'from-orange-400/25',
-  //       'via-yellow-200/8',
-  //       'to-blue-900/40',
-  //     );
-  //   else if (h >= 12 && h < 18)
-  //     heroGradient.classList.add(
-  //       'from-blue-400/20',
-  //       'via-sky-200/8',
-  //       'to-blue-900/35',
-  //     );
-  //   else if (h >= 18 && h < 22)
-  //     heroGradient.classList.add(
-  //       'from-purple-700/40',
-  //       'via-pink-400/12',
-  //       'to-black/65',
-  //     );
-  //   else
-  //     heroGradient.classList.add(
-  //       'from-indigo-900/45',
-  //       'via-black/15',
-  //       'to-black/75',
-  //     );
-  // }
+  // Динамический градиент по времени суток
+  const heroGradient = document.getElementById('hero-gradient');
+  const h = new Date().getHours();
+  if (heroGradient) {
+    if (h >= 6 && h < 12)
+      heroGradient.classList.add(
+        'from-orange-400/25',
+        'via-yellow-200/8',
+        'to-blue-900/40',
+      );
+    else if (h >= 12 && h < 18)
+      heroGradient.classList.add(
+        'from-blue-400/20',
+        'via-sky-200/8',
+        'to-blue-900/35',
+      );
+    else if (h >= 18 && h < 22)
+      heroGradient.classList.add(
+        'from-purple-700/40',
+        'via-pink-400/12',
+        'to-black/65',
+      );
+    else
+      heroGradient.classList.add(
+        'from-indigo-900/45',
+        'via-black/15',
+        'to-black/75',
+      );
+  }
 </script>
