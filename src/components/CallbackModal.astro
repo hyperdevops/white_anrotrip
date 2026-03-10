@@ -193,7 +193,7 @@
 
   closeBtn?.addEventListener('click', window.closeCallbackModal);
   overlay?.addEventListener('click', (e) => {
-    if (e.target === overlay) window.closeCallbackModal();
+    if (content && !content.contains(e.target as Node)) window.closeCallbackModal();
   });
 
   // Обработка отправки формы (временно — console.log, готово к интеграции Netlify Forms/Formspree)

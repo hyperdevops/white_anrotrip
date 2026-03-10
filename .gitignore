@@ -1,86 +1,42 @@
-# build output
+# --- Системные папки и сборка ---
+node_modules/
+.pnpm-store/
 dist/
-build/
-out/
-
-# generated types
 .astro/
 
-# dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
+# --- Логи и временные файлы ---
+*.log
+.history/
+.pnpm-debug.log*
+.npm/
 
-# environment variables
+# --- Секреты (пароли, ключи) ---
 .env
-.env.production
-.env.local
 .env.*
 !.env.example
 
-# logs
-*.log
-logs/
-
-# temporary folders
-.npm/
-.vercel/
-.turbo/
-.history/
+# --- Специфический мусор от ИИ и редакторов ---
+.cursor/
+.cursorignore
+.cursorrules
+.qwen/
+.agents/
 .kilocode/
+.serena/
 .specify/
-.gemini/
+.doc/
+.frontmatter/
+AGENTS.md
+QWEN.md
 
-# IDE-specific files
+# --- Настройки редакторов и системы ---
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
 
-# Editor-specific files
-.cursor/
-.cursorrules
-.cursorignore
-.frontmatter/
-.serena/
-
-# Project-specific
-.doc/
-.qwen/
-QWEN.md
-.cspell.json
-.editorconfig
-.eslint*
-.prettier*
-.stylelint*
-tsconfig.json
-jsconfig.json
-astro.config.mjs
-tailwind.config.js
-postcss.config.js
-pnpm-lock.json
-pnpm-workspace.yaml
-yarn.lock
-package-lock.json
-
-
-# Test files
+# --- Файлы отчетов и тестов ---
+lighthouse-report.html
 coverage/
 .nyc_output/
-*.spec.js
-*.spec.ts
-*.test.js
-*.test.ts
-*.d.ts
 
-# Configuration files (keep important ones)
-# Exclude config files only if they are auto-generated or contain sensitive data
-# astro.config.mjs, tailwind.config.js, etc. are kept above if needed
-
-# Media files (only exclude if they are large generated files)
-# Currently keeping image assets as they appear to be part of the project
-# *.png, *.jpg, etc. removed from ignore as they seem to be used in the project
-/.doc/site-analysis-full.md
-/AGENTS.md

@@ -1,0 +1,6 @@
+# Ignore markdown files
+*.md
+**/*.md
+
+# Ignore cursor directory
+.cursor/**
