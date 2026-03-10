@@ -28,10 +28,19 @@ dist/
 .frontmatter/
 AGENTS.md
 QWEN.md
+.ai.factory.json
+skillkit.yaml
+skills-lock.json
 
 # --- Настройки редакторов и системы ---
 .vscode/
+.cspell/
 .idea/
+.cspell.json
+.prettierrc
+.stylelintignore
+convert-to-webp.json
+frontmatter.json
 .DS_Store
 Thumbs.db
 
