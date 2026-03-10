@@ -1,4 +1,0 @@
-# Словарь проекта White Anrotrip
-# Слова добавляются автоматически при выборе "Add to Workspace Dictionary"
-# (правый клик по слову → Add to Dictionary / Ctrl+. → Add to Workspace Dictionary)
-
