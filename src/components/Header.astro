@@ -184,7 +184,7 @@ const {
       <div class="my-1.5 h-px bg-gray-100 mx-2"></div>
       <a
         href="tel:88002224473"
-        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer"
+        class="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
         <svg
           class="w-4 h-4 text-primary shrink-0"
@@ -244,7 +244,7 @@ const {
             const anchor = document.getElementById('search');
             if (anchor) {
               const top =
-                anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+                anchor.getBoundingClientRect().top + window.scrollY - 104;
               window.scrollTo({ top, behavior: 'smooth' });
             }
           });
@@ -261,7 +261,7 @@ const {
               const offset = headerHeight + GAP_PX;
               const top =
                 anchor.getBoundingClientRect().top +
-                window.pageYOffset -
+                window.scrollY -
                 offset;
               window.scrollTo({ top, behavior: 'smooth' });
             }
@@ -286,7 +286,7 @@ const {
       else if (id === 'content') offset = headerHeight + CORP_CONTENT_GAP;
       else offset = headerHeight + GAP_PX;
       const top =
-        anchor.getBoundingClientRect().top + window.pageYOffset - offset;
+        anchor.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
       if (menuOpen && menu) closeMenu();
     };

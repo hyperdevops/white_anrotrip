@@ -204,7 +204,7 @@ import heroBg from '../assets/hero/plane.avif';
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
     const offset = isMobile ? headerHeight - 6 : 104;
     const top =
-      anchor.getBoundingClientRect().top + window.pageYOffset - offset;
+      anchor.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
   });
 
