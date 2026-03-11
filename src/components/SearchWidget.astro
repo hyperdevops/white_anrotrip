@@ -54,6 +54,7 @@ import NemoSearch from './widgets/NemoSearch.astro';
       tabindex="-1"
       class="tab-btn flex-1 flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-gray-500 hover:text-gray-800 active:scale-[0.98] active:translate-y-0.5 transition-all duration-fast relative cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       data-target="tourvisor"
+      data-tourvisor-tab
     >
       <svg
         class="w-4 h-4 shrink-0"
@@ -92,9 +93,14 @@ import NemoSearch from './widgets/NemoSearch.astro';
       class="tab-content sw-fade-in hidden"
       style="min-height: 400px; width: 100%;"
     >
-      <!-- Placeholder: Tourvisor загружается при первом переключении на вкладку -->
-      <div class="tv-wrapper w-full bg-white rounded-xl min-h-112.5">
-        <div id="tourvisor-container" class="tv-search-form tv-moduleid-192367">
+      <div class="tv-wrapper w-full bg-white rounded-xl min-h-112.5 relative">
+        <div id="tourvisor-container" class="tv-search-form tv-moduleid-192367 min-h-[400px]">
+        </div>
+        <div id="tourvisor-loading" class="absolute inset-0 flex items-center justify-center bg-white/90 rounded-xl transition-opacity duration-300 opacity-0 pointer-events-none" aria-hidden="true">
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin" role="status" aria-label="Загрузка"></div>
+            <span class="text-sm text-gray-500">Загрузка поиска туров…</span>
+          </div>
         </div>
       </div>
     </div>
@@ -144,24 +150,50 @@ import NemoSearch from './widgets/NemoSearch.astro';
         targetContent.classList.remove('hidden');
         targetContent.style.display = 'block';
         if (targetId === 'tourvisor') {
-          loadTourvisor();
+          loadTourvisor(true);
         }
       }
     };
 
-    function loadTourvisor() {
-      if (window.__tourvisorLoaded) return;
-      window.__tourvisorLoaded = true;
+    function loadTourvisor(showLoading) {
+      var loadingEl = document.getElementById('tourvisor-loading');
+      if (window.__tourvisorScriptAdded) {
+        if (showLoading && loadingEl && !window.__tourvisorReady) {
+          loadingEl.classList.remove('opacity-0', 'pointer-events-none');
+          loadingEl.setAttribute('aria-hidden', 'false');
+        }
+        return;
+      }
+      window.__tourvisorScriptAdded = true;
+      if (showLoading && loadingEl) {
+        loadingEl.classList.remove('opacity-0', 'pointer-events-none');
+        loadingEl.setAttribute('aria-hidden', 'false');
+      }
       var s = document.createElement('script');
       s.src = 'https://tourvisor.ru/module/init.js';
-      s.async = false;
-      document.body.appendChild(s);
+      s.async = true;
       s.onload = function () {
+        window.__tourvisorReady = true;
+        if (loadingEl) {
+          loadingEl.classList.add('opacity-0', 'pointer-events-none');
+          loadingEl.setAttribute('aria-hidden', 'true');
+        }
         setTimeout(function () {
           window.dispatchEvent(new Event('resize'));
-        }, 100);
+        }, 150);
       };
+      document.body.appendChild(s);
     }
+
+    function prefetchTourvisorOnHover() {
+      var tab = document.querySelector('[data-tourvisor-tab]');
+      if (!tab) return;
+      tab.addEventListener('mouseenter', function () { loadTourvisor(false); }, { once: true });
+      tab.addEventListener('touchstart', function () { loadTourvisor(false); }, { once: true, passive: true });
+    }
+    prefetchTourvisorOnHover();
+
+    window.loadTourvisor = loadTourvisor;
 
     tabList.addEventListener('keydown', (e) => {
       const currentIndex = tabs.findIndex(

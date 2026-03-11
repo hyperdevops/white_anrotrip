@@ -1,0 +1,208 @@
+---
+// src/components/FAQ.astro
+// FAQ-блок для GEO/AEO и SEO. Schema.org FAQPage в JSON-LD.
+
+const faqItems = [
+  {
+    question: 'Как забронировать тур?',
+    answer:
+      'Вы можете оставить заявку на сайте через форму поиска, позвонить по телефону 8 (800) 222-44-73 или прийти в офис в Екатеринбурге или Челябинске. Менеджер подберёт подходящий вариант и оформит бронирование.',
+  },
+  {
+    question: 'Какие способы оплаты вы принимаете?',
+    answer:
+      'Оплата банковской картой, переводом на расчётный счёт организации или в рассрочку. Для корпоративных клиентов — работа по договору с отсрочкой платежа и документами через ЭДО.',
+  },
+  {
+    question: 'Где находятся офисы ANRO TRIP?',
+    answer:
+      'Офисы расположены в Екатеринбурге и Челябинске. Точные адреса и режим работы указаны в разделе «Контакты». Вы можете связаться с нами онлайн — по телефону, WhatsApp, Telegram или email.',
+  },
+  {
+    question: 'Организуете ли корпоративные туры?',
+    answer:
+      'Да. ANRO TRIP специализируется на корпоративном обслуживании: командировки, деловые поездки, выездные мероприятия. Заключаем договор на индивидуальных условиях, предоставляем отчётные документы через ЭДО.',
+  },
+  {
+    question: 'Можно ли отменить или изменить бронирование?',
+    mobileBreakBefore: 'бронирование',
+    answer:
+      'Да. Условия отмены и изменения зависят от тарифов авиакомпаний, отелей и туроператоров. Менеджер сообщит точные условия при бронировании.',
+  },
+  {
+    question: 'Помогаете ли с оформлением виз?',
+    answer:
+      'Да. Оказываем визовую поддержку по всем направлениям: подготовка пакета документов, консультации, сопровождение подачи в визовый центр.',
+  },
+  {
+    question: 'Как связаться с агентством?',
+    answer:
+      'Телефон: 8 (800) 222-44-73. WhatsApp: +7 (922) 026-70-59. Telegram: @anrotrip. Email: anro@anrotrip.ru. Работаем ежедневно.',
+  },
+  {
+    question: 'Сколько стоит услуга бронирования?',
+    answer:
+      'Услуга бронирования туров, авиабилетов и отелей для клиентов ANRO TRIP бесплатна. Оплачивается только стоимость выбранного тура или билета.',
+  },
+];
+
+const labelClass = 'whitespace-nowrap text-gray-900';
+const linkClass =
+  'whitespace-nowrap text-primary hover:text-primary-dark hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded cursor-pointer';
+const sep = '<br class="md:hidden"><span class="hidden md:inline-block ml-1 text-gray-900 select-none" aria-hidden="true">·</span>';
+
+/** Оборачивает контакты: метки — текст, значения — ссылки. Точка-разделитель между контактами. */
+function wrapContactsWithNowrap(text: string): string {
+  return text
+    .replace(
+      /Телефон: 8 \(800\) 222-44-73\./g,
+      `<span class="${labelClass}">Телефон: </span><a href="tel:88002224473" class="${linkClass}">8 (800) 222-44-73</a>${sep}`,
+    )
+    .replace(
+      /WhatsApp: \+7 \(922\) 026-70-59\./g,
+      `<span class="${labelClass}">WhatsApp: </span><a href="https://wa.me/79220267059" target="_blank" rel="noopener noreferrer" class="${linkClass}">+7 (922) 026-70-59</a>${sep}`,
+    )
+    .replace(
+      /Telegram: @anrotrip\./g,
+      `<span class="${labelClass}">Telegram: </span><a href="https://t.me/anrotrip" target="_blank" rel="noopener noreferrer" class="${linkClass}">@anrotrip</a>${sep}`,
+    )
+    .replace(
+      /Email: anro@anrotrip\.ru\./g,
+      `<span class="${labelClass}">Email: </span><a href="mailto:anro@anrotrip.ru" class="${linkClass}">anro@anrotrip.ru</a>${sep}`,
+    )
+    .replace(
+      /8 \(800\) 222-44-73/g,
+      `<a href="tel:88002224473" class="${linkClass}">8 (800) 222-44-73</a>`,
+    )
+    .replace(
+      /\+7 \(922\) 026-70-59/g,
+      `<a href="https://wa.me/79220267059" target="_blank" rel="noopener noreferrer" class="${linkClass}">+7 (922) 026-70-59</a>`,
+    )
+    .replace(/Работаем ежедневно\./g, '<span class="whitespace-nowrap text-gray-900">Работаем ежедневно.</span>');
+}
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
+export interface Props {
+  /** Дополнительные классы для секции */
+  class?: string;
+}
+const { class: classes = '' } = Astro.props;
+---
+
+<section id="faq" class={`relative overflow-hidden bg-white ${classes}`}>
+  <div class="relative pt-12 pb-20 md:pt-20 md:pb-24 bg-white overflow-hidden">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 lg:items-start">
+        <!-- Левая колонка: заголовок + аккордеон -->
+        <div>
+          <div class="mb-12 md:mb-16 reveal-hidden">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
+              <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Частые вопросы</span>
+            </div>
+            <h2
+              class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-[0.95]"
+              style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);"
+            >
+              Часто задаваемые<br />
+              <span class="text-primary">вопросы</span>
+            </h2>
+          </div>
+
+          <div class="max-w-3xl lg:max-w-7xl space-y-3 reveal-hidden" id="faq-accordion">
+            {faqItems.map((item, i) => (
+              <div
+                class="faq-item rounded-2xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,171,179,0.06)] transition-[box-shadow,transform] duration-300 hover:shadow-[0_4px_16px_rgba(0,171,179,0.1)] data-[open=true]:shadow-[0_4px_20px_rgba(0,171,179,0.12)] data-[open=true]:border-primary/20"
+                data-open="false"
+              >
+                <button
+                  type="button"
+                  class="faq-trigger flex w-full cursor-pointer list-none items-center justify-between gap-3 md:gap-4 px-4 md:px-5 py-3 md:py-4 min-h-[44px] touch-manipulation text-left text-sm md:text-base font-semibold text-gray-900 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  aria-expanded="false"
+                  aria-controls={`faq-answer-${i}`}
+                  id={`faq-question-${i}`}
+                >
+                  <span class:list={[!item.mobileBreakBefore && 'whitespace-nowrap']}>
+                    {item.mobileBreakBefore ? (
+                      <>
+                        {item.question.split(item.mobileBreakBefore)[0]}
+                        <br class="md:hidden" />
+                        {item.mobileBreakBefore}
+                        {item.question.split(item.mobileBreakBefore)[1]}
+                      </>
+                    ) : (
+                      item.question
+                    )}
+                  </span>
+                  <span
+                    class="faq-chevron shrink-0 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-primary/10 text-primary transition-[transform,background-color] duration-300"
+                    aria-hidden="true"
+                  >
+                    <svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  id={`faq-answer-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${i}`}
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="faq-content-inner overflow-hidden min-h-0">
+                    <div class="border-t border-gray-100 px-4 md:px-5 py-3 md:py-4">
+                      <p class="text-sm md:text-base text-gray-600 leading-relaxed" set:html={wrapContactsWithNowrap(item.answer)} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Правая колонка (только desktop): декоративная буква «?» -->
+        <aside class="hidden lg:flex relative w-full max-w-[200px] lg:sticky lg:top-18 items-center justify-end min-h-[280px]">
+          <div
+            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[225px] text-[30rem] font-montserrat font-black text-gray-50 leading-none select-none pointer-events-none -mr-16"
+            aria-hidden="true"
+          >
+            ?
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <script is:inline>
+    (function () {
+      var accordion = document.getElementById('faq-accordion');
+      if (!accordion) return;
+      accordion.addEventListener('click', function (e) {
+        var btn = e.target.closest && e.target.closest('.faq-trigger');
+        if (!btn) return;
+        var item = btn.closest('.faq-item');
+        if (!item) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = item.getAttribute('data-open') === 'true';
+        item.removeAttribute('data-closing');
+        item.setAttribute('data-open', String(!isOpen));
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      }, true);
+    })();
+  </script>
+</section>

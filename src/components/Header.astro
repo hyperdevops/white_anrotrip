@@ -21,6 +21,7 @@ const defaultNavItems = [
   { name: 'О нас', href: '#about' },
   { name: 'Туры', href: '#search' },
   { name: 'Отзывы', href: '#reviews' },
+  { name: 'Вопросы', href: '#faq' },
   { name: 'Команда', href: '#team' },
   { name: 'Контакты', href: '#contacts' },
 ];
@@ -132,7 +133,7 @@ const {
 
         <a
           href={ctaHref}
-          class="header-cta-btn hidden lg:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-[0.98] active:translate-y-0.5 uppercase tracking-wider shadow-md btn-magnetic cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          class="header-cta-btn hidden lg:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-[0.98] active:translate-y-0.5 uppercase tracking-wider shadow-md btn-magnetic cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 whitespace-nowrap"
           {...ctaHref.startsWith('/')
             ? { 'data-astro-transition-prefetch': '' }
             : {}}
@@ -203,7 +204,7 @@ const {
       </a>
       <a
         href={ctaHref}
-        class="header-cta-btn mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark active:scale-[0.98] active:translate-y-0.5 cursor-pointer"
+        class="header-cta-btn mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark active:scale-[0.98] active:translate-y-0.5 cursor-pointer whitespace-nowrap"
         {...ctaHref.startsWith('/')
           ? { 'data-astro-transition-prefetch': '' }
           : {}}

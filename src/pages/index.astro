@@ -5,6 +5,7 @@ import About from '../components/About.astro';
 import Awards from '../components/Awards.astro';
 import Contacts from '../components/Contacts.astro';
 import Footer from '../components/Footer.astro';
+import FAQ from '../components/FAQ.astro';
 import GiftSection from '../components/GiftSection.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
@@ -25,6 +26,9 @@ import Layout from '../layouts/Layout.astro';
       type="image/avif"
       fetchpriority="high"
     />
+    <!-- Tourvisor: preconnect для быстрой загрузки виджета при переключении вкладки -->
+    <link rel="preconnect" href="https://tourvisor.ru" />
+    <link rel="dns-prefetch" href="https://tourvisor.ru" />
   </Fragment>
   <Header />
 
@@ -72,6 +76,7 @@ import Layout from '../layouts/Layout.astro';
         <Reviews />
         <Awards />
         <GiftSection />
+        <FAQ />
         <Team />
         <Contacts />
       </div>

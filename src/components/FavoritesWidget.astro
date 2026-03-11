@@ -66,26 +66,57 @@
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // Клик
+  const openFavoritesCart = () => {
+    const innerBtn = document.querySelector('.TVCartPreviewControl') as HTMLElement;
+    const outerBtn = document.querySelector('.TVCartStickyButton') as HTMLElement;
+    if (innerBtn) {
+      innerBtn.click();
+    } else if (outerBtn) {
+      outerBtn.click();
+    }
+    return !!(innerBtn || outerBtn);
+  };
+
+  const w = window as Window & { loadTourvisor?: (show: boolean) => void; __tourvisorScriptAdded?: boolean; __tourvisorReady?: boolean };
+  // Prefetch Tourvisor при наведении — чтобы при клике виджет уже грузился
+  widget?.addEventListener('mouseenter', () => {
+    if (typeof w.loadTourvisor === 'function' && !w.__tourvisorScriptAdded) {
+      w.loadTourvisor(false);
+    }
+  }, { once: true });
+  widget?.addEventListener('touchstart', () => {
+    if (typeof w.loadTourvisor === 'function' && !w.__tourvisorScriptAdded) {
+      w.loadTourvisor(false);
+    }
+  }, { once: true, passive: true });
+
   widget?.addEventListener('click', (e) => {
     e.preventDefault();
 
-    // Ищем внутреннюю кнопку, на которой висит клик
-    const innerBtn = document.querySelector(
-      '.TVCartPreviewControl',
-    ) as HTMLElement;
-    const outerBtn = document.querySelector(
-      '.TVCartStickyButton',
-    ) as HTMLElement;
+    if (openFavoritesCart()) return;
 
-    if (innerBtn) {
-      innerBtn.click();
-      console.log('Clicked inner button');
-    } else if (outerBtn) {
-      outerBtn.click();
-      console.log('Clicked outer button');
+    // Tourvisor не загружен — загружаем и ждём появления кнопки корзины
+    if (typeof w.loadTourvisor === 'function') {
+      w.loadTourvisor(false);
+    }
+    const checkForCart = () => {
+      if (openFavoritesCart()) return;
+      const observer = new MutationObserver(() => {
+        if (openFavoritesCart()) observer.disconnect();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      setTimeout(() => observer.disconnect(), 15000);
+    };
+    if (w.__tourvisorReady) {
+      checkForCart();
     } else {
-      console.warn('Кнопка Турвизора не найдена');
+      const checkReady = setInterval(() => {
+        if (w.__tourvisorReady) {
+          clearInterval(checkReady);
+          setTimeout(checkForCart, 200);
+        }
+      }, 100);
+      setTimeout(() => clearInterval(checkReady), 15000);
     }
   });
 </script>
