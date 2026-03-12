@@ -121,7 +121,7 @@ const { class: classes = '' } = Astro.props;
             </h2>
           </div>
 
-          <div class="max-w-3xl lg:max-w-7xl space-y-3 reveal-hidden" id="faq-accordion">
+          <div class="max-w-5xl lg:max-w-7xl sm:-mr-16 space-y-3 reveal-hidden" id="faq-accordion">
             {faqItems.map((item, i) => (
               <div
                 class="faq-item rounded-2xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,171,179,0.06)] transition-[box-shadow,transform] duration-300 hover:shadow-[0_4px_16px_rgba(0,171,179,0.1)] data-[open=true]:shadow-[0_4px_20px_rgba(0,171,179,0.12)] data-[open=true]:border-primary/20"
