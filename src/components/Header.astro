@@ -245,7 +245,7 @@ const {
             const anchor = document.getElementById('search');
             if (anchor) {
               const top =
-                anchor.getBoundingClientRect().top + window.scrollY - 104;
+                anchor.getBoundingClientRect().top + window.scrollY - (78);
               window.scrollTo({ top, behavior: 'smooth' });
             }
           });
@@ -273,7 +273,7 @@ const {
 
     // Mobile: все пункты меню — прокрутка к якорям
     const GAP_PX = -28;
-    const SEARCH_GAP = -6; // хедер + минимальный зазор до search widget
+    const SEARCH_GAP = -16; // хедер + минимальный зазор до search widget
     const CORP_CONTENT_GAP = -28;
 
     const scrollToAnchor = (e: Event, href: string) => {

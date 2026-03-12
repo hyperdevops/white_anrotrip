@@ -202,7 +202,7 @@ import heroBg from '../assets/hero/plane.avif';
     const headerEl = document.getElementById('site-header');
     const headerHeight = headerEl ? headerEl.offsetHeight : 64;
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    const offset = isMobile ? headerHeight - 6 : 104;
+    const offset = isMobile ? headerHeight - 16 : 78;
     const top =
       anchor.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
