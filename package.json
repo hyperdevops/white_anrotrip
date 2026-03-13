@@ -1,24 +1,26 @@
 {
-  "name": "white_anrotrip",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/sitemap": "^3.7.0",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.16.13",
-    "astro-compressor": "^1.2.0",
-    "astro-iconify": "^1.2.0",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.1.18"
-  },
-  "devDependencies": {
-    "cspell": "^9.7.0",
-    "prettier-plugin-astro": "^0.14.1"
-  }
+	"name": "white_anrotrip",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"prebuild": "pnpm optimize:images",
+		"optimize:images": "node scripts/optimize-images.mjs",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/sitemap": "^3.7.0",
+		"@tailwindcss/vite": "^4.1.18",
+		"astro": "^5.16.13",
+		"astro-compressor": "^1.2.0",
+		"astro-iconify": "^1.2.0",
+		"sharp": "^0.34.5",
+		"tailwindcss": "^4.1.18"
+	},
+	"devDependencies": {
+		"cspell": "^9.7.0",
+		"prettier-plugin-astro": "^0.14.1"
+	}
 }
