@@ -138,6 +138,7 @@
           'pointer-events-none',
           'scale-90',
         );
+        list?.classList.add('pointer-events-auto');
         iconMsg?.classList.add('opacity-0', '-rotate-90');
         iconClose?.classList.remove('opacity-0', 'rotate-90');
         // Убираем пульсацию при открытии виджета
@@ -150,6 +151,7 @@
           'pointer-events-none',
           'scale-90',
         );
+        list?.classList.remove('pointer-events-auto');
         iconMsg?.classList.remove('opacity-0', '-rotate-90');
         iconClose?.classList.add('opacity-0', 'rotate-90');
         // Возвращаем пульсацию при закрытии виджета
