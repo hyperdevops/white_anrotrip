@@ -1,8 +1,12 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import favicon from '../assets/favicon.png';
 import welcomeImg from '../assets/welcome/welcome.webp';
 import Layout from '../layouts/Layout.astro';
+
+const welcomePreload = await getImage({ src: welcomeImg, quality: 92 });
+// Tiny placeholder (20px) — как Tilda: размытый превью до загрузки полного изображения
+const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
 ---
 
 <Layout
@@ -15,6 +19,7 @@ import Layout from '../layouts/Layout.astro';
 >
   <Fragment slot="head">
     <meta name="robots" content="noindex, nofollow" />
+    <link rel="preload" as="image" href={welcomePreload.src} fetchpriority="high" />
   </Fragment>
   <main id="content" class="fixed inset-0 z-0">
     <!-- Логотип «На главную» — favicon из assets как в Header -->
@@ -37,15 +42,20 @@ import Layout from '../layouts/Layout.astro';
       />
     </a>
 
-    <!-- Полноэкранное фото без отступов -->
-    <Image
-      src={welcomeImg}
-      alt=""
-      class="absolute inset-0 w-full h-full object-cover"
-      quality={85}
-      loading="eager"
-      fetchpriority="high"
-    />
+    <!-- Полноэкранное фото: tiny blur placeholder (как Tilda) + fade-in при загрузке -->
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={`background-image: url('${tinyWelcome.src}'); background-color: #1e293b`}
+    >
+      <Image
+        src={welcomeImg}
+        alt=""
+        class="welcome-bg-image absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out"
+        quality={92}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
 
     <!-- Форма: 70px от верха, reveal-эффект как на corp -->
     <div class="absolute inset-0 flex flex-col items-center pt-[90px] px-4">
@@ -137,6 +147,14 @@ import Layout from '../layouts/Layout.astro';
   </main>
 
   <script>
+    // Blur-up: показать welcome при загрузке
+    const welcomeImg = document.querySelector('.welcome-bg-image');
+    if (welcomeImg) {
+      const show = () => welcomeImg.classList.add('!opacity-100');
+      if ((welcomeImg as HTMLImageElement).complete) show();
+      else welcomeImg.addEventListener('load', show);
+    }
+
     const loginInput = document.getElementById(
       'cabinet-login',
     ) as HTMLInputElement;

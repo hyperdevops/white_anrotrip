@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import corpHero from '../assets/corp/corp.webp';
 import corp1 from '../assets/corp/corp1.webp';
 import corp2 from '../assets/corp/corp2.webp';
@@ -7,6 +7,10 @@ import corp3 from '../assets/corp/corp3.webp';
 import corp4 from '../assets/corp/corp4.webp';
 import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
+
+const corpHeroPreload = await getImage({ src: corpHero, quality: 90 });
+// Tiny placeholder (20px) — как Tilda: размытый превью до загрузки полного изображения
+const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
 ---
 
 <Layout
@@ -14,6 +18,9 @@ import Layout from '../layouts/Layout.astro';
   description="Уникальный сервис для командировок по России и миру. Корпоративное обслуживание, авиабилеты, отели, туры, визы, трансфер."
   showFavorites={false}
 >
+  <Fragment slot="head">
+    <link rel="preload" as="image" href={corpHeroPreload.src} fetchpriority="high" />
+  </Fragment>
   <Header
     navItems={[
       { name: 'О компании', href: '#content' },
@@ -37,13 +44,16 @@ import Layout from '../layouts/Layout.astro';
     <section
       class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden"
     >
-      <!-- Фоновое изображение -->
-      <div class="absolute inset-0">
+      <!-- Фоновое изображение: tiny blur placeholder (как Tilda) + fade-in при загрузке -->
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={`background-image: url('${tinyCorpHero.src}'); background-color: #334155`}
+      >
         <Image
           src={corpHero}
           alt="Корпоративный туризм и командировки"
-          class="h-full w-full object-cover"
-          quality={80}
+          class="corp-hero-bg-image h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out"
+          quality={90}
           loading="eager"
           fetchpriority="high"
         />
@@ -351,6 +361,7 @@ import Layout from '../layouts/Layout.astro';
                 <Image
                   src={corp1}
                   alt="Оформление авиа и ж/д билетов"
+                  quality={90}
                   class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-slow"
                 />
                 <div
@@ -519,6 +530,7 @@ import Layout from '../layouts/Layout.astro';
                 <Image
                   src={corpHero}
                   alt="Профессиональный подбор отеля"
+                  quality={90}
                   class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-slow"
                 />
                 <div
@@ -556,6 +568,7 @@ import Layout from '../layouts/Layout.astro';
                 <Image
                   src={corp2}
                   alt="Индивидуальные и пакетные туры"
+                  quality={90}
                   class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-slow"
                 />
                 <div
@@ -800,6 +813,7 @@ import Layout from '../layouts/Layout.astro';
                 <Image
                   src={corp3}
                   alt="Трансфер и аренда авто"
+                  quality={90}
                   class="w-full h-[280px] md:h-[360px] object-cover object-top group-hover:scale-105 transition-transform duration-slow"
                 />
                 <div
@@ -839,6 +853,7 @@ import Layout from '../layouts/Layout.astro';
                 <Image
                   src={corp4}
                   alt="ANRO TRIP заботится о клиентах"
+                  quality={90}
                   class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-slow"
                 />
               </div>
@@ -1154,6 +1169,14 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script>
+  // Blur-up: показать corp hero при загрузке
+  const corpHeroImg = document.querySelector('.corp-hero-bg-image');
+  if (corpHeroImg) {
+    const show = () => corpHeroImg.classList.add('!opacity-100');
+    if ((corpHeroImg as HTMLImageElement).complete) show();
+    else corpHeroImg.addEventListener('load', show);
+  }
+
   // Стрелка «Листать»: прокрутка к блоку «О компании» — зазор 22px между низом хедера и верхом контента
   const corpArrow = document.getElementById('corp-scroll-arrow');
   const siteHeader = document.getElementById('site-header');

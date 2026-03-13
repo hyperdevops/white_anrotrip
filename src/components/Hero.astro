@@ -1,20 +1,26 @@
 ---
 // src/components/Hero.astro
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import heroBg from '../assets/hero/plane.avif';
+
+// Tiny placeholder (20px) — как Tilda: размытый превью до загрузки полного изображения
+const tinyHero = await getImage({ src: heroBg, width: 20, quality: 20 });
 ---
 
 <section
   id="hero"
   class="sticky top-0 z-0 min-h-dvh w-full flex items-center justify-center overflow-hidden"
 >
-  <!-- Фоновое изображение -->
-  <div class="absolute inset-0">
+  <!-- Фоновое изображение: tiny blur placeholder (как Tilda) + fade-in при загрузке -->
+  <div
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={`background-image: url('${tinyHero.src}'); background-color: #0c4a6e`}
+  >
     <Image
       src={heroBg}
       alt="Вид из самолёта над облаками"
-      class="h-full w-full object-cover scale-100 md:scale-105 hero-kenburns"
-      quality={75}
+      class="hero-bg-image h-full w-full object-cover scale-100 md:scale-105 hero-kenburns opacity-0 transition-opacity duration-500 ease-out"
+      quality={90}
       loading="eager"
       fetchpriority="high"
       decoding="async"
@@ -203,8 +209,7 @@ import heroBg from '../assets/hero/plane.avif';
     const headerHeight = headerEl ? headerEl.offsetHeight : 64;
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
     const offset = isMobile ? headerHeight - 16 : 78;
-    const top =
-      anchor.getBoundingClientRect().top + window.scrollY - offset;
+    const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
   });
 
@@ -213,6 +218,16 @@ import heroBg from '../assets/hero/plane.avif';
       .getElementById('popular-tours')
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  // Blur-up: показать изображение при загрузке
+  const heroImg = hero?.querySelector(
+    '.hero-bg-image',
+  ) as HTMLImageElement | null;
+  if (heroImg) {
+    const show = () => heroImg.classList.add('!opacity-100');
+    if (heroImg.complete) show();
+    else heroImg.addEventListener('load', show);
+  }
 
   // Динамический градиент по времени суток
   const heroGradient = document.getElementById('hero-gradient');
