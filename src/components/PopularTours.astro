@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import antalyaImg  from '../assets/tours/antalya.webp';
-import japanImg    from '../assets/tours/japan.webp';
+import seychellesImg from '../assets/tours/seychelles.webp';
 import thailandImg from '../assets/tours/thailand.webp';
 import maldivesImg from '../assets/tours/maldives.webp';
 import egyptImg    from '../assets/tours/egypt.webp';
@@ -12,11 +12,11 @@ const { class: classes = '' } = Astro.props;
 
 const tours = [
   { title: 'Мальдивы',        price: 'от 150 000 ₽', image: maldivesImg, size: 'large',  badge: 'Luxury',        badgeColor: 'bg-amber-400/90 text-amber-950' },
-  { title: 'Япония, Окинава',  price: 'от 120 000 ₽', image: japanImg,    size: 'tall',   badge: 'Острова',       badgeColor: 'bg-[#0d9488]/85 text-white' },
-  { title: 'Турция, Анталья', price: 'от 45 000 ₽',  image: antalyaImg,  size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white' },
-  { title: 'Таиланд, Пхукет', price: 'от 95 000 ₽',  image: thailandImg, size: 'normal', badge: 'Relax',         badgeColor: 'bg-emerald-500/80 text-white' },
-  { title: 'Египет, Шарм',    price: 'от 55 000 ₽',  image: egyptImg,    size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white' },
-  { title: 'Вьетнам, Нячанг', price: 'от 75 000 ₽',  image: vietnamImg,  size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white' },
+  { title: 'Сейшелы, Маэ',    price: 'от 180 000 ₽', image: seychellesImg, size: 'tall',   badge: 'Острова',       badgeColor: 'bg-[#0d9488]/85 text-white' },
+  { title: 'Турция, Анталья', price: 'от 85 000 ₽',  image: antalyaImg,  size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white' },
+  { title: 'Таиланд, Пхукет', price: 'от 115 000 ₽', image: thailandImg, size: 'normal', badge: 'Relax',         badgeColor: 'bg-emerald-500/80 text-white' },
+  { title: 'Египет, Шарм',    price: 'от 105 000 ₽',  image: egyptImg,    size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white' },
+  { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽',  image: vietnamImg,  size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white' },
 ];
 ---
 
