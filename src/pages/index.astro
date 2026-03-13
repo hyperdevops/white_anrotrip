@@ -1,6 +1,10 @@
 ---
 // src/pages/index.astro
+import { getImage } from 'astro:assets';
 import heroBg from '../assets/hero/plane.avif';
+import maldivesImg from '../assets/tours/maldives.webp';
+import seychellesImg from '../assets/tours/seychelles.webp';
+import antalyaImg from '../assets/tours/antalya.webp';
 import About from '../components/About.astro';
 import Awards from '../components/Awards.astro';
 import Contacts from '../components/Contacts.astro';
@@ -15,6 +19,14 @@ import Reviews from '../components/Reviews.astro';
 import SearchWidget from '../components/SearchWidget.astro';
 import Team from '../components/Team.astro';
 import Layout from '../layouts/Layout.astro';
+
+const heroPreload = await getImage({ src: heroBg, quality: 90 });
+// Preload первых 3 карточек туров — загрузка параллельно с Hero (параметры как в Image)
+const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
+  getImage({ src: maldivesImg, width: 1200, height: 800, quality: 92 }),
+  getImage({ src: seychellesImg, width: 1200, height: 800, quality: 92 }),
+  getImage({ src: antalyaImg, width: 1200, height: 800, quality: 92 }),
+]);
 ---
 
 <Layout title="ANRO TRIP — Будь на высоте!">
@@ -22,10 +34,13 @@ import Layout from '../layouts/Layout.astro';
     <link
       rel="preload"
       as="image"
-      href={heroBg.src}
-      type="image/avif"
+      href={heroPreload.src}
       fetchpriority="high"
     />
+    <!-- Preload первых 3 карточек туров (fetchpriority low — не конкурировать с Hero) -->
+    <link rel="preload" as="image" href={maldivesPreload.src} fetchpriority="low" />
+    <link rel="preload" as="image" href={seychellesPreload.src} fetchpriority="low" />
+    <link rel="preload" as="image" href={antalyaPreload.src} fetchpriority="low" />
     <!-- Tourvisor: preconnect для быстрой загрузки виджета при переключении вкладки -->
     <link rel="preconnect" href="https://tourvisor.ru" />
     <link rel="dns-prefetch" href="https://tourvisor.ru" />
