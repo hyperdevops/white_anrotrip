@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import antalyaImg  from '../assets/tours/antalya.webp';
 import seychellesImg from '../assets/tours/seychelles.webp';
 import thailandImg from '../assets/tours/thailand.webp';
@@ -18,6 +18,11 @@ const tours = [
   { title: 'Египет, Шарм',    price: 'от 105 000 ₽',  image: egyptImg,    size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white' },
   { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽',  image: vietnamImg,  size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white' },
 ];
+
+// Tiny placeholders (20px) для blur-up — мгновенное отображение до загрузки полного изображения
+const tinyPlaceholders = await Promise.all(
+  tours.map((t) => getImage({ src: t.image, width: 20, quality: 20 }))
+);
 ---
 
 <section id="tours" class={`pt-14 pb-10 md:pb-16 bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-hidden ${classes}`}>
@@ -41,7 +46,7 @@ const tours = [
 
     <!-- Bento Grid -->
     <div class="grid grid-cols-1 @md:grid-cols-4 gap-3 md:gap-4 auto-rows-[240px] @lg:auto-rows-[270px]" data-reveal-stagger>
-      {tours.map((tour) => (
+      {tours.map((tour, i) => (
         <button
           type="button"
           data-tour-title={tour.title}
@@ -54,13 +59,26 @@ const tours = [
             tour.size === 'normal' ? '@md:col-span-1 @md:row-span-1' : '',
           ]}
         >
-          <!-- Фото -->
+          <!-- Фото: blur-up (tiny placeholder) + fade-in при загрузке -->
           <div class="absolute inset-0">
-            <div class="absolute inset-0 tour-card-breathe">
-              <Image src={tour.image} alt={tour.title}
-                class="h-full w-full object-cover md:transition-transform md:duration-slow group-hover:scale-[1.04] image-sharp"
-                loading="lazy"
-              />
+            <div
+              class="absolute inset-0 tour-card-breathe bg-cover bg-center bg-no-repeat"
+              style={`background-image: url('${tinyPlaceholders[i].src}');`}
+            >
+              <!-- Wrapper для плавного scale — без конфликта с image-sharp -->
+              <div class="absolute inset-0 transition-transform duration-slow ease-out group-hover:scale-[1.04]">
+                <Image
+                  src={tour.image}
+                  alt={tour.title}
+                  width={1200}
+                  height={800}
+                  quality={92}
+                  sizes={tour.size === 'large' || tour.size === 'wide' ? '(max-width: 767px) 100vw, (min-width: 768px) 50vw' : '(max-width: 767px) 100vw, (min-width: 768px) 25vw'}
+                  fetchpriority={i < 3 ? 'high' : 'low'}
+                  loading={i < 3 ? 'eager' : 'lazy'}
+                  class="tour-card-image h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out image-sharp"
+                />
+              </div>
             </div>
             <!-- Градиент снизу -->
             <div class="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/85%)_0%,rgb(0_0_0/25%)_50%,transparent_100%)] opacity-90 md:group-hover:opacity-70 md:transition-opacity md:duration-normal"></div>
@@ -148,4 +166,18 @@ const tours = [
   }
   initToursBreathePause();
   document.addEventListener('astro:page-load', initToursBreathePause);
+
+  // Blur-up: показать изображение при загрузке
+  document.querySelectorAll('.tour-card-image').forEach((img) => {
+    const show = () => img.classList.add('!opacity-100');
+    if ((img as HTMLImageElement).complete) show();
+    else img.addEventListener('load', show);
+  });
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('.tour-card-image').forEach((img) => {
+      const show = () => img.classList.add('!opacity-100');
+      if ((img as HTMLImageElement).complete) show();
+      else img.addEventListener('load', show);
+    });
+  });
 </script>
