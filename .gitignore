@@ -35,6 +35,7 @@ convert-to-webp.js
 
 # --- Настройки редакторов и системы ---
 .vscode/
+*.code-workspace
 .cspell/
 .idea/
 .cspell.json
