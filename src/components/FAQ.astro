@@ -121,20 +121,20 @@ const { class: classes = '' } = Astro.props;
             </h2>
           </div>
 
-          <div class="max-w-5xl lg:max-w-7xl sm:-mr-16 space-y-3 reveal-hidden" id="faq-accordion">
+          <div class="max-w-5xl lg:max-w-7xl lg:-mr-16 space-y-3 reveal-hidden min-w-0" id="faq-accordion">
             {faqItems.map((item, i) => (
               <div
-                class="faq-item rounded-2xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,171,179,0.06)] transition-[box-shadow,transform] duration-300 hover:shadow-[0_4px_16px_rgba(0,171,179,0.1)] data-[open=true]:shadow-[0_4px_20px_rgba(0,171,179,0.12)] data-[open=true]:border-primary/20"
+                class="faq-item rounded-2xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,171,179,0.06)] transition-[box-shadow,transform] duration-300 hover:shadow-[0_4px_16px_rgba(0,171,179,0.1)] data-[open=true]:shadow-[0_4px_20px_rgba(0,171,179,0.12)] data-[open=true]:border-primary/20 min-w-0"
                 data-open="false"
               >
                 <button
                   type="button"
-                  class="faq-trigger flex w-full cursor-pointer list-none items-center justify-between gap-3 md:gap-4 px-4 md:px-5 py-3 md:py-4 min-h-[44px] touch-manipulation text-left text-sm md:text-base font-semibold text-gray-900 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  class="faq-trigger flex w-full cursor-pointer list-none items-center justify-between gap-3 md:gap-4 px-4 md:px-5 py-3 md:py-4 min-h-[44px] touch-manipulation text-left text-sm md:text-base font-semibold text-gray-900 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-w-0"
                   aria-expanded="false"
                   aria-controls={`faq-answer-${i}`}
                   id={`faq-question-${i}`}
                 >
-                  <span class:list={[!item.mobileBreakBefore && 'whitespace-nowrap']}>
+                  <span class="min-w-0 flex-1 pr-2 wrap-break-word">
                     {item.mobileBreakBefore ? (
                       <>
                         {item.question.split(item.mobileBreakBefore)[0]}

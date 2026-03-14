@@ -54,7 +54,7 @@ const badges = [
 ];
 ---
 
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 w-full py-6 sm:py-8">
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6 w-full py-6 sm:py-8">
   {badges.map((badge, index) => (
     <a
       href={badge.href}
@@ -98,10 +98,10 @@ const badges = [
         )}
       </div>
 
-      <!-- Текст: на мобильном — под иконкой по центру, на sm+ — в ряд -->
-      <div class="min-w-0 flex-1 w-full overflow-visible wrap-break-word">
-        <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide leading-tight sm:whitespace-nowrap">{badge.label}</div>
-        <div class="text-[11px] sm:text-sm font-bold text-gray-900 leading-tight">{badge.value}</div>
+      <!-- Текст: на мобильном — под иконкой по центру, на sm+ — в ряд. Без wrap-break-word — иначе разрыв слов (компаний→ко мп ан ий) -->
+      <div class="min-w-0 flex-1 w-full overflow-hidden">
+        <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide leading-tight whitespace-nowrap">{badge.label}</div>
+        <div class="text-[11px] sm:text-sm font-bold text-gray-900 leading-tight whitespace-nowrap">{badge.value}</div>
       </div>
     </a>
   ))}
