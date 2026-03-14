@@ -4,12 +4,12 @@
 ::view-transition-group(*),
 ::view-transition-old(*),
 ::view-transition-new(*) {
-	pointer-events: none;
+  pointer-events: none;
 }
 ::view-transition-old(root),
 ::view-transition-new(root) {
-	animation-duration: var(--motion-duration-slow);
-	animation-timing-function: var(--motion-easing);
+  animation-duration: var(--motion-duration-slow);
+  animation-timing-function: var(--motion-easing);
 }
 
 /* ═══════════════════════════════════════════════
@@ -17,129 +17,129 @@
    Основной: #00abb3 (тил — цвет «trip» в логотипе)
 ═══════════════════════════════════════════════ */
 @theme {
-	--color-primary: #00abb3;
-	--color-primary-light: #33bfc6;
-	--color-primary-dark: #008a91;
-	--color-secondary: #006d73;
-	--color-secondary-hover: #00585d;
-	--color-cta: #ffd417;
-	--color-cta-hover: #e5be14;
-	--font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
-	--font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-primary: #00abb3;
+  --color-primary-light: #33bfc6;
+  --color-primary-dark: #008a91;
+  --color-secondary: #006d73;
+  --color-secondary-hover: #00585d;
+  --color-cta: #ffd417;
+  --color-cta-hover: #e5be14;
+  --font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 
-	/* Motion — единый ритм анимаций (Web Standards 2026) */
-	--transition-duration-fast: 200ms; /* микро: hover цвет, focus, табы */
-	--transition-duration-normal: 300ms; /* кнопки, карточки, hover transform */
-	--transition-duration-slow: 500ms; /* модалки, overlay, reveal */
-	--transition-timing-function-default: cubic-bezier(0.4, 0, 0.2, 1);
-	--transition-timing-function-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Motion — единый ритм анимаций (Web Standards 2026) */
+  --transition-duration-fast: 200ms; /* микро: hover цвет, focus, табы */
+  --transition-duration-normal: 300ms; /* кнопки, карточки, hover transform */
+  --transition-duration-slow: 500ms; /* модалки, overlay, reveal */
+  --transition-timing-function-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-timing-function-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ═══════════════════════════════════════════════
    BASE LAYER
 ═══════════════════════════════════════════════ */
 @layer base {
-	html {
-		@apply font-sans antialiased;
-		/* Принудительно светлая тема — иначе при тёмной теме ОС браузер подхватывает prefers-color-scheme: dark */
-		color-scheme: light;
-		background-color: #ffffff;
-		/* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
-		/* НЕ используем scroll-snap-type на уровне html — тормозит мобайл */
-		font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
-		/* Единый отступ при прокрутке к якорям: хедер не перекрывает блок (см. :root и SCROLL ANCHORS) */
-		scroll-padding-top: calc(var(--header-height) + var(--scroll-offset));
-	}
+  html {
+    @apply font-sans antialiased;
+    /* Принудительно светлая тема — иначе при тёмной теме ОС браузер подхватывает prefers-color-scheme: dark */
+    color-scheme: light;
+    background-color: #ffffff;
+    /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
+    /* НЕ используем scroll-snap-type на уровне html — тормозит мобайл */
+    font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
+    /* Единый отступ при прокрутке к якорям: хедер не перекрывает блок (см. :root и SCROLL ANCHORS) */
+    scroll-padding-top: calc(var(--header-height) + var(--scroll-offset));
+  }
 
-	/* Чекбоксы и радиокнопки: pointer + цвет из @theme (primary) */
-	input[type='checkbox'],
-	input[type='radio'] {
-		cursor: pointer;
-		accent-color: var(--color-primary);
-	}
+  /* Чекбоксы и радиокнопки: pointer + цвет из @theme (primary) */
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+    accent-color: var(--color-primary);
+  }
 
-	/* label, связанный с checkbox/radio — pointer при клике по подписи */
-	label:has(input[type='checkbox']),
-	label:has(input[type='radio']) {
-		cursor: pointer;
-	}
+  /* label, связанный с checkbox/radio — pointer при клике по подписи */
+  label:has(input[type='checkbox']),
+  label:has(input[type='radio']) {
+    cursor: pointer;
+  }
 
-	body {
-		@apply text-gray-900 wrap-break-word bg-white;
-		line-height: 1.7;
-		/* text-rendering: optimizeLegibility — только для заголовков (см. h1-h6), не для body */
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		/* font-feature-settings убраны из body — лишняя нагрузка на text layout engine мобайла */
-		/* Предотвращаем горизонтальный скролл */
-		overflow-x: hidden;
-		/* Меньше «висячих» коротких слов в конце строки (предлоги, союзы). Поддержка: Chrome 114+, Safari 17+ */
-		text-wrap: pretty;
-	}
+  body {
+    @apply text-gray-900 wrap-break-word bg-white;
+    line-height: 1.7;
+    /* text-rendering: optimizeLegibility — только для заголовков (см. h1-h6), не для body */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* font-feature-settings убраны из body — лишняя нагрузка на text layout engine мобайла */
+    /* Предотвращаем горизонтальный скролл */
+    overflow-x: hidden;
+    /* Меньше «висячих» коротких слов в конце строки (предлоги, союзы). Поддержка: Chrome 114+, Safari 17+ */
+    text-wrap: pretty;
+  }
 
-	/* text-rendering: optimizeLegibility только для заголовков — там важен kerning */
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		text-rendering: optimizeLegibility;
-	}
+  /* text-rendering: optimizeLegibility только для заголовков — там важен kerning */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-rendering: optimizeLegibility;
+  }
 
-	/* Fluid Typography — без media queries */
-	h1 {
-		@apply font-montserrat font-bold;
-		font-size: clamp(2rem, 1rem + 5vw, 4.5rem);
-		line-height: 1.1;
-		letter-spacing: -0.02em;
-	}
-	h2 {
-		@apply font-montserrat font-bold;
-		font-size: clamp(1.75rem, 1rem + 3vw, 3rem);
-		line-height: 1.2;
-		letter-spacing: -0.01em;
-	}
-	h3 {
-		@apply font-montserrat font-bold;
-		font-size: clamp(1.25rem, 0.875rem + 1.5vw, 1.875rem);
-		line-height: 1.3;
-	}
-	h4 {
-		@apply font-montserrat font-bold;
-		font-size: clamp(1.125rem, 0.875rem + 1vw, 1.5rem);
-		line-height: 1.4;
-	}
-	h5,
-	h6 {
-		@apply font-montserrat font-bold;
-		font-size: clamp(1rem, 0.875rem + 0.5vw, 1.25rem);
-		line-height: 1.5;
-	}
+  /* Fluid Typography — без media queries */
+  h1 {
+    @apply font-montserrat font-bold;
+    font-size: clamp(2rem, 1rem + 5vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    @apply font-montserrat font-bold;
+    font-size: clamp(1.75rem, 1rem + 3vw, 3rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    @apply font-montserrat font-bold;
+    font-size: clamp(1.25rem, 0.875rem + 1.5vw, 1.875rem);
+    line-height: 1.3;
+  }
+  h4 {
+    @apply font-montserrat font-bold;
+    font-size: clamp(1.125rem, 0.875rem + 1vw, 1.5rem);
+    line-height: 1.4;
+  }
+  h5,
+  h6 {
+    @apply font-montserrat font-bold;
+    font-size: clamp(1rem, 0.875rem + 0.5vw, 1.25rem);
+    line-height: 1.5;
+  }
 
-	/* Скроллбар — только десктоп */
-	@media (hover: hover) {
-		::-webkit-scrollbar {
-			width: 6px;
-		}
-		::-webkit-scrollbar-track {
-			background: transparent;
-		}
-		::-webkit-scrollbar-thumb {
-			background: #b0b0b0;
-			border-radius: 3px;
-		}
-		::-webkit-scrollbar-thumb:hover {
-			background: #888;
-		}
-	}
+  /* Скроллбар — только десктоп */
+  @media (hover: hover) {
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b0b0b0;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #888;
+    }
+  }
 
-	/* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
-	@media (hover: hover) {
-		html {
-			scroll-behavior: smooth;
-		}
-	}
+  /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
+  @media (hover: hover) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -148,146 +148,146 @@
    Мобайл: убираем blur для экономии GPU
 ═══════════════════════════════════════════════ */
 .glass-panel {
-	background: rgba(255, 255, 255, 0.72);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(255, 255, 255, 0.6);
-	box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
-	transition:
-		background-color var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing),
-		color var(--motion-duration-slow) var(--motion-easing);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
+  transition:
+    background-color var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    color var(--motion-duration-slow) var(--motion-easing);
 }
 @media (max-width: 767px) {
-	.glass-panel {
-		background: rgba(255, 255, 255, 0.96);
-		backdrop-filter: none;
-		-webkit-backdrop-filter: none;
-	}
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .glass-panel-interactive {
-	background: rgba(255, 255, 255, 0.72);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(255, 255, 255, 0.6);
-	box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
-	transition:
-		transform var(--motion-duration-fast) var(--motion-easing),
-		box-shadow var(--motion-duration-fast) var(--motion-easing),
-		border-color var(--motion-duration-fast) var(--motion-easing),
-		background-color var(--motion-duration-fast) var(--motion-easing);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform var(--motion-duration-fast) var(--motion-easing),
+    box-shadow var(--motion-duration-fast) var(--motion-easing),
+    border-color var(--motion-duration-fast) var(--motion-easing),
+    background-color var(--motion-duration-fast) var(--motion-easing);
 }
 @media (max-width: 767px) {
-	.glass-panel-interactive {
-		background: rgba(255, 255, 255, 0.96);
-		backdrop-filter: none;
-		-webkit-backdrop-filter: none;
-	}
+  .glass-panel-interactive {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 /* TrustBadges — изначальная тень primary */
 .trust-badges-card {
-	box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
 }
 @media (hover: hover) {
-	.glass-panel-interactive:hover {
-		background: rgba(255, 255, 255, 0.9);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-		transform: translateY(-2px);
-	}
+  .glass-panel-interactive:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+    transform: translateY(-2px);
+  }
 }
 
 /* ═══════════════════════════════════════════════
    UTILITIES
 ═══════════════════════════════════════════════ */
 .deep-shadow {
-	box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.4) !important;
 }
 
 .scrollbar-hide {
-	-ms-overflow-style: none;
-	scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .scrollbar-hide::-webkit-scrollbar {
-	display: none;
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════
    SCROLL REVEAL — оптимизировано
 ═══════════════════════════════════════════════ */
 .reveal-hidden {
-	opacity: 0;
-	transform: translate3d(0, 32px, 0); /* translate3d — GPU-ускорение */
-	transition:
-		opacity var(--motion-duration-slow) var(--motion-easing),
-		transform var(--motion-duration-slow) var(--motion-easing);
-	/* will-change убран: не нужен до начала анимации, создаёт лишние compositing layers на мобиле */
+  opacity: 0;
+  transform: translate3d(0, 32px, 0); /* translate3d — GPU-ускорение */
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-easing),
+    transform var(--motion-duration-slow) var(--motion-easing);
+  /* will-change убран: не нужен до начала анимации, создаёт лишние compositing layers на мобиле */
 }
 .reveal-visible {
-	opacity: 1;
-	transform: translate3d(0, 0, 0);
-	/* will-change: auto — уже дефолт, явно не нужен */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  /* will-change: auto — уже дефолт, явно не нужен */
 }
 
 /* Staggered — сокращаем задержки на мобайле */
 [data-reveal-stagger] > * {
-	transition:
-		opacity var(--motion-duration-slow) var(--motion-easing),
-		transform var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-easing),
+    transform var(--motion-duration-slow) var(--motion-easing);
 }
 [data-reveal-stagger] > *:nth-child(1) {
-	transition-delay: 0ms;
+  transition-delay: 0ms;
 }
 [data-reveal-stagger] > *:nth-child(2) {
-	transition-delay: 80ms;
+  transition-delay: 80ms;
 }
 [data-reveal-stagger] > *:nth-child(3) {
-	transition-delay: 160ms;
+  transition-delay: 160ms;
 }
 [data-reveal-stagger] > *:nth-child(4) {
-	transition-delay: 240ms;
+  transition-delay: 240ms;
 }
 [data-reveal-stagger] > *:nth-child(5) {
-	transition-delay: 320ms;
+  transition-delay: 320ms;
 }
 [data-reveal-stagger] > *:nth-child(6) {
-	transition-delay: 400ms;
+  transition-delay: 400ms;
 }
 [data-reveal-stagger] > *:nth-child(7) {
-	transition-delay: 480ms;
+  transition-delay: 480ms;
 }
 [data-reveal-stagger] > *:nth-child(8) {
-	transition-delay: 540ms;
+  transition-delay: 540ms;
 }
 [data-reveal-stagger] > *:nth-child(9) {
-	transition-delay: 600ms;
+  transition-delay: 600ms;
 }
 [data-reveal-stagger] > *:nth-child(10) {
-	transition-delay: 660ms;
+  transition-delay: 660ms;
 }
 
 .reveal-from-left {
-	opacity: 0;
-	transform: translateX(-32px);
+  opacity: 0;
+  transform: translateX(-32px);
 }
 .reveal-from-right {
-	opacity: 0;
-	transform: translateX(32px);
+  opacity: 0;
+  transform: translateX(32px);
 }
 .reveal-scale {
-	opacity: 0;
-	transform: scale(0.96);
+  opacity: 0;
+  transform: scale(0.96);
 }
 
 .reveal-visible.reveal-from-left,
 .reveal-visible.reveal-from-right,
 .reveal-visible.reveal-scale {
-	opacity: 1;
-	transform: translate3d(0, 0, 0) scale(1);
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* ═══════════════════════════════════════════════
@@ -295,17 +295,17 @@
    scroll-padding-top на html + scroll-margin-top на целях = один и тот же зазор (хедер + 40px)
 ═══════════════════════════════════════════════ */
 :root {
-	--header-height: 1rem;
-	--scroll-offset: 1px;
-	/* Motion — единый ритм (используется в custom CSS и @theme) */
-	--motion-duration-fast: 200ms;
-	--motion-duration-normal: 300ms;
-	--motion-duration-slow: 500ms;
-	--motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
-	--motion-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --header-height: 1rem;
+  --scroll-offset: 1px;
+  /* Motion — единый ритм (используется в custom CSS и @theme) */
+  --motion-duration-fast: 200ms;
+  --motion-duration-normal: 300ms;
+  --motion-duration-slow: 500ms;
+  --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 :target {
-	scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
 /* Главная: все якоря с одним отступом (как на скриншоте — зазор между хедером и блоком) */
 #content,
@@ -319,7 +319,7 @@
 #team,
 #team-list,
 #contacts {
-	scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
 /* Страница corp: якоря секций */
 #corp-avia,
@@ -328,7 +328,7 @@
 #corp-transfer,
 #corp-benefits,
 #corp-contacts {
-	scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
 
 /* ═══════════════════════════════════════════════
@@ -336,63 +336,63 @@
    Только на устройствах с hover (не мобайл)
 ═══════════════════════════════════════════════ */
 @layer utilities {
-	.btn-ripple {
-		position: relative;
-		overflow: hidden;
-	}
-	.btn-ripple::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(
-			circle,
-			rgba(255, 255, 255, 0.35) 0%,
-			transparent 70%
-		);
-		transform: scale(0);
-		opacity: 0;
-		transition:
-			transform var(--motion-duration-slow) var(--motion-easing),
-			opacity var(--motion-duration-slow) var(--motion-easing);
-	}
-	.btn-ripple:active::before {
-		transform: scale(2.5);
-		opacity: 1;
-		transition:
-			transform 0s,
-			opacity 0.08s;
-	}
+  .btn-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-ripple::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.35) 0%,
+      transparent 70%
+    );
+    transform: scale(0);
+    opacity: 0;
+    transition:
+      transform var(--motion-duration-slow) var(--motion-easing),
+      opacity var(--motion-duration-slow) var(--motion-easing);
+  }
+  .btn-ripple:active::before {
+    transform: scale(2.5);
+    opacity: 1;
+    transition:
+      transform 0s,
+      opacity 0.08s;
+  }
 
-	.btn-magnetic {
-		transition: transform var(--motion-duration-fast)
-			var(--motion-easing-bounce);
-	}
-	@media (hover: hover) {
-		.btn-magnetic:hover {
-			transform: translateY(-2px);
-		}
-	}
-	.btn-magnetic:active {
-		transform: translateY(0) scale(0.98);
-	}
+  .btn-magnetic {
+    transition: transform var(--motion-duration-fast)
+      var(--motion-easing-bounce);
+  }
+  @media (hover: hover) {
+    .btn-magnetic:hover {
+      transform: translateY(-2px);
+    }
+  }
+  .btn-magnetic:active {
+    transform: translateY(0) scale(0.98);
+  }
 
-	@keyframes shake {
-		0%,
-		100% {
-			transform: translateX(0);
-		}
-		20%,
-		60% {
-			transform: translateX(-4px);
-		}
-		40%,
-		80% {
-			transform: translateX(4px);
-		}
-	}
-	.shake-error {
-		animation: shake var(--motion-duration-slow) ease-in-out;
-	}
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-4px);
+    }
+    40%,
+    80% {
+      transform: translateX(4px);
+    }
+  }
+  .shake-error {
+    animation: shake var(--motion-duration-slow) ease-in-out;
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -400,223 +400,223 @@
    Отключаем на мобайле — экономим GPU
 ═══════════════════════════════════════════════ */
 @keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* По умолчанию — без анимации (мобайл) */
 .hero-logo-spin,
 .header-logo-spin {
-	animation: none;
+  animation: none;
 }
 
 /* Включаем только там где есть hover-устройство (десктоп) */
 @media (hover: hover) {
-	.hero-logo-spin {
-		animation: logo-spin 20s linear infinite;
-	}
-	.header-logo-spin {
-		animation: logo-spin 30s linear infinite;
-	}
+  .hero-logo-spin {
+    animation: logo-spin 20s linear infinite;
+  }
+  .header-logo-spin {
+    animation: logo-spin 30s linear infinite;
+  }
 }
 
 /* ═══════════════════════════════════════════════
    HERO ANIMATIONS
 ═══════════════════════════════════════════════ */
 @keyframes hero-kenburns {
-	0% {
-		transform: scale(1.03) translate(0, 0);
-	}
-	50% {
-		transform: scale(1.08) translate(0.8%, -0.8%);
-	}
-	100% {
-		transform: scale(1.12) translate(-0.8%, 0.8%);
-	}
+  0% {
+    transform: scale(1.03) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate(0.8%, -0.8%);
+  }
+  100% {
+    transform: scale(1.12) translate(-0.8%, 0.8%);
+  }
 }
 
 /* kenburns — только десктоп */
 .hero-kenburns {
-	animation: none; /* мобайл — статичное фото */
+  animation: none; /* мобайл — статичное фото */
 }
 @media (hover: hover) {
-	.hero-kenburns {
-		animation: hero-kenburns 30s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
-	}
+  .hero-kenburns {
+    animation: hero-kenburns 30s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  }
 }
 
 /* Gradient text — только десктоп, на мобайле просто белый */
 .hero-gradient-text {
-	color: #ffffff;
+  color: #ffffff;
 }
 @media (hover: hover) {
-	.hero-gradient-text {
-		background: linear-gradient(
-			135deg,
-			#ffffff 0%,
-			#fafdfe 1.5%,
-			#f5fcfd 3%,
-			#eef9fb 5%,
-			#e8f8fa 7%,
-			#ddf4f7 10%,
-			#d4f2f6 13%,
-			#c4eef3 16%,
-			#a8e4ed 20%,
-			#8adceb 22%,
-			#6ed4e6 25%,
-			#5acee2 27%,
-			#4ac6de 29%,
-			#46c3db 30%,
-			#42c0d9 31%,
-			#3ebdd8 32%,
-			#3ab9d7 33%,
-			#36b6d5 34%,
-			#2ab8d0 36%,
-			#1ab5c4 40%,
-			#0ab0b8 44%,
-			#00abb3 50%,
-			#00b5bc 60%,
-			#1abfc6 68%,
-			#33bfc6 72%,
-			#4dc9ce 76%,
-			#66cdd3 80%,
-			#82d7db 83%,
-			#99dde0 86%,
-			#aee4e8 88%,
-			#bbe8eb 90%,
-			#cceef1 92%,
-			#ddf4f7 94%,
-			#e8f7f9 96%,
-			#f0f9fa 98%,
-			#fafdfe 99.5%,
-			#ffffff 100%
-		);
-		background-size: 200% auto;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		animation: partners-title-shine 7s ease-in-out infinite alternate;
-	}
+  .hero-gradient-text {
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #fafdfe 1.5%,
+      #f5fcfd 3%,
+      #eef9fb 5%,
+      #e8f8fa 7%,
+      #ddf4f7 10%,
+      #d4f2f6 13%,
+      #c4eef3 16%,
+      #a8e4ed 20%,
+      #8adceb 22%,
+      #6ed4e6 25%,
+      #5acee2 27%,
+      #4ac6de 29%,
+      #46c3db 30%,
+      #42c0d9 31%,
+      #3ebdd8 32%,
+      #3ab9d7 33%,
+      #36b6d5 34%,
+      #2ab8d0 36%,
+      #1ab5c4 40%,
+      #0ab0b8 44%,
+      #00abb3 50%,
+      #00b5bc 60%,
+      #1abfc6 68%,
+      #33bfc6 72%,
+      #4dc9ce 76%,
+      #66cdd3 80%,
+      #82d7db 83%,
+      #99dde0 86%,
+      #aee4e8 88%,
+      #bbe8eb 90%,
+      #cceef1 92%,
+      #ddf4f7 94%,
+      #e8f7f9 96%,
+      #f0f9fa 98%,
+      #fafdfe 99.5%,
+      #ffffff 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: partners-title-shine 7s ease-in-out infinite alternate;
+  }
 }
 
 @keyframes hero-scroll-bounce {
-	0%,
-	100% {
-		transform: translateY(0);
-		opacity: 0.7;
-	}
-	50% {
-		transform: translateY(5px);
-		opacity: 0.35;
-	}
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.35;
+  }
 }
 @media (hover: hover) {
-	.animate-hero-scroll {
-		animation: hero-scroll-bounce 1.8s ease-in-out infinite;
-	}
+  .animate-hero-scroll {
+    animation: hero-scroll-bounce 1.8s ease-in-out infinite;
+  }
 }
 
 /* ═══════════════════════════════════════════════
    SEARCHWIDGET FADE-IN
 ═══════════════════════════════════════════════ */
 @keyframes sw-fade-in {
-	from {
-		opacity: 0;
-		transform: translateY(4px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .sw-fade-in {
-	animation: sw-fade-in 0.25s ease-out;
+  animation: sw-fade-in 0.25s ease-out;
 }
 
 /* Форма поиска туров — тень primary */
 .search-widget-panel {
-	box-shadow: 0 25px 50px -12px rgb(0 171 179 / 0.25);
+  box-shadow: 0 25px 50px -12px rgb(0 171 179 / 0.25);
 }
 
 /* ═══════════════════════════════════════════════
    PARTNERS — MARQUEE (на всех устройствах)
 ═══════════════════════════════════════════════ */
 @keyframes marquee-forward {
-	from {
-		transform: translate3d(0, 0, 0);
-	}
-	to {
-		transform: translate3d(var(--marquee-offset, -50%), 0, 0);
-	}
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--marquee-offset, -50%), 0, 0);
+  }
 }
 @keyframes marquee-reverse {
-	from {
-		transform: translate3d(var(--marquee-offset, -50%), 0, 0);
-	}
-	to {
-		transform: translate3d(0, 0, 0);
-	}
+  from {
+    transform: translate3d(var(--marquee-offset, -50%), 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .partners-track--forward {
-	animation: marquee-forward 36s linear infinite;
+  animation: marquee-forward 36s linear infinite;
 }
 .partners-track--reverse {
-	animation: marquee-reverse 30s linear infinite;
+  animation: marquee-reverse 30s linear infinite;
 }
 @media (min-width: 768px) {
-	.partners-track--forward,
-	.partners-track--reverse {
-		will-change: transform;
-	}
+  .partners-track--forward,
+  .partners-track--reverse {
+    will-change: transform;
+  }
 }
 @media (hover: hover) {
-	.partners-track--forward:hover,
-	.partners-track--reverse:hover {
-		animation-play-state: paused;
-	}
+  .partners-track--forward:hover,
+  .partners-track--reverse:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes partners-title-shine {
-	0% {
-		background-position: 200% center;
-	}
-	100% {
-		background-position: -200% center;
-	}
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
 }
 
 .partners-title {
-	background: linear-gradient(
-		135deg,
-		#1a1a2e 0%,
-		#003d3f 40%,
-		#00abb3 60%,
-		#1a1a2e 100%
-	);
-	background-size: 200% auto;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+  background: linear-gradient(
+    135deg,
+    #1a1a2e 0%,
+    #003d3f 40%,
+    #00abb3 60%,
+    #1a1a2e 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 @media (hover: hover) {
-	.partners-title {
-		animation: partners-title-shine 4s linear infinite;
-	}
+  .partners-title {
+    animation: partners-title-shine 4s linear infinite;
+  }
 }
 
 @media (hover: hover) {
-	.partners-logo-card:hover {
-		transform: translateY(-3px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
+  .partners-logo-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -624,253 +624,236 @@
    Через CSS (не Tailwind) — надёжная работа hover
 ═══════════════════════════════════════════════ */
 .team-founder-card {
-	transition:
-		transform var(--motion-duration-slow) var(--motion-easing),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .team-toggle-btn {
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 /* Reviews — документы и кнопка «Оставить отзыв» (подъём как Team) */
 .reviews-doc-card {
-	transition:
-		transform var(--motion-duration-slow) var(--motion-easing),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .reviews-cta-btn {
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .partners-cta-btn {
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 /* 2026: active = scale 0.98 + translateY 2px, spring bounce на отпускании */
 .about-cta-btn {
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .gift-cta-btn {
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .about-services-pill {
-	transition:
-		transform var(--motion-duration-slow) var(--motion-easing),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 /* Contacts — карточки и кнопка (подъём + тень primary) */
 .contacts-card {
-	box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
-	transition:
-		transform var(--motion-duration-slow) var(--motion-easing),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing);
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .contacts-cta-btn {
-	box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .header-cta-btn {
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .header-logo-text {
-	transition:
-		transform var(--motion-duration-slow) var(--motion-easing),
-		color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    transform var(--motion-duration-slow) var(--motion-easing),
+    color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .office-toggle-btn {
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .corp-hero-cta-btn {
-	box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.25);
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing);
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.25);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .scroll-to-top-btn {
-	box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
-	transition:
-		opacity var(--motion-duration-slow) var(--motion-easing),
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing);
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-easing),
+    transform var(--motion-duration-slow)
+      var(--transition-timing-function-bounce),
+    box-shadow var(--motion-duration-slow) var(--motion-easing);
 }
 
 .favorites-widget-btn {
-	box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
-	transition:
-		transform var(--motion-duration-slow)
-			var(--transition-timing-function-bounce),
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing),
-		background-color var(--motion-duration-slow) var(--motion-easing),
-		color var(--motion-duration-slow) var(--motion-easing);
+  box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing),
+    background-color var(--motion-duration-slow) var(--motion-easing),
+    color var(--motion-duration-slow) var(--motion-easing);
 }
 
 .about-avia-card {
-	transition:
-		box-shadow var(--motion-duration-slow) var(--motion-easing),
-		border-color var(--motion-duration-slow) var(--motion-easing);
+  transition:
+    box-shadow var(--motion-duration-slow) var(--motion-easing),
+    border-color var(--motion-duration-slow) var(--motion-easing);
 }
 @media (hover: none) {
-	.about-avia-card {
-		transition: none;
-	}
+  .about-avia-card {
+    transition: none;
+  }
 }
 @media (hover: hover) {
-	.about-avia-card:hover {
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.awards-card:hover {
-		box-shadow:
-			0 25px 50px -12px
-				color-mix(in srgb, var(--award-shadow, #00abb3) 35%, transparent),
-			0 0 0 1px
-				color-mix(in srgb, var(--award-shadow, #00abb3) 15%, transparent);
-		border-color: color-mix(
-			in srgb,
-			var(--award-shadow, #00abb3) 30%,
-			transparent
-		);
-	}
-	.team-founder-card:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.team-toggle-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.reviews-doc-card:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.reviews-cta-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.partners-cta-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-	}
-	.about-cta-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.gift-cta-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(255 212 23 / 0.4),
-			0 0 0 1px rgb(255 212 23 / 0.2);
-	}
-	.about-services-pill:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.contacts-card:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-	}
-	.contacts-cta-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-	}
-	.corp-hero-cta-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-	}
-	.scroll-to-top-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-	}
-	.favorites-widget-btn:hover {
-		transform: translateY(-6px);
-		box-shadow:
-			0 25px 50px -12px rgb(0 171 179 / 0.35),
-			0 0 0 1px rgb(0 171 179 / 0.15);
-		border-color: rgb(0 171 179 / 0.3);
-		background-color: rgb(255 255 255);
-		color: var(--color-primary);
-	}
+  .about-avia-card:hover {
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .awards-card:hover {
+    box-shadow:
+      0 25px 50px -12px
+        color-mix(in srgb, var(--award-shadow, #00abb3) 35%, transparent),
+      0 0 0 1px
+        color-mix(in srgb, var(--award-shadow, #00abb3) 15%, transparent);
+    border-color: color-mix(
+      in srgb,
+      var(--award-shadow, #00abb3) 30%,
+      transparent
+    );
+  }
+  .team-founder-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .team-toggle-btn:hover {
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .reviews-doc-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .reviews-cta-btn:hover {
+    box-shadow:
+      0 10px 25px -5px rgb(0 171 179 / 0.25),
+      0 8px 10px -6px rgb(0 171 179 / 0.15),
+      0 0 0 1px rgb(0 171 179 / 0.2);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .partners-cta-btn:hover {
+    box-shadow:
+      0 10px 25px -5px rgb(0 171 179 / 0.25),
+      0 8px 10px -6px rgb(0 171 179 / 0.15),
+      0 0 0 1px rgb(0 171 179 / 0.2);
+  }
+  .about-cta-btn:hover {
+    box-shadow:
+      0 10px 25px -5px rgb(0 171 179 / 0.25),
+      0 8px 10px -6px rgb(0 171 179 / 0.15),
+      0 0 0 1px rgb(0 171 179 / 0.2);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .gift-cta-btn:hover {
+    box-shadow:
+      0 10px 25px -5px rgb(255 212 23 / 0.3),
+      0 8px 10px -6px rgb(255 212 23 / 0.2),
+      0 0 0 1px rgb(255 212 23 / 0.2);
+  }
+  .about-services-pill:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .contacts-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+  }
+  .contacts-cta-btn:hover {
+    box-shadow:
+      0 10px 25px -5px rgb(0 171 179 / 0.25),
+      0 8px 10px -6px rgb(0 171 179 / 0.15),
+      0 0 0 1px rgb(0 171 179 / 0.2);
+  }
+  .corp-hero-cta-btn:hover {
+    box-shadow:
+      0 10px 25px -5px rgb(0 171 179 / 0.25),
+      0 8px 10px -6px rgb(0 171 179 / 0.15),
+      0 0 0 1px rgb(0 171 179 / 0.2);
+  }
+  .scroll-to-top-btn:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 25px 50px -12px rgb(0 171 179 / 0.35),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+  }
+  .favorites-widget-btn:hover {
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1),
+      0 0 0 1px rgb(0 171 179 / 0.15);
+    border-color: rgb(0 171 179 / 0.3);
+    background-color: rgb(255 255 255);
+    color: var(--color-primary);
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -878,75 +861,75 @@
    На мобайле отключаем — главный тормоз
 ═══════════════════════════════════════════════ */
 @keyframes breathe-tour {
-	0% {
-		transform: scale(1) translate(0, 0);
-	}
-	50% {
-		transform: scale(1.05) translate(0.8%, -0.6%);
-	}
-	100% {
-		transform: scale(1.03) translate(-0.6%, 0.8%);
-	}
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.05) translate(0.8%, -0.6%);
+  }
+  100% {
+    transform: scale(1.03) translate(-0.6%, 0.8%);
+  }
 }
 
 /* По умолчанию — без анимации */
 .tour-card-breathe {
-	animation: none;
+  animation: none;
 }
 
 /* Breathe: пауза когда секция вне viewport — меньше нагрузки при прокрутке */
 .tours-out-of-view .tour-card-breathe {
-	animation-play-state: paused;
+  animation-play-state: paused;
 }
 /* Карточки туров: на мобайле — без reveal (всегда видимы), на десктопе — плавный reveal */
 #tours [data-reveal-stagger] > * {
-	transition-duration: var(--motion-duration-slow);
-	transition-timing-function: var(--motion-easing);
+  transition-duration: var(--motion-duration-slow);
+  transition-timing-function: var(--motion-easing);
 }
 @media (hover: none) {
-	#tours [data-reveal-stagger] > * {
-		opacity: 1 !important;
-		transform: none !important;
-		transition: none !important;
-	}
-	/* About bento-карточки: без reveal на мобайле — меньше нагрузки при прокрутке */
-	#about [data-reveal-stagger] > * {
-		opacity: 1 !important;
-		transform: none !important;
-		transition: none !important;
-	}
+  #tours [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  /* About bento-карточки: без reveal на мобайле — меньше нагрузки при прокрутке */
+  #about [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 @media (hover: hover) {
-	.tour-card-breathe {
-		animation: breathe-tour 24s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
-	}
-	[data-reveal-stagger] > *:nth-child(1) .tour-card-breathe {
-		animation-delay: 0s;
-	}
-	[data-reveal-stagger] > *:nth-child(2) .tour-card-breathe {
-		animation-delay: -5s;
-	}
-	[data-reveal-stagger] > *:nth-child(3) .tour-card-breathe {
-		animation-delay: -10s;
-	}
-	[data-reveal-stagger] > *:nth-child(4) .tour-card-breathe {
-		animation-delay: -15s;
-	}
-	[data-reveal-stagger] > *:nth-child(5) .tour-card-breathe {
-		animation-delay: -20s;
-	}
-	[data-reveal-stagger] > *:nth-child(6) .tour-card-breathe {
-		animation-delay: -12s;
-	}
+  .tour-card-breathe {
+    animation: breathe-tour 24s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  }
+  [data-reveal-stagger] > *:nth-child(1) .tour-card-breathe {
+    animation-delay: 0s;
+  }
+  [data-reveal-stagger] > *:nth-child(2) .tour-card-breathe {
+    animation-delay: -5s;
+  }
+  [data-reveal-stagger] > *:nth-child(3) .tour-card-breathe {
+    animation-delay: -10s;
+  }
+  [data-reveal-stagger] > *:nth-child(4) .tour-card-breathe {
+    animation-delay: -15s;
+  }
+  [data-reveal-stagger] > *:nth-child(5) .tour-card-breathe {
+    animation-delay: -20s;
+  }
+  [data-reveal-stagger] > *:nth-child(6) .tour-card-breathe {
+    animation-delay: -12s;
+  }
 }
 
 /* ═══════════════════════════════════════════════
    IMAGE RENDERING
 ═══════════════════════════════════════════════ */
 .image-sharp {
-	transform: translateZ(0);
-	backface-visibility: hidden;
-	/* crisp-edges убираем — ухудшает качество на Retina */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  /* crisp-edges убираем — ухудшает качество на Retina */
 }
 
 /* ═══════════════════════════════════════════════
@@ -957,25 +940,25 @@
    TOURVISOR FIXES
 ═══════════════════════════════════════════════ */
 .TVCartStickyButton {
-	opacity: 0 !important;
-	position: fixed !important;
-	left: -9999px !important;
-	top: -9999px !important;
-	z-index: -9999 !important;
+  opacity: 0 !important;
+  position: fixed !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  z-index: -9999 !important;
 }
 
 .tv-search-form,
 .tv-content,
 .tv-container,
 iframe[src*='tourvisor'] {
-	width: 100% !important;
-	min-height: 400px !important;
-	height: auto !important;
-	display: block !important;
+  width: 100% !important;
+  min-height: 400px !important;
+  height: auto !important;
+  display: block !important;
 }
 
 #tab-tourvisor {
-	-webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ═══════════════════════════════════════════════
@@ -983,60 +966,60 @@ iframe[src*='tourvisor'] {
    JS-управляемый, grid-rows: 0fr → 1fr
 ═══════════════════════════════════════════════ */
 .faq-item[data-open='true'] .faq-content {
-	grid-template-rows: 1fr;
+  grid-template-rows: 1fr;
 }
 .faq-item[data-open='true'] .faq-chevron {
-	transform: rotate(180deg);
-	background-color: rgb(0 171 179 / 0.2);
+  transform: rotate(180deg);
+  background-color: rgb(0 171 179 / 0.2);
 }
 
 /* Базовые стили opacity для текста */
 .faq-item:not([data-open='true']) .faq-content-inner {
-	opacity: 0;
+  opacity: 0;
 }
 
 /* Десктоп: текст и grid — 100ms задержка, 350ms, cubic-bezier (открытие и закрытие одинаково) */
 @media (min-width: 768px) {
-	.faq-content {
-		transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1);
-		transition-delay: 100ms;
-	}
-	.faq-content-inner {
-		transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
-		transition-delay: 100ms;
-	}
-	.faq-item[data-open='true'] .faq-content-inner {
-		opacity: 1;
-	}
-	.faq-item:not([data-open='true']) .faq-content-inner {
-		opacity: 0;
-	}
+  .faq-content {
+    transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 100ms;
+  }
+  .faq-content-inner {
+    transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 100ms;
+  }
+  .faq-item[data-open='true'] .faq-content-inner {
+    opacity: 1;
+  }
+  .faq-item:not([data-open='true']) .faq-content-inner {
+    opacity: 0;
+  }
 }
 
 /* Мобиль: простая анимация открытия/закрытия + текст */
 @media (max-width: 767px) {
-	.faq-item {
-		transition-duration: 200ms;
-	}
-	.faq-content {
-		transition: grid-template-rows 200ms ease-out;
-	}
-	.faq-content-inner {
-		transition: opacity 200ms ease-out;
-	}
-	.faq-item[data-open='true'] .faq-content-inner {
-		opacity: 1;
-	}
-	.faq-item:not([data-open='true']) .faq-content-inner {
-		opacity: 0;
-	}
-	.faq-chevron {
-		transition-duration: 200ms;
-		transition-property: transform;
-	}
-	.faq-item[data-open='true'] .faq-chevron {
-		background-color: rgb(0 171 179 / 0.2);
-	}
+  .faq-item {
+    transition-duration: 200ms;
+  }
+  .faq-content {
+    transition: grid-template-rows 200ms ease-out;
+  }
+  .faq-content-inner {
+    transition: opacity 200ms ease-out;
+  }
+  .faq-item[data-open='true'] .faq-content-inner {
+    opacity: 1;
+  }
+  .faq-item:not([data-open='true']) .faq-content-inner {
+    opacity: 0;
+  }
+  .faq-chevron {
+    transition-duration: 200ms;
+    transition-property: transform;
+  }
+  .faq-item[data-open='true'] .faq-chevron {
+    background-color: rgb(0 171 179 / 0.2);
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1044,41 +1027,41 @@ iframe[src*='tourvisor'] {
    Уважаем настройки пользователя
 ═══════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-	}
-	.reveal-hidden {
-		opacity: 1;
-		transform: none;
-	}
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ═══════════════════════════════════════════════
    PULSE ANIMATION FOR OFFICE WIDGET
 ═══════════════════════════════════════════════ */
 @keyframes pulse-slow {
-	0%,
-	100% {
-		box-shadow:
-			0 4px 12px rgba(0, 0, 0, 0.2),
-			0 0 0 0 rgba(0, 171, 179, 0.6);
-	}
-	50% {
-		box-shadow:
-			0 4px 12px rgba(0, 0, 0, 0.2),
-			0 0 0 10px rgba(0, 171, 179, 0);
-	}
+  0%,
+  100% {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 0 0 rgba(0, 171, 179, 0.6);
+  }
+  50% {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 0 10px rgba(0, 171, 179, 0);
+  }
 }
 
 .animate-pulse-slow {
-	animation: pulse-slow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-slow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Пульсация отключается при открытии виджета */
 .pulse-disabled {
-	animation: none !important;
+  animation: none !important;
 }
