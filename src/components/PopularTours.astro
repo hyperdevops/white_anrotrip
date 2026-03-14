@@ -52,7 +52,7 @@ const tinyPlaceholders = await Promise.all(
           data-tour-title={tour.title}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow deep-shadow border border-white/10 reveal-hidden active:scale-[0.98] active:translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow deep-shadow border border-white/10 reveal-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
             tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
             tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',
@@ -121,7 +121,7 @@ const tinyPlaceholders = await Promise.all(
       <a
         id="popular-tours-all-btn"
         href="#search"
-        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary active:scale-[0.98] active:translate-y-0.5 transition-[color,transform] duration-fast group cursor-pointer"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
       >
         Смотреть все направления
         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -3,7 +3,7 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-gray-950 text-white">
+<footer id="site-footer" class="bg-gray-950 text-white">
   <!-- Верхняя часть -->
   <div class="border-b border-white/8">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl py-12 md:py-16">
@@ -53,7 +53,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="VK"
-              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-primary/20 flex items-center justify-center text-white/60 hover:text-primary active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,transform] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-primary/20 flex items-center justify-center text-white/60 hover:text-primary transition-[color,background-color,transform] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <svg class="w-4 h-4 fill-current" viewBox="0 0 640 640">
                 <path
@@ -66,7 +66,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-emerald-500/20 flex items-center justify-center text-white/60 hover:text-emerald-400 active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,transform] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-emerald-500/20 flex items-center justify-center text-white/60 hover:text-emerald-400 transition-[color,background-color,transform] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path
@@ -79,7 +79,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Telegram"
-              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-sky-500/20 flex items-center justify-center text-white/60 hover:text-sky-400 active:scale-[0.98] active:translate-y-0.5 transition-[color,background-color,transform] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              class="w-9 h-9 rounded-xl bg-white/8 hover:bg-sky-500/20 flex items-center justify-center text-white/60 hover:text-sky-400 transition-[color,background-color,transform] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path
@@ -178,11 +178,15 @@ const currentYear = new Date().getFullYear();
         © {currentYear} ANRO TRIP · Туристическая компания · Все права защищены
       </p>
       <div class="flex items-center gap-4 text-white/50 text-xs">
-        <a href={`${import.meta.env.BASE_URL}privacy`} class="hover:text-white/60 transition-colors cursor-pointer"
+        <a
+          href={`${import.meta.env.BASE_URL}privacy`}
+          class="hover:text-white/60 transition-colors cursor-pointer"
           >Политика конфиденциальности</a
         >
         <span class="w-px h-3 bg-white/15"></span>
-        <a href={`${import.meta.env.BASE_URL}terms`} class="hover:text-white/60 transition-colors cursor-pointer"
+        <a
+          href={`${import.meta.env.BASE_URL}terms`}
+          class="hover:text-white/60 transition-colors cursor-pointer"
           >Пользовательское соглашение</a
         >
       </div>

@@ -98,7 +98,7 @@ const reviewCount = reviews.length;
       <button
         id="open-review-form"
         type="button"
-        class="reviews-cta-btn inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-white/15 text-white font-bold text-sm uppercase tracking-wider shadow-[0_4px_12px_rgba(0,171,179,0.25)] hover:bg-white/18 active:scale-[0.98] active:translate-y-0.5 btn-magnetic cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+        class="reviews-cta-btn inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-primary/15 text-white font-bold text-sm uppercase tracking-wider shadow-[0_4px_12px_rgba(0,171,179,0.25)] hover:bg-primary/15 hover:shadow-lg hover:shadow-primary/30 btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
       >
         <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -127,7 +127,7 @@ const reviewCount = reviews.length;
         type="button"
         aria-label="Увеличить или уменьшить"
         onclick="toggleZoom(event)"
-        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:scale-[0.98] active:translate-y-0.5 flex items-center justify-center text-white transition-[background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-[background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
         id="zoom-btn"
       >
         <svg id="icon-zoom-in" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -226,7 +226,7 @@ const reviewCount = reviews.length;
       <button id="close-review-form"
         type="button"
         aria-label="Закрыть форму отзыва"
-        class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 active:scale-[0.98] active:translate-y-0.5 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-[color,background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+        class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-[color,background-color] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 z-10 btn-ripple">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -274,7 +274,7 @@ const reviewCount = reviews.length;
               <a href={`${import.meta.env.BASE_URL}privacy`} class="text-primary font-semibold hover:underline cursor-pointer">Политикой конфиденциальности</a>
             </label>
           </div>
-          <button class="w-full bg-primary text-white font-bold py-3.5 rounded-xl mt-2 hover:bg-primary-dark transition-colors cursor-pointer tracking-wide uppercase text-sm">
+          <button class="w-full bg-primary text-white font-bold py-3.5 rounded-xl mt-2 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 transition-[color,box-shadow] duration-normal cursor-pointer tracking-wide uppercase text-sm btn-ripple">
             Отправить отзыв
           </button>
         </form>
@@ -343,13 +343,30 @@ const reviewCount = reviews.length;
   function togglePageElements(hide) {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     const duration = isMobile ? 200 : 500;
-    [document.getElementById('scroll-to-top'), document.getElementById('favorites-widget'), document.getElementById('office-widget-container')].forEach(el => {
-      if (!el) return;
-      el.style.transition = `opacity ${duration}ms ease-out`;
-      el.style.opacity = hide ? '0' : '1';
-      el.style.pointerEvents = hide ? 'none' : 'auto';
-      if (!hide) setTimeout(() => { el.style.transition = ''; el.style.opacity = ''; el.style.pointerEvents = ''; }, duration);
-    });
+    const scrollToTop = document.getElementById('scroll-to-top');
+    const others = [document.getElementById('favorites-widget'), document.getElementById('office-widget-container')];
+    if (hide) {
+      [scrollToTop, ...others].forEach(el => {
+        if (!el) return;
+        el.style.transition = `opacity ${duration}ms ease-out`;
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+      });
+    } else {
+      others.forEach(el => {
+        if (!el) return;
+        el.style.transition = `opacity ${duration}ms ease-out`;
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+        setTimeout(() => { el.style.transition = ''; el.style.opacity = ''; el.style.pointerEvents = ''; }, duration);
+      });
+      if (scrollToTop) {
+        scrollToTop.style.transition = '';
+        scrollToTop.style.opacity = '';
+        scrollToTop.style.pointerEvents = '';
+        window.dispatchEvent(new Event('scroll'));
+      }
+    }
   }
 
   function updateCounter() {
