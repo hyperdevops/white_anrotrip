@@ -88,10 +88,15 @@ import certifImg from '../assets/certif/certif.webp';
 
         <button
           onclick="openGiftModal()"
-          class="gift-cta-btn inline-flex items-center gap-3 px-8 py-4 rounded-full bg-cta text-gray-900 font-extrabold text-sm uppercase tracking-wider shadow-[0_4px_24px_rgba(255,212,23,0.35)] active:scale-[0.98] active:translate-y-0.5 btn-magnetic btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          type="button"
+          class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-8 py-4 font-black text-[#11111b] shadow-[0_4px_14px_4px_rgba(255,212,23,0.4)] hover:shadow-[0_6px_18px_4px_rgba(255,212,23,0.4)] transition-shadow duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-sm uppercase tracking-wider"
         >
+          <!-- Shine sweep -->
+          <span
+            class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/35 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"
+          ></span>
           <svg
-            class="w-5 h-5"
+            class="w-5 h-5 shrink-0 relative z-10"
             fill="none"
             stroke="currentColor"
             stroke-width="2.5"
@@ -103,7 +108,7 @@ import certifImg from '../assets/certif/certif.webp';
               d="M20 12V22H4V12M22 7H2V12H22V7ZM12 22V7M12 7H7.5C6.12 7 5 5.88 5 4.5S6.12 2 7.5 2C9.47 2 12 4 12 4M12 7H16.5C17.88 7 19 5.88 19 4.5S17.88 2 16.5 2C14.53 2 12 4 12 4"
             ></path>
           </svg>
-          Приобрести сертификат
+          <span class="relative z-10">Приобрести сертификат</span>
         </button>
       </div>
 
