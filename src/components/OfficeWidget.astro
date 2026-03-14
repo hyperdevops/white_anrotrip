@@ -3,12 +3,11 @@
 ---
 
 <!--
-  right-6 bottom-8: Исходная позиция
-  z-[2147483630]: Высокий слой
+  z-40 — под хедером (z-50) на всех устройствах (мобильные, лэптопы, десктопы)
 -->
 <div
   id="office-widget-container"
-  class="fixed bottom-4 right-4 z-2147483630 flex flex-col items-center gap-3 transition-transform duration-fast ease-out will-change-transform overflow-visible pointer-events-none lg:bottom-5 lg:right-5"
+  class="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-3 will-change-transform overflow-visible pointer-events-none lg:bottom-5 lg:right-5"
 >
   <!-- СПИСОК (Выезжает вверх) -->
   <div
@@ -20,7 +19,7 @@
       href="https://vk.com/anrotrip"
       target="_blank"
       rel="noopener noreferrer"
-      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0077FF] text-white shadow-lg hover:scale-110 active:scale-[0.98] active:translate-y-0.5 transition-transform relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0077FF] text-white shadow-lg hover:scale-110 transition-transform relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       <span
         class="absolute right-full mr-3 bg-white px-2 py-1 rounded text-[10px] font-bold text-gray-700 shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
@@ -41,7 +40,7 @@
       href="https://t.me/anrotrip"
       target="_blank"
       rel="noopener noreferrer"
-      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0088cc] text-white shadow-lg hover:scale-110 active:scale-[0.98] active:translate-y-0.5 transition-transform relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0088cc] text-white shadow-lg hover:scale-110 transition-transform relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       <span
         class="absolute right-full mr-3 bg-white px-2 py-1 rounded text-[10px] font-bold text-gray-700 shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
@@ -58,7 +57,7 @@
       href="https://wa.me/79220267059"
       target="_blank"
       rel="noopener noreferrer"
-      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 active:scale-[0.98] active:translate-y-0.5 transition-transform relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 transition-transform relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       <span
         class="absolute right-full mr-3 bg-white px-2 py-1 rounded text-[10px] font-bold text-gray-700 shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
@@ -72,10 +71,10 @@
     </a>
   </div>
 
-  <!-- ГЛАВНАЯ КНОПКА -->
+  <!-- ГЛАВНАЯ КНОПКА (без тактильного отклика — сенсорная реакция) -->
   <button
     id="office-toggle-btn"
-    class="office-toggle-btn w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary hover:scale-105 active:scale-[0.98] active:translate-y-0.5 transition-[transform] duration-normal cursor-pointer animate-pulse-slow relative z-10 pointer-events-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+    class="office-toggle-btn btn-ripple w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary hover:scale-105 transition-transform duration-normal cursor-pointer animate-pulse-slow relative z-10 pointer-events-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
   >
     <svg
       id="icon-msg"
@@ -111,6 +110,9 @@
 
 <script>
   let scrollHandler: (() => void) | null = null;
+  let resizeHandler: (() => void) | null = null;
+  let footerObserver: IntersectionObserver | null = null;
+  let scrollEndTimer: ReturnType<typeof setTimeout> | null = null;
 
   function initOfficeWidget() {
     const btn = document.getElementById('office-toggle-btn');
@@ -123,10 +125,22 @@
 
     let isOpen = false;
 
-    // Удаляем старый scroll listener (важно при View Transitions)
+    // Удаляем старые listeners (важно при View Transitions)
+    if (scrollEndTimer) {
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = null;
+    }
     if (scrollHandler) {
       window.removeEventListener('scroll', scrollHandler);
       scrollHandler = null;
+    }
+    if (resizeHandler) {
+      window.removeEventListener('resize', resizeHandler);
+      resizeHandler = null;
+    }
+    if (footerObserver) {
+      footerObserver.disconnect();
+      footerObserver = null;
     }
 
     btn.onclick = () => {
@@ -141,7 +155,6 @@
         list?.classList.add('pointer-events-auto');
         iconMsg?.classList.add('opacity-0', '-rotate-90');
         iconClose?.classList.remove('opacity-0', 'rotate-90');
-        // Убираем пульсацию при открытии виджета
         btn.classList.remove('animate-pulse-slow');
         btn.classList.add('pulse-disabled');
       } else {
@@ -154,49 +167,93 @@
         list?.classList.remove('pointer-events-auto');
         iconMsg?.classList.remove('opacity-0', '-rotate-90');
         iconClose?.classList.add('opacity-0', 'rotate-90');
-        // Возвращаем пульсацию при закрытии виджета
         btn.classList.remove('pulse-disabled');
         btn.classList.add('animate-pulse-slow');
       }
     };
 
-    let ticking = false;
+    const getDefaultBottom = () => (window.innerWidth >= 1024 ? 20 : 16);
+    const BUTTON_HALF = 28; // половина высоты кнопки (56px)
     function updateWidgetPosition() {
       if (!container) return;
-      const scrollY = window.scrollY || window.pageYOffset;
-      const bottomOfScreen = scrollY + window.innerHeight;
-      const distanceFromBottom =
-        document.documentElement.scrollHeight - bottomOfScreen;
-      const stopDistance = 130;
-      if (distanceFromBottom < stopDistance) {
-        container.style.transform = `translateY(-${stopDistance - distanceFromBottom}px)`;
-      } else {
-        container.style.transform = 'translateY(0)';
+      const footer =
+        document.getElementById('site-footer') ??
+        document.querySelector('footer[id="site-footer"]');
+      if (!footer) {
+        container.style.removeProperty('bottom');
+        container.style.removeProperty('transform');
+        return;
       }
-      ticking = false;
+      const footerRect = footer.getBoundingClientRect();
+      const footerTop = footerRect.top;
+      const defaultBottom = getDefaultBottom();
+      const innerHeight = window.innerHeight;
+      const buttonCenterY = innerHeight - defaultBottom - BUTTON_HALF;
+      if (footerTop >= buttonCenterY) {
+        container.style.removeProperty('bottom');
+        container.style.removeProperty('transform');
+        return;
+      }
+      const targetBottom = Math.max(
+        defaultBottom,
+        Math.round(innerHeight - BUTTON_HALF - footerTop),
+      );
+      container.style.bottom = `${targetBottom}px`;
+      container.style.transform = '';
     }
 
-    scrollHandler = () => {
+    let ticking = false;
+    const scheduleUpdate = () => {
       if (!ticking) {
-        window.requestAnimationFrame(updateWidgetPosition);
         ticking = true;
+        requestAnimationFrame(() => {
+          updateWidgetPosition();
+          ticking = false;
+        });
       }
+      if (scrollEndTimer) clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(updateWidgetPosition, 120);
     };
-    window.addEventListener('scroll', scrollHandler);
+
+    scrollHandler = () => scheduleUpdate();
+    resizeHandler = () => scheduleUpdate();
+
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    window.addEventListener('resize', resizeHandler);
+
+    // Intersection Observer — дополнительный триггер при появлении футера
+    const footerEl = document.getElementById('site-footer');
+    if (footerEl) {
+      footerObserver = new IntersectionObserver(
+        () => scheduleUpdate(),
+        { root: null, rootMargin: '0px', threshold: [0, 0.1, 0.5, 1] }
+      );
+      footerObserver.observe(footerEl);
+    }
+
     updateWidgetPosition();
   }
 
-  // Инициализация виджета с добавлением класса пульсации при загрузке
-  initOfficeWidget();
-  // Убедимся, что класс пульсации установлен при инициализации
-  document.addEventListener('DOMContentLoaded', () => {
+  // Инициализация после полной загрузки DOM (footer должен быть в документе)
+  const runInit = () => {
+    initOfficeWidget();
     const btn = document.getElementById('office-toggle-btn');
-    if (btn && !btn.classList.contains('pulse-disabled') && !btn.classList.contains('animate-pulse-slow')) {
+    if (
+      btn &&
+      !btn.classList.contains('pulse-disabled') &&
+      !btn.classList.contains('animate-pulse-slow')
+    ) {
       btn.classList.add('animate-pulse-slow');
     }
-  });
-  document.addEventListener('astro:page-load', initOfficeWidget);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runInit);
+  } else {
+    runInit();
+  }
+  document.addEventListener('astro:page-load', runInit);
 
+  // Глобальная функция для отладки
   (window as unknown as { initOfficeWidget?: () => void }).initOfficeWidget =
     initOfficeWidget;
 </script>

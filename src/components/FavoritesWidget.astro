@@ -2,46 +2,105 @@
 // src/components/FavoritesWidget.astro
 ---
 
-<a
-  href="#"
-  id="favorites-widget"
-  class="favorites-widget-btn fixed bottom-6 left-4 z-2147483630 items-center justify-center gap-3 rounded-full bg-white/80 p-3 sm:p-4 sm:pr-6 text-gray-800 backdrop-blur-md active:scale-[0.98] active:translate-y-0.5 group border border-white/40 cursor-pointer w-12 h-12 sm:w-auto sm:h-auto hidden sm:flex focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+<div
+  id="favorites-widget-container"
+  class="fixed bottom-6 left-4 z-2147483630 hidden lg:flex items-center justify-center transition-transform duration-fast ease-out will-change-transform"
 >
-  <!-- Иконка с индикатором -->
-  <div class="relative">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 transition-transform duration-normal group-hover:scale-110 text-primary"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-      ></path>
-    </svg>
+  <a
+    href="#"
+    id="favorites-widget"
+    class="favorites-widget-btn btn-ripple items-center justify-center gap-3 rounded-full bg-white/80 p-4 pr-6 text-gray-800 backdrop-blur-md group border border-white/40 cursor-pointer hidden lg:flex focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+  >
+    <!-- Иконка с индикатором -->
+    <div class="relative">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 transition-transform duration-normal group-hover:scale-110 text-primary"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        ></path>
+      </svg>
 
-    <!-- Индикатор -->
-    <span
-      id="fav-count"
-      class="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-cta text-[8px] font-bold text-black opacity-0 transition-opacity duration-normal"
-    >
-      0
-    </span>
-  </div>
+      <!-- Индикатор -->
+      <span
+        id="fav-count"
+        class="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-cta text-[8px] font-bold text-black opacity-0 transition-opacity duration-normal"
+      >
+        0
+      </span>
+    </div>
 
   <span
-    class="text-xs font-bold uppercase tracking-wider font-montserrat hidden sm:inline-block"
+    class="text-xs font-bold uppercase tracking-wider font-montserrat inline-block"
   >
-    Избранное
-  </span>
-</a>
+      Избранное
+    </span>
+  </a>
+</div>
 
 <script>
   const widget = document.getElementById('favorites-widget');
+  const container = document.getElementById('favorites-widget-container');
+
+  // Остановка кнопки на 70px от низа страницы
+  const STOP_FROM_BOTTOM = 70;
+  const DEFAULT_BOTTOM = 24; // bottom-6
+  const MAX_TRANSLATE = STOP_FROM_BOTTOM - DEFAULT_BOTTOM; // 46px
+
+  let scrollHandler: (() => void) | null = null;
+  let resizeHandler: (() => void) | null = null;
+  let ticking = false;
+
+  const updateFavoritesPosition = () => {
+    if (!container) return;
+    const distanceFromBottom =
+      document.documentElement.scrollHeight -
+      (window.scrollY + window.innerHeight);
+    if (distanceFromBottom >= MAX_TRANSLATE) {
+      container.style.transform = 'translateY(0)';
+    } else {
+      const translateY = Math.max(0, MAX_TRANSLATE - distanceFromBottom);
+      container.style.transform = `translateY(-${translateY}px)`;
+    }
+    ticking = false;
+  };
+
+  const initFavoritesScroll = () => {
+    if (!container) return;
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
+    }
+    if (resizeHandler) {
+      window.removeEventListener('resize', resizeHandler);
+      resizeHandler = null;
+    }
+    scrollHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateFavoritesPosition);
+        ticking = true;
+      }
+    };
+    resizeHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateFavoritesPosition);
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    window.addEventListener('resize', resizeHandler);
+    updateFavoritesPosition();
+  };
+
+  initFavoritesScroll();
+  document.addEventListener('astro:page-load', initFavoritesScroll);
 
   // Функция обновления счетчика
   const updateCount = () => {
@@ -67,8 +126,12 @@
   observer.observe(document.body, { childList: true, subtree: true });
 
   const openFavoritesCart = () => {
-    const innerBtn = document.querySelector('.TVCartPreviewControl') as HTMLElement;
-    const outerBtn = document.querySelector('.TVCartStickyButton') as HTMLElement;
+    const innerBtn = document.querySelector(
+      '.TVCartPreviewControl',
+    ) as HTMLElement;
+    const outerBtn = document.querySelector(
+      '.TVCartStickyButton',
+    ) as HTMLElement;
     if (innerBtn) {
       innerBtn.click();
     } else if (outerBtn) {
@@ -77,18 +140,30 @@
     return !!(innerBtn || outerBtn);
   };
 
-  const w = window as Window & { loadTourvisor?: (show: boolean) => void; __tourvisorScriptAdded?: boolean; __tourvisorReady?: boolean };
+  const w = window as Window & {
+    loadTourvisor?: (show: boolean) => void;
+    __tourvisorScriptAdded?: boolean;
+    __tourvisorReady?: boolean;
+  };
   // Prefetch Tourvisor при наведении — чтобы при клике виджет уже грузился
-  widget?.addEventListener('mouseenter', () => {
-    if (typeof w.loadTourvisor === 'function' && !w.__tourvisorScriptAdded) {
-      w.loadTourvisor(false);
-    }
-  }, { once: true });
-  widget?.addEventListener('touchstart', () => {
-    if (typeof w.loadTourvisor === 'function' && !w.__tourvisorScriptAdded) {
-      w.loadTourvisor(false);
-    }
-  }, { once: true, passive: true });
+  widget?.addEventListener(
+    'mouseenter',
+    () => {
+      if (typeof w.loadTourvisor === 'function' && !w.__tourvisorScriptAdded) {
+        w.loadTourvisor(false);
+      }
+    },
+    { once: true },
+  );
+  widget?.addEventListener(
+    'touchstart',
+    () => {
+      if (typeof w.loadTourvisor === 'function' && !w.__tourvisorScriptAdded) {
+        w.loadTourvisor(false);
+      }
+    },
+    { once: true, passive: true },
+  );
 
   widget?.addEventListener('click', (e) => {
     e.preventDefault();
