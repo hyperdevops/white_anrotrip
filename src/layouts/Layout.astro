@@ -67,6 +67,39 @@ const ogImageUrl = ogImage.startsWith('http')
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:locale" content="ru_RU" />
 
+    <!-- Schema.org JSON-LD -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'TravelAgency',
+        name: 'ANRO TRIP',
+        description:
+          'Туристическая компания. Более 18 лет организуем путешествия и командировки по всему миру.',
+        url: canonical,
+        logo: `${baseUrl}/og-image.jpg`,
+        image: `${baseUrl}/og-image.jpg`,
+        telephone: '+78002224473',
+        priceRange: '₽₽',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Екатеринбург',
+          addressCountry: 'RU',
+        },
+        areaServed: {
+          '@type': 'Place',
+          name: 'Россия и мир',
+        },
+        sameAs: ['https://wa.me/78002224473'],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+78002224473',
+          contactType: 'customer service',
+          availableLanguage: 'Russian',
+        },
+      })}
+    />
+
     <!-- Шрифты: preconnect + display=swap для быстрого рендера -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
