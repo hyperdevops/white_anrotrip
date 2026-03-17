@@ -148,7 +148,7 @@
    Мобайл: убираем blur для экономии GPU
 ═══════════════════════════════════════════════ */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.73);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.6);

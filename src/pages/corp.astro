@@ -98,7 +98,8 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
           class="font-montserrat font-extrabold uppercase tracking-tight leading-[1.15] drop-shadow-2xl mb-6 reveal-hidden max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto px-1"
           style="font-size: clamp(1.875rem, 1.5rem + 2.5vw, 4rem);"
         >
-          Коммерческое <span class="text-primary">предложение</span>
+          Коммерческое<br />
+          <span class="text-primary">предложение</span>
         </h1>
 
         <!-- Подзаголовок: обычный регистр на мобиле, uppercase на десктопе -->
@@ -1021,155 +1022,157 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
          id="site-footer" — для OfficeWidget (остановка кнопки на границе)
     ═══════════════════════════════════════════════════════════════ -->
       <div id="site-footer">
-      <section
-        id="corp-contacts"
-        class="relative z-10 bg-gray-950 py-16 md:py-24 overflow-hidden"
-      >
-        <div
-          class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2"
+        <section
+          id="corp-contacts"
+          class="relative z-10 bg-gray-950 py-16 md:py-24 overflow-hidden"
         >
-        </div>
-        <div
-          class="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none translate-y-1/2"
-        >
-        </div>
-
-        <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-          <p
-            class="text-center text-white/70 text-base md:text-lg leading-relaxed max-w-3xl mx-auto mb-12 md:mb-16 reveal-hidden wrap-break-word"
-          >
-            Cвяжитесь с нами любым удобным способом для получения коммерческого
-            предложения и составления договора на индивидуальных условиях:
-          </p>
-
           <div
-            class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 reveal-hidden"
-            data-reveal-stagger
+            class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2"
           >
-            <!-- Телефон -->
-            <div
-              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-normal min-w-0 wrap-break-word"
-            >
-              <div
-                class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
-              >
-                <svg
-                  class="w-6 h-6 text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  ></path>
-                </svg>
-              </div>
-              <h4
-                class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
-              >
-                Телефон
-              </h4>
-              <a
-                href="tel:88002224473"
-                class="block text-xl font-bold text-white hover:text-primary transition-colors mb-2"
-                >8 (800) 222 44 73</a
-              >
-              <a
-                href="https://wa.me/79220267059"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block text-white/70 hover:text-primary transition-colors text-sm"
-              >
-                +7 922 026 70 59 <span class="text-white/40"
-                  >(WhatsApp, Viber, Telegram)</span
-                >
-              </a>
-            </div>
+          </div>
+          <div
+            class="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none translate-y-1/2"
+          >
+          </div>
 
-            <!-- Почта -->
-            <div
-              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-normal min-w-0 wrap-break-word"
+          <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
+            <p
+              class="text-center text-white/70 text-base md:text-lg leading-relaxed max-w-3xl mx-auto mb-12 md:mb-16 reveal-hidden wrap-break-word"
             >
-              <div
-                class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
-              >
-                <svg
-                  class="w-6 h-6 text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  ></path>
-                </svg>
-              </div>
-              <h4
-                class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
-              >
-                Почта
-              </h4>
-              <a
-                href="mailto:anro@anrotrip.ru"
-                class="block text-lg font-semibold text-primary hover:text-primary-light transition-colors"
-                >anro@anrotrip.ru</a
-              >
-            </div>
+              Cвяжитесь с нами любым удобным способом для получения
+              коммерческого предложения и составления договора на индивидуальных
+              условиях:
+            </p>
 
-            <!-- Офисы -->
             <div
-              class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-normal min-w-0 wrap-break-word"
+              class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 reveal-hidden"
+              data-reveal-stagger
             >
+              <!-- Телефон -->
               <div
-                class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
+                class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-normal min-w-0 wrap-break-word"
               >
-                <svg
-                  class="w-6 h-6 text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  viewBox="0 0 24 24"
+                <div
+                  class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
+                  <svg
+                    class="w-6 h-6 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4
+                  class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+                >
+                  Телефон
+                </h4>
+                <a
+                  href="tel:88002224473"
+                  class="block text-xl font-bold text-white hover:text-primary transition-colors mb-2"
+                  >8 (800) 222 44 73</a
+                >
+                <a
+                  href="https://wa.me/79220267059"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block text-white/70 hover:text-primary transition-colors text-sm"
+                >
+                  +7 922 026 70 59 <span class="text-white/40"
+                    >(WhatsApp, Viber, Telegram)</span
+                  >
+                </a>
               </div>
-              <h4
-                class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+
+              <!-- Почта -->
+              <div
+                class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-normal min-w-0 wrap-break-word"
               >
-                Офисы
-              </h4>
-              <div class="space-y-3 text-white/80 text-sm leading-relaxed">
-                <p class="font-semibold text-white wrap-break-word">
-                  г. Челябинск
-                </p>
-                <p>ул. 250-летия Челябинска, д. 29</p>
-                <p class="pt-2 wrap-break-word">
-                  <span class="font-semibold text-white">г. Москва</span>
-                  <span class="text-white/50">(представительство)</span>
-                </p>
-                <p>
-                  <span class="font-semibold text-white">г. Екатеринбург</span>
-                  <span class="text-white/50">(представительство)</span>
-                </p>
+                <div
+                  class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
+                >
+                  <svg
+                    class="w-6 h-6 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4
+                  class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+                >
+                  Почта
+                </h4>
+                <a
+                  href="mailto:anro@anrotrip.ru"
+                  class="block text-lg font-semibold text-primary hover:text-primary-light transition-colors"
+                  >anro@anrotrip.ru</a
+                >
+              </div>
+
+              <!-- Офисы -->
+              <div
+                class="rounded-3xl bg-gray-900/80 border border-white/10 p-8 hover:border-primary/30 transition-all duration-normal min-w-0 wrap-break-word"
+              >
+                <div
+                  class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
+                >
+                  <svg
+                    class="w-6 h-6 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <h4
+                  class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"
+                >
+                  Офисы
+                </h4>
+                <div class="space-y-3 text-white/80 text-sm leading-relaxed">
+                  <p class="font-semibold text-white wrap-break-word">
+                    г. Челябинск
+                  </p>
+                  <p>ул. 250-летия Челябинска, д. 29</p>
+                  <p class="pt-2 wrap-break-word">
+                    <span class="font-semibold text-white">г. Москва</span>
+                    <span class="text-white/50">(представительство)</span>
+                  </p>
+                  <p>
+                    <span class="font-semibold text-white">г. Екатеринбург</span
+                    >
+                    <span class="text-white/50">(представительство)</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
     </div>
   </main>
