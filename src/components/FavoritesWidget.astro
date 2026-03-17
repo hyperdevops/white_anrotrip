@@ -144,6 +144,7 @@
     loadTourvisor?: (show: boolean) => void;
     __tourvisorScriptAdded?: boolean;
     __tourvisorReady?: boolean;
+    openFavoritesWidget?: () => void;
   };
   // Prefetch Tourvisor при наведении — чтобы при клике виджет уже грузился
   widget?.addEventListener(
@@ -165,9 +166,7 @@
     { once: true, passive: true },
   );
 
-  widget?.addEventListener('click', (e) => {
-    e.preventDefault();
-
+  const openFavoritesWidget = () => {
     if (openFavoritesCart()) return;
 
     // Tourvisor не загружен — загружаем и ждём появления кнопки корзины
@@ -193,5 +192,13 @@
       }, 100);
       setTimeout(() => clearInterval(checkReady), 15000);
     }
+  };
+
+  // Для пункта меню на mobile/tablet (где виджет скрыт)
+  w.openFavoritesWidget = openFavoritesWidget;
+
+  widget?.addEventListener('click', (e) => {
+    e.preventDefault();
+    openFavoritesWidget();
   });
 </script>

@@ -11,4 +11,5 @@ interface Window {
   changeSlide: (direction: number) => void;
   toggleZoom: (event: Event) => void;
   closeReviewForm: () => void;
+  openFavoritesWidget?: () => void;
 }
