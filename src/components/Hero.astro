@@ -153,7 +153,7 @@ const tinyHero = await getImage({ src: heroBg, width: 20, quality: 20 });
 
   <!-- Скролл-стрелка — внизу Hero -->
   <div
-    class="reveal-hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-20 delay-200 animate-hero-scroll"
+    class="reveal-hidden absolute bottom-[clamp(0.75rem,2vh,1.5rem)] left-1/2 -translate-x-1/2 z-20 delay-200 animate-hero-scroll [@media(max-height:720px)]:hidden"
   >
     <button
       id="scroll-arrow"
