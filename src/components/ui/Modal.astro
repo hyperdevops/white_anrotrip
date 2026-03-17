@@ -52,12 +52,12 @@ const { id, title } = Astro.props;
 </dialog>
 
 <script define:vars={{ id }}>
-  const dialog = document.getElementById(id) as HTMLDialogElement | null;
-  let previousActiveElement: HTMLElement | null = null;
+  const dialog = document.getElementById(id);
+  let previousActiveElement = null;
 
   function closeWithAnimation() {
     if (!dialog) return;
-    const box = dialog.querySelector('.modal-box') as HTMLElement | null;
+    const box = dialog.querySelector('.modal-box');
     if (box) {
       box.style.willChange = 'opacity, transform';
       box.classList.remove('modal-open');
@@ -74,9 +74,9 @@ const { id, title } = Astro.props;
 
   document.addEventListener(`open-modal-${id}`, () => {
     if (!dialog) return;
-    previousActiveElement = document.activeElement as HTMLElement | null;
+    previousActiveElement = document.activeElement;
     dialog.showModal();
-    const box = dialog.querySelector('.modal-box') as HTMLElement | null;
+    const box = dialog.querySelector('.modal-box');
     if (box) {
       box.style.willChange = 'opacity, transform';
       box.classList.remove('scale-95', 'opacity-0');
@@ -86,7 +86,7 @@ const { id, title } = Astro.props;
       };
       box.addEventListener('transitionend', onOpenEnd, { once: true });
     }
-    const firstFocusable = dialog.querySelector<HTMLElement>('.close-modal');
+    const firstFocusable = dialog.querySelector('.close-modal');
     firstFocusable?.focus();
   });
 
@@ -103,8 +103,8 @@ const { id, title } = Astro.props;
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target as HTMLElement;
-    const d = document.getElementById(id) as HTMLDialogElement | null;
+    const t = e.target;
+    const d = document.getElementById(id);
     if (!d) return;
     if (t.closest(`#${id} .close-modal`)) closeWithAnimation();
     if (t === d) closeWithAnimation();
