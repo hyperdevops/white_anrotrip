@@ -2,9 +2,9 @@
 // src/pages/index.astro
 import { getImage } from 'astro:assets';
 import heroBg from '../assets/hero/plane.avif';
+import antalyaImg from '../assets/tours/antalya.webp';
 import maldivesImg from '../assets/tours/maldives.webp';
 import seychellesImg from '../assets/tours/seychelles.webp';
-import antalyaImg from '../assets/tours/antalya.webp';
 import About from '../components/About.astro';
 import Awards from '../components/Awards.astro';
 import Contacts from '../components/Contacts.astro';
@@ -13,6 +13,7 @@ import Footer from '../components/Footer.astro';
 import GiftSection from '../components/GiftSection.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import JournalSection from '../components/JournalSection.astro';
 import Partners from '../components/Partners.astro';
 import PopularTours from '../components/PopularTours.astro';
 import Reviews from '../components/Reviews.astro';
@@ -38,9 +39,24 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
       fetchpriority="high"
     />
     <!-- Preload первых 3 карточек туров (fetchpriority low — не конкурировать с Hero) -->
-    <link rel="preload" as="image" href={maldivesPreload.src} fetchpriority="low" />
-    <link rel="preload" as="image" href={seychellesPreload.src} fetchpriority="low" />
-    <link rel="preload" as="image" href={antalyaPreload.src} fetchpriority="low" />
+    <link
+      rel="preload"
+      as="image"
+      href={maldivesPreload.src}
+      fetchpriority="low"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href={seychellesPreload.src}
+      fetchpriority="low"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href={antalyaPreload.src}
+      fetchpriority="low"
+    />
     <!-- Tourvisor: preconnect для быстрой загрузки виджета при переключении вкладки -->
     <link rel="preconnect" href="https://tourvisor.ru" />
     <link rel="dns-prefetch" href="https://tourvisor.ru" />
@@ -79,12 +95,11 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
       <div class="space-y-0">
         <!-- Якорь для стрелочки "Популярные туры" -->
         <!-- Отрицательный margin подтягивает блок к форме поиска, не меняя внутренние отступы PopularTours -->
-        <div
-          id="popular-tours"
-          class="scroll-mt-26 -mt-26 pt-2 md:pt-4"
-        >
+        <div id="popular-tours" class="scroll-mt-26 -mt-26 pt-2 md:pt-4">
           <PopularTours />
         </div>
+
+        <JournalSection />
 
         <About />
         <Partners />
