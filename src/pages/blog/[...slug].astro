@@ -25,7 +25,7 @@ const collageImages = post.data.heroImages?.slice(0, 5) ?? [];
 const hasHero = hasCollage || !!post.data.heroImage;
 ---
 
-<Layout title={`${post.data.title} | Журнал ANRO TRIP`} description={post.data.description} showFavorites={false} showOfficeWidget={false}>
+<Layout title={`${post.data.title} | Журнал ANRO TRIP`} description={post.data.description} showFavorites={false} showOfficeWidget={true}>
   <!-- Hero-зона (relative вместо sticky, чтобы не перекрывать Footer) -->
   {hasHero && (
     <div class="relative z-0 h-[55vh] md:h-[65vh] overflow-hidden">
