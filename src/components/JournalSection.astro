@@ -45,7 +45,7 @@ const latestPosts = sortedPosts.slice(0, 3);
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5" data-reveal-stagger>
       {
         latestPosts.map((post, index) => (
-          <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 deep-shadow transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
+          <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
             <!-- Изображение -->
             <a
               href={`${base}/blog/${post.id}`}
@@ -54,7 +54,7 @@ const latestPosts = sortedPosts.slice(0, 3);
             >
               {(post.data.heroImages && post.data.heroImages.length >= 2) ? (
                 <!-- Слайд-шоу с плавной сменой -->
-                <div class="absolute inset-0" data-slideshow={`${post.id}-${index}`}>
+                <div class="absolute inset-0 transition-transform duration-slow ease-out group-hover:scale-[1.04]" data-slideshow={`${post.id}-${index}`}>
                   {post.data.heroImages.slice(0, 5).map((img, i) => (
                     <div class="absolute inset-0 transition-opacity duration-700 ease-in-out" data-slide={i} data-slideshow-group={`${post.id}-${index}`}>
                       <Image

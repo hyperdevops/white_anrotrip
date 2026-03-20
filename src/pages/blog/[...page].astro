@@ -61,7 +61,7 @@ const { page } = Astro.props;
       >
         {
           page.data.map((post, index) => (
-            <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 deep-shadow transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
+            <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
               <a
                 href={`${base}/blog/${post.id}`}
                 class="block relative overflow-hidden aspect-4/3"

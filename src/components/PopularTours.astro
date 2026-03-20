@@ -52,7 +52,7 @@ const tinyPlaceholders = await Promise.all(
           data-tour-title={tour.title}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow deep-shadow border border-white/10 reveal-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] border border-white/10 reveal-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
             tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
             tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',
