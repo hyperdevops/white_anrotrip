@@ -1,0 +1,59 @@
+---
+/**
+ * Ссылка на соцсеть в футере с всплывающей подсказкой (чёрный фон, текст цвета бренда).
+ */
+export interface Props {
+  href: string;
+  /** Подпись для скринридеров */
+  ariaLabel: string;
+  /** Текст подсказки при наведении / фокусе */
+  tooltip: string;
+  /** Цвет текста подсказки (Tailwind), в тон иконке */
+  tooltipTextClass: string;
+  /** Классы самой кнопки-ссылки с иконкой */
+  linkClass: string;
+  /** Подсказка над иконкой (по умолчанию) или под ней (основной футер) */
+  tooltipPlacement?: 'top' | 'bottom';
+}
+
+const { href, ariaLabel, tooltip, tooltipTextClass, linkClass, tooltipPlacement = 'top' } =
+  Astro.props;
+
+const bubbleClass =
+  'max-w-none shrink-0 whitespace-nowrap rounded-lg bg-black px-2.5 py-1.5 text-[11px] font-semibold tracking-tight shadow-[0_10px_28px_-6px_rgba(0,0,0,0.95)] ring-1 ring-white/15';
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={ariaLabel}
+  class:list={['group relative inline-flex shrink-0', linkClass]}
+>
+  <slot />
+  {
+    tooltipPlacement === 'bottom' ? (
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute top-full left-1/2 z-40 mt-2 flex -translate-x-1/2 flex-col items-center opacity-0 -translate-y-1 transition-[opacity,transform] duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0 max-md:hidden"
+      >
+        <span
+          class="-mb-px h-0 w-0 border-x-[5px] border-b-[6px] border-x-transparent border-b-black"
+          aria-hidden="true"
+        />
+        <span class:list={[bubbleClass, tooltipTextClass]}>{tooltip}</span>
+      </span>
+    ) : (
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute bottom-full left-1/2 z-40 mb-2 flex -translate-x-1/2 flex-col items-center opacity-0 translate-y-1 transition-[opacity,transform] duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0 max-md:hidden"
+      >
+        <span class:list={[bubbleClass, tooltipTextClass]}>{tooltip}</span>
+        <span
+          class="-mt-px h-0 w-0 border-x-[5px] border-t-[6px] border-x-transparent border-t-black"
+          aria-hidden="true"
+        />
+      </span>
+    )
+  }
+</a>
