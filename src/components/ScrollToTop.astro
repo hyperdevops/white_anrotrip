@@ -1,12 +1,26 @@
 ---
 // src/components/ScrollToTop.astro
+/** default — над виджетом офиса; blog — 6px от низа и справа (страницы статей) */
+export interface Props {
+  variant?: 'default' | 'blog';
+}
+
+const { variant = 'default' } = Astro.props;
+
+const positionClass =
+  variant === 'blog'
+    ? 'bottom-[16px] right-[16px]'
+    : 'bottom-32 right-6 sm:bottom-32 sm:right-6 lg:bottom-[70px] lg:right-5';
 ---
 
 <!-- Кнопка "Наверх" - изначально скрыта. Без backdrop-blur и filter — остаётся чёткой при scale -->
 <button
   id="scroll-to-top"
   aria-label="Вернуться наверх"
-  class="scroll-to-top-btn fixed bottom-32 right-6 z-2147483646 pointer-events-none opacity-0 translate-y-20 rounded-full bg-gray-900/95 p-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:bottom-32 sm:right-6 lg:bottom-[70px] lg:right-5 cursor-pointer"
+  class:list={[
+    'scroll-to-top-btn fixed z-2147483646 pointer-events-none opacity-0 translate-y-20 rounded-full bg-gray-900/95 p-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 cursor-pointer',
+    positionClass,
+  ]}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"

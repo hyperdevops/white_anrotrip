@@ -1,8 +1,15 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
-import Footer from '../../components/Footer.astro';
+import favicon from '../../assets/favicon.png';
+import FooterMinimal from '../../components/FooterMinimal.astro';
 import Layout from '../../layouts/Layout.astro';
+import {
+  maxIconPath,
+  socialLogoTransform0,
+  socialLogoTransform80,
+  vkIconPath,
+} from '../../lib/social-icons';
 
 export const prerender = true;
 
@@ -19,16 +26,30 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+// Расчёт времени чтения
+const wordCount = post.body ? post.body.trim().split(/\s+/).length : 0;
+const readingTime = Math.max(1, Math.round(wordCount / 200));
+const readingTimeLabel = `${readingTime}\u00a0мин`;
+
 // Определяем режим Hero: коллаж или одиночное изображение
 const hasCollage = post.data.heroImages && post.data.heroImages.length >= 2;
-const collageImages = post.data.heroImages?.slice(0, 5) ?? [];
+const collageImages = post.data.heroImages?.slice(0, 8) ?? [];
 const hasHero = hasCollage || !!post.data.heroImage;
 ---
 
-<Layout title={`${post.data.title} | Журнал ANRO TRIP`} description={post.data.description} showFavorites={false} showOfficeWidget={true}>
-  <!-- Hero-зона (relative вместо sticky, чтобы не перекрывать Footer) -->
+<Layout
+  title={`${post.data.title} | Журнал ANRO TRIP`}
+  description={post.data.description}
+  showFavorites={false}
+  showOfficeWidget={false}
+  showScrollToTop={true}
+  scrollToTopVariant="blog"
+>
+  <!-- Обёртка: ограничивает sticky Hero (как на corp), чтобы при скролле контент наползал на фото -->
+  <div>
+  <!-- Hero: sticky — при прокрутке main (z-10) наползает сверху; логотип внутри Hero -->
   {hasHero && (
-    <div class="relative z-0 h-[55vh] md:h-[65vh] overflow-hidden">
+    <div class="sticky top-0 z-0 h-[55vh] md:h-[65vh] overflow-hidden">
       {hasCollage ? (
         <!-- Слайд-шоу с плавной сменой -->
         <div class="absolute inset-0" data-slideshow="hero-collage">
@@ -79,21 +100,74 @@ const hasHero = hasCollage || !!post.data.heroImage;
           </time>
           <span class="text-white/50 text-xs" aria-hidden="true">·</span>
           <span class="text-white/70 text-xs font-inter">{post.data.author}</span>
+          <span class="text-white/40 text-xs" aria-hidden="true">·</span>
+          <span class="text-white/60 text-xs font-inter inline-flex items-center gap-1">
+            <svg class="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l3.5 2"/>
+            </svg>
+            {readingTimeLabel}
+          </span>
         </div>
         <h1 class="font-montserrat font-extrabold text-white uppercase tracking-tight leading-tight" style="font-size: clamp(1.5rem, 1.2rem + 3vw, 3rem);">
           {post.data.title}
         </h1>
       </div>
+
+      <!-- Логотип «На главную» — в слое Hero, уезжает вместе с фото при скролле -->
+      <a
+        href={`${base}/`}
+        data-astro-reload
+        class="reveal-hidden pointer-events-auto absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
+        aria-label="На главную"
+      >
+        <Image
+          src={favicon}
+          alt=""
+          width={40}
+          height={40}
+          format="png"
+          densities={[2, 3, 4]}
+          quality="max"
+          decoding="async"
+          class="h-10 w-10 object-contain drop-shadow-sm"
+        />
+      </a>
     </div>
   )}
 
-  <!-- Контент — наползает поверх Hero как на главной -->
+  <!-- Контент — наползает поверх Hero при скролле (z-10 > z-0) -->
   <main
     class:list={[
-      'relative z-10 bg-[linear-gradient(to_bottom,rgb(255_255_255)_0px,rgb(255_255_255)_60px,rgb(248_252_255)_120px,rgb(255_255_255)_100%)] shadow-[0_-10px_40px_rgba(15,76,129,0.12)]',
+      'blog-mesh-text-bg relative overflow-hidden z-10 shadow-[0_-10px_40px_rgba(15,76,129,0.12)]',
       hasHero ? '-mt-8 rounded-t-3xl' : 'pt-32 md:pt-40',
     ]}
   >
+    <!-- Фоновые орбы статьи — паттерн как на главной -->
+    <div class="absolute -top-20 -right-20 size-96 rounded-full bg-primary/8 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute top-[30%] -left-16 size-72 rounded-full bg-secondary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute top-[65%] right-8 size-64 rounded-full bg-cta/6 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute bottom-48 -left-8 size-56 rounded-full bg-primary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <!-- Без Hero: логотип в верхней зоне статьи (наезжает контент при скролле нет — нет sticky hero) -->
+    {!hasHero && (
+      <a
+        href={`${base}/`}
+        data-astro-reload
+        class="reveal-hidden absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
+        aria-label="На главную"
+      >
+        <Image
+          src={favicon}
+          alt=""
+          width={40}
+          height={40}
+          format="png"
+          densities={[2, 3, 4]}
+          quality="max"
+          decoding="async"
+          class="h-10 w-10 object-contain drop-shadow-sm"
+        />
+      </a>
+    )}
     <!-- Если нет Hero — показываем заголовок здесь -->
     {!hasHero && (
       <div class="px-4 sm:px-6 max-w-4xl mx-auto pt-12 pb-8">
@@ -112,6 +186,13 @@ const hasHero = hasCollage || !!post.data.heroImage;
           </time>
           <span class="text-gray-300 text-xs" aria-hidden="true">·</span>
           <span class="text-gray-400 text-xs font-inter">{post.data.author}</span>
+          <span class="text-gray-200 text-xs" aria-hidden="true">·</span>
+          <span class="text-gray-400 text-xs font-inter inline-flex items-center gap-1">
+            <svg class="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l3.5 2"/>
+            </svg>
+            {readingTimeLabel}
+          </span>
         </div>
         <h1 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-tight" style="font-size: clamp(1.5rem, 1.2rem + 3vw, 3rem);">
           {post.data.title}
@@ -119,59 +200,178 @@ const hasHero = hasCollage || !!post.data.heroImage;
       </div>
     )}
 
-    <div class="px-4 sm:px-6 max-w-4xl mx-auto pb-16 md:pb-24">
-      <!-- Хлебные крошки -->
-      <nav class="flex items-center gap-2 text-xs text-gray-400 font-inter pt-8 mb-8" aria-label="Навигация">
-        <a href={`${base}/`} class="hover:text-primary transition-colors duration-fast">Главная</a>
-        <svg class="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-        <a href={`${base}/blog`} class="hover:text-primary transition-colors duration-fast">Журнал</a>
-        <svg class="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-        <span class="text-gray-600 line-clamp-1">{post.data.title}</span>
+    <div class="px-4 sm:px-6 max-w-3xl mx-auto pb-20 md:pb-28">
+      <!-- Хлебные крошки — minimal pill style -->
+      <nav class="flex items-center gap-1.5 pt-10 mb-10" aria-label="Навигация">
+        <a href={`${base}/`} class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">
+          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
+          Главная
+        </a>
+        <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <a href={`${base}/blog`} class="px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">Журнал</a>
+        <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <span class="px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-500 bg-gray-100/80 line-clamp-1 font-inter">{post.data.title}</span>
       </nav>
 
-      <!-- Лид-абзац -->
-      <p class="text-lg md:text-xl text-gray-500 font-inter leading-relaxed mb-10 max-w-3xl">
+      <!-- Лид-абзац: та же типографика и акцент слева, что у .blog-content h2 — единая редакционная система -->
+      <p
+        class="font-montserrat font-extrabold tracking-tight mb-12 max-w-2xl text-slate-900 leading-snug pl-4 border-l-4 border-primary"
+        style="font-size: clamp(1.35rem, 2.2vw + 0.5rem, 1.85rem); text-shadow: 0 1px 2px rgb(0 171 179 / 0.06);"
+      >
         {post.data.description}
       </p>
 
       <!-- Контент статьи -->
-      <article class="blog-content font-inter text-gray-800 text-base md:text-lg leading-relaxed">
+      <article class="blog-content font-inter text-slate-700 min-w-0 w-full" style="font-size: clamp(1rem, 0.3vw + 0.93rem, 1.125rem); line-height: 1.85;">
         <Content />
       </article>
 
-      <!-- CTA блок -->
+      <!-- CTA — градиентный 1px-ободок: цвет у орбов, плавное растворение между ними (без сплошной border) -->
       {post.data.destination && (
-        <div class="mt-16 p-8 md:p-10 bg-[linear-gradient(135deg,rgb(0_171_179/5%)_0%,rgb(0_171_179/10%)_100%)] rounded-3xl border border-primary/15 text-center">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-5">
-            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Подобрать тур</span>
-          </div>
-          <h3 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-4" style="font-size: clamp(1.25rem, 1rem + 2vw, 2rem);">
-            Вдохновились<br /><span class="text-primary">{post.data.destination === 'Направления' ? 'Направления' : post.data.destination}?</span>
-          </h3>
-          <p class="text-gray-500 mb-8 font-inter max-w-xl mx-auto text-sm md:text-base">
-            Мы поможем организовать идеальное путешествие. Оставьте заявку — наши эксперты подберут лучшие варианты туров.
-          </p>
-          <button
-            type="button"
-            data-modal-target="callback-modal"
-            class="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-linear-to-r from-cta to-[#e5be14] px-8 py-4 font-black text-gray-900 shadow-[0_4px_14px_4px_rgba(255,212,23,0.35)] hover:shadow-[0_6px_18px_4px_rgba(255,212,23,0.4)] transition-shadow duration-normal cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-sm uppercase tracking-wider font-montserrat"
+        <div
+          class="relative mt-20 rounded-[1.75rem] md:rounded-[2.25rem] p-px overflow-hidden bg-[linear-gradient(135deg,rgb(255_212_23/0.35),rgb(255_212_23/0.06)_12%,transparent_32%,transparent_68%,rgb(0_171_179/0.06)_88%,rgb(0_171_179/0.32))]"
+          aria-labelledby="blog-cta-heading"
+        >
+          <div
+            class="relative overflow-hidden rounded-[calc(1.75rem-1px)] md:rounded-[calc(2.25rem-1px)] text-center"
           >
-            <span class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"></span>
-            <span class="relative z-10">Подобрать тур</span>
-          </button>
+          <!-- Фон: плавный светлый градиент без резких полос -->
+          <div
+            class="absolute inset-0 bg-linear-to-br from-white via-[rgb(245_252_252)] to-[rgb(228_244_245)] pointer-events-none"
+            aria-hidden="true"
+          />
+          <!-- Орбы — паттерн как GiftSection / Awards -->
+          <div
+            class="absolute -top-12 -right-8 md:-right-16 w-56 h-56 md:w-72 md:h-72 rounded-full bg-primary/12 blur-none md:blur-3xl pointer-events-none translate-x-1/4 -translate-y-1/4"
+            aria-hidden="true"
+          />
+          <div
+            class="absolute -bottom-20 -left-16 w-64 h-64 md:w-80 md:h-80 rounded-full bg-cta/14 blur-none md:blur-3xl pointer-events-none -translate-x-1/4 translate-y-1/4"
+            aria-hidden="true"
+          />
+          <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] rounded-full bg-primary/[0.04] blur-none md:blur-3xl pointer-events-none"
+            aria-hidden="true"
+          />
+
+          <div class="relative z-10 px-6 py-12 md:px-14 md:py-14">
+            <div
+              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/20 mb-6 md:mb-7"
+            >
+              <span class="w-1.5 h-1.5 shrink-0 rounded-full bg-primary md:animate-pulse" aria-hidden="true" />
+              <span class="text-[10px] font-extrabold text-primary uppercase tracking-[0.2em] font-montserrat">
+                Подобрать тур
+              </span>
+            </div>
+            <h3
+              id="blog-cta-heading"
+              class="font-montserrat font-black text-slate-900 uppercase tracking-tight mb-5 md:mb-6 leading-[1.1]"
+              style="font-size: clamp(1.5rem, 1rem + 2.8vw, 2.35rem);"
+            >
+              Вдохновились
+              <br />
+              <span class="text-primary">
+                {post.data.destination === 'Направления' ? 'Направления' : post.data.destination}?
+              </span>
+            </h3>
+            <div class="text-slate-500 mb-10 font-inter max-w-md mx-auto space-y-1 text-sm md:text-base leading-relaxed">
+              <p>Мы поможем организовать идеальное путешествие.</p>
+              <p>Оставьте заявку — наши эксперты подберут лучшие варианты туров.</p>
+            </div>
+            <a
+              href={`${base}/#search`}
+              data-astro-reload
+              class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-10 py-4 font-black text-[#11111b] transition-[transform,opacity] duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-sm uppercase tracking-wider font-montserrat"
+            >
+              <span
+                class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"
+                aria-hidden="true"
+              />
+              <span class="relative z-10">Подобрать тур</span>
+              <svg
+                class="relative z-10 w-4 h-4 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+          </div>
         </div>
       )}
 
-      <!-- Назад к журналу -->
-      <div class="mt-12 pt-8 border-t border-gray-100">
+      <!-- Поделиться -->
+      <div class="mt-14 py-5 border-t border-primary/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-gray-400 font-inter">Понравилась статья? Поделитесь:</p>
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:justify-end">
+          <a
+            href="https://max.ru/id6658540239_biz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold font-inter bg-[#7c3aed]/8 text-[#7c3aed] border border-[#7c3aed]/20 hover:bg-[#7c3aed]/15 transition-colors duration-200"
+            aria-label="MAX — страница компании"
+          >
+            <svg
+              class="h-3.5 w-3.5 shrink-0 overflow-visible text-current"
+              viewBox="80 80 80 80"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <g transform={socialLogoTransform80}>
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d={maxIconPath}
+                ></path>
+              </g>
+            </svg>
+            MAX
+          </a>
+          <a
+            href={`https://t.me/share/url?url=${encodeURIComponent(String(Astro.url))}&text=${encodeURIComponent(post.data.title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold font-inter bg-[#2AABEE]/8 text-[#2AABEE] border border-[#2AABEE]/20 hover:bg-[#2AABEE]/15 transition-colors duration-200"
+            aria-label="Поделиться в Telegram"
+          >
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            Telegram
+          </a>
+          <a
+            href={`https://vk.com/share.php?url=${encodeURIComponent(String(Astro.url))}&title=${encodeURIComponent(post.data.title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold font-inter bg-[#0077FF]/8 text-[#0077FF] border border-[#0077FF]/20 hover:bg-[#0077FF]/15 transition-colors duration-200"
+            aria-label="Поделиться ВКонтакте"
+          >
+            <svg
+              class="h-3.5 w-3.5 shrink-0 overflow-visible text-current"
+              viewBox="0 0 80 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <g transform={socialLogoTransform0}>
+                <path fill="currentColor" d={vkIconPath}></path>
+              </g>
+            </svg>
+            ВКонтакте
+          </a>
+        </div>
+      </div>
+
+      <!-- Назад к журналу — pill link -->
+      <div class="mt-10 flex justify-center">
         <a
           href={`${base}/blog`}
-          class="group inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast font-montserrat uppercase tracking-wide"
+          class="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-slate-400 hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/15 transition-all duration-200 font-montserrat uppercase tracking-wider"
         >
           <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-fast" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
@@ -181,12 +381,15 @@ const hasHero = hasCollage || !!post.data.heroImage;
       </div>
     </div>
   </main>
+  </div>
 
-  <Footer />
+  <FooterMinimal />
 </Layout>
 
 <script>
-  // Слайд-шоу с плавной сменой изображений в Hero
+  /** Таймер слайдшоу Hero: один экземпляр, при повторном init старый сбрасывается (иначе интервалы накапливаются и смена «ускоряется»). */
+  let heroSlideshowTimer: ReturnType<typeof setInterval> | null = null;
+
   function initHeroSlideshow() {
     const heroSlideshow = document.querySelector('[data-slideshow="hero-collage"]');
 
@@ -197,13 +400,18 @@ const hasHero = hasCollage || !!post.data.heroImage;
 
     if (slides.length < 2) return;
 
+    if (heroSlideshowTimer !== null) {
+      clearInterval(heroSlideshowTimer);
+      heroSlideshowTimer = null;
+    }
+
     // Скрыть все слайды кроме первого
     slides.forEach((slide, i) => {
       (slide as HTMLElement).style.opacity = i === 0 ? '1' : '0';
     });
 
     let current = 0;
-    const interval = 5000; // 5 секунд
+    const intervalMs = 5500;
 
     const nextSlide = () => {
       const next = (current + 1) % slides.length;
@@ -212,11 +420,9 @@ const hasHero = hasCollage || !!post.data.heroImage;
       current = next;
     };
 
-    setInterval(nextSlide, interval);
+    heroSlideshowTimer = setInterval(nextSlide, intervalMs);
   }
 
-  // Запуск при первой загрузке
   document.addEventListener('DOMContentLoaded', initHeroSlideshow);
-  // Запуск при View Transition
   document.addEventListener('astro:page-load', initHeroSlideshow);
 </script>

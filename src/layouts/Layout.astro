@@ -21,6 +21,8 @@ interface Props {
   showFavorites?: boolean;
   showScrollProgress?: boolean;
   showScrollToTop?: boolean;
+  /** Позиция кнопки «Наверх» (только при showScrollToTop) */
+  scrollToTopVariant?: 'default' | 'blog';
   showOfficeWidget?: boolean;
   /** Показывать Schema.org JSON-LD (для страниц вроде cabinet/terms/privacy — false) */
   showSchema?: boolean;
@@ -34,6 +36,7 @@ const {
   showFavorites = true,
   showScrollProgress = true,
   showScrollToTop = true,
+  scrollToTopVariant = 'default',
   showOfficeWidget = true,
   showSchema = true,
 } = Astro.props;
@@ -95,7 +98,13 @@ const ogImageUrl = ogImage.startsWith('http')
               '@type': 'Place',
               name: 'Россия и мир',
             },
-            sameAs: ['https://wa.me/78002224473', 'https://t.me/anrotrip'],
+            sameAs: [
+              'https://t.me/anro_trip',
+              'https://max.ru/u/f9LHodD0cOKNXrTMtvUZWd2zLeGEpz34bQ0i1a-Ur_6EKrIw9H11bR6uhLM',
+              'https://t.me/anrotrip',
+              'https://vk.com/anrotrip',
+              'https://max.ru/id6658540239_biz',
+            ],
             contactPoint: {
               '@type': 'ContactPoint',
               telephone: '+78002224473',
@@ -174,7 +183,7 @@ const ogImageUrl = ogImage.startsWith('http')
     </a>
     {showScrollProgress && <ScrollProgress />}
     <slot />
-    {showScrollToTop && <ScrollToTop />}
+    {showScrollToTop && <ScrollToTop variant={scrollToTopVariant} />}
     {showFavorites && <FavoritesWidget />}
     {showOfficeWidget && <OfficeWidget />}
     <CookieBanner />

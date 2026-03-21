@@ -313,6 +313,7 @@
 #popular-tours,
 #tours,
 #about,
+#journal,
 #partners,
 #reviews,
 #awards,
@@ -336,6 +337,48 @@
    Только на устройствах с hover (не мобайл)
 ═══════════════════════════════════════════════ */
 @layer utilities {
+  /**
+   * Журнал: фон «mesh / aurora» для текстовых зон (primary, primary-light, primary-dark, secondary, мягкий светло-синий).
+   * Многослойные radial-gradient — аналог мягких пятен на светлой базе; без отдельных DOM-слоёв.
+   */
+  /**
+   * Фон журнала: мягкие пятна без «полос» от бэндинга.
+   * Меньше слоёв, длиннее переход к transparent, background-repeat: no-repeat.
+   */
+  .blog-mesh-text-bg {
+    /* База совпадает с низом градиента — без «белой полосы» слева от контраста слоёв */
+    background-color: rgb(244 249 251);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    background-image:
+      /* Левый край прокрашен мягко — центр пятна у левой границы, без резкого шва */
+      radial-gradient(
+        ellipse 130% 100% at 0% 22%,
+        rgb(0 171 179 / 0.1) 0%,
+        rgb(0 171 179 / 0.04) 40%,
+        transparent 68%
+      ),
+      radial-gradient(
+        ellipse 120% 90% at 100% 8%,
+        rgb(186 224 245 / 0.13) 0%,
+        rgb(186 224 245 / 0.04) 42%,
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 110% 85% at 50% 100%,
+        rgb(51 191 198 / 0.09) 0%,
+        transparent 70%
+      ),
+      /* Вертикальный тон — без угла, который даёт светлую полосу слева */
+        linear-gradient(
+          180deg,
+          rgb(245 250 252) 0%,
+          rgb(244 249 251) 45%,
+          rgb(246 251 252) 100%
+        );
+  }
+
   .btn-ripple {
     position: relative;
     overflow: hidden;
@@ -1067,76 +1110,492 @@ iframe[src*='tourvisor'] {
 }
 
 /* ═══════════════════════════════════════════════
-   BLOG CONTENT — типографика статей журнала
+   BLOG CONTENT — Premium Editorial Typography
    Используется в [...slug].astro
+   Тренд 2026: минимализм с эмоциональными акцентами,
+   glass-морфизм, тактильные тени с цветом бренда
 ═══════════════════════════════════════════════ */
+
+.blog-content {
+  max-width: 42rem;
+  margin-inline: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  text-wrap: pretty;
+}
+
+/* --- H2: крупный, акцентная линия слева, тень primary --- */
 .blog-content h2 {
-  font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+  font-size: clamp(1.35rem, 2.2vw + 0.5rem, 1.85rem);
+  font-weight: 800;
+  color: rgb(15 23 42);
+  font-family: var(--font-montserrat);
+  margin-top: 3.5rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+  padding-left: 1rem;
+  border-left: 4px solid var(--color-primary);
+  letter-spacing: -0.025em;
+  text-shadow: 0 1px 2px rgb(0 171 179 / 0.06);
+}
+
+.blog-content h2:first-of-type {
+  margin-top: 0;
+}
+
+/* --- H3: вторичный secondary --- */
+.blog-content h3 {
+  font-size: clamp(1.15rem, 1.5vw + 0.5rem, 1.45rem);
   font-weight: 700;
-  color: rgb(17 24 39);
+  color: var(--color-primary-dark);
   font-family: var(--font-montserrat);
   margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+  margin-bottom: 0.85rem;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
 }
 
-.blog-content h3 {
-  font-size: clamp(1.1rem, 1.5vw + 0.5rem, 1.375rem);
-  font-weight: 700;
-  color: rgb(17 24 39);
-  font-family: var(--font-montserrat);
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-  line-height: 1.4;
-}
-
+/* --- Параграфы --- */
 .blog-content p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.65rem;
+  color: rgb(30 41 59);
 }
 
+/* --- Лид-абзац: только орбы на фоне страницы (без glass / заливки) --- */
+.blog-content .blog-content-lead {
+  font-size: clamp(1.1rem, 0.7vw + 1rem, 1.25rem);
+  line-height: 1.8;
+  color: rgb(51 65 85);
+  margin-bottom: 2.5rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(
+      circle at 92% 15%,
+      rgb(0 171 179 / 0.16) 0%,
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgb(255 212 23 / 0.12) 0%,
+      transparent 30%
+    );
+  border: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+/* --- Bold: акцентный dark primary вместо серого --- */
+.blog-content strong {
+  color: rgb(15 23 42);
+  font-weight: 700;
+}
+
+/* --- Списки с кастомными маркерами --- */
 .blog-content ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.blog-content ul li {
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.blog-content ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(0 171 179 / 0.15);
 }
 
 .blog-content ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  counter-reset: ol-counter;
 }
 
+.blog-content ol li {
+  padding-left: 2rem;
+  position: relative;
+  counter-increment: ol-counter;
+}
+
+.blog-content ol li::before {
+  content: counter(ol-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-montserrat);
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: white;
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
+/* --- Врезка: только орбы (без glass / заливки) --- */
+.blog-content .blog-content-callout {
+  border-radius: 1.25rem;
+  border: none;
+  background:
+    radial-gradient(
+      circle at 10% 18%,
+      rgb(51 191 198 / 0.18) 0%,
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 88% 80%,
+      rgb(0 109 115 / 0.12) 0%,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 50% 5%,
+      rgb(255 212 23 / 0.08) 0%,
+      transparent 28%
+    );
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 1.75rem 1.75rem;
+  margin: 2.5rem 0;
+}
+
+.blog-content .blog-content-callout-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-montserrat);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.85rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.65rem;
+  background: rgb(0 171 179 / 0.1);
+  border-radius: 9999px;
+  border: 1px solid rgb(0 171 179 / 0.2);
+}
+
+.blog-content .blog-content-callout-title::before {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: none;
+}
+
+/* --- Ссылки --- */
 .blog-content a {
   color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 200ms;
+  text-decoration: none;
+  background-image: linear-gradient(rgb(0 171 179 / 0.2), rgb(0 171 179 / 0.2));
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: all 250ms ease;
 }
 
 .blog-content a:hover {
   color: var(--color-primary-dark);
+  background-size: 100% 2px;
+  background-image: linear-gradient(var(--color-primary), var(--color-primary));
 }
 
+/* --- Изображения: glass frame --- */
 .blog-content img {
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 24px rgba(0, 171, 179, 0.1);
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  border-radius: 1.25rem;
+  box-shadow:
+    0 12px 40px rgb(0 109 115 / 0.15),
+    0 0 0 1px rgb(0 171 179 / 0.1);
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
   width: 100%;
   height: auto;
 }
 
+/* Кадр к разделам «топ направлений»: единая рамка, без двойной тени у img */
+.blog-content figure.blog-content-spot {
+  margin: 1.75rem 0 2.25rem;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgb(0 171 179 / 0.14);
+  box-shadow:
+    0 12px 44px rgb(0 109 115 / 0.12),
+    inset 0 1px 0 rgb(255 255 255 / 0.45);
+}
+
+.blog-content figure.blog-content-spot img {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  height: auto;
+}
+
+/* Markdown оборачивает картинку в <p> внутри <figure> — убираем лишний отступ */
+.blog-content figure.blog-content-spot > p {
+  margin: 0;
+}
+
+/* --- Цитата: premium с градиентом и свечением --- */
 .blog-content blockquote {
-  border-left: 4px solid var(--color-primary);
-  padding-left: 1rem;
+  position: relative;
+  border-left: none;
+  padding: 1.75rem 1.75rem 1.75rem 2rem;
   font-style: italic;
-  color: rgb(107 114 128);
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  color: rgb(51 65 85);
+  margin: 2.5rem 0;
+  background: linear-gradient(
+    135deg,
+    rgb(0 171 179 / 0.06) 0%,
+    rgb(255 255 255 / 0.95) 100%
+  );
+  border-radius: 1.25rem;
+  border: 1px solid rgb(0 171 179 / 0.15);
+  box-shadow: none;
+}
+
+.blog-content blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  bottom: 1rem;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary),
+    var(--color-cta)
+  );
+  box-shadow: none;
+}
+
+.blog-content blockquote p {
+  margin-bottom: 0;
+}
+
+/* --- HR: тонкий двухцветный градиент --- */
+.blog-content hr {
+  border: none;
+  height: 2px;
+  margin: 3rem auto;
+  max-width: 50%;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary),
+    var(--color-cta),
+    var(--color-primary),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* --- CTA-блок: glass + жёлтый свет + тени --- */
+.blog-content .blog-content-cta {
+  position: relative;
+  margin-top: 3.5rem;
+  padding: 2.5rem 2rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  border: 1px solid rgb(255 212 23 / 0.4);
+  background: linear-gradient(
+    155deg,
+    rgb(255 255 255 / 0.95) 0%,
+    rgb(255 212 23 / 0.12) 40%,
+    rgb(0 171 179 / 0.08) 100%
+  );
+  backdrop-filter: blur(16px);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.blog-content .blog-content-cta::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 50%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(255 212 23 / 0.2) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.blog-content .blog-content-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -15%;
+  width: 45%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(0 171 179 / 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.blog-content .blog-content-cta > * {
+  position: relative;
+  z-index: 1;
+}
+
+.blog-content .blog-content-cta p {
+  margin-bottom: 1.75rem;
+  color: rgb(31 41 55);
+  line-height: 1.7;
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+.blog-content .blog-content-cta-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-montserrat);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+  padding: 0.4rem 1rem 0.4rem 0.75rem;
+  background: rgb(255 212 23 / 0.2);
+  border: 1px solid rgb(255 212 23 / 0.4);
+  border-radius: 9999px;
+}
+
+.blog-content .blog-content-cta-kicker::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-cta);
+  box-shadow: none;
+}
+
+.blog-content .blog-content-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, var(--color-cta) 0%, #e5be14 100%);
+  color: rgb(17 24 39);
+  font-family: var(--font-montserrat);
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1.1rem 2.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: none;
+  transition:
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 300ms ease;
+}
+
+.blog-content .blog-content-cta-btn:hover {
+  box-shadow: none;
+  transform: translateY(-3px);
+  color: rgb(17 24 39);
+}
+
+/* Мобильные: комфортная строка, отступы врезок, без лишней «школьной» плотности */
+@media (max-width: 639px) {
+  .blog-content {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .blog-content p {
+    line-height: 1.82;
+  }
+
+  .blog-content h2 {
+    margin-top: 2.75rem;
+    padding-left: 0.75rem;
+    font-size: clamp(1.2rem, 1.1rem + 1.5vw, 1.65rem);
+  }
+
+  .blog-content h3 {
+    margin-top: 2rem;
+  }
+
+  .blog-content .blog-content-lead {
+    padding: 1.2rem 1.1rem;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+  }
+
+  .blog-content .blog-content-callout {
+    padding: 1.35rem 1.15rem;
+    margin: 2rem 0;
+    border-radius: 1rem;
+  }
+
+  .blog-content blockquote {
+    padding: 1.35rem 1.15rem 1.35rem 1.35rem;
+    margin: 2rem 0;
+    border-radius: 1rem;
+  }
+
+  .blog-content figure.blog-content-spot {
+    margin: 1.5rem 0 2rem;
+    border-radius: 1rem;
+  }
+
+  .blog-content hr {
+    margin: 2.25rem auto;
+    max-width: 70%;
+  }
+
+  .blog-content ul li {
+    padding-left: 1.35rem;
+  }
+
+  .blog-content ol li {
+    padding-left: 1.85rem;
+  }
+
+  .blog-content ol li::before {
+    width: 1.35rem;
+    height: 1.35rem;
+    font-size: 0.65rem;
+    top: 0.12rem;
+  }
 }

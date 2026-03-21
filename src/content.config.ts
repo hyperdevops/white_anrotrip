@@ -15,6 +15,8 @@ const blog = defineCollection({
       heroImages: z.array(image()).optional(),
       author: z.string().default('Команда ANRO TRIP'),
       destination: z.string().optional(),
+      /** Крупная карточка в блоке «Журнал» на главной (одна на сайт) */
+      featured: z.boolean().optional(),
     }),
 });
 

@@ -17,9 +17,13 @@ const isHome =
   Astro.url.pathname === '' ||
   Astro.url.pathname === baseTrimmed ||
   Astro.url.pathname === baseTrimmed + '/';
+/** На главной — якорь к секции «Наш журнал»; на других страницах — переход на главную с хэшем */
+const journalHref = isHome ? '#journal' : `${baseTrimmed}/#journal`;
+
 const defaultNavItems = [
   { name: 'О нас', href: '#about' },
   { name: 'Туры', href: '#search' },
+  { name: 'Журнал', href: journalHref },
   { name: 'Отзывы', href: '#reviews' },
   { name: 'Вопросы', href: '#faq' },
   { name: 'Команда', href: '#team' },
