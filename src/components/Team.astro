@@ -146,22 +146,29 @@ const team = [
 
   </div>
 
-  <!-- Кнопка "Показать всю команду" -->
+  <!-- Кнопка: открыть / свернуть список (всегда на месте) -->
   <div class="flex justify-center relative z-20 -mb-6" id="team-btn-wrapper">
-    <button id="toggle-team-btn"
-      class="team-toggle-btn inline-flex gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-primary/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+    <button
+      type="button"
+      id="toggle-team-btn"
+      aria-expanded="false"
+      aria-controls="team-list"
+      class="team-toggle-btn inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-primary/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-[background-color,box-shadow] duration-slow ease-out"
     >
-      <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <svg class="team-btn-icon-users w-4 h-4 shrink-0 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
       </svg>
-      Вся команда
+      <span class="team-btn-label font-montserrat">Вся команда</span>
+      <svg class="team-btn-chevron w-4 h-4 shrink-0 text-primary transition-transform duration-slow ease-out" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
     </button>
   </div>
 </section>
 
 <!-- ═══ ВСЯ КОМАНДА ═══ -->
-<section id="team-list" class="relative bg-gray-50 overflow-hidden transition-[max-height,opacity] duration-slow ease-in-out max-h-0 opacity-0 hidden border-t border-gray-100">
-  <div class="container mx-auto px-4 sm:px-6 max-w-7xl pt-20 pb-16 md:pb-20">
+<section id="team-list" class="team-list-panel relative bg-gray-50 overflow-hidden transition-[max-height,opacity] duration-slow ease-in-out opacity-0 hidden border-t border-gray-100 motion-reduce:transition-none">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl pt-12 md:pt-16 pb-16 md:pb-20">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {team.map((member) => (
@@ -199,28 +206,134 @@ const team = [
         </div>
       ))}
     </div>
+
+    <!-- Свернуть список — после всех фото (как в главной кнопке «Вся команда») -->
+    <div class="flex justify-center mt-12 md:mt-14">
+      <button
+        type="button"
+        id="team-collapse-bottom"
+        class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-primary shadow-sm transition-[color,background-color,transform,box-shadow] duration-slow ease-out hover:bg-primary/10 hover:border-primary/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 md:text-sm"
+      >
+        <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+        </svg>
+        Свернуть
+      </button>
+    </div>
   </div>
 </section>
 
-<script>
-  const btn        = document.getElementById('toggle-team-btn');
-  const btnWrapper = document.getElementById('team-btn-wrapper');
-  const wrapper    = document.getElementById('team-list');
+<script is:inline>
+  (function () {
+    function initTeamListToggle() {
+      var btn = document.getElementById('toggle-team-btn');
+      var wrapper = document.getElementById('team-list');
+      var collapseBottom = document.getElementById('team-collapse-bottom');
+      var teamSection = document.getElementById('team');
 
-  if (btn && wrapper && btnWrapper) {
-    btn.addEventListener('click', () => {
-      wrapper.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
-        wrapper.classList.remove('opacity-0');
-        wrapper.classList.add('opacity-100');
-      });
-      // Не используем display:none — это убирает элемент из потока и вызывает скачок линии.
-      // Оставляем кнопку в разметке, скрываем визуально (без layout shift).
-      btnWrapper.style.opacity = '0';
-      btnWrapper.style.visibility = 'hidden';
-      btnWrapper.style.pointerEvents = 'none';
-      btnWrapper.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
-    });
-  }
+      if (!btn || !wrapper) return;
+
+      var panel = wrapper;
+      var toggleBtn = btn;
+
+      var labelEl = toggleBtn.querySelector('.team-btn-label');
+      var chevronEl = toggleBtn.querySelector('.team-btn-chevron');
+
+      var COLLAPSE_MS = 520;
+
+      function isExpanded() {
+        return toggleBtn.getAttribute('aria-expanded') === 'true';
+      }
+
+      function setExpandedUi(expanded) {
+        toggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        if (labelEl) {
+          labelEl.textContent = expanded ? 'Свернуть' : 'Вся команда';
+        }
+        if (chevronEl) {
+          chevronEl.classList.toggle('rotate-180', expanded);
+        }
+      }
+
+      function openList() {
+        panel.classList.remove('hidden');
+        panel.style.maxHeight = '0px';
+        void panel.offsetHeight;
+        requestAnimationFrame(function () {
+          var h = panel.scrollHeight;
+          if (h < 1) {
+            panel.style.maxHeight = 'none';
+          } else {
+            panel.style.maxHeight = h + 'px';
+          }
+          panel.classList.remove('opacity-0');
+          panel.classList.add('opacity-100');
+        });
+        setExpandedUi(true);
+      }
+
+      function closeList(opts) {
+        var scrollToTeam = opts && opts.scrollToTeam === true;
+        if (panel.classList.contains('hidden')) return;
+
+        var h = panel.scrollHeight;
+        panel.style.maxHeight = h + 'px';
+        void panel.offsetHeight;
+        panel.style.maxHeight = '0px';
+        panel.classList.remove('opacity-100');
+        panel.classList.add('opacity-0');
+        setExpandedUi(false);
+
+        var done = false;
+        function finish() {
+          if (done) return;
+          done = true;
+          panel.classList.add('hidden');
+          panel.style.maxHeight = '';
+          if (scrollToTeam && teamSection) {
+            teamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        function onEnd(e) {
+          if (e.target !== panel || e.propertyName !== 'max-height') return;
+          panel.removeEventListener('transitionend', onEnd);
+          finish();
+        }
+        panel.addEventListener('transitionend', onEnd);
+        window.setTimeout(finish, COLLAPSE_MS);
+      }
+
+      function toggle() {
+        if (isExpanded()) {
+          closeList({ scrollToTeam: false });
+        } else {
+          openList();
+        }
+      }
+
+      toggleBtn.onclick = function () {
+        toggle();
+      };
+      if (collapseBottom) {
+        collapseBottom.onclick = function () {
+          closeList({ scrollToTeam: true });
+        };
+      }
+    }
+
+    function runInit() {
+      initTeamListToggle();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runInit);
+    } else {
+      runInit();
+    }
+    if (!window.__anroTeamPageLoadInit) {
+      window.__anroTeamPageLoadInit = true;
+      document.addEventListener('astro:page-load', runInit);
+    }
+  })();
 </script>
