@@ -94,11 +94,23 @@ import NemoSearch from './widgets/NemoSearch.astro';
       style="min-height: 400px; width: 100%;"
     >
       <div class="tv-wrapper w-full bg-white rounded-xl min-h-112.5 relative">
-        <div id="tourvisor-container" class="tv-search-form tv-moduleid-192367 min-h-[400px]">
+        <div
+          id="tourvisor-container"
+          class="tv-search-form tv-moduleid-192367 min-h-[400px]"
+        >
         </div>
-        <div id="tourvisor-loading" class="absolute inset-0 flex items-center justify-center bg-white/90 rounded-xl transition-opacity duration-300 opacity-0 pointer-events-none" aria-hidden="true">
+        <div
+          id="tourvisor-loading"
+          class="absolute inset-0 flex items-center justify-center bg-white/90 rounded-xl transition-opacity duration-300 opacity-0 pointer-events-none"
+          aria-hidden="true"
+        >
           <div class="flex flex-col items-center gap-3">
-            <div class="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin" role="status" aria-label="Загрузка"></div>
+            <div
+              class="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin"
+              role="status"
+              aria-label="Загрузка"
+            >
+            </div>
             <span class="text-sm text-gray-500">Загрузка поиска туров…</span>
           </div>
         </div>
@@ -188,8 +200,20 @@ import NemoSearch from './widgets/NemoSearch.astro';
     function prefetchTourvisorOnHover() {
       var tab = document.querySelector('[data-tourvisor-tab]');
       if (!tab) return;
-      tab.addEventListener('mouseenter', function () { loadTourvisor(false); }, { once: true });
-      tab.addEventListener('touchstart', function () { loadTourvisor(false); }, { once: true, passive: true });
+      tab.addEventListener(
+        'mouseenter',
+        function () {
+          loadTourvisor(false);
+        },
+        { once: true },
+      );
+      tab.addEventListener(
+        'touchstart',
+        function () {
+          loadTourvisor(false);
+        },
+        { once: true, passive: true },
+      );
     }
     prefetchTourvisorOnHover();
 
