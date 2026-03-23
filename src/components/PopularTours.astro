@@ -52,7 +52,7 @@ const tinyPlaceholders = await Promise.all(
           data-tour-title={tour.title}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] border border-white/10 reveal-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
+            '@container group relative min-w-0 overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] border border-white/10 reveal-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
             tour.size === 'large'  ? '@md:col-span-2 @md:row-span-2' : '',
             tour.size === 'tall'   ? '@md:col-span-1 @md:row-span-2' : '',
             tour.size === 'wide'   ? '@md:col-span-2 @md:row-span-1' : '',
@@ -90,7 +90,7 @@ const tinyPlaceholders = await Promise.all(
           <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
             <!-- Бейдж -->
             <div class="flex justify-between items-start">
-              <span class:list={['inline-block rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider', tour.badgeColor]}>
+              <span class:list={['inline-block rounded-full px-3 py-1 font-black uppercase tracking-wider text-[clamp(0.5625rem,0.45rem+0.5cqw,0.625rem)]', tour.badgeColor]}>
                 {tour.badge}
               </span>
               <!-- Иконка-стрелка появляется при hover (только десктоп) -->
@@ -103,7 +103,7 @@ const tinyPlaceholders = await Promise.all(
 
             <!-- Название и цена -->
             <div class="transform translate-y-1.5 md:group-hover:translate-y-0 md:transition-transform md:duration-normal">
-              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 md:group-hover:text-cta md:transition-colors md:duration-normal" style="font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem);">
+              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 md:group-hover:text-cta md:transition-colors md:duration-normal text-[clamp(1rem,0.7rem+3.2cqw,1.65rem)]">
                 {tour.title}
               </h3>
               <div class="flex items-center gap-2">
