@@ -11,6 +11,12 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.0
         version: 3.7.0
+      '@fontsource/inter':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/montserrat':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.1.18(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
@@ -317,8 +323,8 @@ packages:
     resolution: {integrity: sha512-ZaaBr0pTvNxmyUbIn+nVPXPr383VqJzfUDMWicgTjJIeo2+T2hOq2kNpgpvTIrWtZrsZnSP8oXms1+sKTjcvkw==}
     engines: {node: '>=20'}
 
-  '@cyberalien/svg-utils@1.2.4':
-    resolution: {integrity: sha512-4gy8TOhEp/Zy0q/B935c5KZn2XFtFoUy01VH04bCMgzljpht0/QQGrk4eS5SNkl2YgohpTur2CYsRdDdCyYSAg==}
+  '@cyberalien/svg-utils@1.2.8':
+    resolution: {integrity: sha512-ILHRhyyv7WamaiKjPPUqriQKySGnl/r+A6YddAmtvW6xC/f0TksPmhljo/qvqaq7FPJ/ZHvZKsBJeuKOAEGXKA==}
 
   '@emnapi/runtime@1.8.1':
     resolution: {integrity: sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg==}
@@ -479,8 +485,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@iconify/tools@5.0.5':
-    resolution: {integrity: sha512-JE3uqne+l89kggZYKIukaYDIae4lHKMNVDg7Oc+L+8rPwiMcfD5C56YLWyynyH/ib6I9xDFH1aamdfoL+m7OFA==}
+  '@fontsource/inter@5.2.8':
+    resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
+
+  '@fontsource/montserrat@5.2.8':
+    resolution: {integrity: sha512-xTjLxSbSfCycDB0pwmNsfNvdfWPaDaRQ2LC6yt/ZI7SdvXG52zHnzNYC/09mzuAuWNJyShkteutfCoDgym56hQ==}
+
+  '@iconify/tools@5.0.6':
+    resolution: {integrity: sha512-94dmgES3W9j3Z9xcxSZh6sLBIYwVFykcIER3vV1DTTF/g3Eyr/kG3/QNm4GNhqKoXexg5tmCtVA9AAilO81e4w==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -2543,7 +2555,7 @@ snapshots:
 
   '@cspell/url@9.7.0': {}
 
-  '@cyberalien/svg-utils@1.2.4':
+  '@cyberalien/svg-utils@1.2.8':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -2630,9 +2642,13 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@iconify/tools@5.0.5':
+  '@fontsource/inter@5.2.8': {}
+
+  '@fontsource/montserrat@5.2.8': {}
+
+  '@iconify/tools@5.0.6':
     dependencies:
-      '@cyberalien/svg-utils': 1.2.4
+      '@cyberalien/svg-utils': 1.2.8
       '@iconify/types': 2.0.0
       '@iconify/utils': 3.1.0
       fflate: 0.8.2
@@ -3012,7 +3028,7 @@ snapshots:
 
   astro-iconify@1.2.0:
     dependencies:
-      '@iconify/tools': 5.0.5
+      '@iconify/tools': 5.0.6
       node-fetch: 3.3.2
       resolve-pkg: 2.0.0
       svgo: 3.3.2
