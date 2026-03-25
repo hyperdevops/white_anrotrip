@@ -2,6 +2,7 @@
 // src/components/Hero.astro
 import { getImage, Image } from 'astro:assets';
 import heroBg from '../assets/hero/plane.avif';
+import PhoneOutlineIcon from './PhoneOutlineIcon.astro';
 
 // Tiny placeholder (20px) — как Tilda: размытый превью до загрузки полного изображения
 const tinyHero = await getImage({ src: heroBg, width: 20, quality: 20 });
@@ -111,19 +112,7 @@ const tinyHero = await getImage({ src: heroBg, width: 20, quality: 20 });
           class="inline-flex items-center gap-2 px-7 py-5 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 btn-ripple transition-[background-color] duration-normal cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           style="font-size: clamp(0.85rem, 0.75rem + 0.5vw, 1rem);"
         >
-          <svg
-            class="w-4 h-4 text-cta"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-            ></path>
-          </svg>
+          <PhoneOutlineIcon iconClass="w-4 h-4" colorClass="text-cta" />
           8 (800) 222-44-73
         </a>
       </div>

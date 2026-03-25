@@ -1,15 +1,18 @@
 ---
-// src/components/GiftModal.astro
-import { Image } from 'astro:assets';
-import certifImg from '../assets/certif/certif.webp';
+import {
+  modalLeadInputClass,
+  modalLeadLabelClass,
+  modalLeadSubmitClass,
+} from '../lib/form-classes';
+import { sitePrivacy } from '../lib/site-urls';
+import XMarkIcon from './icons/XMarkIcon.astro';
 ---
 
-<!-- ФОН (Оверлей) --><!-- z-index максимальный, чтобы перекрывать всё -->
 <div
   id="gift-modal-overlay"
   class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]"
 >
-  <!-- КОНТЕНТ: desktop — slide up, mobile — лёгкое всплытие (translate-y-8, ease-out-expo) -->
+  {/* Панель: desktop slide-up, mobile — лёгкое всплытие */}
   <div
     class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90dvh] overflow-y-auto contain-[layout_paint]
       translate-y-20 max-md:translate-y-8
@@ -17,25 +20,13 @@ import certifImg from '../assets/certif/certif.webp';
       [&.modal-open]:translate-y-0"
     id="gift-modal-content"
   >
-    <!-- Крестик закрытия -->
     <button
       id="close-gift-modal"
       type="button"
       aria-label="Закрыть окно подарочного сертификата"
       class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-[color,background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 z-10"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 stroke-2"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path></svg
-      >
+      <XMarkIcon />
     </button>
 
     <div class="p-8 pt-7">
@@ -48,18 +39,6 @@ import certifImg from '../assets/certif/certif.webp';
         Лучший подарок — это путешествие!
       </p>
 
-      <!-- Картинка сертификата (Astro Image — оптимизация, lazy, только desktop) -->
-      <!-- <div
-        class="hidden md:block w-full aspect-[1.58/1] rounded-xl overflow-hidden mb-8 shadow-md"
-      >
-        <Image
-          src={certifImg}
-          alt="Подарочный сертификат ANRO TRIP"
-          class="w-full h-full object-cover"
-          loading="lazy"
-        />
-      </div> -->
-
       <form id="gift-form" class="space-y-3" onsubmit="event.preventDefault();">
         <p class="text-xs text-center text-gray-500 mb-5 font-inter">
           <i
@@ -69,41 +48,41 @@ import certifImg from '../assets/certif/certif.webp';
           >
         </p>
         <div>
-          <label class="text-xs text-gray-500 font-medium mb-1 block"
-            >Фамилия Имя Отчество</label
-          >
+          <label for="gift-fio" class={modalLeadLabelClass}>Фамилия Имя Отчество</label>
           <input
+            id="gift-fio"
             name="fio"
             type="text"
             placeholder="ФИО"
             required
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition-[border-color,box-shadow]"
+            autocomplete="name"
+            class={modalLeadInputClass}
           />
         </div>
 
         <div>
-          <label class="text-xs text-gray-500 font-medium mb-1 block"
-            >Ваш телефон</label
-          >
+          <label for="gift-phone" class={modalLeadLabelClass}>Ваш телефон</label>
           <input
+            id="gift-phone"
             name="phone"
             type="tel"
             placeholder="+7 (999) 000-00-00"
             required
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition-[border-color,box-shadow]"
+            autocomplete="tel"
+            class={modalLeadInputClass}
           />
         </div>
 
         <div>
-          <label class="text-xs text-gray-500 font-medium mb-1 block"
-            >Ваш e-mail</label
-          >
+          <label for="gift-email" class={modalLeadLabelClass}>Ваш e-mail</label>
           <input
+            id="gift-email"
             name="email"
             type="email"
             placeholder="example@mail.ru"
             required
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition-[border-color,box-shadow]"
+            autocomplete="email"
+            class={modalLeadInputClass}
           />
         </div>
 
@@ -112,23 +91,22 @@ import certifImg from '../assets/certif/certif.webp';
             name="agree"
             type="checkbox"
             id="agree-gift"
-            class="mt-0.5 w-4 h-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+            required
+            class="mt-0.5 w-4 h-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           />
           <label
             for="agree-gift"
             class="text-[11px] text-gray-400 leading-snug cursor-pointer"
           >
             Даю свое согласие на обработку персональных данных в соответствии с <a
-              href={`${import.meta.env.BASE_URL}privacy`}
+              href={sitePrivacy()}
               class="text-primary font-semibold hover:underline cursor-pointer"
               >Политикой конфиденциальности</a
             >
           </label>
         </div>
 
-        <button
-          class="w-full bg-primary text-white font-bold py-3.5 rounded-xl mt-2 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 transition-[color,box-shadow] duration-normal cursor-pointer tracking-wide uppercase text-sm btn-ripple"
-        >
+        <button type="submit" class={modalLeadSubmitClass}>
           Отправить
         </button>
       </form>
@@ -232,13 +210,10 @@ import certifImg from '../assets/certif/certif.webp';
     if (e.target === overlay) closeGiftModal();
   });
 
-  // Обработка отправки формы (временно — console.log, готово к интеграции Netlify Forms/Formspree)
+  // Отправка на сервер — после подключения API; данные не логируются в консоль (152-ФЗ).
   const giftForm = document.getElementById('gift-form');
   giftForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const data = Object.fromEntries(new FormData(form).entries());
-    console.log('Form submitted', data);
     closeGiftModal();
   });
 

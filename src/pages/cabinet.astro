@@ -3,6 +3,8 @@ import { getImage, Image } from 'astro:assets';
 import favicon from '../assets/favicon.png';
 import welcomeImg from '../assets/welcome/welcome.webp';
 import Layout from '../layouts/Layout.astro';
+import { cabinetLoginInputClass } from '../lib/form-classes';
+import { siteHome } from '../lib/site-urls';
 
 const welcomePreload = await getImage({ src: welcomeImg, quality: 92 });
 // Tiny placeholder (20px) — как Tilda: размытый превью до загрузки полного изображения
@@ -25,7 +27,7 @@ const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
   <main id="content" class="fixed inset-0 z-0">
     <!-- Логотип «На главную» — favicon из assets как в Header -->
     <a
-      href={import.meta.env.BASE_URL}
+      href={siteHome()}
       data-astro-reload
       class="reveal-hidden absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       aria-label="На главную"
@@ -107,14 +109,15 @@ const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
             </div>
           </fieldset>
 
+          <label for="cabinet-login" class="sr-only">Телефон или email для входа</label>
           <input
             id="cabinet-login"
             type="tel"
             name="login"
             placeholder="+7 (999) 000-00-00"
             required
-            autocomplete="username"
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 text-base placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            autocomplete="tel"
+            class={cabinetLoginInputClass}
           />
 
           <button
@@ -167,6 +170,7 @@ const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
         if (radio.value === 'phone') {
           loginInput.type = 'tel';
           loginInput.placeholder = '+7 (999) 000-00-00';
+          loginInput.setAttribute('autocomplete', 'tel');
           phone?.classList.add('font-bold', 'text-gray-800');
           phone?.classList.remove('text-gray-500');
           email?.classList.remove('font-bold', 'text-gray-800');
@@ -174,6 +178,7 @@ const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
         } else {
           loginInput.type = 'email';
           loginInput.placeholder = 'example@mail.ru';
+          loginInput.setAttribute('autocomplete', 'email');
           email?.classList.add('font-bold', 'text-gray-800');
           email?.classList.remove('text-gray-500');
           phone?.classList.remove('font-bold', 'text-gray-800');

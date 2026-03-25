@@ -1,5 +1,7 @@
 ---
 // src/components/ui/Modal.astro
+import XMarkIcon from '../icons/XMarkIcon.astro';
+
 interface Props {
   id: string;
   title: string;
@@ -24,19 +26,7 @@ const { id, title } = Astro.props;
       class="close-modal absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-[color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
       aria-label="Закрыть окно"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+      <XMarkIcon iconClass="h-6 w-6" />
     </button>
 
     <!-- Заголовок -->

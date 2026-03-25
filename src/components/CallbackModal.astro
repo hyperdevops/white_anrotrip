@@ -1,111 +1,117 @@
 ---
-// src/components/CallbackModal.astro
+import {
+  modalLeadInputClass,
+  modalLeadLabelClass,
+  modalLeadSubmitClass,
+} from '../lib/form-classes';
+import { sitePrivacy } from '../lib/site-urls';
+import XMarkIcon from './icons/XMarkIcon.astro';
 ---
 
-<!-- ФОН (Оверлей) -->
 <div
   id="callback-modal-overlay"
   class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]"
 >
   <div class="flex min-h-full min-w-full items-center justify-center">
-    <!-- КОНТЕНТ: desktop — slide up, mobile — лёгкое всплытие (translate-y-8, ease-out) -->
+    {
+      /* КОНТЕНТ: desktop — slide up, mobile — лёгкое всплытие (translate-y-8, ease-out) */
+    }
     <div
-    class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90dvh] overflow-y-auto contain-[layout_paint]
+      class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90dvh] overflow-y-auto contain-[layout_paint]
       translate-y-20 max-md:translate-y-8
       transition-transform duration-slow ease-out max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]
       [&.modal-open]:translate-y-0"
-    id="callback-modal-content"
-  >
-    <!-- Крестик закрытия -->
-    <button
-      id="close-callback-modal"
-      type="button"
-      aria-label="Закрыть окно заказа звонка"
-      class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-[color,background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 z-10"
+      id="callback-modal-content"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 stroke-2"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path></svg
+      <button
+        id="close-callback-modal"
+        type="button"
+        aria-label="Закрыть окно заказа звонка"
+        class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-[color,background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 z-10"
       >
-    </button>
-
-    <div class="p-8 pt-7">
-      <h3
-        class="font-montserrat text-xl font-extrabold text-gray-900 uppercase tracking-wide mb-1 text-center"
-      >
-        Заказ обратного звонка
-      </h3>
-      <p class="text-center text-sm text-gray-400 mb-6 wrap-break-word">
-        Оставьте свои контакты,<br class="hidden sm:block" />и мы свяжемся с
-        вами в ближайшее время!
-      </p>
-
-      <form
-        id="callback-form"
-        class="space-y-3"
-        onsubmit="event.preventDefault();"
-      >
-        <div>
-          <label class="text-xs text-gray-500 font-medium mb-1 block"
-            >Ваше имя</label
-          >
-          <input
-            name="name"
-            type="text"
-            placeholder="Имя"
-            required
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition-[border-color,box-shadow]"
-          />
-        </div>
-
-        <div>
-          <label class="text-xs text-gray-500 font-medium mb-1 block"
-            >Ваш телефон</label
-          >
-          <input
-            name="phone"
-            type="tel"
-            placeholder="+7 (999) 000-00-00"
-            required
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition-[border-color,box-shadow]"
-          />
-        </div>
-
-        <div class="flex items-start gap-2.5 pt-1">
-          <input
-            name="agree"
-            type="checkbox"
-            id="agree-callback"
-            class="mt-0.5 w-4 h-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
-          />
-          <label
-            for="agree-callback"
-            class="text-[11px] text-gray-400 leading-snug cursor-pointer"
-          >
-            Даю свое согласие на обработку персональных данных в соответствии с <a
-              href={`${import.meta.env.BASE_URL}privacy`}
-              class="text-primary font-semibold hover:underline cursor-pointer"
-              >Политикой конфиденциальности</a
-            >
-          </label>
-        </div>
-
-        <button
-          class="w-full bg-primary text-white font-bold py-3.5 rounded-xl mt-2 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 transition-[color,box-shadow] duration-normal cursor-pointer tracking-wide uppercase text-sm btn-ripple"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 stroke-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path></svg
         >
-          Заказать звонок
-        </button>
-      </form>
+      </button>
+
+      <div class="p-8 pt-7">
+        <h3
+          class="font-montserrat text-xl font-extrabold text-gray-900 uppercase tracking-wide mb-1 text-center"
+        >
+          Заказ обратного звонка
+        </h3>
+        <p class="text-center text-sm text-gray-400 mb-6 wrap-break-word">
+          Оставьте свои контакты,<br class="hidden sm:block" />и мы свяжемся с
+          вами в ближайшее время!
+        </p>
+
+        <form
+          id="callback-form"
+          class="space-y-3"
+          onsubmit="event.preventDefault();"
+        >
+          <div>
+            <label for="callback-name" class={modalLeadLabelClass}>Ваше имя</label>
+            <input
+              id="callback-name"
+              name="name"
+              type="text"
+              placeholder="Имя"
+              required
+              autocomplete="name"
+              class={modalLeadInputClass}
+            />
+          </div>
+
+          <div>
+            <label for="callback-phone" class={modalLeadLabelClass}>Ваш телефон</label>
+            <input
+              id="callback-phone"
+              name="phone"
+              type="tel"
+              placeholder="+7 (999) 000-00-00"
+              required
+              autocomplete="tel"
+              class={modalLeadInputClass}
+            />
+          </div>
+
+          <div class="flex items-start gap-2.5 pt-1">
+            <input
+              name="agree"
+              type="checkbox"
+              id="agree-callback"
+              required
+              class="mt-0.5 w-4 h-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            />
+            <label
+              for="agree-callback"
+              class="text-[11px] text-gray-400 leading-snug cursor-pointer"
+            >
+              Даю свое согласие на обработку персональных данных в соответствии
+              с <a
+                href={sitePrivacy()}
+                class="text-primary font-semibold hover:underline cursor-pointer"
+                >Политикой конфиденциальности</a
+              >
+            </label>
+          </div>
+
+          <button type="submit" class={modalLeadSubmitClass}>
+            Заказать звонок
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
   </div>
 </div>
 
@@ -193,16 +199,14 @@
 
   closeBtn?.addEventListener('click', window.closeCallbackModal);
   overlay?.addEventListener('click', (e) => {
-    if (content && !content.contains(e.target as Node)) window.closeCallbackModal();
+    if (content && !content.contains(e.target as Node))
+      window.closeCallbackModal();
   });
 
-  // Обработка отправки формы (временно — console.log, готово к интеграции Netlify Forms/Formspree)
+  // Отправка на сервер — после подключения API; данные не логируются в консоль (152-ФЗ).
   const callbackForm = document.getElementById('callback-form');
   callbackForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const data = Object.fromEntries(new FormData(form).entries());
-    console.log('Form submitted', data);
     window.closeCallbackModal();
   });
 

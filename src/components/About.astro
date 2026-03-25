@@ -1,5 +1,6 @@
 ---
 // src/components/About.astro
+import { siteCorp } from '../lib/site-urls';
 import TrustBadges from './TrustBadges.astro';
 
 const services = [
@@ -297,7 +298,7 @@ const { class: classes = '' } = Astro.props;
             </svg>
           </a>
           <a
-            href={`${import.meta.env.BASE_URL}corp`}
+            href={siteCorp()}
             class="about-cta-btn inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-primary/35 text-white font-semibold font-montserrat text-sm uppercase tracking-wider shadow-[0_4px_24px_rgba(0,171,179,0.4)] hover:bg-primary/10 active:bg-primary/30 active:border-primary/50 transition-colors duration-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 btn-ripple cursor-pointer"
           >
             Коммерческое Предложение

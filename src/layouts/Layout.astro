@@ -10,6 +10,7 @@ import FavoritesWidget from '../components/FavoritesWidget.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import OfficeWidget from '../components/OfficeWidget.astro';
 import GiftModal from '../components/GiftModal.astro';
+import { siteHome } from '../lib/site-urls';
 
 interface Props {
   title: string;
@@ -42,11 +43,118 @@ const {
 } = Astro.props;
 
 const baseUrl = Astro.url.origin;
-const base = import.meta.env.BASE_URL;
+const base = siteHome();
 const canonical = canonicalURL ?? Astro.url.href;
 const ogImageUrl = ogImage.startsWith('http')
   ? ogImage
   : new URL(ogImage, baseUrl).href;
+
+/** Стабильный id организации для связи филиалов (LocalBusiness) с TravelAgency */
+const organizationId = `${baseUrl}/#organization`;
+const parentOrganization = { '@id': organizationId };
+
+/** JSON-LD TravelAgency — корневая сущность; url сайта, не canonical страницы */
+const travelAgencySchema = {
+  '@type': 'TravelAgency',
+  '@id': organizationId,
+  name: 'ANRO TRIP',
+  description:
+    'Туристическая компания. Более 18 лет организуем путешествия и командировки по всему миру.',
+  url: baseUrl,
+  logo: `${baseUrl}/og-image.jpg`,
+  image: `${baseUrl}/og-image.jpg`,
+  telephone: '+78002224473',
+  priceRange: '₽₽',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Екатеринбург',
+    addressCountry: 'RU',
+  },
+  areaServed: {
+    '@type': 'Place',
+    name: 'Россия и мир',
+  },
+  sameAs: [
+    'https://t.me/anro_trip',
+    'https://max.ru/u/f9LHodD0cOKNXrTMtvUZWd2zLeGEpz34bQ0i1a-Ur_6EKrIw9H11bR6uhLM',
+    'https://t.me/anrotrip',
+    'https://vk.com/anrotrip',
+    'https://max.ru/id6658540239_biz',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+78002224473',
+    contactType: 'customer service',
+    availableLanguage: 'Russian',
+  },
+};
+
+/**
+ * Офисы: адреса как в Contacts/Footer.
+ * Екатеринбург — на сайте без улицы (представительство), в разметке только город и регион.
+ */
+const localBusinessEkaterinburg = {
+  '@type': 'LocalBusiness',
+  '@id': `${baseUrl}/#localbusiness-ekaterinburg`,
+  name: 'ANRO TRIP — Екатеринбург',
+  description:
+    'Представительство туристической компании ANRO TRIP в Екатеринбурге. Встреча по предварительной договорённости.',
+  image: ogImageUrl,
+  url: baseUrl,
+  telephone: '+78002224473',
+  priceRange: '₽₽',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Екатеринбург',
+    addressRegion: 'Свердловская область',
+    addressCountry: 'RU',
+  },
+  parentOrganization,
+};
+
+const localBusinessChelyabinsk = {
+  '@type': 'LocalBusiness',
+  '@id': `${baseUrl}/#localbusiness-chelyabinsk`,
+  name: 'ANRO TRIP — Челябинск',
+  description:
+    'Офис туристической компании ANRO TRIP в Челябинске. Пн–пт 9:00–18:00, сб–вс по договорённости.',
+  image: ogImageUrl,
+  url: baseUrl,
+  telephone: '+73512252991',
+  priceRange: '₽₽',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'ул. 250-летия Челябинска, д. 29, пом. 2',
+    addressLocality: 'Челябинск',
+    postalCode: '454003',
+    addressCountry: 'RU',
+  },
+  parentOrganization,
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+      ],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  ],
+};
+
+/** Один блок JSON-LD: TravelAgency + филиалы */
+const schemaOrgGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    travelAgencySchema,
+    localBusinessEkaterinburg,
+    localBusinessChelyabinsk,
+  ],
+};
 ---
 
 <!doctype html>
@@ -62,10 +170,8 @@ const ogImageUrl = ogImage.startsWith('http')
     <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="apple-touch-icon" href={favicon.src} />
 
-    <!-- Canonical -->
     <link rel="canonical" href={canonical} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -73,67 +179,22 @@ const ogImageUrl = ogImage.startsWith('http')
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:locale" content="ru_RU" />
 
+    <!-- Twitter / X Card (превью при шеринге; дублирует OG для совместимости с X и краулерами) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <!-- Schema.org JSON-LD -->
     {
       showSchema && (
         <script
           type="application/ld+json"
-          set:html={JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'TravelAgency',
-            name: 'ANRO TRIP',
-            description:
-              'Туристическая компания. Более 18 лет организуем путешествия и командировки по всему миру.',
-            url: canonical,
-            logo: `${baseUrl}/og-image.jpg`,
-            image: `${baseUrl}/og-image.jpg`,
-            telephone: '+78002224473',
-            priceRange: '₽₽',
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: 'Екатеринбург',
-              addressCountry: 'RU',
-            },
-            areaServed: {
-              '@type': 'Place',
-              name: 'Россия и мир',
-            },
-            sameAs: [
-              'https://t.me/anro_trip',
-              'https://max.ru/u/f9LHodD0cOKNXrTMtvUZWd2zLeGEpz34bQ0i1a-Ur_6EKrIw9H11bR6uhLM',
-              'https://t.me/anrotrip',
-              'https://vk.com/anrotrip',
-              'https://max.ru/id6658540239_biz',
-            ],
-            contactPoint: {
-              '@type': 'ContactPoint',
-              telephone: '+78002224473',
-              contactType: 'customer service',
-              availableLanguage: 'Russian',
-            },
-          })}
+          set:html={JSON.stringify(schemaOrgGraph)}
         />
       )
     }
 
-    <!-- Шрифты: preconnect + display=swap для быстрого рендера -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <!-- Noscript fallback -->
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
-
-    <!-- View Transitions API -->
     <ClientRouter />
 
     <title>{title}</title>
@@ -143,7 +204,7 @@ const ogImageUrl = ogImage.startsWith('http')
     class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary-dark"
     data-base={base}
   >
-    <!-- Вспышка при загрузке — тот же эффект, что при клике по логотипу (fade-in 0.5s). Учитываем prefers-reduced-motion -->
+    {/* Вспышка при загрузке — fade-in 0.5s, учитываем prefers-reduced-motion */}
     <script is:inline>
       (function () {
         var d = document;
@@ -174,7 +235,7 @@ const ogImageUrl = ogImage.startsWith('http')
         }
       })();
     </script>
-    <!-- Skip Link: виден при фокусе (Tab), для клавиатуры и скринридеров -->
+    {/* Skip Link: виден при фокусе (Tab), для клавиатуры и скринридеров */}
     <a
       href="#content"
       class="fixed left-4 top-0 z-9999 -translate-y-full rounded-b-md bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform duration-fast focus:translate-y-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
@@ -191,8 +252,7 @@ const ogImageUrl = ogImage.startsWith('http')
     <CallbackModal />
     <ReviewModal />
 
-    <!-- Tourvisor не поддерживает View Transition — при переходе на главную делаем полную загрузку (astro:before-swap) -->
-    <!-- При «Назад» из bfcache главная может восстановиться сломанной — перезагружаем -->
+    {/* Tourvisor не поддерживает View Transition → полная перезагрузка при переходе на главную; при «Назад» из bfcache тоже перезагружаем */}
     <script is:inline>
       document.addEventListener('astro:before-swap', function (e) {
         var isMainPage = e.newDocument.querySelector(
@@ -211,9 +271,8 @@ const ogImageUrl = ogImage.startsWith('http')
         }
       });
     </script>
-    <!-- ОБНОВЛЕННЫЙ СКРИПТ АНИМАЦИИ -->
+    <!-- Scroll reveal + scroll lock (модалки) -->
     <script is:inline>
-      // Создаем глобальную функцию для запуска/перезапуска анимаций
       window.initScrollReveal = () => {
         const observerOptions = {
           root: null,
@@ -225,24 +284,18 @@ const ogImageUrl = ogImage.startsWith('http')
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('reveal-visible');
-              observer.unobserve(entry.target); // Перестаем следить после появления
+              observer.unobserve(entry.target);
             }
           });
         }, observerOptions);
 
-        // Находим все скрытые элементы и начинаем следить
         document.querySelectorAll('.reveal-hidden').forEach((el) => {
-          // Если мы перезапускаем, убеждаемся, что класс видимости снят
-          // Но делаем это аккуратно, чтобы не мигало то, что уже на экране (если не телепорт)
-          // В данном случае Header сам снимет классы перед вызовом этой функции
           observer.observe(el);
         });
       };
 
-      // Запускаем при первой загрузке
       window.initScrollReveal();
 
-      // При переходах View Transitions (ClientRouter) перезапускаем reveal для новой страницы
       document.addEventListener('astro:page-load', () => {
         requestAnimationFrame(() => {
           window.initScrollReveal?.();
@@ -251,35 +304,29 @@ const ogImageUrl = ogImage.startsWith('http')
           window.initTourvisorWidget?.();
         });
       });
-      // Функция вычисления ширины скроллбара
+
       function getScrollbarWidth() {
         return window.innerWidth - document.documentElement.clientWidth;
       }
 
-      // БЛОКИРОВКА СКРОЛЛА С КОМПЕНСАЦИЕЙ
       window.lockScroll = () => {
         const scrollbarWidth = getScrollbarWidth();
 
-        // Если скроллбара нет (мобилка), просто блокируем и выходим
         if (scrollbarWidth <= 0) {
           document.body.style.overflow = 'hidden';
           return;
         }
 
-        // 1. Добавляем отступ body, чтобы контент не прыгал
         document.body.style.paddingRight = `${scrollbarWidth}px`;
 
-        // 2. Добавляем отступ ХЕДЕРУ (если он fixed w-full), чтобы он не растягивался
         const header = document.querySelector('header');
         if (header) {
           header.style.paddingRight = `${scrollbarWidth}px`;
         }
 
-        // 3. Блокируем скролл
         document.body.style.overflow = 'hidden';
       };
 
-      // РАЗБЛОКИРОВКА
       window.unlockScroll = () => {
         document.body.style.overflow = '';
         document.body.style.paddingRight = '';

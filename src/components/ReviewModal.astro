@@ -1,50 +1,55 @@
 ---
 // src/components/ReviewModal.astro
 import Modal from './ui/Modal.astro';
+import {
+  reviewModalLabelClass,
+  reviewModalSubmitClass,
+  reviewModalTextareaClass,
+  reviewModalTextFieldClass,
+} from '../lib/form-classes';
 ---
 
 <Modal id="review-modal" title="Оставить отзыв">
-  <form
-    class="space-y-4"
-    onsubmit="event.preventDefault(); alert('Спасибо за ваш отзыв!'); this.reset(); document.getElementById('review-modal').close();"
-  >
+  <form id="review-modal-form" class="space-y-4">
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <label
-          class="block text-sm font-medium text-gray-700 mb-1"
+        <label for="review-modal-name" class={reviewModalLabelClass}
           >Имя</label
         >
         <input
+          id="review-modal-name"
           type="text"
+          name="name"
           required
-          class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:ring-2 focus:ring-[#04a5e5] outline-none"
+          autocomplete="name"
+          class={reviewModalTextFieldClass}
         />
       </div>
       <div>
-        <label
-          class="block text-sm font-medium text-gray-700 mb-1"
+        <label for="review-modal-city" class={reviewModalLabelClass}
           >Город</label
         >
         <input
+          id="review-modal-city"
           type="text"
-          class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:ring-2 focus:ring-[#04a5e5] outline-none"
+          name="city"
+          autocomplete="address-level2"
+          class={reviewModalTextFieldClass}
         />
       </div>
     </div>
 
-    <div>
-      <label
-        class="block text-sm font-medium text-gray-700 mb-1"
-        >Ваша оценка</label
-      >
+    <fieldset class="border-0 p-0 m-0 min-w-0">
+      <legend class={reviewModalLabelClass}>Ваша оценка</legend>
       <div class="flex gap-2">
         {
           [1, 2, 3, 4, 5].map((star) => (
-            <label class="cursor-pointer">
+            <label class="cursor-pointer rounded-md focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
               <input
                 type="radio"
                 name="rating"
                 value={star}
+                id={`review-modal-rating-${star}`}
                 class="peer sr-only"
               />
               <svg
@@ -58,25 +63,35 @@ import Modal from './ui/Modal.astro';
           ))
         }
       </div>
-    </div>
+    </fieldset>
 
     <div>
-      <label
-        class="block text-sm font-medium text-gray-700 mb-1"
+      <label for="review-modal-text" class={reviewModalLabelClass}
         >Текст отзыва</label
       >
       <textarea
+        id="review-modal-text"
+        name="review"
         required
         rows="4"
-        class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:ring-2 focus:ring-[#04a5e5] outline-none resize-none"
+        autocomplete="off"
+        class={reviewModalTextareaClass}
       ></textarea>
     </div>
 
-    <button
-      type="submit"
-      class="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 transition-[color,box-shadow] duration-normal cursor-pointer btn-ripple"
-    >
+    <button type="submit" class={reviewModalSubmitClass}>
       Отправить отзыв
     </button>
   </form>
 </Modal>
+
+<script>
+  const reviewForm = document.getElementById('review-modal-form');
+  reviewForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    // Отправка на сервер — после подключения API; данные не логируются в консоль (152-ФЗ).
+    form.reset();
+    (document.getElementById('review-modal') as HTMLDialogElement | null)?.close();
+  });
+</script>

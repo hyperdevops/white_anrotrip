@@ -1,7 +1,9 @@
 ---
+// Текст типовой; перед продом — согласование с юристом. См. .doc/legal-pages-review.md
 // import Header from '../components/Header.astro';
 import FooterLegalStrip from '../components/FooterLegalStrip.astro';
 import Layout from '../layouts/Layout.astro';
+import { siteHome } from '../lib/site-urls';
 ---
 
 <Layout
@@ -13,7 +15,7 @@ import Layout from '../layouts/Layout.astro';
   showSchema={false}
 >
   <!-- <Header /> -->
-  <main class="min-h-dvh pt-24 pb-16">
+  <main id="content" class="min-h-dvh pt-24 pb-16">
     <article
       class="container mx-auto max-w-3xl px-4 sm:px-6 font-inter text-gray-800 leading-relaxed"
     >
@@ -280,7 +282,7 @@ import Layout from '../layouts/Layout.astro';
 
       <p class="mt-10">
         <a
-          href={import.meta.env.BASE_URL}
+          href={siteHome()}
           data-astro-reload
           class="inline-flex items-center gap-2 text-primary font-semibold hover:underline cursor-pointer"
         >

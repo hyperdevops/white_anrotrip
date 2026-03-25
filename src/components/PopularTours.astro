@@ -136,7 +136,7 @@ const tinyPlaceholders = await Promise.all(
   const scrollToSearch = () => {
     const anchor = document.getElementById('search');
     if (anchor) {
-      const top = anchor.getBoundingClientRect().top + window.pageYOffset - 104;
+      const top = anchor.getBoundingClientRect().top + window.scrollY - 104;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
