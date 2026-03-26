@@ -11,15 +11,18 @@
 		"astro": "astro"
 	},
 	"dependencies": {
+		"@astrojs/node": "^9.5.5",
 		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/inter": "^5.2.8",
 		"@fontsource/montserrat": "^5.2.8",
 		"@tailwindcss/vite": "^4.1.18",
-		"astro": "^5.16.13",
+		"astro": "^5.18.1",
 		"astro-compressor": "^1.2.0",
 		"astro-iconify": "^1.2.0",
+		"resend": "^6.9.4",
 		"sharp": "^0.34.5",
-		"tailwindcss": "^4.1.18"
+		"tailwindcss": "^4.1.18",
+		"zod": "^3.24.2"
 	},
 	"devDependencies": {
 		"cspell": "^9.7.0",
