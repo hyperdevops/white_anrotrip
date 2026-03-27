@@ -21,12 +21,24 @@ const isHome =
   Astro.url.pathname === baseTrimmed + '/';
 /** На главной — якорь к секции «Наш журнал»; на других страницах — переход на главную с хэшем */
 const journalHref = isHome ? '#journal' : `${baseTrimmed}/#journal`;
+/** CTA «бизнес / travel-ассистент» в About — якорь на главной или переход с других страниц */
+const businessHref = isHome ? '#business' : `${baseTrimmed}/#business`;
+/** Раздел наград */
+const awardsHref = isHome ? '#awards' : `${baseTrimmed}/#awards`;
+/** Подарочный сертификат */
+const giftHref = isHome ? '#gift' : `${baseTrimmed}/#gift`;
+/** Направления работы */
+const directionsHref = isHome ? '#directions' : `${baseTrimmed}/#directions`;
 
 const defaultNavItems = [
-  { name: 'О нас', href: '#about' },
   { name: 'Туры', href: '#search' },
   { name: 'Журнал', href: journalHref },
+  { name: 'О нас', href: '#about' },
+  { name: 'Направления', href: directionsHref },
+  { name: 'Бизнес', href: businessHref },
   { name: 'Отзывы', href: '#reviews' },
+  { name: 'Награды', href: awardsHref },
+  { name: 'Подарок', href: giftHref },
   { name: 'Вопросы', href: '#faq' },
   { name: 'Команда', href: '#team' },
   { name: 'Контакты', href: '#contacts' },
@@ -44,7 +56,7 @@ const ctaPrefetch = ctaHref.startsWith('/')
   : {};
 
 const navDesktopLinkClass =
-  'relative px-1.5 lg:px-2 py-1.5 lg:py-2 text-[9px] lg:text-[10px] xl:text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-widest whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
+  'relative px-1 lg:px-1.5 py-1.5 lg:py-2 text-[9px] lg:text-[10px] xl:text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-wider whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
 
 const mobileNavRowBase =
   'flex items-center rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
@@ -56,17 +68,24 @@ const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
   id="site-header"
   class="fixed top-0 left-0 right-0 z-50 transition-[transform,opacity] duration-normal"
 >
-  <div class="mx-auto max-w-7xl px-3 sm:px-4 pt-3 md:pt-4">
+  <div
+    class:list={[
+      'mx-auto px-3 sm:px-4 pt-3 md:pt-4',
+      navVariant === 'corp' ? 'max-w-7xl' : 'max-w-screen-2xl',
+    ]}
+  >
     <div
       id="header-inner"
       class:list={[
-        'relative grid items-center gap-4 lg:gap-6 rounded-2xl glass-panel max-md:backdrop-blur-none md:backdrop-blur-xl px-4 py-3 transition-[background-color,border-color,box-shadow] duration-normal',
+        'relative grid items-center gap-3 lg:gap-4 rounded-2xl glass-panel max-md:backdrop-blur-none md:backdrop-blur-xl px-4 py-3 transition-[background-color,border-color,box-shadow] duration-normal',
         navVariant === 'corp'
           ? 'grid-cols-[auto_minmax(0,1fr)_auto]'
-          : 'grid-cols-[1fr_auto_1fr]',
+          : 'grid-cols-[auto_1fr_auto]',
       ]}
     >
-      {/* Логотип: на главной — scroll to top; на corp/cabinet — data-astro-reload (полная перезагрузка для Tourvisor) */}
+      {
+        /* Логотип: на главной — scroll to top; на corp/cabinet — data-astro-reload (полная перезагрузка для Tourvisor) */
+      }
       <a
         href={isHome ? '#' : base}
         id="logo-btn"
@@ -133,7 +152,7 @@ const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
       >
         <a
           href="tel:88002224473"
-          class="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer"
+          class="hidden 2xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer"
         >
           <PhoneOutlineIcon iconClass="w-3.5 h-3.5" />
           8 (800) 222-44-73
@@ -180,7 +199,7 @@ const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
                 <span class="w-1 h-1 rounded-full bg-primary shrink-0" />
                 {item.name}
               </a>
-              {item.name === 'Контакты' ? (
+              {item.name === 'Контакты' && navVariant !== 'corp' ? (
                 <button
                   id="open-favorites-menu"
                   type="button"
@@ -225,8 +244,21 @@ const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
   let menuOpen = false;
   let toggleClickHandler: ((e: Event) => void) | null = null;
 
+  /** Синхронизирует --site-header-h для scroll-mt calc() в секциях Awards, Gift, Business */
+  const syncHeaderHeightVar = () => {
+    const el = document.getElementById('site-header');
+    if (el)
+      document.documentElement.style.setProperty(
+        '--site-header-h',
+        `${el.offsetHeight}px`,
+      );
+  };
+  syncHeaderHeightVar();
+  window.addEventListener('resize', syncHeaderHeightVar);
+
   // Прокрутка к якорям: Desktop — только #search и #content; Mobile — все пункты меню
   const initAnchorScroll = () => {
+    syncHeaderHeightVar();
     const headerEl = document.getElementById('site-header');
     const headerHeight = headerEl ? headerEl.offsetHeight : 64;
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
@@ -267,9 +299,15 @@ const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
     const GAP_PX = -28;
     const SEARCH_GAP = -16; // хедер + минимальный зазор до search widget
     const CORP_CONTENT_GAP = -28;
+    // Секция py-14 (56px) на мобиле: пилюля на 30px ниже хедера → offset = headerHeight - 26
+    const BUSINESS_GAP = -26;
+    // Секции py-16 (64px) на мобиле: пилюля на 60px ниже хедера → offset = headerHeight - 4
+    const AWARDS_GIFT_GAP = -4;
 
     const scrollToAnchor = (e: Event, href: string) => {
-      const id = href.replace(/^#/, '');
+      const raw =
+        href.indexOf('#') >= 0 ? href.slice(href.indexOf('#') + 1) : '';
+      const id = raw;
       if (!id) return;
       const anchor = document.getElementById(id);
       if (!anchor) return;
@@ -277,6 +315,9 @@ const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
       let offset: number;
       if (id === 'search') offset = headerHeight + SEARCH_GAP;
       else if (id === 'content') offset = headerHeight + CORP_CONTENT_GAP;
+      else if (id === 'business') offset = headerHeight + BUSINESS_GAP;
+      else if (id === 'awards' || id === 'gift' || id === 'directions')
+        offset = headerHeight + AWARDS_GIFT_GAP;
       else offset = headerHeight + GAP_PX;
       const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });

@@ -210,7 +210,10 @@ const { class: classes = '' } = Astro.props;
   <!-- ══════════════════════════════════════════════
        БЛОК 4 — НАПРАВЛЕНИЯ РАБОТЫ (нумерованный список)
   ══════════════════════════════════════════════ -->
-  <div class="py-16 md:py-24 bg-gray-50 border-t border-gray-100">
+  <div
+    id="directions"
+    class="py-16 md:py-24 bg-gray-50 border-t border-gray-100 scroll-mt-[calc(var(--site-header-h,5rem)+60px-4rem)] md:scroll-mt-[calc(var(--site-header-h,5rem)+60px-6rem)]"
+  >
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
 
       <!-- Заголовок — асимметричный -->
@@ -270,9 +273,12 @@ const { class: classes = '' } = Astro.props;
   </div>
 
   <!-- ══════════════════════════════════════════════
-       БЛОК 5 — CTA (тёмная полоса)
+       БЛОК 5 — CTA (тёмная полоса), якорь «Бизнес» в хедере
   ══════════════════════════════════════════════ -->
-  <div class="relative overflow-hidden bg-gray-900 py-14 md:py-20 reveal-hidden">
+  <div
+    id="business"
+    class="relative overflow-hidden bg-gray-900 py-14 md:py-20 scroll-mt-[calc(var(--site-header-h,5rem)+30px)]"
+  >
     <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-none md:blur-3xl pointer-events-none -translate-y-1/2"></div>
     <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-none md:blur-3xl pointer-events-none translate-y-1/2"></div>
 

@@ -324,12 +324,12 @@
 #journal,
 #partners,
 #reviews,
-#awards,
 #team,
 #team-list,
 #contacts {
   scroll-margin-top: calc(var(--header-height) + var(--scroll-offset));
 }
+/* #awards и #gift — индивидуальный scroll-mt через Tailwind (с учётом внутреннего padding секции) */
 /* Страница corp: якоря секций */
 #corp-avia,
 #corp-hotels,
