@@ -9,16 +9,15 @@ export const callbackBodySchema = z.object({
 export const giftBodySchema = z.object({
   fio: z.string().min(1).max(200),
   phone: z.string().min(7).max(40),
-  email: z.string().email().max(320),
+  email: z.email().max(320),
   token: z.string().min(1).max(8000),
 });
 
-const optionalEmail = z
-  .string()
-  .max(320)
-  .optional()
-  .transform((v) => (v === '' || v === undefined ? undefined : v))
-  .pipe(z.string().email().max(320).optional());
+/** Пустая строка и undefined → undefined; иначе email ≤320 символов (Zod 4). */
+const optionalEmail = z.preprocess(
+  (val) => (val === '' || val === undefined ? undefined : val),
+  z.email().max(320).optional(),
+);
 
 export const reviewBodySchema = z.object({
   name: z.string().min(1).max(200),
