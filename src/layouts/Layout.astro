@@ -25,6 +25,8 @@ interface Props {
   /** Позиция кнопки «Наверх» (только при showScrollToTop) */
   scrollToTopVariant?: 'default' | 'blog';
   showOfficeWidget?: boolean;
+  /** Виджет офиса: на corp — компактная панель «Связаться» */
+  officeWidgetVariant?: 'default' | 'corp';
   /** Показывать Schema.org JSON-LD (для страниц вроде cabinet/terms/privacy — false) */
   showSchema?: boolean;
 }
@@ -39,6 +41,7 @@ const {
   showScrollToTop = true,
   scrollToTopVariant = 'default',
   showOfficeWidget = true,
+  officeWidgetVariant = 'default',
   showSchema = true,
 } = Astro.props;
 
@@ -238,7 +241,7 @@ const schemaOrgGraph = {
     {/* Skip Link: виден при фокусе (Tab), для клавиатуры и скринридеров */}
     <a
       href="#content"
-      class="fixed left-4 top-0 z-9999 -translate-y-full rounded-b-md bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform duration-fast focus:translate-y-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      class="fixed left-4 top-0 z-9999 -translate-y-full rounded-b-md bg-primary px-4 py-2.5 text-sm font-semibold text-white focus:shadow-lg transition-transform duration-fast focus:translate-y-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       Перейти к содержимому
     </a>
@@ -246,7 +249,9 @@ const schemaOrgGraph = {
     <slot />
     {showScrollToTop && <ScrollToTop variant={scrollToTopVariant} />}
     {showFavorites && <FavoritesWidget />}
-    {showOfficeWidget && <OfficeWidget />}
+    {showOfficeWidget && (
+      <OfficeWidget variant={officeWidgetVariant} />
+    )}
     <CookieBanner />
     <GiftModal />
     <CallbackModal />

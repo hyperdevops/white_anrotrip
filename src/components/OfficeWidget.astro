@@ -1,4 +1,5 @@
 ---
+import PhoneSolidIcon from './PhoneSolidIcon.astro';
 import {
   maxIconPath,
   socialLogoTransform0,
@@ -6,172 +7,354 @@ import {
   telegramIconPath,
   vkIconPath,
 } from '../lib/social-icons';
+
+export interface Props {
+  /**
+   * corp: 1-й ряд — Почта, Телефон, Telegram; главная — Телефон, ВКонтакте, Telegram.
+   * 2-й ряд одинаковый: Канал MAX, Чат TG, Туры MAX.
+   */
+  variant?: 'default' | 'corp';
+}
+
+const { variant = 'default' } = Astro.props;
+
+const CORP_MAIL = 'mailto:anro@anrotrip.ru';
+const CORP_TG_NEWS = 'https://t.me/anrotrip';
+const CORP_TG_CHAT = 'https://t.me/anro_trip';
+const CORP_MAX_CHANNEL =
+  'https://max.ru/u/f9LHodD0cOKNXrTMtvUZWd2zLeGEpz34bQ0i1a-Ur_6EKrIw9H11bR6uhLM';
+const CORP_MAX_BIZ = 'https://max.ru/id6658540239_biz';
+
+const corpItemClass =
+  'group flex min-w-[3.75rem] flex-col items-center gap-1.5 rounded-xl p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
+const corpCircleClass =
+  'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-md ring-1 ring-black/5 transition-[box-shadow,background-color] duration-fast group-hover:shadow-lg';
+
+/** Карточка «Связаться»: без blur; на главной — тень primary, на corp — нейтральная */
+const officeContactCardBase =
+  'w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-gray-200/90 bg-white p-4 font-inter shadow-2xl max-md:max-w-[min(20rem,calc(100vw-1.5rem))]';
+const officeContactCardClass =
+  variant === 'default'
+    ? `${officeContactCardBase} shadow-primary/25`
+    : `${officeContactCardBase} shadow-black/12`;
 ---
 
 {/* z-40 — под хедером (z-50) */}
 <div
   id="office-widget-container"
-  class="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-3 will-change-transform overflow-visible pointer-events-none lg:bottom-5 lg:right-5"
+  class:list={[
+    'fixed bottom-4 right-4 z-40 flex flex-col items-end gap-3 will-change-transform overflow-visible pointer-events-none lg:bottom-5 lg:right-5',
+  ]}
 >
   <div
     id="social-list"
-    class="flex flex-col gap-3 transition-all duration-normal opacity-0 translate-y-4 pointer-events-none scale-90 origin-bottom pb-2"
+    class:list={[
+      'transition-all duration-normal pb-2',
+      'flex flex-col items-end origin-bottom-right',
+      'pointer-events-none scale-90 opacity-0 translate-y-4',
+    ]}
   >
-    {/* TG новости → MAX новости → TG чат → VK → MAX канал */}
-    <a
-      href="https://t.me/anrotrip"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Telegram — Все Новости"
-      class="group flex cursor-pointer flex-col items-center gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-    >
-      <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0088cc] text-white shadow-lg transition-transform group-hover:scale-110"
-      >
-        <svg
-          class="h-7 w-7 shrink-0 overflow-visible text-white"
-          viewBox="0 0 80 80"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
+    {
+      (
+        <div
+          class={officeContactCardClass}
+          role="region"
+          aria-label="Связаться с ANRO TRIP"
         >
-          <g transform={socialLogoTransform0}>
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d={telegramIconPath}></path>
-          </g>
-        </svg>
-      </span>
-      <span
-        class="pointer-events-none max-w-21 rounded-full bg-black/95 px-2.5 py-1 text-center text-[9px] font-bold leading-tight text-[#4db8ea] shadow-[0_3px_14px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.06)_inset] ring-1 ring-[#0088cc]/45 ring-inset"
-        aria-hidden="true">Все новости</span
-      >
-    </a>
-    <a
-      href="https://max.ru/id6658540239_biz"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="MAX — Все Новости"
-      class="group flex cursor-pointer flex-col items-center gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-    >
-      <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#7c3aed] text-white shadow-lg transition-transform group-hover:scale-110"
-      >
-        <svg
-          class="h-7 w-7 shrink-0 overflow-visible text-white"
-          viewBox="80 80 80 80"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <g transform={socialLogoTransform80}>
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d={maxIconPath}></path>
-          </g>
-        </svg>
-      </span>
-      <span
-        class="pointer-events-none max-w-21 rounded-full bg-black/95 px-2.5 py-1 text-center text-[9px] font-bold leading-tight text-[#a78bfa] shadow-[0_3px_14px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.06)_inset] ring-1 ring-[#7c3aed]/50 ring-inset"
-        aria-hidden="true">Все новости</span
-      >
-    </a>
-    <a
-      href="https://t.me/anro_trip"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Telegram — Чат"
-      class="group flex cursor-pointer flex-col items-center gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-    >
-      <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0891b2] text-white shadow-lg transition-transform group-hover:scale-110"
-      >
-        <svg
-          class="h-7 w-7 shrink-0 overflow-visible text-white"
-          viewBox="0 0 80 80"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <g transform={socialLogoTransform0}>
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d={telegramIconPath}></path>
-          </g>
-        </svg>
-      </span>
-      <span
-        class="pointer-events-none max-w-21 rounded-full bg-black/95 px-2.5 py-1 text-center text-[9px] font-bold leading-tight text-[#5ec8df] shadow-[0_3px_14px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.06)_inset] ring-1 ring-[#0891b2]/50 ring-inset"
-        aria-hidden="true">Наш чат</span
-      >
-    </a>
-    <a
-      href="https://vk.com/anrotrip"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="ВКонтакте"
-      class="group flex cursor-pointer flex-col items-center gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-    >
-      <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0077FF] text-white shadow-lg transition-transform group-hover:scale-110"
-      >
-        <svg
-          class="h-7 w-7 shrink-0 overflow-visible text-white"
-          viewBox="0 0 80 80"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <g transform={socialLogoTransform0}>
-            <path fill="currentColor" d={vkIconPath}></path>
-          </g>
-        </svg>
-      </span>
-      <span
-        class="pointer-events-none max-w-21 rounded-full bg-black/95 px-2.5 py-1 text-center text-[9px] font-bold leading-tight text-[#5ca3ff] shadow-[0_3px_14px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.06)_inset] ring-1 ring-[#0077FF]/50 ring-inset"
-        aria-hidden="true">ВКонтакте</span
-      >
-    </a>
-    <a
-      href="https://max.ru/u/f9LHodD0cOKNXrTMtvUZWd2zLeGEpz34bQ0i1a-Ur_6EKrIw9H11bR6uhLM"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="MAX — Наш Канал"
-      class="group flex cursor-pointer flex-col items-center gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-    >
-      <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#5b21b6] text-white shadow-lg transition-transform group-hover:scale-110"
-      >
-        <svg
-          class="h-7 w-7 shrink-0 overflow-visible text-white"
-          viewBox="80 80 80 80"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <g transform={socialLogoTransform80}>
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d={maxIconPath}></path>
-          </g>
-        </svg>
-      </span>
-      <span
-        class="pointer-events-none max-w-21 rounded-full bg-black/95 px-2.5 py-1 text-center text-[9px] font-bold leading-tight text-[#b4a3e8] shadow-[0_3px_14px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.06)_inset] ring-1 ring-[#5b21b6]/55 ring-inset"
-        aria-hidden="true">Наш канал</span
-      >
-    </a>
+          <p class="mb-4 text-center font-montserrat text-lg font-bold tracking-tight text-gray-900">
+            Связаться
+          </p>
+          <div class="flex flex-col gap-4">
+            {variant === 'corp' ? (
+            <!-- 1-й ряд corp: Почта, Телефон, Telegram @anrotrip -->
+            <div
+              class="flex flex-wrap items-start justify-center gap-x-3 gap-y-3 sm:gap-x-4"
+              role="group"
+              aria-label="Почта, телефон, Telegram — новости"
+            >
+              <a
+                href={CORP_MAIL}
+                class={corpItemClass}
+                aria-label="Написать на почту anro@anrotrip.ru"
+              >
+                <span
+                  class:list={[corpCircleClass, 'bg-gray-900 group-hover:bg-gray-800']}
+                >
+                  <svg
+                    class="h-5 w-5 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Почта
+                </span>
+              </a>
+              <a
+                href="tel:88002224473"
+                class={corpItemClass}
+                aria-label="Позвонить: 8 800 222-44-73"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-primary group-hover:bg-primary-dark',
+                  ]}
+                >
+                  <PhoneSolidIcon iconClass="w-5 h-5" colorClass="text-white" />
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Телефон
+                </span>
+              </a>
+              <a
+                href={CORP_TG_NEWS}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={corpItemClass}
+                aria-label="Telegram — все новости (@anrotrip)"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-[#0087cb] group-hover:bg-[#0074b0]',
+                  ]}
+                >
+                  <svg
+                    class="h-5 w-5 shrink-0 text-white"
+                    viewBox="0 0 80 80"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <g transform={socialLogoTransform0}>
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d={telegramIconPath}
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Telegram
+                </span>
+              </a>
+            </div>
+            ) : (
+            <!-- 1-й ряд главная: Телефон, ВКонтакте, Telegram @anrotrip (без почты) -->
+            <div
+              class="flex flex-wrap items-start justify-center gap-x-3 gap-y-3 sm:gap-x-4"
+              role="group"
+              aria-label="Телефон, ВКонтакте, Telegram — новости"
+            >
+              <a
+                href="tel:88002224473"
+                class={corpItemClass}
+                aria-label="Позвонить: 8 800 222-44-73"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-primary group-hover:bg-primary-dark',
+                  ]}
+                >
+                  <PhoneSolidIcon iconClass="w-5 h-5" colorClass="text-white" />
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Телефон
+                </span>
+              </a>
+              <a
+                href="https://vk.com/anrotrip"
+                target="_blank"
+                rel="noopener noreferrer"
+                class={corpItemClass}
+                aria-label="ВКонтакте"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-[#0077FF] group-hover:bg-[#0066dd]',
+                  ]}
+                >
+                  <svg
+                    class="h-5 w-5 shrink-0 text-white"
+                    viewBox="0 0 80 80"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <g transform={socialLogoTransform0}>
+                      <path fill="currentColor" d={vkIconPath} />
+                    </g>
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  ВКонтакте
+                </span>
+              </a>
+              <a
+                href={CORP_TG_NEWS}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={corpItemClass}
+                aria-label="Telegram — все новости (@anrotrip)"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-[#0087cb] group-hover:bg-[#0074b0]',
+                  ]}
+                >
+                  <svg
+                    class="h-5 w-5 shrink-0 text-white"
+                    viewBox="0 0 80 80"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <g transform={socialLogoTransform0}>
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d={telegramIconPath}
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Telegram
+                </span>
+              </a>
+            </div>
+            )}
+            <!-- 2-й ряд: MAX канал, Telegram чат, MAX бизнес -->
+            <div
+              class="flex flex-wrap items-start justify-center gap-x-3 gap-y-3 border-t border-gray-100 pt-4 sm:gap-x-4"
+              role="group"
+              aria-label="MAX и Telegram"
+            >
+              <a
+                href={CORP_MAX_CHANNEL}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={corpItemClass}
+                aria-label="MAX — наш канал"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-[#7b3dec] group-hover:bg-[#6829d4]',
+                  ]}
+                >
+                  <svg
+                    class="h-[18px] w-[18px] shrink-0 text-white"
+                    viewBox="80 80 80 80"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <g transform={socialLogoTransform80}>
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d={maxIconPath}
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Канал
+                </span>
+              </a>
+              <a
+                href={CORP_TG_CHAT}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={corpItemClass}
+                aria-label="Telegram — чат (@anro_trip)"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-[#0087cb] group-hover:bg-[#0074b0]',
+                  ]}
+                >
+                  <svg
+                    class="h-5 w-5 shrink-0 text-white"
+                    viewBox="0 0 80 80"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <g transform={socialLogoTransform0}>
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d={telegramIconPath}
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Чат
+                </span>
+              </a>
+              <a
+                href={CORP_MAX_BIZ}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={corpItemClass}
+                aria-label="MAX — ANRO TRIP туры и авиабилеты"
+              >
+                <span
+                  class:list={[
+                    corpCircleClass,
+                    'bg-[#7b3dec] group-hover:bg-[#6829d4]',
+                  ]}
+                >
+                  <svg
+                    class="h-[18px] w-[18px] shrink-0 text-white"
+                    viewBox="80 80 80 80"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <g transform={socialLogoTransform80}>
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d={maxIconPath}
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span class="text-center text-[11px] font-semibold leading-tight text-gray-600">
+                  Туры
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )
+    }
   </div>
 
   {/* Главная кнопка: pulse, морфинг чат↔крест */}
   <button
     id="office-toggle-btn"
     type="button"
-    aria-label="Открыть контакты офиса и мессенджеры"
+    aria-label="Открыть меню «Связаться»"
     aria-expanded="false"
     aria-controls="social-list"
     class="office-toggle-btn group relative z-10 flex h-14 w-14 cursor-pointer items-center justify-center overflow-visible rounded-full bg-primary text-white shadow-[0_4px_22px_rgba(0,171,179,0.42)] ring-1 ring-white/25 transition-all duration-300 ease-[cubic-bezier(0.34,1.45,0.64,1)] animate-pulse-slow pointer-events-auto hover:scale-[1.06] hover:bg-primary hover:shadow-[0_8px_32px_rgba(0,171,179,0.5)] hover:ring-white/35 active:scale-[0.92] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary [&.is-open]:animate-none [&.is-open]:scale-100 [&.is-open]:shadow-[0_6px_28px_rgba(0,171,179,0.55)] [&.is-open]:ring-2 [&.is-open]:ring-white/40"
