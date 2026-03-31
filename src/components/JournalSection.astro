@@ -51,7 +51,7 @@ const latestPosts = sortedPosts
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5" data-reveal-stagger>
       {
         featuredPost && (
-          <article class="group reveal-hidden md:col-span-3 flex flex-col lg:flex-row rounded-3xl overflow-hidden bg-white border border-primary/15 shadow-[0_8px_40px_rgba(0,171,179,0.18)] hover:shadow-[0_12px_48px_rgba(0,171,179,0.28)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
+          <article class="group reveal-hidden md:col-span-3 flex flex-col lg:flex-row rounded-3xl overflow-hidden bg-white border border-primary/15 shadow-[0_8px_40px_rgba(0,171,179,0.18)] hover:shadow-[0_12px_48px_rgba(0,171,179,0.28)] transition-[opacity,transform,box-shadow] duration-slow">
             <a
               href={siteBlogPost(featuredPost.id)}
               class="relative block overflow-hidden aspect-16/10 lg:w-[58%] lg:shrink-0 lg:aspect-auto lg:min-h-[min(22rem,52vh)]"
@@ -145,7 +145,7 @@ const latestPosts = sortedPosts
       }
       {
         latestPosts.map((post, index) => (
-          <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
+          <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow">
             <!-- Изображение -->
             <a
               href={siteBlogPost(post.id)}
