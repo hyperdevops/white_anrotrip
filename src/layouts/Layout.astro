@@ -136,13 +136,7 @@ const localBusinessChelyabinsk = {
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-      ],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
       opens: '09:00',
       closes: '18:00',
     },
@@ -207,7 +201,9 @@ const schemaOrgGraph = {
     class="bg-white text-gray-900 font-inter antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary-dark"
     data-base={base}
   >
-    {/* Вспышка при загрузке — fade-in 0.5s, учитываем prefers-reduced-motion */}
+    {
+      /* Вспышка при загрузке — fade-in 0.5s, учитываем prefers-reduced-motion */
+    }
     <script is:inline>
       (function () {
         var d = document;
@@ -249,15 +245,15 @@ const schemaOrgGraph = {
     <slot />
     {showScrollToTop && <ScrollToTop variant={scrollToTopVariant} />}
     {showFavorites && <FavoritesWidget />}
-    {showOfficeWidget && (
-      <OfficeWidget variant={officeWidgetVariant} />
-    )}
+    {showOfficeWidget && <OfficeWidget variant={officeWidgetVariant} />}
     <CookieBanner />
     <GiftModal />
     <CallbackModal />
     <ReviewModal />
 
-    {/* Tourvisor не поддерживает View Transition → полная перезагрузка при переходе на главную; при «Назад» из bfcache тоже перезагружаем */}
+    {
+      /* Tourvisor не поддерживает View Transition → полная перезагрузка при переходе на главную; при «Назад» из bfcache тоже перезагружаем */
+    }
     <script is:inline>
       document.addEventListener('astro:before-swap', function (e) {
         var isMainPage = e.newDocument.querySelector(

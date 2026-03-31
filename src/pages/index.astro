@@ -85,7 +85,8 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
         id="search"
         class="absolute -top-32 w-full h-1 scroll-mt-[78px] max-md:scroll-mt-14"
         aria-hidden="true"
-      ></div>
+      >
+      </div>
 
       <!--
          Виджет поиска.
@@ -129,8 +130,7 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
         var headerHeight = headerEl ? headerEl.offsetHeight : 64;
         var isMobile = window.matchMedia('(max-width: 767px)').matches;
         var offset = isMobile ? headerHeight - 16 : 78;
-        var top =
-          anchor.getBoundingClientRect().top + window.scrollY - offset;
+        var top = anchor.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: top, behavior: 'auto' });
       }
 
