@@ -382,7 +382,11 @@ const homeContactBtnBase =
   window.addEventListener('resize', syncHeaderHeightVar);
 
   // Прокрутка к якорям: Desktop — только #search и #content; Mobile — все пункты меню
+  let anchorScrollController: AbortController | null = null;
   const initAnchorScroll = () => {
+    anchorScrollController?.abort();
+    anchorScrollController = new AbortController();
+    const { signal } = anchorScrollController;
     syncHeaderHeightVar();
     const headerEl = document.getElementById('site-header');
     const headerHeight = headerEl ? headerEl.offsetHeight : 64;
@@ -392,31 +396,39 @@ const homeContactBtnBase =
       document
         .querySelectorAll<HTMLAnchorElement>('header a[href="#search"]')
         .forEach((link) => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const anchor = document.getElementById('search');
-            if (anchor) {
-              const top =
-                anchor.getBoundingClientRect().top + window.scrollY - 78;
-              window.scrollTo({ top, behavior: 'smooth' });
-            }
-          });
+          link.addEventListener(
+            'click',
+            (e) => {
+              e.preventDefault();
+              const anchor = document.getElementById('search');
+              if (anchor) {
+                const top =
+                  anchor.getBoundingClientRect().top + window.scrollY - 78;
+                window.scrollTo({ top, behavior: 'smooth' });
+              }
+            },
+            { signal },
+          );
         });
 
       const GAP_PX = 22;
       document
         .querySelectorAll<HTMLAnchorElement>('header a[href="#content"]')
         .forEach((link) => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const anchor = document.getElementById('content');
-            if (anchor) {
-              const offset = headerHeight + GAP_PX;
-              const top =
-                anchor.getBoundingClientRect().top + window.scrollY - offset;
-              window.scrollTo({ top, behavior: 'smooth' });
-            }
-          });
+          link.addEventListener(
+            'click',
+            (e) => {
+              e.preventDefault();
+              const anchor = document.getElementById('content');
+              if (anchor) {
+                const offset = headerHeight + GAP_PX;
+                const top =
+                  anchor.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+              }
+            },
+            { signal },
+          );
         });
       return;
     }
@@ -426,8 +438,8 @@ const homeContactBtnBase =
     const CORP_CONTENT_GAP = -28;
     // Секция py-14 (56px) на мобиле: пилюля на 30px ниже хедера → offset = headerHeight - 26
     const BUSINESS_GAP = -26;
-    // Секции py-16 (64px) на мобиле: пилюля на 60px ниже хедера → offset = headerHeight - 4
-    const AWARDS_GIFT_GAP = -4;
+    // Секции py-16 (64px) на мобиле: пилюля ~36px ниже низа хедера → offset = headerHeight - 28 (см. .doc/header-anchor-scroll.md)
+    const AWARDS_GIFT_GAP = -28;
 
     const scrollToAnchor = (e: Event, href: string) => {
       const raw =
@@ -453,7 +465,9 @@ const homeContactBtnBase =
       .querySelectorAll<HTMLAnchorElement>('header a[href^="#"]:not(#logo-btn)')
       .forEach((link) => {
         const href = link.getAttribute('href') || '';
-        link.addEventListener('click', (e) => scrollToAnchor(e, href));
+        link.addEventListener('click', (e) => scrollToAnchor(e, href), {
+          signal,
+        });
       });
   };
   initAnchorScroll();
