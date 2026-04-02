@@ -1,6 +1,9 @@
 /**
  * Иконки мобильного меню: Font Awesome Free (классы fa-solid / fa-brands) + цвет кружка.
  * Размер задаётся в Header через text-* на <i>.
+ *
+ * default — палитра главной: primary / secondary / cta из @theme.
+ * *-corp — деловой стиль: slate/gray + сбалансированные акценты primary / primary-dark.
  */
 export interface MobileNavIconDef {
   box: string;
@@ -16,19 +19,20 @@ const fallback: MobileNavIconDef = {
 };
 
 const map: Record<string, MobileNavIconDef> = {
+  /* ─── Главная (default) — бренд ANRO TRIP ─── */
   Туры: {
     box: 'bg-primary/12',
     icon: 'text-primary',
     fa: 'fa-solid fa-magnifying-glass',
   },
   Журнал: {
-    box: 'bg-sky-500/12',
-    icon: 'text-sky-600',
+    box: 'bg-secondary/10',
+    icon: 'text-secondary',
     fa: 'fa-solid fa-newspaper',
   },
   'О нас': {
-    box: 'bg-violet-500/12',
-    icon: 'text-violet-600',
+    box: 'bg-primary/10',
+    icon: 'text-primary-dark',
     fa: 'fa-solid fa-circle-info',
   },
   Бизнес: {
@@ -37,28 +41,28 @@ const map: Record<string, MobileNavIconDef> = {
     fa: 'fa-solid fa-briefcase',
   },
   Отзывы: {
-    box: 'bg-amber-500/12',
-    icon: 'text-amber-600',
+    box: 'bg-cta/20',
+    icon: 'text-yellow-900',
     fa: 'fa-solid fa-star',
   },
   Награды: {
-    box: 'bg-[#ffd417]/25',
-    icon: 'text-yellow-700',
+    box: 'bg-cta/22',
+    icon: 'text-yellow-900',
     fa: 'fa-solid fa-trophy',
   },
   Подарок: {
-    box: 'bg-rose-500/12',
-    icon: 'text-rose-600',
+    box: 'bg-cta/18',
+    icon: 'text-yellow-900',
     fa: 'fa-solid fa-gift',
   },
   Вопросы: {
-    box: 'bg-gray-400/15',
-    icon: 'text-gray-600',
+    box: 'bg-gray-400/12',
+    icon: 'text-gray-700',
     fa: 'fa-solid fa-circle-question',
   },
   Команда: {
-    box: 'bg-teal-500/12',
-    icon: 'text-teal-700',
+    box: 'bg-primary-light/14',
+    icon: 'text-primary-dark',
     fa: 'fa-solid fa-users',
   },
   Контакты: {
@@ -67,40 +71,46 @@ const map: Record<string, MobileNavIconDef> = {
     fa: 'fa-solid fa-clipboard-list',
   },
   Избранное: {
-    box: 'bg-red-500/12',
-    icon: 'text-red-600',
+    box: 'bg-secondary/8',
+    icon: 'text-secondary',
     fa: 'fa-solid fa-heart',
   },
-  'О компании': {
-    box: 'bg-secondary/12',
-    icon: 'text-secondary',
+
+  /* ─── CORP: нейтраль + ритм primary / primary-dark (бизнес, без «сплошного серого») ─── */
+  'О компании-corp': {
+    box: 'bg-slate-400/10',
+    icon: 'text-primary-dark/90',
     fa: 'fa-solid fa-building',
   },
-  Авиабилеты: {
-    box: 'bg-sky-500/12',
-    icon: 'text-sky-600',
+  'Авиабилеты-corp': {
+    box: 'bg-primary-light/12',
+    icon: 'text-primary-dark/90',
     fa: 'fa-solid fa-plane-departure',
   },
-  Отели: {
-    box: 'bg-violet-500/12',
-    icon: 'text-violet-600',
+  'Отели-corp': {
+    box: 'bg-slate-400/10',
+    icon: 'text-primary/80',
     fa: 'fa-solid fa-hotel',
   },
-  Трансфер: {
-    box: 'bg-amber-500/12',
-    icon: 'text-amber-700',
-    fa: 'fa-solid fa-car-side',
+  'Туры-corp': {
+    box: 'bg-primary/10',
+    icon: 'text-primary-dark',
+    fa: 'fa-solid fa-magnifying-glass',
   },
-  /** Только corp: мобильное меню — в ряду sky / violet / primary / emerald гармонирует как «между» небом и бренд-teal */
   'Трансфер-corp': {
-    box: 'bg-cyan-500/12',
-    icon: 'text-cyan-700',
+    box: 'bg-gray-400/10',
+    icon: 'text-primary-dark/85',
     fa: 'fa-solid fa-car-side',
   },
-  Преимущества: {
-    box: 'bg-emerald-500/12',
-    icon: 'text-emerald-700',
+  'Преимущества-corp': {
+    box: 'bg-primary/8',
+    icon: 'text-primary/88',
     fa: 'fa-solid fa-wand-magic-sparkles',
+  },
+  'Контакты-corp': {
+    box: 'bg-primary-dark/10',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-clipboard-list',
   },
 };
 
@@ -108,8 +118,9 @@ export function getMobileNavIcon(
   label: string,
   navVariant: 'default' | 'corp' = 'default',
 ): MobileNavIconDef {
-  if (navVariant === 'corp' && label === 'Трансфер') {
-    return map['Трансфер-corp'];
+  const corpLabel = `${label}-corp`;
+  if (navVariant === 'corp' && map[corpLabel]) {
+    return map[corpLabel];
   }
   return map[label] ?? fallback;
 }
