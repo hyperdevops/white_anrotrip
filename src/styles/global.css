@@ -8,6 +8,11 @@
 @import '@fontsource/montserrat/700.css';
 @import '@fontsource/montserrat/800.css';
 
+/* Font Awesome Free — solid + brands (Telegram и др.; regular не подключаем) */
+@import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+@import '@fortawesome/fontawesome-free/css/solid.min.css';
+@import '@fortawesome/fontawesome-free/css/brands.min.css';
+
 /* View Transitions: не блокировать клики после анимации + плавная длительность */
 ::view-transition-group(*),
 ::view-transition-old(*),

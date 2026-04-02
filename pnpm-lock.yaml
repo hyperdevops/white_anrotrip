@@ -23,6 +23,9 @@ importers:
       '@fontsource/montserrat':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fortawesome/fontawesome-free':
+        specifier: ^7.2.0
+        version: 7.2.0
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.2))
@@ -517,8 +520,12 @@ packages:
   '@fontsource/montserrat@5.2.8':
     resolution: {integrity: sha512-xTjLxSbSfCycDB0pwmNsfNvdfWPaDaRQ2LC6yt/ZI7SdvXG52zHnzNYC/09mzuAuWNJyShkteutfCoDgym56hQ==}
 
-  '@iconify/tools@5.0.6':
-    resolution: {integrity: sha512-94dmgES3W9j3Z9xcxSZh6sLBIYwVFykcIER3vV1DTTF/g3Eyr/kG3/QNm4GNhqKoXexg5tmCtVA9AAilO81e4w==}
+  '@fortawesome/fontawesome-free@7.2.0':
+    resolution: {integrity: sha512-3DguDv/oUE+7vjMeTSOjCSG+KeawgVQOHrKRnvUuqYh1mfArrh7s+s8hXW3e4RerBA1+Wh+hBqf8sJNpqNrBWg==}
+    engines: {node: '>=6'}
+
+  '@iconify/tools@5.0.11':
+    resolution: {integrity: sha512-zur/06/zTSflUSoPARK5FfHNZQ9UYsoloPDQHLAZHbQqWhs0/tXS+KB70uOAt94dUB1F94JOkSqIOT2R4Deixg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1711,8 +1718,8 @@ packages:
   mlly@1.8.0:
     resolution: {integrity: sha512-l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==}
 
-  modern-tar@0.7.5:
-    resolution: {integrity: sha512-YTefgdpKKFgoTDbEUqXqgUJct2OG6/4hs4XWLsxcHkDLj/x/V8WmKIRppPnXP5feQ7d1vuYWSp3qKkxfwaFaxA==}
+  modern-tar@0.7.6:
+    resolution: {integrity: sha512-sweCIVXzx1aIGTCdzcMlSZt1h8k5Tmk08VNAuRk3IU28XamGiOH5ypi11g6De2CH7PhYqSSnGy2A/EFhbWnVKg==}
     engines: {node: '>=18.0.0'}
 
   mrmime@2.0.1:
@@ -2033,10 +2040,6 @@ packages:
     resolution: {integrity: sha512-Ae3OVUqifDw0wBriIBS7yVaW44Dp6eSHQcyq4Igc7eN2TJH/2YsicswaW+J/OuMvhpDPOKEgpAZCjkb4hpoyeA==}
     engines: {node: ^16.14.0 || >= 17.3.0}
 
-  tinyexec@1.0.2:
-    resolution: {integrity: sha512-W/KYk+NFhkmsYpuHq5JykngiOCnxeVL8v8dFnqxSD8qEEdRfXk1SDM6JzNqcERbcGYj9tMrDQBYV9cjgnunFIg==}
-    engines: {node: '>=18'}
-
   tinyexec@1.0.4:
     resolution: {integrity: sha512-u9r3uZC0bdpGOXtlxUIdwf9pkmvhqJdrVCH9fapQtgy/OeTTMZ1nqH7agtvEfmGui6e1XxjcdrlxvxJvc3sMqw==}
     engines: {node: '>=18'}
@@ -2289,7 +2292,7 @@ snapshots:
   '@antfu/install-pkg@1.1.0':
     dependencies:
       package-manager-detector: 1.6.0
-      tinyexec: 1.0.2
+      tinyexec: 1.0.4
 
   '@astrojs/compiler@2.13.0': {}
 
@@ -2695,13 +2698,15 @@ snapshots:
 
   '@fontsource/montserrat@5.2.8': {}
 
-  '@iconify/tools@5.0.6':
+  '@fortawesome/fontawesome-free@7.2.0': {}
+
+  '@iconify/tools@5.0.11':
     dependencies:
       '@cyberalien/svg-utils': 1.2.8
       '@iconify/types': 2.0.0
       '@iconify/utils': 3.1.0
       fflate: 0.8.2
-      modern-tar: 0.7.5
+      modern-tar: 0.7.6
       pathe: 2.0.3
       svgo: 4.0.1
 
@@ -3080,7 +3085,7 @@ snapshots:
 
   astro-iconify@1.2.0:
     dependencies:
-      '@iconify/tools': 5.0.6
+      '@iconify/tools': 5.0.11
       node-fetch: 3.3.2
       resolve-pkg: 2.0.0
       svgo: 3.3.2
@@ -4060,7 +4065,7 @@ snapshots:
       pkg-types: 1.3.1
       ufo: 1.6.3
 
-  modern-tar@0.7.5: {}
+  modern-tar@0.7.6: {}
 
   mrmime@2.0.1: {}
 
@@ -4474,8 +4479,6 @@ snapshots:
   tiny-inflate@1.0.3: {}
 
   tinyclip@0.1.12: {}
-
-  tinyexec@1.0.2: {}
 
   tinyexec@1.0.4: {}
 
