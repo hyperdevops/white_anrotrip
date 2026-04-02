@@ -7,6 +7,7 @@
 	},
 	"scripts": {
 		"dev": "astro dev",
+		"check": "astro check",
 		"build": "astro build",
 		"prebuild": "pnpm optimize:images",
 		"optimize:images": "node scripts/optimize-images.mjs",
@@ -29,8 +30,10 @@
 		"zod": "^4.0.0"
 	},
 	"devDependencies": {
+		"@astrojs/check": "^0.9.8",
 		"cspell": "^9.7.0",
-		"prettier-plugin-astro": "^0.14.1"
+		"prettier-plugin-astro": "^0.14.1",
+		"typescript": "^5.7.3"
 	},
 	"pnpm": {
 		"overrides": {
