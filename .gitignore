@@ -15,13 +15,14 @@ dist/
 .env.*
 !.env.example
 
-# --- Специфический мусор от ИИ и редакторов ---
+# --- Специфические файлы от ИИ и редакторов ---
 .cursor/
 .cursorignore
 .cursorrules
 .qwen/
 .agents/
 .kilocode/
+.kilocodemodes
 .serena/
 .specify/
 .doc/
@@ -32,6 +33,7 @@ QWEN.md
 skillkit.yaml
 skills-lock.json
 convert-to-webp.js
+scripts/
 
 # --- Настройки редакторов и системы ---
 .vscode/
