@@ -7,6 +7,7 @@ import {
   socialLogoTransform80,
   telegramIconPath,
 } from '../lib/social-icons';
+import { getMobileNavIcon } from '../lib/mobile-nav-icons';
 import { siteCabinet, siteHome } from '../lib/site-urls';
 import PhoneSolidIcon from './PhoneSolidIcon.astro';
 
@@ -69,13 +70,21 @@ const navDesktopLinkClass =
   'relative px-1.5 lg:px-2 py-1.5 lg:py-2 text-[9px] lg:text-[10px] xl:text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-wide whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
 
 const mobileNavRowBase =
-  'flex items-center rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
-const mobileNavItemClass = `${mobileNavRowBase} gap-3`;
-const mobileTelRowClass = `${mobileNavRowBase} gap-2`;
+  'flex w-full items-center gap-3 rounded-xl px-2 py-2 text-sm font-semibold text-gray-800 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 max-[height:640px]:py-1.5 max-[height:520px]:gap-2.5 max-[height:520px]:py-1.5';
+const mobileNavItemClass = mobileNavRowBase;
+
+/** Иконка «Избранное» в хедере (mobile) — тот же стиль, что в mobile-nav-icons «Избранное» */
+const favHeaderIcon = getMobileNavIcon('Избранное');
 
 /** Круглые кнопки связи (только главная): общая база, как у соцкнопок в OfficeWidget/Footer */
 const homeContactBtnBase =
   'inline-flex shrink-0 items-center justify-center rounded-full shadow-sm transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+
+/** Иконка в ряду «Звонок / Telegram / MAX»: как у телефона — 1.125rem → 16px на узкой высоте окна */
+const homeContactIconBox =
+  'flex h-4.5 w-full shrink-0 items-center justify-center max-[height:520px]:h-4';
+const homeContactIconText =
+  'text-[9px] font-bold uppercase tracking-wide leading-none whitespace-nowrap';
 ---
 
 <header
@@ -183,77 +192,6 @@ const homeContactBtnBase =
         {
           homeQuickContacts ? (
             <>
-              <div
-                class="flex lg:hidden items-center gap-1 shrink-0"
-                role="group"
-                aria-label="Связь: телефон, Telegram, MAX"
-              >
-                <a
-                  href="tel:88002224473"
-                  class:list={[
-                    homeContactBtnBase,
-                    'h-7 w-7 bg-primary text-white hover:bg-primary-dark focus-visible:ring-primary focus-visible:ring-offset-white',
-                  ]}
-                  aria-label="Позвонить: 8 800 222-44-73"
-                >
-                  <PhoneSolidIcon
-                    iconClass="w-3.5 h-3.5"
-                    colorClass="text-white"
-                  />
-                </a>
-                <a
-                  href={HEADER_TG_CHAT}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class:list={[
-                    homeContactBtnBase,
-                    'h-7 w-7 bg-[#0087cb] text-white hover:bg-[#0074b0] focus-visible:ring-sky-400 focus-visible:ring-offset-white',
-                  ]}
-                  aria-label="Написать в Telegram — чат ANRO TRIP"
-                >
-                  <svg
-                    class="h-5 w-5 shrink-0 text-white"
-                    viewBox="0 0 80 80"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <g transform={socialLogoTransform0}>
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d={telegramIconPath}
-                      />
-                    </g>
-                  </svg>
-                </a>
-                <a
-                  href={HEADER_MAX_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class:list={[
-                    homeContactBtnBase,
-                    'h-7 w-7 bg-[#7b3dec] text-white hover:bg-[#6829d4] focus-visible:ring-violet-400 focus-visible:ring-offset-white',
-                  ]}
-                  aria-label="Открыть в MAX"
-                >
-                  <svg
-                    class="h-[14px] w-[14px] shrink-0 text-white"
-                    viewBox="80 80 80 80"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <g transform={socialLogoTransform80}>
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d={maxIconPath}
-                      />
-                    </g>
-                  </svg>
-                </a>
-              </div>
               <a
                 href="tel:88002224473"
                 class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
@@ -287,6 +225,27 @@ const homeContactBtnBase =
           {ctaText}
         </a>
 
+        {
+          navVariant !== 'corp' ? (
+            <button
+              type="button"
+              id="open-favorites-header"
+              class:list={[
+                'lg:hidden flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-primary/10 transition-[background-color,opacity] duration-fast hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+              ]}
+              aria-label="Открыть избранное (корзину туров)"
+            >
+              <i
+                class:list={[
+                  ...favHeaderIcon.fa.split(' '),
+                  'block text-base leading-none text-primary',
+                ]}
+                aria-hidden="true"
+              />
+            </button>
+          ) : null
+        }
+
         <button
           id="menu-toggle"
           class="lg:hidden flex flex-col gap-1.25 p-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
@@ -307,51 +266,174 @@ const homeContactBtnBase =
     </div>
   </div>
 
+  <!-- Мобильное меню: затемнение + шторка выше хедера (z-50), логотип и бургер под блюром/затемнением -->
+  <div
+    id="mobile-menu-backdrop"
+    class="fixed inset-0 z-55 bg-black/55 backdrop-blur-md max-md:backdrop-blur-sm lg:hidden transition-opacity duration-500 ease-out opacity-0 pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
   <div
     id="mobile-menu"
-    class="fixed top-20 right-4 w-56 bg-white/95 rounded-2xl border border-white/40 shadow-2xl shadow-black/15 lg:hidden z-40 transition-[opacity,transform] duration-250 ease-out opacity-0 -translate-y-3 pointer-events-none"
+    class="fixed top-[max(0.5rem,env(safe-area-inset-top))] right-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-56 flex w-[min(268px,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white touch-pan-y lg:hidden translate-x-[calc(100%+0.5rem)] transform-gpu shadow-xl shadow-black/10 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] will-change-transform pointer-events-none motion-reduce:duration-0"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Меню сайта"
   >
-    <nav class="flex flex-col p-2" aria-label="Меню">
-      <ul class="flex flex-col gap-0.5">
-        {
-          navItems.map((item) => (
-            <li>
-              <a href={item.href} class={mobileNavItemClass}>
-                <span class="w-1 h-1 rounded-full bg-primary shrink-0" />
-                {item.name}
-              </a>
-              {item.name === 'Контакты' && navVariant !== 'corp' ? (
-                <button
-                  id="open-favorites-menu"
-                  type="button"
-                  class:list={[mobileNavItemClass, 'mt-0.5 w-full']}
-                  aria-label="Открыть избранное (корзину туров)"
-                >
-                  <span class="w-1 h-1 rounded-full bg-primary shrink-0" />
-                  Избранное
-                </button>
-              ) : null}
-            </li>
-          ))
-        }
-      </ul>
-      <div class="my-1.5 h-px bg-gray-100 mx-2"></div>
-      {
-        !homeQuickContacts ? (
-          <a href="tel:88002224473" class={mobileTelRowClass}>
-            <PhoneSolidIcon iconClass="w-4 h-4" colorClass="text-primary" />8
-            (800) 222-44-73
-          </a>
-        ) : null
-      }
-      <a
-        href={ctaHref}
-        class="header-cta-btn btn-ripple mx-2 mb-1 mt-0.5 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white hover:bg-primary-dark cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-        {...ctaPrefetch}
+    <div class="flex h-full min-h-0 w-full flex-col overflow-hidden pt-1.5">
+      <nav
+        class="flex min-h-0 flex-1 flex-col overflow-hidden"
+        aria-label="Меню"
       >
-        {ctaText}
-      </a>
-    </nav>
+        <div
+          class="flex min-h-0 flex-1 flex-col gap-0 overflow-y-auto overscroll-contain px-1.5 pb-1.5 [-webkit-overflow-scrolling:touch]"
+        >
+          <div
+            class="flex shrink-0 flex-col gap-1.5 pt-0.5 max-[height:560px]:gap-1"
+          >
+            <a
+              href={ctaHref}
+              class="header-cta-btn btn-ripple mb-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 transition-[background-color,box-shadow] duration-fast hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 max-[height:680px]:mb-3 max-[height:560px]:mb-3 max-[height:560px]:py-2.5 max-[height:480px]:mb-2.5 max-[height:480px]:py-2 max-[height:480px]:text-[13px]"
+              {...ctaPrefetch}
+            >
+              <i
+                class="fa-solid fa-circle-user text-lg leading-none text-white"
+                aria-hidden="true"></i>
+              {ctaText}
+            </a>
+          </div>
+          <div
+            class="mx-1 mb-2 h-px shrink-0 bg-linear-to-r from-transparent via-gray-200 to-transparent"
+            aria-hidden="true"
+          >
+          </div>
+          <ul
+            class="flex flex-col gap-0 pb-0.5 max-[height:640px]:gap-0 max-[height:520px]:gap-0"
+          >
+            {
+              navItems.map((item) => {
+                const navIcon = getMobileNavIcon(item.name, navVariant);
+                return (
+                  <>
+                    <li>
+                      <a href={item.href} class={mobileNavItemClass}>
+                        <span
+                          class:list={[
+                            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 max-[height:520px]:h-8 max-[height:520px]:w-8',
+                            navIcon.box,
+                          ]}
+                        >
+                          <i
+                            class:list={[
+                              ...navIcon.fa.split(' '),
+                              navIcon.icon,
+                              'block text-[1.125rem] leading-none max-[height:520px]:text-base',
+                            ]}
+                            aria-hidden="true"
+                          />
+                        </span>
+                        <span class="min-w-0 flex-1 text-left leading-snug">
+                          {item.name}
+                        </span>
+                      </a>
+                    </li>
+                    {item.name === 'Контакты' ? (
+                      <li class="list-none py-0" aria-hidden="true">
+                        <div class="mx-1 mb-2 h-px shrink-0 bg-linear-to-r from-transparent via-gray-200 to-transparent" />
+                      </li>
+                    ) : null}
+                  </>
+                );
+              })
+            }
+          </ul>
+        </div>
+        <div
+          class="mt-auto shrink-0 bg-white px-1.5 pt-2 pb-1.5 max-[height:560px]:pt-1.5 max-[height:520px]:pt-1"
+        >
+          <div
+            class="grid grid-cols-3 gap-2 max-[height:520px]:gap-1.5"
+            role="group"
+            aria-label="Связь: телефон, Telegram, MAX"
+          >
+            <a
+              href="tel:88002224473"
+              class:list={[
+                homeContactBtnBase,
+                'h-12 w-full flex-col gap-1 rounded-full border border-primary/15 bg-primary text-white shadow-md shadow-primary/15 hover:bg-primary-dark focus-visible:ring-primary focus-visible:ring-offset-2 max-[height:560px]:h-10 max-[height:480px]:h-9 max-[height:480px]:gap-0.5 max-[height:480px]:py-1',
+              ]}
+              aria-label="Позвонить: 8 800 222-44-73"
+            >
+              <span class={homeContactIconBox}>
+                <i
+                  class="fa-solid fa-phone block text-[1.125rem] leading-none text-white max-[height:520px]:text-base"
+                  aria-hidden="true"></i>
+              </span>
+              <span class={homeContactIconText}>Звонок</span>
+            </a>
+            <a
+              href={HEADER_TG_CHAT}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[
+                homeContactBtnBase,
+                'h-12 w-full flex-col gap-1 overflow-visible rounded-full border border-sky-500/20 bg-[#0087cb] text-white shadow-md shadow-sky-500/20 hover:bg-[#0074b0] focus-visible:ring-sky-400 focus-visible:ring-offset-2 max-[height:560px]:h-10 max-[height:480px]:h-9 max-[height:480px]:gap-0.5 max-[height:480px]:py-1',
+              ]}
+              aria-label="Написать в Telegram — чат ANRO TRIP"
+            >
+              <span class:list={[homeContactIconBox, 'overflow-visible']}>
+                <svg
+                  class="block size-4.5 shrink-0 origin-center scale-[1.50] text-white max-[height:520px]:size-4 max-[height:520px]:scale-140"
+                  viewBox="0 0 80 80"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <g transform={socialLogoTransform0}>
+                    <path
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d={telegramIconPath}></path>
+                  </g>
+                </svg>
+              </span>
+              <span class={homeContactIconText}>Telegram</span>
+            </a>
+            <a
+              href={HEADER_MAX_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[
+                homeContactBtnBase,
+                'h-12 w-full flex-col gap-1 rounded-full border border-violet-400/25 bg-[#7b3dec] text-white shadow-md shadow-violet-500/20 hover:bg-[#6829d4] focus-visible:ring-violet-400 focus-visible:ring-offset-2 max-[height:560px]:h-10 max-[height:480px]:h-9 max-[height:480px]:gap-0.5 max-[height:480px]:py-1',
+              ]}
+              aria-label="Открыть в MAX"
+            >
+              {
+                /* Логотип MAX — только SVG из social-icons (как на всём сайте); не менять на FA */
+              }
+              <span class={homeContactIconBox}>
+                <svg
+                  class="block size-4.5 shrink-0 text-white max-[height:520px]:size-4"
+                  viewBox="80 80 80 80"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <g transform={socialLogoTransform80}>
+                    <path
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d={maxIconPath}></path>
+                  </g>
+                </svg>
+              </span>
+              <span class={homeContactIconText}>MAX</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -360,6 +442,9 @@ const homeContactBtnBase =
     'menu-toggle',
   ) as HTMLButtonElement | null;
   let menu = document.getElementById('mobile-menu') as HTMLElement | null;
+  let backdrop = document.getElementById(
+    'mobile-menu-backdrop',
+  ) as HTMLElement | null;
   const logoBtn = document.getElementById(
     'logo-btn',
   ) as HTMLAnchorElement | null;
@@ -368,6 +453,8 @@ const homeContactBtnBase =
   ) as HTMLElement | null;
   let menuOpen = false;
   let toggleClickHandler: ((e: Event) => void) | null = null;
+  let favoritesHeaderHandler: ((e: Event) => void) | null = null;
+  let menuSwipeAbort: AbortController | null = null;
 
   /** Синхронизирует --site-header-h для scroll-mt calc() в секциях Awards, Gift, Business */
   const syncHeaderHeightVar = () => {
@@ -529,47 +616,42 @@ const homeContactBtnBase =
   initLogoClick();
   document.addEventListener('astro:page-load', initLogoClick);
 
+  const clearMenuDrawerInlineTransform = () => {
+    if (!menu) return;
+    menu.style.transform = '';
+    menu.style.transition = '';
+  };
+
   const openMenu = () => {
     if (!menu || !toggleBtn) return;
+    clearMenuDrawerInlineTransform();
     menuOpen = true;
-    menu.classList.remove('opacity-0', '-translate-y-3', 'pointer-events-none');
-    menu.classList.add('opacity-100', 'translate-y-0');
-    toggleBtn.setAttribute('aria-expanded', 'true');
-    const bars = toggleBtn.querySelectorAll('span');
-    bars[0]?.classList.add('rotate-45', 'translate-y-[7px]');
-    bars[1]?.classList.add('opacity-0', 'scale-x-0');
-    bars[2]?.classList.add(
-      '-rotate-45',
-      '-translate-y-[7px]',
-      'w-5',
-      'self-auto',
+    backdrop?.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop?.classList.add('opacity-100', 'pointer-events-auto');
+    backdrop?.setAttribute('aria-hidden', 'false');
+    menu.classList.remove(
+      'translate-x-[calc(100%+0.5rem)]',
+      'pointer-events-none',
     );
+    menu.classList.add('translate-x-0', 'pointer-events-auto');
+    document.body.classList.add('overflow-hidden');
+    toggleBtn.setAttribute('aria-expanded', 'true');
   };
 
   const closeMenu = () => {
     if (!menu || !toggleBtn) return;
-    const menuEl = menu;
+    clearMenuDrawerInlineTransform();
     menuOpen = false;
-    toggleBtn.setAttribute('aria-expanded', 'false');
-    menuEl.style.transition = 'none';
-    menuEl.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
-    menuEl.classList.remove('opacity-100', 'translate-y-0');
-    requestAnimationFrame(() => {
-      menuEl.style.transition = '';
-    });
-    const bars = toggleBtn.querySelectorAll('span');
-    bars.forEach((b) => ((b as HTMLElement).style.transition = 'none'));
-    bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
-    bars[1]?.classList.remove('opacity-0', 'scale-x-0');
-    bars[2]?.classList.remove(
-      '-rotate-45',
-      '-translate-y-[7px]',
-      'w-5',
-      'self-auto',
+    backdrop?.classList.add('opacity-0', 'pointer-events-none');
+    backdrop?.classList.remove('opacity-100', 'pointer-events-auto');
+    backdrop?.setAttribute('aria-hidden', 'true');
+    menu.classList.add(
+      'translate-x-[calc(100%+0.5rem)]',
+      'pointer-events-none',
     );
-    requestAnimationFrame(() => {
-      bars.forEach((b) => ((b as HTMLElement).style.transition = ''));
-    });
+    menu.classList.remove('translate-x-0', 'pointer-events-auto');
+    document.body.classList.remove('overflow-hidden');
+    toggleBtn.setAttribute('aria-expanded', 'false');
   };
 
   const initMobileMenu = () => {
@@ -577,24 +659,53 @@ const homeContactBtnBase =
       'menu-toggle',
     ) as HTMLButtonElement | null;
     menu = document.getElementById('mobile-menu') as HTMLElement | null;
+    backdrop = document.getElementById(
+      'mobile-menu-backdrop',
+    ) as HTMLElement | null;
     headerInner = document.getElementById('header-inner') as HTMLElement | null;
     onScroll();
-    if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
+
+    const favHeaderBtn = document.getElementById(
+      'open-favorites-header',
+    ) as HTMLButtonElement | null;
+    if (favoritesHeaderHandler && favHeaderBtn) {
+      favHeaderBtn.removeEventListener('click', favoritesHeaderHandler);
+    }
+    favoritesHeaderHandler = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const w = window as Window & { openFavoritesWidget?: () => void };
+      w.openFavoritesWidget?.();
+      if (menuOpen) closeMenu();
+    };
+    favHeaderBtn?.addEventListener('click', favoritesHeaderHandler);
+
+    const resetDrawerClosed = () => {
+      clearMenuDrawerInlineTransform();
+      backdrop?.classList.add('opacity-0', 'pointer-events-none');
+      backdrop?.classList.remove('opacity-100', 'pointer-events-auto');
+      backdrop?.setAttribute('aria-hidden', 'true');
+      menu?.classList.add(
+        'translate-x-[calc(100%+0.5rem)]',
+        'pointer-events-none',
+      );
+      menu?.classList.remove('translate-x-0', 'pointer-events-auto');
+      document.body.classList.remove('overflow-hidden');
+    };
+
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      menuSwipeAbort?.abort();
+      menuSwipeAbort = null;
+      resetDrawerClosed();
+      menuOpen = false;
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+      return;
+    }
     if (!toggleBtn || !menu) return;
 
     menuOpen = false;
-    menu.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
-    menu.classList.remove('opacity-100', 'translate-y-0');
+    resetDrawerClosed();
     toggleBtn.setAttribute('aria-expanded', 'false');
-    const bars = toggleBtn.querySelectorAll('span');
-    bars[0]?.classList.remove('rotate-45', 'translate-y-[7px]');
-    bars[1]?.classList.remove('opacity-0', 'scale-x-0');
-    bars[2]?.classList.remove(
-      '-rotate-45',
-      '-translate-y-[7px]',
-      'w-5',
-      'self-auto',
-    );
 
     if (toggleClickHandler)
       toggleBtn.removeEventListener('click', toggleClickHandler);
@@ -608,15 +719,97 @@ const homeContactBtnBase =
       link.addEventListener('click', () => closeMenu());
     });
 
-    const favoritesBtn = document.getElementById(
-      'open-favorites-menu',
-    ) as HTMLButtonElement | null;
-    favoritesBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const w = window as Window & { openFavoritesWidget?: () => void };
-      w.openFavoritesWidget?.();
-      closeMenu();
+    /** Свайп вправо по панели или затемнению — закрыть шторку (до breakpoint lg) */
+    menuSwipeAbort?.abort();
+    menuSwipeAbort = new AbortController();
+    const swipeSig = menuSwipeAbort.signal;
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+    let swipeDragging = false;
+
+    const onSwipeStart = (e: TouchEvent) => {
+      if (!menuOpen || e.touches.length !== 1) return;
+      swipeStartX = e.touches[0].clientX;
+      swipeStartY = e.touches[0].clientY;
+      swipeDragging = false;
+    };
+
+    const onSwipeMove = (e: TouchEvent) => {
+      if (!menuOpen || !menu || e.touches.length !== 1) return;
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+      const dx = x - swipeStartX;
+      const dy = y - swipeStartY;
+      if (!swipeDragging) {
+        if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+        if (Math.abs(dy) >= Math.abs(dx)) return;
+        if (dx <= 0) return;
+        swipeDragging = true;
+        menu.style.transition = 'none';
+      }
+      if (swipeDragging) {
+        e.preventDefault();
+        const w = menu.offsetWidth;
+        const clamped = Math.min(Math.max(0, dx), w);
+        menu.style.transform = `translate3d(${clamped}px, 0, 0)`;
+      }
+    };
+
+    const onSwipeEnd = (e: TouchEvent) => {
+      if (!menu) return;
+      const wasDragging = swipeDragging;
+      swipeDragging = false;
+      if (!menuOpen) return;
+      const x = e.changedTouches[0]?.clientX ?? swipeStartX;
+      const dx = x - swipeStartX;
+      const w = menu.offsetWidth;
+      menu.style.transition = '';
+      menu.style.transform = '';
+      if (!wasDragging) return;
+      const threshold = Math.min(96, Math.max(64, w * 0.22));
+      if (dx > threshold) closeMenu();
+    };
+
+    const onSwipeCancel = () => {
+      swipeDragging = false;
+      if (menu) {
+        menu.style.transition = '';
+        menu.style.transform = '';
+      }
+    };
+
+    const swipeOpts = { signal: swipeSig };
+    menu.addEventListener('touchstart', onSwipeStart, {
+      ...swipeOpts,
+      passive: true,
+    });
+    menu.addEventListener('touchmove', onSwipeMove, {
+      ...swipeOpts,
+      passive: false,
+    });
+    menu.addEventListener('touchend', onSwipeEnd, {
+      ...swipeOpts,
+      passive: true,
+    });
+    menu.addEventListener('touchcancel', onSwipeCancel, {
+      ...swipeOpts,
+      passive: true,
+    });
+    backdrop?.addEventListener('touchstart', onSwipeStart, {
+      ...swipeOpts,
+      passive: true,
+    });
+    backdrop?.addEventListener('touchmove', onSwipeMove, {
+      ...swipeOpts,
+      passive: false,
+    });
+    backdrop?.addEventListener('touchend', onSwipeEnd, {
+      ...swipeOpts,
+      passive: true,
+    });
+    backdrop?.addEventListener('touchcancel', onSwipeCancel, {
+      ...swipeOpts,
+      passive: true,
     });
   };
   initMobileMenu();
@@ -624,8 +817,13 @@ const homeContactBtnBase =
 
   document.addEventListener('click', (e) => {
     const target = e.target;
+    const favHeader = document.getElementById('open-favorites-header');
     if (menuOpen && menu && target instanceof Node) {
-      if (!menu.contains(target) && !toggleBtn?.contains(target)) {
+      if (
+        !menu.contains(target) &&
+        !toggleBtn?.contains(target) &&
+        !favHeader?.contains(target)
+      ) {
         closeMenu();
       }
     }
