@@ -121,14 +121,15 @@ const reviewCount = reviews.length;
   <div
     id="lightbox"
     class="fixed inset-0 z-2147483647 bg-black/95 hidden items-center justify-center opacity-0 transition-opacity duration-normal select-none backdrop-blur-sm cursor-zoom-in overflow-hidden"
-    onclick="toggleZoom(event)"
   >
     <!-- Панель управления -->
-    <div class="absolute top-0 right-0 p-5 flex gap-3 z-2147483649" onclick="event.stopPropagation()">
+    <div
+      id="lightbox-top-bar"
+      class="absolute top-0 right-0 p-5 flex gap-3 z-2147483649"
+    >
       <button
         type="button"
         aria-label="Увеличить или уменьшить"
-        onclick="toggleZoom(event)"
         class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-[background-color,transform] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
         id="zoom-btn"
       >
@@ -160,7 +161,7 @@ const reviewCount = reviews.length;
     <!-- Стрелки: зона клика только в области стрелок, не перекрывает кнопки закрытия/зума -->
     <div
       class="absolute left-0 top-24 bottom-16 w-20 z-2147483649 cursor-pointer"
-      onclick="event.stopPropagation(); changeSlide(-1)"
+      data-lightbox-arrow="prev"
       role="button"
       tabindex="-1"
       aria-label="Предыдущий отзыв"
@@ -177,7 +178,7 @@ const reviewCount = reviews.length;
     </div>
     <div
       class="absolute right-0 top-24 bottom-16 w-20 z-2147483649 cursor-pointer"
-      onclick="event.stopPropagation(); changeSlide(1)"
+      data-lightbox-arrow="next"
       role="button"
       tabindex="-1"
       aria-label="Следующий отзыв"
@@ -326,7 +327,7 @@ const reviewCount = reviews.length;
   </div>
 </section>
 
-<script define:vars={{ reviewTitles, reviewCount }}>
+<script is:inline define:vars={{ reviewTitles, reviewCount }}>
   let currentIndex = 0;
   let isZoomed = false;
 
@@ -338,7 +339,6 @@ const reviewCount = reviews.length;
   const counter    = document.getElementById('lightbox-counter');
   const titleEl    = document.getElementById('lightbox-title')?.querySelector('span');
 
-  const zoomBtn    = document.getElementById('zoom-btn');
   const iconIn     = document.getElementById('icon-zoom-in');
   const iconOut    = document.getElementById('icon-zoom-out');
 
@@ -464,7 +464,7 @@ const reviewCount = reviews.length;
   }
 
   // Зум как на anrotrip (Tilda): без transform, изображение в 2× размере + прокрутка, без прыжка
-  window.toggleZoom = (e) => {
+  window.toggleZoom = () => {
     const img = images[currentIndex];
     const slide = slides[currentIndex];
     const inner = inners[currentIndex];
@@ -536,6 +536,31 @@ const reviewCount = reviews.length;
     iconIn.classList.remove('hidden'); iconOut.classList.add('hidden');
     isZoomed = false;
   }
+
+  const lightboxTopBar = document.getElementById('lightbox-top-bar');
+  const lightboxArrowPrev = document.querySelector('[data-lightbox-arrow="prev"]');
+  const lightboxArrowNext = document.querySelector('[data-lightbox-arrow="next"]');
+  const zoomBtnEl = document.getElementById('zoom-btn');
+
+  lightboxTopBar?.addEventListener('click', (e) => e.stopPropagation());
+  zoomBtnEl?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    window.toggleZoom();
+  });
+  lightboxArrowPrev?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    window.changeSlide(-1);
+  });
+  lightboxArrowNext?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    window.changeSlide(1);
+  });
+  lightbox?.addEventListener('click', (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
+    if (t.closest('#lightbox-top-bar') || t.closest('[data-lightbox-arrow]')) return;
+    window.toggleZoom();
+  });
 
   // Swipe support
   let touchStartX = 0;

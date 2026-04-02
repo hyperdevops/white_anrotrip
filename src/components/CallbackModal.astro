@@ -5,7 +5,6 @@ import {
   modalLeadSubmitClass,
 } from '../lib/form-classes';
 import { sitePrivacy } from '../lib/site-urls';
-import XMarkIcon from './icons/XMarkIcon.astro';
 ---
 
 <div
@@ -54,11 +53,7 @@ import XMarkIcon from './icons/XMarkIcon.astro';
           вами в ближайшее время!
         </p>
 
-        <form
-          id="callback-form"
-          class="space-y-3"
-          onsubmit="event.preventDefault();"
-        >
+        <form id="callback-form" class="space-y-3">
           <div>
             <label for="callback-name" class={modalLeadLabelClass}>Ваше имя</label>
             <input

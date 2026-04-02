@@ -41,7 +41,7 @@ const { id, title } = Astro.props;
   </div>
 </dialog>
 
-<script define:vars={{ id }}>
+<script is:inline define:vars={{ id }}>
   const dialog = document.getElementById(id);
   let previousActiveElement = null;
 

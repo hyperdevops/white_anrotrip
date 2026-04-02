@@ -70,7 +70,7 @@ const navDesktopLinkClass =
   'relative px-1.5 lg:px-2 py-1.5 lg:py-2 text-[9px] lg:text-[10px] xl:text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-wide whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
 
 const mobileNavRowBase =
-  'flex w-full items-center gap-3 rounded-xl px-2 py-2 text-sm font-semibold text-gray-800 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 max-[height:640px]:py-1.5 max-[height:520px]:gap-2.5 max-[height:520px]:py-1.5';
+  'flex w-full items-center gap-3 rounded-xl px-2 py-2 text-sm font-semibold text-gray-800 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:640px)]:py-1.5 [@media(max-height:520px)]:gap-2.5 [@media(max-height:520px)]:py-1.5';
 const mobileNavItemClass = mobileNavRowBase;
 
 /** Иконка «Избранное» в хедере (mobile) — тот же стиль, что в mobile-nav-icons «Избранное» */
@@ -82,7 +82,7 @@ const homeContactBtnBase =
 
 /** Иконка в ряду «Звонок / Telegram / MAX»: как у телефона — 1.125rem → 16px на узкой высоте окна */
 const homeContactIconBox =
-  'flex h-4.5 w-full shrink-0 items-center justify-center max-[height:520px]:h-4';
+  'flex h-4.5 w-full shrink-0 items-center justify-center [@media(max-height:520px)]:h-4';
 const homeContactIconText =
   'text-[9px] font-bold uppercase tracking-wide leading-none whitespace-nowrap';
 ---
@@ -275,25 +275,57 @@ const homeContactIconText =
   </div>
   <div
     id="mobile-menu"
-    class="fixed top-[max(0.5rem,env(safe-area-inset-top))] right-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-56 flex w-[min(268px,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white touch-pan-y lg:hidden translate-x-[calc(100%+0.5rem)] transform-gpu shadow-xl shadow-black/10 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] will-change-transform pointer-events-none motion-reduce:duration-0"
+    class:list={[
+      'fixed top-[max(0.5rem,env(safe-area-inset-top))] right-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-56 flex w-[min(268px,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-2xl border touch-pan-y lg:hidden translate-x-[calc(100%+0.5rem)] transform-gpu shadow-xl shadow-black/10 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] will-change-transform pointer-events-none motion-reduce:duration-0',
+      navVariant === 'corp' ? 'border-gray-200 bg-gray-50' : 'border-gray-200 bg-white',
+    ]}
     role="dialog"
     aria-modal="true"
     aria-label="Меню сайта"
   >
-    <div class="flex h-full min-h-0 w-full flex-col overflow-hidden pt-1.5">
+    <div
+      class="flex h-full min-h-0 w-full flex-col overflow-hidden pt-1.5 relative"
+    >
+      <!-- Фоновые орбы шторки мобильного меню — паттерн как на главной -->
+      <div
+        class:list={[
+          'absolute -top-8 -right-8 size-40 rounded-full pointer-events-none',
+          navVariant === 'corp' ? 'bg-primary-dark/5' : 'bg-primary/8',
+        ]}
+        aria-hidden="true"
+      >
+      </div>
+      <!-- <div -->
+      <!-- class="absolute bottom-61 -left-10 size-42 rounded-full bg-primary/6 pointer-events-none" -->
+      <!-- aria-hidden="true" -->
+      <!-- > -->
+      <!-- </div> -->
+      <div
+        class:list={[
+          'absolute bottom-4 -left-8 size-40 rounded-full pointer-events-none',
+          navVariant === 'corp' ? 'bg-primary-dark/4' : 'bg-primary/8',
+        ]}
+        aria-hidden="true"
+      >
+      </div>
+      <!-- <div -->
+      <!-- class="absolute -bottom-6 left-1/3 size-36 rounded-full bg-primary/5 pointer-events-none" -->
+      <!-- aria-hidden="true" -->
+      <!-- > -->
+      <!-- </div> -->
       <nav
-        class="flex min-h-0 flex-1 flex-col overflow-hidden"
+        class="relative flex min-h-0 flex-1 flex-col overflow-hidden z-10"
         aria-label="Меню"
       >
         <div
           class="flex min-h-0 flex-1 flex-col gap-0 overflow-y-auto overscroll-contain px-1.5 pb-1.5 [-webkit-overflow-scrolling:touch]"
         >
           <div
-            class="flex shrink-0 flex-col gap-1.5 pt-0.5 max-[height:560px]:gap-1"
+            class="flex shrink-0 flex-col gap-1.5 pt-0.5 [@media(max-height:560px)]:gap-1"
           >
             <a
               href={ctaHref}
-              class="header-cta-btn btn-ripple mb-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 transition-[background-color,box-shadow] duration-fast hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 max-[height:680px]:mb-3 max-[height:560px]:mb-3 max-[height:560px]:py-2.5 max-[height:480px]:mb-2.5 max-[height:480px]:py-2 max-[height:480px]:text-[13px]"
+              class="header-cta-btn btn-ripple mb-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 transition-[background-color,box-shadow] duration-fast hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:680px)]:mb-3 [@media(max-height:560px)]:mb-3 [@media(max-height:560px)]:py-2.5 [@media(max-height:480px)]:mb-2.5 [@media(max-height:480px)]:py-2 [@media(max-height:480px)]:text-[13px]"
               {...ctaPrefetch}
             >
               <i
@@ -308,7 +340,7 @@ const homeContactIconText =
           >
           </div>
           <ul
-            class="flex flex-col gap-0 pb-0.5 max-[height:640px]:gap-0 max-[height:520px]:gap-0"
+            class="flex flex-col gap-0 pb-0.5 [@media(max-height:640px)]:gap-0 [@media(max-height:520px)]:gap-0"
           >
             {
               navItems.map((item) => {
@@ -319,7 +351,7 @@ const homeContactIconText =
                       <a href={item.href} class={mobileNavItemClass}>
                         <span
                           class:list={[
-                            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 max-[height:520px]:h-8 max-[height:520px]:w-8',
+                            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 [@media(max-height:520px)]:h-8 [@media(max-height:520px)]:w-8',
                             navIcon.box,
                           ]}
                         >
@@ -327,7 +359,7 @@ const homeContactIconText =
                             class:list={[
                               ...navIcon.fa.split(' '),
                               navIcon.icon,
-                              'block text-[1.125rem] leading-none max-[height:520px]:text-base',
+                              'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
                             ]}
                             aria-hidden="true"
                           />
@@ -349,10 +381,10 @@ const homeContactIconText =
           </ul>
         </div>
         <div
-          class="mt-auto shrink-0 bg-white px-1.5 pt-2 pb-1.5 max-[height:560px]:pt-1.5 max-[height:520px]:pt-1"
+          class="mt-auto shrink-0 bg-white px-1.5 pt-2 pb-1.5 [@media(max-height:560px)]:pt-1.5 [@media(max-height:520px)]:pt-1"
         >
           <div
-            class="grid grid-cols-3 gap-2 max-[height:520px]:gap-1.5"
+            class="grid grid-cols-3 gap-2 [@media(max-height:520px)]:gap-1.5"
             role="group"
             aria-label="Связь: телефон, Telegram, MAX"
           >
@@ -360,13 +392,13 @@ const homeContactIconText =
               href="tel:88002224473"
               class:list={[
                 homeContactBtnBase,
-                'h-12 w-full flex-col gap-1 rounded-full border border-primary/15 bg-primary text-white shadow-md shadow-primary/15 hover:bg-primary-dark focus-visible:ring-primary focus-visible:ring-offset-2 max-[height:560px]:h-10 max-[height:480px]:h-9 max-[height:480px]:gap-0.5 max-[height:480px]:py-1',
+                'h-12 w-full flex-col gap-1 rounded-full border border-primary/15 bg-primary text-white shadow-md shadow-primary/15 hover:bg-primary-dark focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:560px)]:h-10 [@media(max-height:480px)]:h-9 [@media(max-height:480px)]:gap-0.5 [@media(max-height:480px)]:py-1',
               ]}
               aria-label="Позвонить: 8 800 222-44-73"
             >
               <span class={homeContactIconBox}>
                 <i
-                  class="fa-solid fa-phone block text-[1.125rem] leading-none text-white max-[height:520px]:text-base"
+                  class="fa-solid fa-phone block text-[1.125rem] leading-none text-white [@media(max-height:520px)]:text-base"
                   aria-hidden="true"></i>
               </span>
               <span class={homeContactIconText}>Звонок</span>
@@ -377,13 +409,13 @@ const homeContactIconText =
               rel="noopener noreferrer"
               class:list={[
                 homeContactBtnBase,
-                'h-12 w-full flex-col gap-1 overflow-visible rounded-full border border-sky-500/20 bg-[#0087cb] text-white shadow-md shadow-sky-500/20 hover:bg-[#0074b0] focus-visible:ring-sky-400 focus-visible:ring-offset-2 max-[height:560px]:h-10 max-[height:480px]:h-9 max-[height:480px]:gap-0.5 max-[height:480px]:py-1',
+                'h-12 w-full flex-col gap-1 overflow-visible rounded-full border border-sky-500/20 bg-[#0087cb] text-white shadow-md shadow-sky-500/20 hover:bg-[#0074b0] focus-visible:ring-sky-400 focus-visible:ring-offset-2 [@media(max-height:560px)]:h-10 [@media(max-height:480px)]:h-9 [@media(max-height:480px)]:gap-0.5 [@media(max-height:480px)]:py-1',
               ]}
               aria-label="Написать в Telegram — чат ANRO TRIP"
             >
               <span class:list={[homeContactIconBox, 'overflow-visible']}>
                 <svg
-                  class="block size-4.5 shrink-0 origin-center scale-[1.50] text-white max-[height:520px]:size-4 max-[height:520px]:scale-140"
+                  class="block size-4.5 shrink-0 origin-center scale-[1.50] text-white [@media(max-height:520px)]:size-4 [@media(max-height:520px)]:scale-140"
                   viewBox="0 0 80 80"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -405,7 +437,7 @@ const homeContactIconText =
               rel="noopener noreferrer"
               class:list={[
                 homeContactBtnBase,
-                'h-12 w-full flex-col gap-1 rounded-full border border-violet-400/25 bg-[#7b3dec] text-white shadow-md shadow-violet-500/20 hover:bg-[#6829d4] focus-visible:ring-violet-400 focus-visible:ring-offset-2 max-[height:560px]:h-10 max-[height:480px]:h-9 max-[height:480px]:gap-0.5 max-[height:480px]:py-1',
+                'h-12 w-full flex-col gap-1 rounded-full border border-violet-400/25 bg-[#7b3dec] text-white shadow-md shadow-violet-500/20 hover:bg-[#6829d4] focus-visible:ring-violet-400 focus-visible:ring-offset-2 [@media(max-height:560px)]:h-10 [@media(max-height:480px)]:h-9 [@media(max-height:480px)]:gap-0.5 [@media(max-height:480px)]:py-1',
               ]}
               aria-label="Открыть в MAX"
             >
@@ -414,7 +446,7 @@ const homeContactIconText =
               }
               <span class={homeContactIconBox}>
                 <svg
-                  class="block size-4.5 shrink-0 text-white max-[height:520px]:size-4"
+                  class="block size-4.5 shrink-0 text-white [@media(max-height:520px)]:size-4"
                   viewBox="80 80 80 80"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -445,9 +477,6 @@ const homeContactIconText =
   let backdrop = document.getElementById(
     'mobile-menu-backdrop',
   ) as HTMLElement | null;
-  const logoBtn = document.getElementById(
-    'logo-btn',
-  ) as HTMLAnchorElement | null;
   let headerInner = document.getElementById(
     'header-inner',
   ) as HTMLElement | null;
