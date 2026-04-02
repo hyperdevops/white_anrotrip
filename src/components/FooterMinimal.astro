@@ -1,5 +1,6 @@
 ---
 /** Компактный футер (блог/лендинги): соцсети, копирайт, юр. ссылки */
+import { sitePrivacy, siteTerms } from '../lib/site-urls';
 import {
   maxIconPath,
   socialLogoTransform0,
@@ -7,7 +8,6 @@ import {
   telegramIconPath,
   vkIconPath,
 } from '../lib/social-icons';
-import { sitePrivacy, siteTerms } from '../lib/site-urls';
 import FooterSocialLink from './FooterSocialLink.astro';
 
 const currentYear = new Date().getFullYear();
@@ -55,7 +55,7 @@ const socials: {
     hover: 'hover:bg-cyan-500/20 hover:text-cyan-300',
     ring: 'focus-visible:ring-primary',
     icon: 'tg',
-    caption: 'Ваш чат',
+    caption: 'Наш чат',
     captionColor: 'text-[#5ec8df]',
   },
   {
