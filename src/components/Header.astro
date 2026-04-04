@@ -277,7 +277,9 @@ const homeContactIconText =
     id="mobile-menu"
     class:list={[
       'fixed top-[max(0.5rem,env(safe-area-inset-top))] right-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-56 flex w-[min(268px,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-2xl border touch-pan-y lg:hidden translate-x-[calc(100%+0.5rem)] transform-gpu shadow-xl shadow-black/10 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] will-change-transform pointer-events-none motion-reduce:duration-0',
-      navVariant === 'corp' ? 'border-gray-200 bg-gray-50' : 'border-gray-200 bg-white',
+      navVariant === 'corp'
+        ? 'border-gray-200 bg-gray-50'
+        : 'border-gray-200 bg-white',
     ]}
     role="dialog"
     aria-modal="true"
