@@ -107,9 +107,7 @@ const homeContactIconText =
         'relative grid items-center gap-2 lg:gap-3 rounded-2xl glass-panel max-md:backdrop-blur-none md:backdrop-blur-xl px-3 sm:px-4 py-2.5 md:py-3 transition-[background-color,border-color,box-shadow] duration-normal',
         navVariant === 'corp'
           ? 'grid-cols-[auto_minmax(0,1fr)_auto]'
-          : isHome
-            ? 'grid-cols-[auto_1fr_auto] lg:grid-cols-[1fr_auto_1fr]'
-            : 'grid-cols-[auto_1fr_auto]',
+          : 'grid-cols-[auto_1fr_auto]',
       ]}
     >
       {
@@ -159,7 +157,9 @@ const homeContactIconText =
       <nav
         class:list={[
           'hidden lg:flex items-center justify-center min-w-0 gap-x-1.5 lg:gap-x-1.5 overflow-visible',
-          isHome && navVariant === 'default' ? 'justify-self-center' : '',
+          isHome && navVariant === 'default'
+            ? 'justify-self-center lg:translate-x-[2px]'
+            : '',
         ]}
         aria-label="Основное меню"
       >
