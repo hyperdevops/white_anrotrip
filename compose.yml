@@ -1,0 +1,30 @@
+# Production compose — используется на Aeza VPS.
+# Локальный тест: compose.local.yml
+# Подробнее: .doc/server-vps-stack-plan.md
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3 / QUIC
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+
+  app:
+    image: ghcr.io/${GITHUB_REPOSITORY:-owner/white_anrotrip}:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file: .env
+    expose:
+      - "4321"
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,47 +1,49 @@
-name: Deploy to GitHub Pages
+name: Deploy to VPS
 
 on:
   push:
-    branches:
-      - main # Скрипт сработает только при пуше в main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches: [main]
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      # ── Build & push Docker image ──────────────────────────────────────────
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        run: |
+          IMAGE=ghcr.io/${{ github.repository }}
+          TAG=sha-${{ github.sha }}
+          docker build -t "${IMAGE}:${TAG}" -t "${IMAGE}:latest" .
+
+      - name: Push Docker image
+        run: docker push ghcr.io/${{ github.repository }} --all-tags
+
+      # ── Deploy on VPS via SSH ──────────────────────────────────────────────
+      - name: Deploy to Aeza VPS
+        uses: appleboy/ssh-action@v1
         with:
-          version: 8 # Укажите версию pnpm, если используете другую
+          host: ${{ secrets.SSH_HOST }}
+          username: deploy
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            cd /home/deploy/anrotrip
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22 # Astro и package.json engines: >=22.12.0
-          cache: 'pnpm'
+            # Обновить образ и перезапустить контейнер
+            IMAGE_TAG=sha-${{ github.sha }} \
+            GITHUB_REPOSITORY=${{ github.repository }} \
+              docker compose pull app
 
-      - name: Install dependencies
-        run: pnpm install --ignore-workspace
+            IMAGE_TAG=sha-${{ github.sha }} \
+            GITHUB_REPOSITORY=${{ github.repository }} \
+              docker compose up -d
 
-      - name: Build
-        run: pnpm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist' # Важно: убедитесь, что Vite собирает проект именно в папку dist
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+            # Удалить старые образы
+            docker image prune -f

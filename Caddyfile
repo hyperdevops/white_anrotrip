@@ -1,0 +1,8 @@
+anrotrip.ru, www.anrotrip.ru {
+    encode gzip
+
+    # Реальный IP клиента (через Cloudflare)
+    trusted_proxies cloudflare
+
+    reverse_proxy app:4321
+}

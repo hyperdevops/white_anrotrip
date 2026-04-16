@@ -1,0 +1,12 @@
+# Локальный тест в Docker (без Caddy, без SSL).
+# Использование:
+#   cp .env.example .env.local  # заполнить RESEND_API_KEY и др.
+#   docker compose -f compose.local.yml up --build
+#   Открыть: http://localhost:4321
+
+services:
+  app:
+    build: .
+    ports:
+      - "4321:4321"
+    env_file: .env.local

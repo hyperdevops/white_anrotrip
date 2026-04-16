@@ -1,0 +1,17 @@
+node_modules
+dist
+.astro
+.git
+.github
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.doc
+.agents
+.specify
+.cursor
+.serena
+.frontmatter
+coverage
