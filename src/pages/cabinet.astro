@@ -87,7 +87,7 @@ const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
                 <input
                   type="radio"
                   name="inputType"
-                  value="phone"
+                  value="tel"
                   checked
                   class="w-4 h-4 accent-secondary cabinet-radio cursor-pointer"
                 />
@@ -167,7 +167,7 @@ const tinyWelcome = await getImage({ src: welcomeImg, width: 20, quality: 20 });
         const radio = r as HTMLInputElement;
         const phone = document.getElementById('cabinet-label-phone');
         const email = document.getElementById('cabinet-label-email');
-        if (radio.value === 'phone') {
+        if (radio.value === 'tel') {
           loginInput.type = 'tel';
           loginInput.placeholder = '+7 (999) 000-00-00';
           loginInput.setAttribute('autocomplete', 'tel');
