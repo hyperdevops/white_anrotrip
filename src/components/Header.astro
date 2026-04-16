@@ -269,7 +269,7 @@ const homeContactIconText =
   <!-- Мобильное меню: затемнение + шторка выше хедера (z-50), логотип и бургер под блюром/затемнением -->
   <div
     id="mobile-menu-backdrop"
-    class="fixed inset-0 z-55 bg-black/55 backdrop-blur-md max-md:backdrop-blur-sm lg:hidden transition-opacity duration-500 ease-out opacity-0 pointer-events-none"
+    class="fixed inset-0 z-55 bg-black/55 backdrop-blur-none lg:hidden transition-opacity duration-500 ease-out opacity-0 pointer-events-none"
     aria-hidden="true"
   >
   </div>
@@ -285,36 +285,7 @@ const homeContactIconText =
     aria-modal="true"
     aria-label="Меню сайта"
   >
-    <div
-      class="flex h-full min-h-0 w-full flex-col overflow-hidden pt-1.5 relative"
-    >
-      <!-- Фоновые орбы шторки мобильного меню — паттерн как на главной -->
-      <div
-        class:list={[
-          'absolute -top-8 -right-8 size-40 rounded-full pointer-events-none',
-          navVariant === 'corp' ? 'bg-primary-dark/5' : 'bg-primary/8',
-        ]}
-        aria-hidden="true"
-      >
-      </div>
-      <!-- <div -->
-      <!-- class="absolute bottom-61 -left-10 size-42 rounded-full bg-primary/6 pointer-events-none" -->
-      <!-- aria-hidden="true" -->
-      <!-- > -->
-      <!-- </div> -->
-      <div
-        class:list={[
-          'absolute bottom-4 -left-8 size-40 rounded-full pointer-events-none',
-          navVariant === 'corp' ? 'bg-primary-dark/4' : 'bg-primary/8',
-        ]}
-        aria-hidden="true"
-      >
-      </div>
-      <!-- <div -->
-      <!-- class="absolute -bottom-6 left-1/3 size-36 rounded-full bg-primary/5 pointer-events-none" -->
-      <!-- aria-hidden="true" -->
-      <!-- > -->
-      <!-- </div> -->
+    <div class="flex h-full min-h-0 w-full flex-col overflow-hidden pt-1.5">
       <nav
         class="relative flex min-h-0 flex-1 flex-col overflow-hidden z-10"
         aria-label="Меню"
