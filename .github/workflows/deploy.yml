@@ -3,21 +3,30 @@ name: Deploy to VPS
 on:
   push:
     branches: [main, main-design-green]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to VPS after build?'
+        required: true
+        default: 'false'
+        type: choice
+        options: ['true', 'false']
 
 permissions:
   contents: read
   packages: write
 
 jobs:
-  deploy:
+  # ── Шаг 1: Сборка и push образа в GHCR ──────────────────────────────────
+  # Запускается при каждом push в main.
+  # VPS не нужен — образ всегда актуален в реестре.
+  build-push:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── Build & push Docker image ──────────────────────────────────────────
-      # Встроенный GITHUB_TOKEN (не нужен отдельный GHCR_TOKEN), см. permissions выше.
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -34,7 +43,15 @@ jobs:
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository }} --all-tags
 
-      # ── Deploy on VPS via SSH ──────────────────────────────────────────────
+  # ── Шаг 2: Деплой на VPS ─────────────────────────────────────────────────
+  # Запускается ТОЛЬКО вручную через Actions → Run workflow → deploy: true.
+  # Требует: SSH_HOST и SSH_PRIVATE_KEY в GitHub Secrets.
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-push
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true' }}
+
+    steps:
       - name: Deploy to Aeza VPS
         uses: appleboy/ssh-action@v1
         with:
@@ -45,7 +62,6 @@ jobs:
             set -e
             cd /home/deploy/anrotrip
 
-            # Обновить образ и перезапустить контейнер
             IMAGE_TAG=sha-${{ github.sha }} \
             GITHUB_REPOSITORY=${{ github.repository }} \
               docker compose pull app
@@ -54,5 +70,4 @@ jobs:
             GITHUB_REPOSITORY=${{ github.repository }} \
               docker compose up -d
 
-            # Удалить старые образы
             docker image prune -f
