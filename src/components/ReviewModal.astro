@@ -11,6 +11,8 @@ import {
 
 <Modal id="review-modal" title="Оставить отзыв">
   <form id="review-modal-form" class="space-y-4">
+    {/* Honeypot */}
+    <input type="text" name="_hp" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <div class="grid grid-cols-2 gap-4">
       <div>
         <label for="review-modal-name" class={reviewModalLabelClass}
@@ -79,19 +81,63 @@ import {
       ></textarea>
     </div>
 
-    <button type="submit" class={reviewModalSubmitClass}>
+    <p id="review-error" class="hidden text-sm text-red-500 text-center" role="alert"></p>
+
+    <button type="submit" id="review-submit" class={reviewModalSubmitClass}>
       Отправить отзыв
     </button>
   </form>
+
+  {/* Экран успеха */}
+  <div id="review-success" class="hidden text-center py-6 px-2">
+    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto mb-4">
+      <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h4 class="font-montserrat text-lg font-bold text-gray-900 mb-2">Спасибо за отзыв!</h4>
+    <p class="text-sm text-gray-500">Он поможет другим путешественникам с выбором.</p>
+  </div>
 </Modal>
 
 <script>
-  const reviewForm = document.getElementById('review-modal-form');
-  reviewForm?.addEventListener('submit', (e) => {
+  // Отправка на сервер. Данные не логируются в console.* (152-ФЗ).
+  const reviewForm = document.getElementById('review-modal-form') as HTMLFormElement | null;
+  const reviewSubmit = document.getElementById('review-submit') as HTMLButtonElement | null;
+  const reviewError = document.getElementById('review-error') as HTMLParagraphElement | null;
+  const reviewSuccess = document.getElementById('review-success') as HTMLElement | null;
+  const reviewDialog = document.getElementById('review-modal') as HTMLDialogElement | null;
+
+  reviewForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    // Отправка на сервер — после подключения API; данные не логируются в консоль (152-ФЗ).
-    form.reset();
-    (document.getElementById('review-modal') as HTMLDialogElement | null)?.close();
+    if (!reviewForm || !reviewSubmit) return;
+
+    reviewSubmit.disabled = true;
+    reviewSubmit.textContent = 'Отправляем…';
+    if (reviewError) { reviewError.textContent = ''; reviewError.classList.add('hidden'); }
+
+    try {
+      const res = await fetch('/api/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(reviewForm))),
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        reviewForm.classList.add('hidden');
+        reviewSuccess?.classList.remove('hidden');
+        setTimeout(() => { reviewDialog?.close(); }, 3000);
+      } else {
+        throw new Error(data.error ?? 'Ошибка отправки');
+      }
+    } catch (err: unknown) {
+      if (reviewError) {
+        reviewError.textContent = err instanceof Error ? err.message : 'Не удалось отправить. Попробуйте ещё раз.';
+        reviewError.classList.remove('hidden');
+      }
+      reviewSubmit.disabled = false;
+      reviewSubmit.textContent = 'Отправить отзыв';
+    }
   });
 </script>

@@ -40,6 +40,8 @@ import XMarkIcon from './icons/XMarkIcon.astro';
       </p>
 
       <form id="gift-form" class="space-y-3">
+          {/* Honeypot */}
+          <input type="text" name="_hp" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <p class="text-xs text-center text-gray-500 mb-5 font-inter">
           <i
             >Вы можете приобрести <strong>Подарочный сертификат</strong> на любые
@@ -106,10 +108,24 @@ import XMarkIcon from './icons/XMarkIcon.astro';
           </label>
         </div>
 
-        <button type="submit" class={modalLeadSubmitClass}>
+        {/* Сообщение об ошибке */}
+        <p id="gift-error" class="hidden text-sm text-red-500 text-center pt-1" role="alert"></p>
+
+        <button type="submit" id="gift-submit" class={modalLeadSubmitClass}>
           Отправить
         </button>
       </form>
+
+      {/* Экран успеха */}
+      <div id="gift-success" class="hidden text-center py-6 px-2">
+        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto mb-4">
+          <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h4 class="font-montserrat text-lg font-bold text-gray-900 mb-2">Заявка принята!</h4>
+        <p class="text-sm text-gray-500">Мы свяжемся с вами для оформления сертификата.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -210,11 +226,43 @@ import XMarkIcon from './icons/XMarkIcon.astro';
     if (e.target === overlay) closeGiftModal();
   });
 
-  // Отправка на сервер — после подключения API; данные не логируются в консоль (152-ФЗ).
-  const giftForm = document.getElementById('gift-form');
-  giftForm?.addEventListener('submit', (e) => {
+  // Отправка на сервер. Данные не логируются в console.* (152-ФЗ).
+  const giftForm = document.getElementById('gift-form') as HTMLFormElement | null;
+  const giftSubmit = document.getElementById('gift-submit') as HTMLButtonElement | null;
+  const giftError = document.getElementById('gift-error') as HTMLParagraphElement | null;
+  const giftSuccess = document.getElementById('gift-success') as HTMLElement | null;
+
+  giftForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    closeGiftModal();
+    if (!giftForm || !giftSubmit) return;
+
+    giftSubmit.disabled = true;
+    giftSubmit.textContent = 'Отправляем…';
+    if (giftError) { giftError.textContent = ''; giftError.classList.add('hidden'); }
+
+    try {
+      const res = await fetch('/api/gift', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(giftForm))),
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        giftForm.classList.add('hidden');
+        giftSuccess?.classList.remove('hidden');
+        setTimeout(() => closeGiftModal(), 3000);
+      } else {
+        throw new Error(data.error ?? 'Ошибка отправки');
+      }
+    } catch (err: unknown) {
+      if (giftError) {
+        giftError.textContent = err instanceof Error ? err.message : 'Не удалось отправить. Попробуйте ещё раз.';
+        giftError.classList.remove('hidden');
+      }
+      giftSubmit.disabled = false;
+      giftSubmit.textContent = 'Отправить';
+    }
   });
 
   window.addEventListener('keydown', (e) => {
