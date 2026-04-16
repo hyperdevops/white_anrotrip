@@ -1,4 +1,12 @@
 User-agent: *
+Disallow: /api/
+Disallow: /cabinet
+
 Allow: /
 
 Sitemap: https://anrotrip.ru/sitemap-index.xml
+
+User-agent: YandexBot
+Disallow: /api/
+Disallow: /cabinet
+Host: https://anrotrip.ru
