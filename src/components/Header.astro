@@ -15,7 +15,7 @@ export interface Props {
   navItems?: { name: string; href: string }[];
   ctaText?: string;
   ctaHref?: string;
-  /** default: на главной — нав по геометрическому центру полосы (lg: 1fr auto 1fr). Иначе — как раньше. corp: своя сетка. */
+  /** default: на главной — нав по геометрическому центру полосы (xl: 1fr auto 1fr). Иначе — как раньше. corp: своя сетка. */
   navVariant?: 'default' | 'corp';
   /** Круглые кнопки телефона / Telegram / MAX — только главная (`index.astro`). Страницу corp не трогать. */
   homeQuickContacts?: boolean;
@@ -148,17 +148,17 @@ const homeContactIconText =
             >
           </div>
           <span
-            class="text-[9px] sm:text-[8px] text-gray-400 uppercase tracking-widest hidden sm:block"
-            >Travel &amp; Business</span
+            class="text-[7px] sm:text-[7px] text-black/60 uppercase tracking-widest hidden sm:block leading-tight mt-[2px]"
+            >Туристическая<br /><span class="block -mt-px">компания</span></span
           >
         </div>
       </a>
 
       <nav
         class:list={[
-          'hidden lg:flex items-center justify-center min-w-0 gap-x-1.5 lg:gap-x-1.5 overflow-visible',
+          'hidden nav:flex items-center justify-center min-w-0 gap-x-1.5 nav:gap-x-1.5 overflow-visible',
           isHome && navVariant === 'default'
-            ? 'justify-self-center lg:translate-x-[2px]'
+            ? 'justify-self-center nav:translate-x-[2px]'
             : '',
         ]}
         aria-label="Основное меню"
@@ -194,7 +194,7 @@ const homeContactIconText =
             <>
               <a
                 href="tel:88002224473"
-                class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                class="hidden nav:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <PhoneSolidIcon
                   iconClass="w-3.5 h-3.5"
@@ -206,7 +206,7 @@ const homeContactIconText =
           ) : (
             <a
               href="tel:88002224473"
-              class="hidden 2xl:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer"
+              class="hidden nav:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 hover:text-primary hover:bg-primary/5 transition-[color,background-color] duration-fast whitespace-nowrap cursor-pointer"
             >
               <PhoneSolidIcon
                 iconClass="w-3.5 h-3.5"
@@ -219,7 +219,7 @@ const homeContactIconText =
 
         <a
           href={ctaHref}
-          class="header-cta-btn btn-ripple hidden lg:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 uppercase tracking-wide shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 whitespace-nowrap"
+          class="header-cta-btn btn-ripple hidden nav:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 uppercase tracking-wide shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 whitespace-nowrap"
           {...ctaPrefetch}
         >
           {ctaText}
@@ -231,7 +231,7 @@ const homeContactIconText =
               type="button"
               id="open-favorites-header"
               class:list={[
-                'lg:hidden flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-primary/10 transition-[background-color,opacity] duration-fast hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+                'nav:hidden flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-primary/10 transition-[background-color,opacity] duration-fast hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
               ]}
               aria-label="Открыть избранное (корзину туров)"
             >
@@ -248,7 +248,7 @@ const homeContactIconText =
 
         <button
           id="menu-toggle"
-          class="lg:hidden flex flex-col gap-1.25 p-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+          class="nav:hidden flex flex-col gap-1.25 p-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
           aria-label="Меню"
           aria-expanded="false"
         >
@@ -269,14 +269,14 @@ const homeContactIconText =
   <!-- Мобильное меню: затемнение + шторка выше хедера (z-50), логотип и бургер под блюром/затемнением -->
   <div
     id="mobile-menu-backdrop"
-    class="fixed inset-0 z-55 bg-black/55 backdrop-blur-none lg:hidden transition-opacity duration-500 ease-out opacity-0 pointer-events-none"
+    class="fixed inset-0 z-55 bg-black/55 backdrop-blur-none nav:hidden transition-opacity duration-500 ease-out opacity-0 pointer-events-none"
     aria-hidden="true"
   >
   </div>
   <div
     id="mobile-menu"
     class:list={[
-      'fixed top-[max(0.5rem,env(safe-area-inset-top))] right-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-56 flex w-[min(268px,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-2xl border touch-pan-y lg:hidden translate-x-[calc(100%+0.5rem)] transform-gpu shadow-xl shadow-black/10 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] will-change-transform pointer-events-none motion-reduce:duration-0',
+      'fixed top-[max(0.5rem,env(safe-area-inset-top))] right-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-56 flex w-[min(268px,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-2xl border touch-pan-y nav:hidden translate-x-[calc(100%+0.5rem)] transform-gpu shadow-xl shadow-black/10 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] will-change-transform pointer-events-none motion-reduce:duration-0',
       navVariant === 'corp'
         ? 'border-gray-200 bg-gray-50'
         : 'border-gray-200 bg-white',
@@ -695,7 +695,7 @@ const homeContactIconText =
       document.body.classList.remove('overflow-hidden');
     };
 
-    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1440) {
       menuSwipeAbort?.abort();
       menuSwipeAbort = null;
       resetDrawerClosed();

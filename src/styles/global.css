@@ -40,6 +40,9 @@
   --font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 
+  /* Кастомный брейкпоинт: десктопная навигация от 1440px */
+  --breakpoint-nav: 90rem; /* 1440px */
+
   /* Motion — единый ритм анимаций (Web Standards 2026) */
   --transition-duration-fast: 200ms; /* микро: hover цвет, focus, табы */
   --transition-duration-normal: 300ms; /* кнопки, карточки, hover transform */
