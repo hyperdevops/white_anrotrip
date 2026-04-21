@@ -1,4 +1,4 @@
-# Production compose — используется на Aeza VPS.
+# Production compose — используется на Beget VPS.
 # Локальный тест: compose.local.yml
 # Подробнее: .doc/server-vps-stack-plan.md
 

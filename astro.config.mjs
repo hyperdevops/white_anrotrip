@@ -7,7 +7,7 @@ import compressor from 'astro-compressor';
 
 // https://astro.build/config
 export default defineConfig({
-  /** Прод: anrotrip.ru (Aeza VPS + Docker + Caddy).
+  /** Прод: anrotrip.ru (Beget VPS + Docker + Caddy).
    *  Локальный тест: docker run -p 4321:4321 — открыть http://localhost:4321
    *  GitHub Pages (архив): был site=hyperdevops.github.io, base=/white_anrotrip/ — более не используется.
    *  Подробнее: .doc/server-vps-stack-plan.md */

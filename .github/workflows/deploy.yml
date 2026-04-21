@@ -52,7 +52,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true' }}
 
     steps:
-      - name: Deploy to Aeza VPS
+      - name: Deploy to Beget VPS
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
