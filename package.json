@@ -20,10 +20,10 @@
 		"@fontsource/inter": "^5.2.8",
 		"@fontsource/montserrat": "^5.2.8",
 		"@fortawesome/fontawesome-free": "^7.2.0",
-		"@tailwindcss/vite": "^4.2.2",
-		"astro": "^6.1.1",
+		"@tailwindcss/vite": "^4.2.3",
+		"astro": "^6.1.8",
 		"astro-compressor": "^1.3.0",
-		"astro-iconify": "^1.2.0",
+		"astro-iconify": "^1.3.1",
 		"nodemailer": "^8.0.5",
 		"resend": "^6.9.4",
 		"sharp": "^0.34.5",
@@ -33,13 +33,29 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.8",
 		"@types/nodemailer": "^8.0.0",
-		"cspell": "^9.7.0",
+		"cspell": "^9.8.0",
 		"prettier-plugin-astro": "^0.14.1",
 		"typescript": "^5.7.3"
 	},
 	"pnpm": {
 		"overrides": {
-			"@astrojs/internal-helpers": "0.8.0"
+			"vite": ">=7.3.2",
+			"rollup": ">=4.59.0",
+			"h3": ">=1.15.9",
+			"defu": ">=6.1.5",
+			"svgo": ">=3.3.3",
+			"smol-toml": ">=1.6.1",
+			"yaml": ">=2.8.3",
+			"anymatch>picomatch": ">=2.3.2",
+			"tinyglobby>picomatch": ">=4.0.4",
+			"@astrojs/internal-helpers>picomatch": "4.0.4"
+		},
+		"packageExtensions": {
+			"@astrojs/internal-helpers": {
+				"dependencies": {
+					"picomatch": ">=4.0.4"
+				}
+			}
 		}
 	}
 }
