@@ -8,7 +8,7 @@ export interface TourStyleBadge {
 
 const TOUR_BADGE_BY_DESTINATION: Record<string, TourStyleBadge> = {
   Мальдивы: {
-    label: 'Luxury',
+    label: 'Премиум',
     className: 'bg-amber-400/90 text-amber-950',
   },
   Сейшелы: {
@@ -20,7 +20,7 @@ const TOUR_BADGE_BY_DESTINATION: Record<string, TourStyleBadge> = {
     className: 'bg-rose-500/90 text-white',
   },
   Таиланд: {
-    label: 'Relax',
+    label: 'Расслабление',
     className: 'bg-emerald-500/80 text-white',
   },
   Египет: {
