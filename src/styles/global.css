@@ -8,9 +8,10 @@
 @import '@fontsource/montserrat/700.css';
 @import '@fontsource/montserrat/800.css';
 
-/* Font Awesome Free — solid + brands (Telegram и др.; regular не подключаем) */
+/* Font Awesome Free — solid + regular + brands */
 @import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 @import '@fortawesome/fontawesome-free/css/solid.min.css';
+@import '@fortawesome/fontawesome-free/css/regular.min.css';
 @import '@fortawesome/fontawesome-free/css/brands.min.css';
 
 /* View Transitions: не блокировать клики после анимации + плавная длительность */
@@ -1040,15 +1041,13 @@ iframe[src*='tourvisor'] {
   opacity: 0;
 }
 
-/* Десктоп: текст и grid — 100ms задержка, 350ms, cubic-bezier (открытие и закрытие одинаково) */
+/* Десктоп: без задержки старта (раньше 100ms давали ощущение лага); короче 220ms */
 @media (min-width: 768px) {
   .faq-content {
-    transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: 100ms;
+    transition: grid-template-rows 220ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .faq-content-inner {
-    transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: 100ms;
+    transition: opacity 220ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .faq-item[data-open='true'] .faq-content-inner {
     opacity: 1;
@@ -1058,16 +1057,16 @@ iframe[src*='tourvisor'] {
   }
 }
 
-/* Мобиль: простая анимация открытия/закрытия + текст */
+/* Мобиль: чуть короче ответ чем раньше (200ms → 160ms) */
 @media (max-width: 767px) {
   .faq-item {
-    transition-duration: 200ms;
+    transition-duration: 160ms;
   }
   .faq-content {
-    transition: grid-template-rows 200ms ease-out;
+    transition: grid-template-rows 160ms ease-out;
   }
   .faq-content-inner {
-    transition: opacity 200ms ease-out;
+    transition: opacity 160ms ease-out;
   }
   .faq-item[data-open='true'] .faq-content-inner {
     opacity: 1;
@@ -1076,7 +1075,7 @@ iframe[src*='tourvisor'] {
     opacity: 0;
   }
   .faq-chevron {
-    transition-duration: 200ms;
+    transition-duration: 160ms;
     transition-property: transform;
   }
   .faq-item[data-open='true'] .faq-chevron {
