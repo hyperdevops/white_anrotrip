@@ -20,6 +20,11 @@ const fallback: MobileNavIconDef = {
 
 const map: Record<string, MobileNavIconDef> = {
   /* ─── Главная (default) — бренд ANRO TRIP ─── */
+  Авиабилеты: {
+    box: 'bg-primary-light/12',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-plane-departure',
+  },
   Туры: {
     box: 'bg-primary/12',
     icon: 'text-primary',

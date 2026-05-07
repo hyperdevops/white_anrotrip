@@ -2,6 +2,8 @@
 // src/components/TrustBadges.astro
 // Бейджи доверия (РТО, ТОП-10, Опыт, Клиенты, Корпоративы)
 
+import { siteHome } from '../lib/site-urls';
+
 const badges = [
   {
     icon: 'shield',
@@ -9,7 +11,8 @@ const badges = [
     value: 'РТО 022708',
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',
-    href: '#registry-rto',
+    href: 'https://www.economy.gov.ru/material/directions/turizm/reestry_turizm/edinyy_federalnyy_reestr_turoperatorov/',
+    external: true,
   },
   {
     icon: 'shield-check',
@@ -17,12 +20,13 @@ const badges = [
     value: 'РТА 0024615',
     colorClass: 'text-cyan-600',
     bgClass: 'bg-cyan-600/10',
-    href: '#registry-rta',
+    href: 'https://ev.economy.gov.ru/lk_exp/registry/',
+    external: true,
   },
   {
     icon: 'trophy',
-    label: 'Премия 2026',
-    value: 'ТОП-10 России',
+    label: 'Награды',
+    value: 'ANRO TRIP 2026',
     colorClass: 'text-cta',
     bgClass: 'bg-cta/10',
     href: '#awards',
@@ -30,26 +34,26 @@ const badges = [
   {
     icon: 'calendar',
     label: 'Опыт',
-    value: 'Более 18 лет',
+    value: 'Более 19 лет',
     colorClass: 'text-secondary',
     bgClass: 'bg-secondary/10',
-    href: '#awards',
+    href: `${siteHome()}#partners`,
   },
   {
     icon: 'users',
     label: 'Клиентов',
-    value: '14 000+',
+    value: '17 000+',
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',
-    href: '#reviews',
+    href: `${siteHome()}#partners`,
   },
   {
     icon: 'building',
     label: 'Корпоративы',
-    value: '700+ компаний',
+    value: '800+ компаний',
     colorClass: 'text-secondary',
     bgClass: 'bg-secondary/10',
-    href: '#awards',
+    href: `${siteHome()}#business`,
   },
 ];
 ---
@@ -58,6 +62,8 @@ const badges = [
   {badges.map((badge) => (
     <a
       href={badge.href}
+      target={badge.external ? '_blank' : undefined}
+      rel={badge.external ? 'noopener noreferrer' : undefined}
       class:list={[
         'trust-badges-card glass-panel-interactive px-3 py-3 sm:px-5 sm:py-4 rounded-2xl flex flex-col sm:flex-row items-center gap-2 sm:gap-3 group cursor-pointer min-h-0 no-underline text-inherit hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 w-full min-w-0 text-center sm:text-left overflow-visible',
         'max-sm:contain-[layout] max-sm:transition-shadow max-sm:duration-fast max-sm:hover:translate-y-0',

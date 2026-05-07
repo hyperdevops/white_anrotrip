@@ -140,12 +140,12 @@ const { class: classes = '' } = Astro.props;
             {
               faqItems.map((item, i) => (
                 <div
-                  class="faq-item rounded-2xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,171,179,0.06)] transition-[box-shadow,transform] duration-300 hover:shadow-[0_4px_16px_rgba(0,171,179,0.1)] data-[open=true]:shadow-[0_4px_20px_rgba(0,171,179,0.12)] data-[open=true]:border-primary/20 min-w-0"
+                  class="faq-item rounded-2xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,171,179,0.06)] transition-[box-shadow,transform] duration-200 hover:shadow-[0_4px_16px_rgba(0,171,179,0.1)] data-[open=true]:shadow-[0_4px_20px_rgba(0,171,179,0.12)] data-[open=true]:border-primary/20 min-w-0"
                   data-open="false"
                 >
                   <button
                     type="button"
-                    class="faq-trigger flex w-full cursor-pointer list-none items-center justify-between gap-3 md:gap-4 px-4 md:px-5 py-3 md:py-4 min-h-[44px] touch-manipulation text-left text-sm md:text-base font-semibold text-gray-900 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-w-0"
+                    class="faq-trigger flex w-full cursor-pointer list-none items-center justify-between gap-3 md:gap-4 px-4 md:px-5 py-3 md:py-4 min-h-[44px] touch-manipulation text-left text-sm md:text-base font-semibold text-gray-900 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-w-0"
                     aria-expanded="false"
                     aria-controls={`faq-answer-${i}`}
                     id={`faq-question-${i}`}
@@ -163,7 +163,7 @@ const { class: classes = '' } = Astro.props;
                       )}
                     </span>
                     <span
-                      class="faq-chevron shrink-0 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-primary/10 text-primary transition-[transform,background-color] duration-300"
+                      class="faq-chevron shrink-0 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-primary/10 text-primary transition-[transform,background-color] duration-200"
                       aria-hidden="true"
                     >
                       <svg
@@ -186,7 +186,7 @@ const { class: classes = '' } = Astro.props;
                     id={`faq-answer-${i}`}
                     role="region"
                     aria-labelledby={`faq-question-${i}`}
-                    class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                    class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 ease-out"
                   >
                     <div class="faq-content-inner overflow-hidden min-h-0">
                       <div class="border-t border-gray-100 px-4 md:px-5 py-3 md:py-4">
@@ -208,7 +208,7 @@ const { class: classes = '' } = Astro.props;
           class="hidden lg:flex relative w-full max-w-[200px] lg:sticky lg:top-18 items-center justify-end min-h-[280px]"
         >
           <div
-            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[225px] text-[22rem] font-montserrat font-black text-primary/[0.04] leading-none select-none pointer-events-none -mr-16"
+            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[225px] text-[28rem] font-montserrat font-black text-primary/[0.04] leading-none select-none pointer-events-none -mr-16"
             aria-hidden="true"
           >
             ?

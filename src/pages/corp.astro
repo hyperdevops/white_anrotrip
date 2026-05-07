@@ -127,18 +127,7 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
             class="corp-hero-cta-btn inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-primary text-white font-bold font-montserrat text-sm uppercase tracking-wider hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 btn-ripple cursor-pointer"
           >
             Связаться
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
+            <i class="fa-solid fa-arrow-right text-sm leading-none shrink-0" aria-hidden="true"></i>
           </a>
           <a
             href="mailto:anro@anrotrip.ru"
@@ -146,7 +135,7 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
             aria-label="Написать на почту"
           >
             <svg
-              class="w-4 h-4"
+              class="w-6 w-6"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -176,7 +165,7 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
             aria-label="MAX — страница компании"
           >
             <svg
-              class="h-4 w-4 shrink-0 overflow-visible text-white"
+              class="h-4.5 w-4.5 shrink-0 overflow-visible text-white"
               viewBox="80 80 80 80"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
@@ -211,11 +200,13 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
               stroke="currentColor"
               stroke-width="2"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
             </svg>
           </a>
         </div>
@@ -1056,10 +1047,7 @@ const tinyCorpHero = await getImage({ src: corpHero, width: 20, quality: 20 });
                 <div
                   class="w-12 h-12 rounded-2xl bg-primary/15 flex items-center justify-center mb-6"
                 >
-                  <PhoneOutlineIcon
-                    iconClass="w-6 h-6"
-                    strokeWidth={1.8}
-                  />
+                  <PhoneOutlineIcon iconClass="text-xl" colorClass="text-primary" />
                 </div>
                 <h4
                   class="font-montserrat font-bold text-white text-lg mb-4 uppercase tracking-wider"

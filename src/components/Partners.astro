@@ -28,10 +28,10 @@ const partners = [
 const row1 = [...partners, ...partners];
 
 const stats = [
-  { value: '700+', label: 'компаний-партнёров', icon: 'building' },
-  { value: '18', label: 'лет на рынке', icon: 'calendar' },
-  { value: '14 000+', label: 'довольных клиентов', icon: 'users' },
-  { value: '10', label: 'отраслей бизнеса', icon: 'layers' },
+  { value: '800+', label: 'компаний-партнёров', icon: 'building' },
+  { value: '19', label: 'лет на рынке', icon: 'calendar' },
+  { value: '17 000+', label: 'довольных клиентов', icon: 'users' },
+  { value: 'Более 10', label: 'отраслей бизнеса', icon: 'layers' },
 ];
 
 interface Props {
@@ -175,9 +175,7 @@ const { class: classes = '' }: Props = Astro.props;
         class="partners-cta-btn inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-white font-semibold font-montserrat text-sm hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 btn-ripple shadow-[0_4px_20px_rgba(0,171,179,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 cursor-pointer"
       >
         Стать партнёром
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-        </svg>
+        <i class="fa-solid fa-arrow-right text-sm leading-none shrink-0" aria-hidden="true"></i>
       </a>
     </div>
 

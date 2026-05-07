@@ -11,12 +11,12 @@ export interface Props { class?: string; }
 const { class: classes = '' } = Astro.props;
 
 const tours = [
-  { title: 'Мальдивы',        price: 'от 150 000 ₽', image: maldivesImg, size: 'large',  badge: 'Премиум',       badgeColor: 'bg-amber-400/90 text-amber-950' },
-  { title: 'Сейшелы, Маэ',    price: 'от 180 000 ₽', image: seychellesImg, size: 'tall',   badge: 'Острова',       badgeColor: 'bg-[#0d9488]/85 text-white' },
-  { title: 'Турция, Анталья', price: 'от 85 000 ₽',  image: antalyaImg,  size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white' },
-  { title: 'Таиланд, Пхукет', price: 'от 115 000 ₽', image: thailandImg, size: 'normal', badge: 'Расслабление', badgeColor: 'bg-emerald-500/80 text-white' },
-  { title: 'Египет, Шарм',    price: 'от 105 000 ₽',  image: egyptImg,    size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white' },
-  { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽',  image: vietnamImg,  size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white' },
+  { title: 'Мальдивы',        price: 'от 150 000 ₽', image: maldivesImg,   size: 'large',  badge: 'Премиум',       badgeColor: 'bg-amber-400/90 text-amber-950',  tvCountry: '' },
+  { title: 'Сейшелы, Маэ',    price: 'от 180 000 ₽', image: seychellesImg, size: 'tall',   badge: 'Острова',       badgeColor: 'bg-[#0d9488]/85 text-white',       tvCountry: '' },
+  { title: 'Турция, Анталья', price: 'от 85 000 ₽',  image: antalyaImg,    size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white',        tvCountry: 'Турция' },
+  { title: 'Таиланд, Пхукет', price: 'от 115 000 ₽', image: thailandImg,   size: 'normal', badge: 'Расслабление',  badgeColor: 'bg-emerald-500/80 text-white',     tvCountry: 'Таиланд' },
+  { title: 'Египет, Шарм',    price: 'от 105 000 ₽', image: egyptImg,      size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white',      tvCountry: 'Египет' },
+  { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽', image: vietnamImg,    size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white',         tvCountry: 'Вьетнам' },
 ];
 
 // Tiny placeholders (20px) для blur-up — мгновенное отображение до загрузки полного изображения
@@ -33,14 +33,14 @@ const tinyPlaceholders = await Promise.all(
       <div>
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
           <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-          <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Горящие туры</span>
+          <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Туры</span>
         </div>
         <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
           Популярные<br /><span class="text-primary">направления</span>
         </h2>
       </div>
-      <p class="text-gray-400 text-sm max-w-xs leading-relaxed @md:pb-2 @md:text-right">
-        Лучшие предложения этого сезона.<br />Нажмите на карточку, чтобы подобрать тур.
+      <p class="text-gray-500 text-sm max-w-xs leading-relaxed @md:pb-2 @md:text-right">
+        Лучшие направления сезона весна 2026.<br />Нажмите на карточку, чтобы подобрать тур.
       </p>
     </div>
 
@@ -50,6 +50,7 @@ const tinyPlaceholders = await Promise.all(
         <button
           type="button"
           data-tour-title={tour.title}
+          data-tv-country={tour.tvCountry}
           aria-label={`Подобрать тур: ${tour.title} — переход к форме поиска`}
           class:list={[
             '@container group relative min-w-0 overflow-hidden rounded-3xl cursor-pointer transition-[opacity,transform,box-shadow] duration-slow shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] border border-white/10 reveal-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [content-visibility:auto]',
@@ -95,9 +96,7 @@ const tinyPlaceholders = await Promise.all(
               </span>
               <!-- Иконка-стрелка появляется при hover (только десктоп) -->
               <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-normal -translate-y-1 md:group-hover:translate-y-0">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
+                <i class="fa-solid fa-arrow-right text-sm leading-none text-white md:transition-transform md:duration-normal md:group-hover:translate-x-0.5" aria-hidden="true"></i>
               </span>
             </div>
 
@@ -121,12 +120,22 @@ const tinyPlaceholders = await Promise.all(
       <a
         id="popular-tours-all-btn"
         href="#search"
-        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
       >
         Смотреть все направления
-        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-        </svg>
+        <i
+          class:list={[
+            'fa-solid',
+            'fa-arrow-right',
+            'text-sm',
+            'leading-none',
+            'shrink-0',
+            'group-hover:translate-x-1',
+            'transition-transform',
+            'duration-fast',
+          ]}
+          aria-hidden="true"
+        />
       </a>
     </div>
   </div>
@@ -142,11 +151,25 @@ const tinyPlaceholders = await Promise.all(
   };
 
   document.querySelectorAll('button[data-tour-title]').forEach((btn) => {
-    btn.addEventListener('click', () => scrollToSearch());
+    btn.addEventListener('click', () => {
+      const country = (btn as HTMLElement).dataset.tvCountry || '';
+      // 1. Переключаем вкладку «Туры и Отели» и инициируем предвыбор страны
+      if (typeof (window as any).switchSearchTab === 'function') {
+        (window as any).switchSearchTab('tourvisor');
+      }
+      if (country && typeof (window as any).tvSelectCountry === 'function') {
+        (window as any).tvSelectCountry(country);
+      }
+      // 2. Скролл к виджету
+      scrollToSearch();
+    });
   });
 
   document.getElementById('popular-tours-all-btn')?.addEventListener('click', (e) => {
     e.preventDefault();
+    if (typeof (window as any).switchSearchTab === 'function') {
+      (window as any).switchSearchTab('tourvisor');
+    }
     scrollToSearch();
   });
 
