@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import SectionSparklesLayer from './SectionSparklesLayer.astro';
 import { getTourStyleBadge } from '../lib/tourDestinationBadge';
 import { siteBlogIndex, siteBlogPost } from '../lib/site-urls';
 
@@ -16,9 +17,11 @@ const latestPosts = sortedPosts
 
 <section
   id="journal"
-  class="pt-14 pb-10 md:pt-20 md:pb-24 bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-hidden"
+  class="relative pt-14 pb-10 md:pt-20 md:pb-24 bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-x-clip overflow-y-visible"
 >
-  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+  <SectionSparklesLayer />
+
+  <div class="relative z-10 container mx-auto px-4 sm:px-6 max-w-7xl">
 
     <!-- Заголовок секции — паттерн как в PopularTours -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 md:mb-12 reveal-hidden">

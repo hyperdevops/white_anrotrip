@@ -1,0 +1,36 @@
+---
+/** Canvas-искры секции — как блок «Наш журнал» на главной */
+export interface Props {
+  colorPalette?: 'default' | 'awards';
+  density?: number;
+  speed?: number;
+  minSize?: number;
+  maxSize?: number;
+  class?: string;
+}
+
+const {
+  colorPalette = 'default',
+  density = 175,
+  speed = 5,
+  minSize = 0.45,
+  maxSize = 1.8,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'sparkles-atmosphere section-sparkles-atmosphere pointer-events-none absolute inset-0 z-0 max-md:hidden',
+    colorPalette === 'awards' && 'awards-sparkles-atmosphere',
+    className,
+  ]}
+  aria-hidden="true"
+  data-sparkle-density={density}
+  data-sparkle-speed={speed}
+  data-sparkle-min-size={minSize}
+  data-sparkle-max-size={maxSize}
+  {...colorPalette === 'awards' ? { 'data-sparkle-colors': 'awards' } : {}}
+>
+  <canvas class="sparkles-atmosphere__canvas"></canvas>
+</div>
