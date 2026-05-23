@@ -6,7 +6,9 @@ import annaRozhkovaImg  from '../assets/team/a_rozhkova.webp';
 import nikitaRozhkovImg from '../assets/team/n_rozhkov.webp';
 import teamGroupImg     from '../assets/team/team.webp';
 
+import uDenisovaImg     from '../assets/team/u_denisova.webp';
 import eNedelkoImg      from '../assets/team/e_nedelko.webp';
+import aDenisovaImg     from '../assets/team/a_denisova.webp';
 import eSherbakovaImg   from '../assets/team/e_sherbakova.webp';
 import sMosincevaImg    from '../assets/team/s_mosinceva.webp';
 import nKorolevaImg     from '../assets/team/n_koroleva.webp';
@@ -14,22 +16,23 @@ import uSubotinaImg     from '../assets/team/u_subotina.webp';
 import dSemushinaImg    from '../assets/team/d_semushina.webp';
 import tDankovaImg      from '../assets/team/t_dankova.webp';
 import sLednevaImg      from '../assets/team/s_ledneva.webp';
+import ktsypyshevaImg   from '../assets/team/k_tsypysheva.webp';
 import kMusinaImg       from '../assets/team/k_musina.webp';
-import aDenisovaImg     from '../assets/team/a_denisova.webp';
 import aBochkarevaImg   from '../assets/team/a_bochkareva.webp';
 import aKrestovskichImg from '../assets/team/a_krestovskich.webp';
 import eGolovanovaImg   from '../assets/team/e_golovanova.webp';
 import uPasynkovaImg    from '../assets/team/u_pasynkova.webp';
 import aBatenevaImg     from '../assets/team/a_bateneva.webp';
 import oGolikovaImg     from '../assets/team/o_golikova.webp';
-import uDenisovaImg     from '../assets/team/u_denisova.webp';
 import oDomashevskayaImg from '../assets/team/o_domashevskaya.webp';
 import eMamikinaImg     from '../assets/team/e_mamykina.webp';
 import nVafinaImg       from '../assets/team/n_vafina.webp';
 import kNagovicynaImg   from '../assets/team/k_nagovicyna.webp';
 
 const team = [
+  { name: 'Юлия Денисова',         role: 'Административный директор',     dept: 'г. Челябинск',        email: 'online@anrotrip.ru',           phone: '8 (800) 222-44-73',          img: uDenisovaImg     },
   { name: 'Екатерина Неделько',    role: 'Руководитель',       dept: 'Авиаотдел',           email: 'e.nedelko@anrotrip.ru',        phone: '8 (800) 222-44-73 доб. 115', img: eNedelkoImg      },
+  { name: 'Анна Денисова',         role: 'Руководитель',       dept: 'Туристический отдел', email: 'a.denisova@anrotrip.ru',       phone: '8 (800) 222-44-73',          img: aDenisovaImg     },
   { name: 'Елена Щербакова',       role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'lena@anrotrip.ru',             phone: '8 (800) 222-44-73 доб. 114', img: eSherbakovaImg   },
   { name: 'Светлана Мосинцева',    role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'svetlana.m@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 111', img: sMosincevaImg    },
   { name: 'Наталья Королёва',      role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'koroleva@anrotrip.ru',         phone: '8 (800) 222-44-73 доб. 112', img: nKorolevaImg     },
@@ -37,15 +40,14 @@ const team = [
   { name: 'Диана Семушова',        role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'diana@anrotrip.ru',            phone: '8 (800) 222-44-73 доб. 110', img: dSemushinaImg    },
   { name: 'Татьяна Данкова',       role: 'Авиакассир',         dept: 'Авиаотдел',           email: 't.dankova@anrotrip.ru',        phone: '8 (800) 222-44-73',          img: tDankovaImg      },
   { name: 'Светлана Леднева',      role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'svetlana.l@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 115', img: sLednevaImg      },
+  { name: 'Кристина Цыпышева',     role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'k.tsypyshevak.tsypysheva@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 222', img: ktsypyshevaImg   },
   { name: 'Ксения Мусина',         role: 'Менеджер',           dept: 'Отдел сервиса',       email: 'ksenia@anrotrip.ru',           phone: '8 (800) 222-44-73 доб. 666', img: kMusinaImg       },
-  { name: 'Анна Денисова',         role: 'Руководитель',       dept: 'Туристический отдел', email: 'a.denisova@anrotrip.ru',       phone: '8 (800) 222-44-73',          img: aDenisovaImg     },
   { name: 'Анна Бочкарева',        role: 'Менеджер',           dept: 'Туристический отдел', email: 'bochkareva@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 120', img: aBochkarevaImg   },
   { name: 'Анастасия Крестовских', role: 'Менеджер',           dept: 'Туристический отдел', email: 'anastasiya@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 117', img: aKrestovskichImg },
   { name: 'Елена Голованова',      role: 'Менеджер',           dept: 'Туристический отдел', email: 'anro.chelyabinsk@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 119', img: eGolovanovaImg   },
   { name: 'Юлия Пасынкова',        role: 'Менеджер',           dept: 'Туристический отдел', email: 'anro.chelyabinsk@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 118', img: uPasynkovaImg    },
   { name: 'Анна Батенева',         role: 'Менеджер',           dept: 'Туристический отдел', email: 'a.bateneva@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 122', img: aBatenevaImg     },
   { name: 'Ольга Голикова',        role: 'Визовый специалист', dept: 'Туристический отдел', email: 'visa@anrotrip.ru',             phone: '8 (800) 222-44-73',          img: oGolikovaImg     },
-  { name: 'Юлия Денисова',         role: 'Директор офиса',     dept: 'г. Челябинск',        email: 'online@anrotrip.ru',           phone: '8 (800) 222-44-73',          img: uDenisovaImg     },
   { name: 'Ольга Домашевская',     role: 'Главный бухгалтер',  dept: 'Финансовый отдел',    email: 'finance@anrotrip.ru',          phone: '8 (800) 222-44-73 доб. 333', img: oDomashevskayaImg},
   { name: 'Екатерина Мамыкина',    role: 'Бухгалтер',          dept: 'Финансовый отдел',    email: 'katya@anrotrip.ru',            phone: '8 (800) 222-44-73',          img: eMamikinaImg     },
   { name: 'Наталья Вафина',        role: 'Бухгалтер',          dept: 'Финансовый отдел',    email: 'natalia.v@anrotrip.ru',        phone: '8 (800) 222-44-73',          img: nVafinaImg       },
@@ -167,8 +169,8 @@ const team = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {team.map((member) => (
         <div class="flex flex-col items-center text-center group transition-transform duration-slow ease-out hover:-translate-y-1">
-          <!-- Фото -->
-          <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden mb-4 ring-2 ring-gray-100 group-hover:ring-primary/30 group-hover:shadow-xl transition-all duration-slow ease-out bg-gray-200 shrink-0">
+          <!-- Фото (круглое) -->
+          <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-4xl overflow-hidden mb-5 ring-2 ring-gray-100 group-hover:ring-primary/30 group-hover:shadow-xl transition-all duration-slow ease-out bg-gray-200 shrink-0">
             <Image
               src={member.img}
               alt={member.name}
@@ -177,21 +179,25 @@ const team = [
             />
           </div>
 
+          <!-- Имя -->
+          <h3 class="font-montserrat font-bold text-gray-900 text-lg leading-tight mb-1">{member.name}</h3>
+          <!-- Должность -->
+          <p class="text-[13px] text-gray-400 leading-snug">{member.role}</p>
+          <!-- Отдел / город -->
           {member.dept && (
-            <div class="text-[9px] text-gray-400 uppercase tracking-widest mb-1 font-semibold">{member.dept}</div>
+            <p class="text-[13px] text-gray-400 mb-2 leading-snug">{member.dept}</p>
           )}
-          <h3 class="font-montserrat font-bold text-gray-900 text-sm mb-0.5 leading-tight">{member.name}</h3>
-          <p class="text-xs text-gray-400 mb-3">{member.role}</p>
 
-          <div class="space-y-1 w-full">
+          <!-- Контакты -->
+          <div class="w-full">
             <a href={`mailto:${member.email}`}
-              class="block text-[10px] text-primary hover:text-secondary transition-colors font-medium truncate px-1 cursor-pointer"
+              class="block text-[13px] text-primary hover:text-secondary transition-colors font-medium truncate px-1 cursor-pointer"
               title={member.email}>
               {member.email}
             </a>
             {member.phone && (
               <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`}
-                class="block text-[10px] text-gray-400 hover:text-primary transition-colors truncate px-1 cursor-pointer"
+                class="block text-[13px] text-primary hover:text-secondary transition-colors truncate px-1 mb-6 cursor-pointer"
                 title={member.phone}>
                 {member.phone}
               </a>
