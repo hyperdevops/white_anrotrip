@@ -2,6 +2,7 @@
 // src/components/TrustBadges.astro
 // Бейджи доверия (РТО, ТОП-10, Опыт, Клиенты, Корпоративы)
 
+import { iataIconPath, iataIconViewBoxEmblem } from '../lib/iata-icon';
 import { siteHome } from '../lib/site-urls';
 
 const badges = [
@@ -24,20 +25,22 @@ const badges = [
     external: true,
   },
   {
-    icon: 'trophy',
-    label: 'Награды',
-    value: 'ANRO TRIP 2026',
-    colorClass: 'text-cta',
-    bgClass: 'bg-cta/10',
-    href: '#awards',
-  },
-  {
-    icon: 'calendar',
-    label: 'Опыт',
-    value: 'Более 19 лет',
+    icon: 'iata',
+    label: 'Аккредитация',
+    value: 'IATA',
     colorClass: 'text-secondary',
     bgClass: 'bg-secondary/10',
-    href: `${siteHome()}#partners`,
+    href: 'https://www.iata.org/',
+    external: true,
+  },
+  {
+    icon: 'tkp',
+    label: 'Аккредитация',
+    value: 'ТКП',
+    colorClass: 'text-secondary',
+    bgClass: 'bg-secondary/10',
+    href: 'https://www.tch.ru/',
+    external: true,
   },
   {
     icon: 'users',
@@ -82,15 +85,27 @@ const badges = [
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         )}
-        {badge.icon === 'trophy' && (
-          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20 7h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 17.9V19H8v2h8v-2h-3v-1.1a5.01 5.01 0 0 0 4.61-2.96C20.08 14.63 22 12.55 22 10V9c0-1.1-.9-2-2-2zM6 10V9h2v3.82C6.84 12.4 6 11.3 6 10zm12 0c0 1.3-.84 2.4-2 2.82V9h2v1z"/>
+        {badge.icon === 'iata' && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox={iataIconViewBoxEmblem}
+            preserveAspectRatio="xMidYMid meet"
+            class={`mx-auto block size-7 sm:size-8 shrink-0 -translate-y-[4px] sm:-translate-y-[6px] ${badge.colorClass}`}
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d={iataIconPath} />
           </svg>
         )}
-        {badge.icon === 'calendar' && (
-          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/>
-          </svg>
+        {badge.icon === 'tkp' && (
+          <span
+            class:list={[
+              'mx-auto block h-3 w-7 sm:h-3.5 sm:w-8 shrink-0 bg-secondary',
+              'mask-[url(/logos/tkp.png)] mask-center mask-no-repeat [mask-size:contain]',
+              '[-webkit-mask-image:url(/logos/tkp.png)] [-webkit-mask-position:center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:contain]',
+            ]}
+            aria-hidden="true"
+          />
         )}
         {badge.icon === 'users' && (
           <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
