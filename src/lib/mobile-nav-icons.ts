@@ -28,22 +28,52 @@ const map: Record<string, MobileNavIconDef> = {
   Туры: {
     box: 'bg-primary/12',
     icon: 'text-primary',
-    fa: 'fa-solid fa-magnifying-glass',
+    fa: 'fa-solid fa-globe',
   },
   Журнал: {
     box: 'bg-secondary/10',
     icon: 'text-secondary',
     fa: 'fa-solid fa-newspaper',
   },
+  'О компании': {
+    box: 'bg-primary/10',
+    icon: 'text-primary-dark',
+    fa: 'fa-solid fa-building',
+  },
+  Доверие: {
+    box: 'bg-secondary/10',
+    icon: 'text-secondary',
+    fa: 'fa-solid fa-shield-halved',
+  },
   'О нас': {
     box: 'bg-primary/10',
     icon: 'text-primary-dark',
     fa: 'fa-solid fa-circle-info',
   },
-  Бизнес: {
+  'Наши услуги': {
+    box: 'bg-secondary/12',
+    icon: 'text-secondary',
+    fa: 'fa-solid fa-list-check',
+  },
+  Направления: {
+    box: 'bg-primary-light/12',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-arrow-trend-up',
+  },
+  'Для бизнеса': {
     box: 'bg-secondary/12',
     icon: 'text-secondary',
     fa: 'fa-solid fa-briefcase',
+  },
+  Партнеры: {
+    box: 'bg-primary/10',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-handshake',
+  },
+  Партнёры: {
+    box: 'bg-primary/10',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-handshake',
   },
   Отзывы: {
     box: 'bg-cta/20',
@@ -55,14 +85,14 @@ const map: Record<string, MobileNavIconDef> = {
     icon: 'text-yellow-900',
     fa: 'fa-solid fa-trophy',
   },
-  Подарок: {
+  Сертификат: {
     box: 'bg-cta/18',
     icon: 'text-yellow-900',
     fa: 'fa-solid fa-gift',
   },
   Вопросы: {
-    box: 'bg-gray-400/12',
-    icon: 'text-gray-700',
+    box: 'bg-secondary/12',
+    icon: 'text-secondary',
     fa: 'fa-solid fa-circle-question',
   },
   Команда: {

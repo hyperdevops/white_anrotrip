@@ -15,7 +15,7 @@ export interface Props {
   navItems?: { name: string; href: string }[];
   ctaText?: string;
   ctaHref?: string;
-  /** На главной — сетка auto | 1fr | auto: нав центрирован в средней колонке; без translate (он ломал симметрию зазоров). Зазор лого—первый пункт: nav:pr-* на ссылке лого, под длину пунктов (Авиабилеты и т.д.). */
+  /** На главной (десктоп nav:): панель `w-max` по центру страницы, равные зазоры лого—меню—телефон. */
   navVariant?: 'default' | 'corp';
   /** Круглые кнопки телефона / Telegram / MAX — только главная (`index.astro`). Страницу corp не трогать. */
   homeQuickContacts?: boolean;
@@ -34,7 +34,9 @@ const isHome =
   Astro.url.pathname === baseTrimmed + '/';
 /** На главной — якорь к секции «Наш журнал»; на других страницах — переход на главную с хэшем */
 const journalHref = isHome ? '#journal' : `${baseTrimmed}/#journal`;
-/** CTA «бизнес / travel-ассистент» в About — якорь на главной или переход с других страниц */
+/** Как бейдж в Hero (`#hero-services-badge`) — секция «Наши услуги» в About */
+const servicesHref = isHome ? '#services' : `${baseTrimmed}/#services`;
+/** Блок «Для бизнеса» / travel-ассистент в About */
 const businessHref = isHome ? '#business' : `${baseTrimmed}/#business`;
 /** Раздел наград */
 const awardsHref = isHome ? '#awards' : `${baseTrimmed}/#awards`;
@@ -43,12 +45,49 @@ const giftHref = isHome ? '#gift' : `${baseTrimmed}/#gift`;
 
 const defaultNavItems = [
   { name: 'Авиабилеты', href: '#search' },
+  { name: 'Туры', href: '#popular-tours' },
   { name: 'Журнал', href: journalHref },
   { name: 'О нас', href: '#about' },
-  { name: 'Бизнес', href: businessHref },
+  { name: 'Наши услуги', href: servicesHref },
+  { name: 'Партнёры', href: '#partners' },
   { name: 'Отзывы', href: '#reviews' },
   { name: 'Награды', href: awardsHref },
-  { name: 'Подарок', href: giftHref },
+  { name: 'Сертификат', href: giftHref },
+  { name: 'Вопросы', href: '#faq' },
+  { name: 'Команда', href: '#team' },
+  { name: 'Контакты', href: '#contacts' },
+];
+
+/** Десктоп главной (`isHome && navVariant === 'default'`): 2 подменю + отдельные ссылки.
+ * Корпоративная страница и прочие случаи — плоский `navItems`. */
+const defaultNavGroups: { name: string; items: { name: string; href: string }[] }[] = [
+  {
+    name: 'О компании',
+    items: [
+      { name: 'О нас', href: '#about' },
+      { name: 'Наши услуги', href: servicesHref },
+      { name: 'Направления', href: '#directions' },
+      { name: 'Для бизнеса', href: '#business' },
+      { name: 'Партнеры', href: '#partners' },
+    ],
+  },
+  {
+    name: 'Доверие',
+    items: [
+      { name: 'Отзывы', href: '#reviews' },
+      { name: 'Награды', href: awardsHref },
+      { name: 'Сертификат', href: giftHref },
+    ],
+  },
+];
+
+/** Главная, десктоп: без выпадашки — порядок: ссылки до групп и после */
+const defaultNavStandaloneFirst: { name: string; href: string }[] = [
+  { name: 'Авиабилеты', href: '#search' },
+  { name: 'Туры', href: '#popular-tours' },
+  { name: 'Журнал', href: journalHref },
+];
+const defaultNavStandalone: { name: string; href: string }[] = [
   { name: 'Вопросы', href: '#faq' },
   { name: 'Команда', href: '#team' },
   { name: 'Контакты', href: '#contacts' },
@@ -67,11 +106,35 @@ const ctaPrefetch = ctaHref.startsWith('/')
   : {};
 
 const navDesktopLinkClass =
-  'relative px-1.5 lg:px-2 py-1.5 lg:py-2 text-[9px] lg:text-[10px] xl:text-[11px] font-bold text-gray-600 hover:text-primary uppercase tracking-wide whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
+  'relative px-1.5 lg:px-2 py-1.5 lg:py-2 text-[8px] lg:text-[9px] xl:text-[10px] font-bold font-montserrat text-gray-600 hover:text-primary uppercase tracking-wider whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
+/** Триггер группы (главная, default): компактнее обычной ссылки + flex с шевроном. `group` — для подчёркивания внутри. */
+const navDesktopTriggerClass =
+  'relative flex items-center gap-1 px-[5px] lg:px-[7px] py-1.5 lg:py-2 text-[8px] lg:text-[9px] xl:text-[10px] font-bold font-montserrat text-gray-600 hover:text-primary uppercase tracking-wider whitespace-nowrap transition-colors duration-fast rounded-lg hover:bg-primary/5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
+/** Пункт подменю: типографика nav + зелёная точка, как в основном меню */
+const navDesktopMenuItemClass =
+  'flex w-full items-center px-4 py-2 text-[8px] lg:text-[9px] xl:text-[10px] font-bold font-montserrat text-gray-600 uppercase tracking-wider hover:text-primary hover:bg-primary/5 transition-colors duration-fast whitespace-nowrap rounded-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 cursor-pointer';
+
+type HomeNavEntry =
+  | { kind: 'link'; name: string; href: string }
+  | { kind: 'group'; name: string; items: { name: string; href: string }[] };
+
+/** Главная: тот же порядок и группы, что в десктоп-меню (`nav:`) */
+const homeNavEntries: HomeNavEntry[] = [
+  ...defaultNavStandaloneFirst.map((item) => ({ kind: 'link' as const, ...item })),
+  ...defaultNavGroups.map((group) => ({ kind: 'group' as const, ...group })),
+  ...defaultNavStandalone.map((item) => ({ kind: 'link' as const, ...item })),
+];
 
 const mobileNavRowBase =
   'flex w-full items-center gap-3 rounded-xl px-2 py-2 text-sm font-semibold text-gray-800 hover:bg-primary/8 hover:text-primary transition-[background-color,color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:640px)]:py-1.5 [@media(max-height:520px)]:gap-2.5 [@media(max-height:520px)]:py-1.5';
 const mobileNavItemClass = mobileNavRowBase;
+/** Подменю главной в drawer: отступ слева, чтобы читались как подпункты */
+const mobileNavSubListClass =
+  'ml-3 flex flex-col gap-0 border-l border-primary/15 pb-0.5 pl-2 pt-0.5 [@media(max-height:520px)]:ml-2.5 [@media(max-height:520px)]:pl-1.5 [@media(max-height:520px)]:pb-0';
+const mobileNavGroupSummaryClass = [
+  mobileNavRowBase,
+  'list-none [&::-webkit-details-marker]:hidden',
+].join(' ');
 
 /** Иконка «Избранное» в хедере (mobile) — тот же стиль, что в mobile-nav-icons «Избранное» */
 const favHeaderIcon = getMobileNavIcon('Избранное');
@@ -93,21 +156,28 @@ const homeContactIconText =
 >
   <div
     class:list={[
-      'mx-auto px-3 sm:px-4 pt-3 md:pt-4',
+      'mx-auto px-3 sm:px-4 pt-[8px] md:pt-[12px]',
       navVariant === 'corp'
         ? 'max-w-7xl'
-        : homeQuickContacts
-          ? 'max-w-[1400px]'
-          : 'max-w-[1360px]',
+        : isHome && navVariant === 'default'
+          ? 'max-w-[calc(80rem+32px)]'
+          : homeQuickContacts
+          ? 'max-w-[calc(90rem)]'
+          : 'max-w-[calc(88rem)]',
     ]}
   >
     <div
       id="header-inner"
       class:list={[
-        'relative grid items-center gap-2 lg:gap-3 rounded-2xl glass-panel max-md:backdrop-blur-none md:backdrop-blur-xl px-3 sm:px-4 py-2.5 md:py-3 transition-[background-color,border-color,box-shadow] duration-normal',
-        navVariant === 'corp'
-          ? 'grid-cols-[auto_minmax(0,1fr)_auto]'
-          : 'grid-cols-[auto_1fr_auto]',
+        'relative items-center rounded-2xl glass-panel max-md:backdrop-blur-none md:backdrop-blur-xl px-3 sm:px-4 py-[6px] md:py-2 transition-[background-color,border-color,box-shadow] duration-normal overflow-visible',
+        isHome && navVariant === 'default'
+          ? 'grid grid-cols-[auto_1fr_auto] gap-2 lg:gap-3 nav:flex nav:w-max nav:mx-auto nav:items-center nav:gap-x-12'
+          : [
+              'grid gap-2 lg:gap-3',
+              navVariant === 'corp'
+                ? 'grid-cols-[auto_minmax(0,1fr)_auto]'
+                : 'grid-cols-[auto_1fr_auto]',
+            ],
       ]}
     >
       {
@@ -118,9 +188,6 @@ const homeContactIconText =
         id="logo-btn"
         class:list={[
           'flex items-center gap-3 group z-50 cursor-pointer select-none',
-          isHome && navVariant === 'default'
-            ? 'lg:justify-self-start nav:pr-4'
-            : '',
         ]}
         {...isHome ? {} : { 'data-astro-reload': true }}
       >
@@ -150,7 +217,7 @@ const homeContactIconText =
             >
           </div>
           <span
-            class="text-[7px] sm:text-[7px] text-black/60 uppercase tracking-widest hidden sm:block leading-tight mt-[2px]"
+            class="text-[7px] sm:text-[7px] text-black/60 uppercase tracking-widest hidden sm:block leading-tight mt-0.5"
             >Туристическая<br /><span class="block -mt-px">компания</span></span
           >
         </div>
@@ -158,16 +225,85 @@ const homeContactIconText =
 
       <nav
         class:list={[
-          'hidden nav:flex items-center justify-center min-w-0 gap-x-1.5 nav:gap-x-1.5 overflow-visible',
+          'hidden nav:flex items-center min-w-0 overflow-visible',
           isHome && navVariant === 'default'
-            ? 'justify-self-center'
-            : '',
+            ? 'nav:z-10 shrink-0 gap-x-1.5 nav:gap-x-1.5 nav:translate-x-[7px]'
+            : navVariant === 'corp'
+              ? 'justify-self-center justify-center gap-x-2.5 nav:gap-x-2.5'
+              : 'justify-self-center justify-center gap-x-1.5 nav:gap-x-1.5',
         ]}
         aria-label="Основное меню"
       >
         {
-          navItems.map((item, index) => (
-            <>
+          isHome && navVariant === 'default' ? (
+            homeNavEntries.map((entry) => (
+                <>
+                  {entry.kind === 'link' ? (
+                    <a
+                      href={entry.href}
+                      class={navDesktopLinkClass}
+                      style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-wrap-mode: nowrap;"
+                    >
+                      {entry.name}
+                      <span class="absolute bottom-1 left-2 right-2 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-normal origin-left" />
+                    </a>
+                  ) : (
+                    <div
+                      class="group nav-menu-group relative flex items-center"
+                      data-nav-menu
+                      data-nav-menu-id={entry.name}
+                    >
+                      <button
+                        type="button"
+                        class={navDesktopTriggerClass}
+                        data-nav-menu-trigger
+                        aria-haspopup="menu"
+                        aria-expanded="false"
+                        style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-wrap-mode: nowrap;"
+                      >
+                        {entry.name}
+                        <svg
+                          class="w-2 h-2 shrink-0 transition-transform duration-fast group-[.is-open]:rotate-180"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          aria-hidden="true"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5l3 3 3-3" />
+                        </svg>
+                        <span class="absolute bottom-1 left-2 right-2 h-px bg-primary scale-x-0 group-hover:scale-x-100 group-[.is-open]:scale-x-100 transition-transform duration-normal origin-left" />
+                      </button>
+
+                      <div
+                        data-nav-menu-panel
+                        data-nav-menu-id={entry.name}
+                        class="nav-dropdown-panel fixed z-[52] min-w-44 w-max max-w-[calc(100vw-2rem)] pt-4.5 invisible pointer-events-none"
+                      >
+                        <ul
+                          role="menu"
+                          aria-label={entry.name}
+                          class="nav-dropdown-menu w-full overflow-hidden rounded-2xl py-2 shadow-lg shadow-black/5"
+                        >
+                          {entry.items.map((item) => (
+                            <li role="none" class="w-full">
+                              <a
+                                role="menuitem"
+                                href={item.href}
+                                class={navDesktopMenuItemClass}
+                              >
+                                {item.name}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ))
+          ) : (
+            navItems.map((item) => (
               <a
                 href={item.href}
                 class={navDesktopLinkClass}
@@ -176,20 +312,19 @@ const homeContactIconText =
                 {item.name}
                 <span class="absolute bottom-1 left-2 right-2 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-normal origin-left" />
               </a>
-              {index < navItems.length - 1 ? (
-                <span
-                  class="w-0.5 h-0.5 lg:w-1 lg:h-1 shrink-0 rounded-full bg-primary self-center"
-                  aria-hidden="true"
-                />
-              ) : null}
-            </>
-          ))
+            ))
+          )
         }
       </nav>
 
       {/* col-start-3 фиксирует бургер справа на mobile при скрытой nav */}
       <div
-        class="col-start-3 flex items-center justify-end gap-1.5 sm:gap-2 z-50 justify-self-end shrink-0"
+        class:list={[
+          'flex items-center justify-end gap-1.5 sm:gap-2 z-50 shrink-0',
+          isHome && navVariant === 'default'
+            ? 'col-start-3 justify-self-end nav:col-auto nav:justify-self-auto'
+            : 'col-start-3 justify-self-end',
+        ]}
       >
         {
           homeQuickContacts ? (
@@ -221,7 +356,7 @@ const homeContactIconText =
 
         <a
           href={ctaHref}
-          class="header-cta-btn btn-ripple hidden nav:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 uppercase tracking-wide shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 whitespace-nowrap"
+          class="header-cta-btn btn-ripple hidden nav:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-bold text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 uppercase tracking-wide shadow-md nav:shadow-sm nav:hover:shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 whitespace-nowrap"
           {...ctaPrefetch}
         >
           {ctaText}
@@ -240,7 +375,7 @@ const homeContactIconText =
               <i
                 class:list={[
                   ...favHeaderIcon.fa.split(' '),
-                  'block text-base leading-none text-primary',
+                  'block text-base leading-none text-primary translate-x-[0.2px] translate-y-[0.6px]',
                 ]}
                 aria-hidden="true"
               />
@@ -268,6 +403,13 @@ const homeContactIconText =
     </div>
   </div>
 
+  <!-- Десктоп: выпадашки вне #header-inner — иначе blur не виден (вложенный backdrop-filter) -->
+  <div
+    id="nav-desktop-dropdown-layer"
+    class="pointer-events-none fixed inset-0 z-[51] max-[89.999rem]:hidden"
+    aria-hidden="true"
+  ></div>
+
   <!-- Мобильное меню: затемнение + шторка выше хедера (z-50), логотип и бургер под блюром/затемнением -->
   <div
     id="mobile-menu-backdrop"
@@ -293,71 +435,156 @@ const homeContactIconText =
         aria-label="Меню"
       >
         <div
-          class="flex min-h-0 flex-1 flex-col gap-0 overflow-y-auto overscroll-contain px-1.5 pb-1.5 [-webkit-overflow-scrolling:touch]"
+          class="flex shrink-0 flex-col gap-1.5 px-1.5 pt-0.5 [@media(max-height:560px)]:gap-1"
         >
-          <div
-            class="flex shrink-0 flex-col gap-1.5 pt-0.5 [@media(max-height:560px)]:gap-1"
+          <a
+            href={ctaHref}
+            class="header-cta-btn btn-ripple mb-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 transition-[background-color,box-shadow] duration-fast hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:680px)]:mb-3 [@media(max-height:560px)]:mb-3 [@media(max-height:560px)]:py-2.5 [@media(max-height:480px)]:mb-2.5 [@media(max-height:480px)]:py-2 [@media(max-height:480px)]:text-[13px]"
+            {...ctaPrefetch}
           >
-            <a
-              href={ctaHref}
-              class="header-cta-btn btn-ripple mb-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 transition-[background-color,box-shadow] duration-fast hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:680px)]:mb-3 [@media(max-height:560px)]:mb-3 [@media(max-height:560px)]:py-2.5 [@media(max-height:480px)]:mb-2.5 [@media(max-height:480px)]:py-2 [@media(max-height:480px)]:text-[13px]"
-              {...ctaPrefetch}
-            >
-              <i
-                class="fa-solid fa-circle-user text-lg leading-none text-white"
-                aria-hidden="true"></i>
-              {ctaText}
-            </a>
-          </div>
+            <i
+              class="fa-solid fa-circle-user text-lg leading-none text-white"
+              aria-hidden="true"></i>
+            {ctaText}
+          </a>
           <div
             class="mx-1 mb-2 h-px shrink-0 bg-linear-to-r from-transparent via-gray-200 to-transparent"
             aria-hidden="true"
           >
           </div>
+        </div>
+
+        <div
+          class="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-1.5 [-webkit-overflow-scrolling:touch]"
+        >
           <ul
             class="flex flex-col gap-0 pb-0.5 [@media(max-height:640px)]:gap-0 [@media(max-height:520px)]:gap-0"
           >
             {
-              navItems.map((item) => {
-                const navIcon = getMobileNavIcon(item.name, navVariant);
-                return (
-                  <>
-                    <li>
-                      <a href={item.href} class={mobileNavItemClass}>
-                        <span
-                          class:list={[
-                            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 [@media(max-height:520px)]:h-8 [@media(max-height:520px)]:w-8',
-                            navIcon.box,
-                          ]}
-                        >
-                          <i
+              isHome && navVariant === 'default'
+                ? homeNavEntries.map((entry) => {
+                    const renderMobileNavLink = (item: {
+                      name: string;
+                      href: string;
+                    }) => {
+                      const navIcon = getMobileNavIcon(item.name, navVariant);
+                      return (
+                        <a href={item.href} class={mobileNavItemClass}>
+                          <span
                             class:list={[
-                              ...navIcon.fa.split(' '),
-                              navIcon.icon,
-                              'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
+                              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 [@media(max-height:520px)]:h-8 [@media(max-height:520px)]:w-8',
+                              navIcon.box,
                             ]}
-                            aria-hidden="true"
-                          />
-                        </span>
-                        <span class="min-w-0 flex-1 text-left leading-snug">
-                          {item.name}
-                        </span>
-                      </a>
-                    </li>
-                    {item.name === 'Контакты' ? (
-                      <li class="list-none py-0" aria-hidden="true">
-                        <div class="mx-1 mb-2 h-px shrink-0 bg-linear-to-r from-transparent via-gray-200 to-transparent" />
+                          >
+                            <i
+                              class:list={[
+                                ...navIcon.fa.split(' '),
+                                navIcon.icon,
+                                'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
+                              ]}
+                              aria-hidden="true"
+                            />
+                          </span>
+                          <span class="min-w-0 flex-1 text-left leading-snug">
+                            {item.name}
+                          </span>
+                        </a>
+                      );
+                    };
+
+                    return entry.kind === 'link' ? (
+                      <li>{renderMobileNavLink(entry)}</li>
+                    ) : (() => {
+                        const groupIcon = getMobileNavIcon(entry.name, navVariant);
+                        return (
+                      <li class="list-none">
+                        <details class="group/mobile-sub">
+                          <summary class={mobileNavGroupSummaryClass}>
+                                  <span
+                                    class:list={[
+                                      'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 [@media(max-height:520px)]:h-8 [@media(max-height:520px)]:w-8',
+                                      groupIcon.box,
+                                    ]}
+                                  >
+                                    <i
+                                      class:list={[
+                                        ...groupIcon.fa.split(' '),
+                                        groupIcon.icon,
+                                        'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
+                                      ]}
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  <span class="min-w-0 flex-1 text-left leading-snug">
+                                    {entry.name}
+                                  </span>
+                                  <svg
+                                    class="ml-auto h-3 w-3 shrink-0 text-gray-500 transition-transform duration-fast group-open/mobile-sub:rotate-180"
+                                    viewBox="0 0 12 12"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    aria-hidden="true"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M3 4.5l3 3 3-3"
+                                    />
+                                  </svg>
+                          </summary>
+                          <ul class={mobileNavSubListClass}>
+                            {entry.items.map((item) => (
+                              <li>{renderMobileNavLink(item)}</li>
+                            ))}
+                          </ul>
+                        </details>
                       </li>
-                    ) : null}
-                  </>
-                );
-              })
+                        );
+                      })();
+                  })
+                : navItems.map((item) => {
+                    const navIcon = getMobileNavIcon(item.name, navVariant);
+                    return (
+                      <li>
+                        <a href={item.href} class={mobileNavItemClass}>
+                          <span
+                            class:list={[
+                              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/6 [@media(max-height:520px)]:h-8 [@media(max-height:520px)]:w-8',
+                              navIcon.box,
+                            ]}
+                          >
+                            <i
+                              class:list={[
+                                ...navIcon.fa.split(' '),
+                                navIcon.icon,
+                                'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
+                              ]}
+                              aria-hidden="true"
+                            />
+                          </span>
+                          <span class="min-w-0 flex-1 text-left leading-snug">
+                            {item.name}
+                          </span>
+                        </a>
+                      </li>
+                    );
+                  })
             }
           </ul>
         </div>
+
         <div
-          class="mt-auto shrink-0 bg-white px-1.5 pt-2 pb-1.5 [@media(max-height:560px)]:pt-1.5 [@media(max-height:520px)]:pt-1"
+          class:list={[
+            'mt-auto shrink-0 px-1.5 pt-2 pb-1.5 [@media(max-height:560px)]:pt-1.5 [@media(max-height:520px)]:pt-1',
+            navVariant === 'corp' ? 'bg-gray-50' : 'bg-white',
+          ]}
         >
+          <div
+            class="mx-1 mb-2 h-px shrink-0 bg-linear-to-r from-transparent via-gray-200 to-transparent"
+            aria-hidden="true"
+          >
+          </div>
           <div
             class="grid grid-cols-3 gap-2 [@media(max-height:520px)]:gap-1.5"
             role="group"
@@ -502,6 +729,28 @@ const homeContactIconText =
           );
         });
 
+      /** Как бейдж в Hero (`hero-services-badge`): тот же зазор до «Наши услуги» */
+      const SERVICES_ANCHOR_GAP = 55;
+      document
+        .querySelectorAll<HTMLAnchorElement>('header a[href="#services"]')
+        .forEach((link) => {
+          link.addEventListener(
+            'click',
+            (e) => {
+              e.preventDefault();
+              const anchor = document.getElementById('services');
+              if (anchor) {
+                const top =
+                  anchor.getBoundingClientRect().top +
+                  window.scrollY -
+                  (headerHeight + SERVICES_ANCHOR_GAP);
+                window.scrollTo({ top, behavior: 'smooth' });
+              }
+            },
+            { signal },
+          );
+        });
+
       const GAP_PX = 22;
       document
         .querySelectorAll<HTMLAnchorElement>('header a[href="#content"]')
@@ -527,6 +776,8 @@ const homeContactIconText =
     const GAP_PX = -28;
     const SEARCH_GAP = -16; // хедер + минимальный зазор до search widget
     const CORP_CONTENT_GAP = -28;
+    /** Как бейдж Hero и десктоп `#services` в хедере */
+    const SERVICES_ANCHOR_GAP = 55;
     // Секция py-14 (56px) на мобиле: пилюля на 30px ниже хедера → offset = headerHeight - 26
     const BUSINESS_GAP = -26;
     // Секции py-16 (64px) на мобиле: пилюля ~36px ниже низа хедера → offset = headerHeight - 28 (см. .doc/header-anchor-scroll.md)
@@ -543,6 +794,7 @@ const homeContactIconText =
       let offset: number;
       if (id === 'search') offset = headerHeight + SEARCH_GAP;
       else if (id === 'content') offset = headerHeight + CORP_CONTENT_GAP;
+      else if (id === 'services') offset = headerHeight + SERVICES_ANCHOR_GAP;
       else if (id === 'business') offset = headerHeight + BUSINESS_GAP;
       else if (id === 'awards' || id === 'gift')
         offset = headerHeight + AWARDS_GIFT_GAP;
@@ -832,8 +1084,190 @@ const homeContactIconText =
       }
     }
   });
+  /** Десктопные выпадашки главной: одно меню, без group-hover (подвисания / несколько открытых). */
+  let navMenuAbort: AbortController | null = null;
+  let navMenuCloseTimer: ReturnType<typeof setTimeout> | null = null;
+
+  const getNavMenuPanel = (group: HTMLElement): HTMLElement | null => {
+    const id = group.getAttribute('data-nav-menu-id');
+    if (id) {
+      return document.querySelector<HTMLElement>(
+        `[data-nav-menu-panel][data-nav-menu-id="${CSS.escape(id)}"]`,
+      );
+    }
+    return group.querySelector<HTMLElement>('[data-nav-menu-panel]');
+  };
+
+  const restoreNavDropdownPanel = (group: HTMLElement) => {
+    const panel = getNavMenuPanel(group);
+    if (!panel || group.contains(panel)) return;
+    group.appendChild(panel);
+    panel.style.removeProperty('top');
+    panel.style.removeProperty('left');
+    panel.style.removeProperty('transform');
+  };
+
+  const setNavDropdownPanelOpen = (panel: HTMLElement | null, open: boolean) => {
+    if (!panel) return;
+    panel.classList.toggle('invisible', !open);
+    panel.classList.toggle('pointer-events-none', !open);
+    panel.classList.toggle('visible', open);
+    panel.classList.toggle('pointer-events-auto', open);
+  };
+
+  const positionNavDropdownPanel = (group: HTMLElement) => {
+    const trigger = group.querySelector<HTMLElement>('[data-nav-menu-trigger]');
+    const panel = getNavMenuPanel(group);
+    const layer = document.getElementById('nav-desktop-dropdown-layer');
+    if (!trigger || !panel || !layer) return;
+
+    if (panel.parentElement !== layer) {
+      layer.appendChild(panel);
+    }
+
+    const rect = trigger.getBoundingClientRect();
+    panel.style.top = `${rect.bottom}px`;
+    panel.style.left = `${rect.left + rect.width / 2}px`;
+    panel.style.transform = 'translateX(-50%)';
+  };
+
+  const isNavMenuHoverTarget = (group: HTMLElement, target: EventTarget | null) => {
+    if (!(target instanceof Node)) return false;
+    const panel = getNavMenuPanel(group);
+    return group.contains(target) || (panel?.contains(target) ?? false);
+  };
+
+  const closeDesktopNavMenus = () => {
+    if (navMenuCloseTimer) {
+      clearTimeout(navMenuCloseTimer);
+      navMenuCloseTimer = null;
+    }
+    document.querySelectorAll<HTMLElement>('[data-nav-menu]').forEach((g) => {
+      g.classList.remove('is-open');
+      g
+        .querySelector<HTMLElement>('[data-nav-menu-trigger]')
+        ?.setAttribute('aria-expanded', 'false');
+      const panel = getNavMenuPanel(g);
+      setNavDropdownPanelOpen(panel, false);
+      restoreNavDropdownPanel(g);
+    });
+  };
+
+  const initDesktopNavMenus = () => {
+    navMenuAbort?.abort();
+    navMenuAbort = new AbortController();
+    const { signal } = navMenuAbort;
+    closeDesktopNavMenus();
+
+    if (!window.matchMedia('(min-width: 90rem)').matches) return;
+
+    const nav = document.querySelector(
+      '#site-header nav[aria-label="Основное меню"]',
+    );
+    if (!nav) return;
+
+    const groups = nav.querySelectorAll<HTMLElement>('[data-nav-menu]');
+    if (!groups.length) return;
+
+    const layer = document.getElementById('nav-desktop-dropdown-layer');
+    if (!layer) return;
+
+    const closeAll = closeDesktopNavMenus;
+
+    const openGroup = (g: HTMLElement) => {
+      if (navMenuCloseTimer) {
+        clearTimeout(navMenuCloseTimer);
+        navMenuCloseTimer = null;
+      }
+      groups.forEach((el) => {
+        const on = el === g;
+        el.classList.toggle('is-open', on);
+        el
+          .querySelector<HTMLElement>('[data-nav-menu-trigger]')
+          ?.setAttribute('aria-expanded', on ? 'true' : 'false');
+        const panel = getNavMenuPanel(el);
+        setNavDropdownPanelOpen(panel, on);
+        if (on) {
+          positionNavDropdownPanel(el);
+        } else {
+          restoreNavDropdownPanel(el);
+        }
+      });
+    };
+
+    const scheduleClose = () => {
+      if (navMenuCloseTimer) clearTimeout(navMenuCloseTimer);
+      navMenuCloseTimer = setTimeout(closeAll, 120);
+    };
+
+    const repositionOpenNavDropdown = () => {
+      const open = document.querySelector<HTMLElement>('[data-nav-menu].is-open');
+      if (open) positionNavDropdownPanel(open);
+    };
+
+    groups.forEach((group) => {
+      const panel = getNavMenuPanel(group);
+
+      group.addEventListener('mouseenter', () => openGroup(group), { signal });
+      group.addEventListener(
+        'mouseleave',
+        (e) => {
+          if (isNavMenuHoverTarget(group, e.relatedTarget)) return;
+          scheduleClose();
+        },
+        { signal },
+      );
+      group.addEventListener('focusin', () => openGroup(group), { signal });
+      group.addEventListener(
+        'focusout',
+        (e) => {
+          const related = e.relatedTarget;
+          if (related instanceof Node && group.contains(related)) return;
+          if (isNavMenuHoverTarget(group, related)) return;
+          scheduleClose();
+        },
+        { signal },
+      );
+
+      panel?.addEventListener('mouseenter', () => openGroup(group), { signal });
+      panel?.addEventListener(
+        'mouseleave',
+        (e) => {
+          if (isNavMenuHoverTarget(group, e.relatedTarget)) return;
+          scheduleClose();
+        },
+        { signal },
+      );
+    });
+
+    nav.addEventListener(
+      'mouseleave',
+      (e) => {
+        if (e.relatedTarget instanceof Node && layer.contains(e.relatedTarget)) {
+          return;
+        }
+        closeAll();
+      },
+      { signal },
+    );
+
+    window.addEventListener('resize', repositionOpenNavDropdown, { signal });
+    window.addEventListener('scroll', repositionOpenNavDropdown, {
+      signal,
+      passive: true,
+    });
+  };
+
+  initDesktopNavMenus();
+  document.addEventListener('astro:page-load', initDesktopNavMenus);
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuOpen) {
+    if (e.key !== 'Escape') return;
+    if (document.querySelector('[data-nav-menu].is-open')) {
+      closeDesktopNavMenus();
+      return;
+    }
+    if (menuOpen) {
       closeMenu();
       toggleBtn?.focus();
     }
