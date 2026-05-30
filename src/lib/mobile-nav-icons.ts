@@ -66,13 +66,8 @@ const map: Record<string, MobileNavIconDef> = {
     fa: 'fa-solid fa-briefcase',
   },
   Партнеры: {
-    box: 'bg-primary/10',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-handshake',
-  },
-  Партнёры: {
-    box: 'bg-primary/10',
-    icon: 'text-primary',
+    box: 'bg-cta/20',
+    icon: 'text-yellow-900',
     fa: 'fa-solid fa-handshake',
   },
   Отзывы: {
