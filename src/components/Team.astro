@@ -1,5 +1,6 @@
 ---
 // src/components/Team.astro
+// cspell:words ANRO anrotrip anro Rozhkova rozhkova Rozhkov rozhkov Denisova denisova Nedelko nedelko Sherbakova sherbakova Mosinceva mosinceva Koroleva koroleva Subotina subotina Semushina semushina Dankova dankova Ledneva ledneva Tsypysheva tsypysheva Musina musina Bochkareva bochkareva Krestovskich krestovskich Golovanova golovanova Pasynkova pasynkova Bateneva bateneva Golikova golikova Domashevskaya domashevskaya Mamykina mamykina Mamikina Vafina vafina Nagovicyna nagovicyna
 import { Image } from 'astro:assets';
 
 import annaRozhkovaImg  from '../assets/team/a_rozhkova.webp';
@@ -16,7 +17,7 @@ import uSubotinaImg     from '../assets/team/u_subotina.webp';
 import dSemushinaImg    from '../assets/team/d_semushina.webp';
 import tDankovaImg      from '../assets/team/t_dankova.webp';
 import sLednevaImg      from '../assets/team/s_ledneva.webp';
-import ktsypyshevaImg   from '../assets/team/k_tsypysheva.webp';
+import kTsypyshevaImg   from '../assets/team/k_tsypysheva.webp';
 import kMusinaImg       from '../assets/team/k_musina.webp';
 import aBochkarevaImg   from '../assets/team/a_bochkareva.webp';
 import aKrestovskichImg from '../assets/team/a_krestovskich.webp';
@@ -29,6 +30,14 @@ import eMamikinaImg     from '../assets/team/e_mamykina.webp';
 import nVafinaImg       from '../assets/team/n_vafina.webp';
 import kNagovicynaImg   from '../assets/team/k_nagovicyna.webp';
 
+/** tel: для «8 (800) … доб. 115» → tel:88002224473,115 (не склеивать цифры добавочного с основным) */
+function phoneToTelHref(phone: string): string {
+  const ext = phone.match(/доб\.?\s*(\d+)/iu);
+  const main = phone.replace(/доб\.?\s*\d+/giu, '').replace(/[^\d+]/g, '');
+  if (ext?.[1]) return `tel:${main},${ext[1]}`;
+  return `tel:${main}`;
+}
+
 const team = [
   { name: 'Юлия Денисова',         role: 'Административный директор',     dept: 'г. Челябинск',        email: 'online@anrotrip.ru',           phone: '8 (800) 222-44-73',          img: uDenisovaImg     },
   { name: 'Екатерина Неделько',    role: 'Руководитель',       dept: 'Авиаотдел',           email: 'e.nedelko@anrotrip.ru',        phone: '8 (800) 222-44-73 доб. 115', img: eNedelkoImg      },
@@ -40,7 +49,7 @@ const team = [
   { name: 'Диана Семушова',        role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'diana@anrotrip.ru',            phone: '8 (800) 222-44-73 доб. 110', img: dSemushinaImg    },
   { name: 'Татьяна Данкова',       role: 'Авиакассир',         dept: 'Авиаотдел',           email: 't.dankova@anrotrip.ru',        phone: '8 (800) 222-44-73',          img: tDankovaImg      },
   { name: 'Светлана Леднева',      role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'svetlana.l@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 115', img: sLednevaImg      },
-  { name: 'Кристина Цыпышева',     role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'k.tsypyshevak.tsypysheva@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 222', img: ktsypyshevaImg   },
+  { name: 'Кристина Цыпышева',     role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'k.tsypysheva@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 222', img: kTsypyshevaImg   },
   { name: 'Ксения Мусина',         role: 'Менеджер',           dept: 'Отдел сервиса',       email: 'ksenia@anrotrip.ru',           phone: '8 (800) 222-44-73 доб. 666', img: kMusinaImg       },
   { name: 'Анна Бочкарева',        role: 'Менеджер',           dept: 'Туристический отдел', email: 'bochkareva@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 120', img: aBochkarevaImg   },
   { name: 'Анастасия Крестовских', role: 'Менеджер',           dept: 'Туристический отдел', email: 'anastasiya@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 117', img: aKrestovskichImg },
@@ -163,7 +172,7 @@ const team = [
 </section>
 
 <!-- ═══ ВСЯ КОМАНДА ═══ -->
-<section id="team-list" class="team-list-panel relative bg-gray-50 overflow-hidden transition-[max-height,opacity] duration-slow ease-in-out opacity-0 hidden border-t border-gray-100 motion-reduce:transition-none">
+<section id="team-list" class="team-list-panel relative bg-gray-50 overflow-hidden transition-[max-height,opacity] duration-slow ease-in-out opacity-0 hidden border-t border-gray-100 motion-reduce:transition-none" aria-hidden="true">
   <div class="container mx-auto px-4 sm:px-6 max-w-7xl pt-12 md:pt-16 pb-16 md:pb-20">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -196,7 +205,7 @@ const team = [
               {member.email}
             </a>
             {member.phone && (
-              <a href={`tel:${member.phone.replace(/[^\d+]/g, '')}`}
+              <a href={phoneToTelHref(member.phone)}
                 class="block text-[13px] text-primary hover:text-secondary transition-colors truncate px-1 mb-6 cursor-pointer"
                 title={member.phone}>
                 {member.phone}
@@ -255,6 +264,7 @@ const team = [
 
       function openList() {
         panel.classList.remove('hidden');
+        panel.setAttribute('aria-hidden', 'false');
         panel.style.maxHeight = '0px';
         void panel.offsetHeight;
         requestAnimationFrame(function () {
@@ -287,9 +297,10 @@ const team = [
           if (done) return;
           done = true;
           panel.classList.add('hidden');
+          panel.setAttribute('aria-hidden', 'true');
           panel.style.maxHeight = '';
           if (scrollToTeam && teamSection) {
-            teamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            window.smoothScrollIntoView(teamSection);
           }
         }
 
