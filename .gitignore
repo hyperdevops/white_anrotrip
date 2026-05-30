@@ -33,7 +33,8 @@ QWEN.md
 skillkit.yaml
 skills-lock.json
 convert-to-webp.js
-scripts/
+scripts/*
+!scripts/optimize-images.mjs
 
 # --- Настройки редакторов и системы ---
 .vscode/

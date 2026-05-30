@@ -1,0 +1,65 @@
+# Проверка: pnpm spellcheck  (или: pnpm exec cspell -c cspell.config.yaml "src/...")
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+version: '0.2'
+language: en,ru
+import:
+  - '@cspell/cspell-bundled-dicts/cspell-default.json'
+ignorePaths:
+  - node_modules
+  - dist
+  - .astro
+  - pnpm-lock.yaml
+ignoreRegExpList:
+  - /'\.\.\/assets\/team\/[^']+'/
+words:
+  - ANRO
+  - anrotrip
+  - anro
+  - grayscale
+  - Rozhkova
+  - rozhkova
+  - Rozhkov
+  - rozhkov
+  - Denisova
+  - denisova
+  - Nedelko
+  - nedelko
+  - Sherbakova
+  - sherbakova
+  - Mosinceva
+  - mosinceva
+  - Koroleva
+  - koroleva
+  - Subotina
+  - subotina
+  - Semushina
+  - semushina
+  - Dankova
+  - dankova
+  - Ledneva
+  - ledneva
+  - Tsypysheva
+  - tsypysheva
+  - Musina
+  - musina
+  - Bochkareva
+  - bochkareva
+  - Krestovskich
+  - krestovskich
+  - Golovanova
+  - golovanova
+  - Pasynkova
+  - pasynkova
+  - Bateneva
+  - bateneva
+  - Golikova
+  - golikova
+  - Domashevskaya
+  - domashevskaya
+  - Mamykina
+  - mamykina
+  - Mamikina
+  - Vafina
+  - vafina
+  - Nagovicyna
+  - nagovicyna

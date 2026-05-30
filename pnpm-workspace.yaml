@@ -1,3 +1,28 @@
-ignoredBuiltDependencies:
-  - esbuild
-  - sharp
+# pnpm 11 — единый конфиг: https://pnpm.io/settings
+
+allowBuilds:
+  esbuild: true
+  # false: бинарники @img/sharp-* подтягиваются как optional deps; postinstall на Arch/Docker стабильнее
+  sharp: false
+
+overrides:
+  # Одна версия Vite: Astro 6 — ^7.x; @tailwindcss/vite совместим с 7 (не 8 — иначе дубль и ошибки check)
+  vite: 7.3.3
+  rollup: '>=4.59.0'
+  h3: '>=1.15.9'
+  defu: '>=6.1.5'
+  svgo: '>=3.3.3'
+  smol-toml: '>=1.6.1'
+  yaml: '>=2.8.3'
+  anymatch>picomatch: '>=2.3.2'
+  tinyglobby>picomatch: '>=4.0.4'
+  '@astrojs/internal-helpers>picomatch': '4.0.4'
+
+packageExtensions:
+  '@astrojs/internal-helpers':
+    dependencies:
+      picomatch: '>=4.0.4'
+
+# Проверка engines зависимостей как на Node 22 LTS (см. Dockerfile, .node-version)
+nodeVersion: 22.14.0
+engineStrict: true

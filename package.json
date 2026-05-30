@@ -2,12 +2,15 @@
 	"name": "white_anrotrip",
 	"type": "module",
 	"version": "0.0.1",
+	"packageManager": "pnpm@11.3.0",
 	"engines": {
-		"node": ">=22.12.0"
+		"node": "^22.13.0",
+		"pnpm": ">=11.0.0"
 	},
 	"scripts": {
 		"dev": "astro dev",
 		"check": "astro check",
+		"spellcheck": "cspell -c cspell.config.yaml \"src/components/Header.astro\" \"src/components/Team.astro\"",
 		"build": "astro build",
 		"prebuild": "pnpm optimize:images",
 		"optimize:images": "node scripts/optimize-images.mjs",
@@ -36,26 +39,5 @@
 		"cspell": "^9.8.0",
 		"prettier-plugin-astro": "^0.14.1",
 		"typescript": "^5.7.3"
-	},
-	"pnpm": {
-		"overrides": {
-			"vite": ">=7.3.2",
-			"rollup": ">=4.59.0",
-			"h3": ">=1.15.9",
-			"defu": ">=6.1.5",
-			"svgo": ">=3.3.3",
-			"smol-toml": ">=1.6.1",
-			"yaml": ">=2.8.3",
-			"anymatch>picomatch": ">=2.3.2",
-			"tinyglobby>picomatch": ">=4.0.4",
-			"@astrojs/internal-helpers>picomatch": "4.0.4"
-		},
-		"packageExtensions": {
-			"@astrojs/internal-helpers": {
-				"dependencies": {
-					"picomatch": ">=4.0.4"
-				}
-			}
-		}
 	}
 }
