@@ -1,4 +1,5 @@
 ---
+// cspell:words ANRO grayscale
 import { Image } from 'astro:assets';
 import favicon from '../assets/favicon.png';
 import {
@@ -49,6 +50,7 @@ const defaultNavItems = [
   { name: 'Журнал', href: journalHref },
   { name: 'О нас', href: '#about' },
   { name: 'Наши услуги', href: servicesHref },
+  { name: 'Для бизнеса', href: businessHref },
   { name: 'Партнёры', href: '#partners' },
   { name: 'Отзывы', href: '#reviews' },
   { name: 'Награды', href: awardsHref },
@@ -67,13 +69,12 @@ const defaultNavGroups: { name: string; items: { name: string; href: string }[] 
       { name: 'О нас', href: '#about' },
       { name: 'Наши услуги', href: servicesHref },
       { name: 'Направления', href: '#directions' },
-      { name: 'Для бизнеса', href: '#business' },
-      { name: 'Партнеры', href: '#partners' },
     ],
   },
   {
     name: 'Доверие',
     items: [
+      { name: 'Партнеры', href: '#partners' },
       { name: 'Отзывы', href: '#reviews' },
       { name: 'Награды', href: awardsHref },
       { name: 'Сертификат', href: giftHref },
@@ -121,7 +122,9 @@ type HomeNavEntry =
 /** Главная: тот же порядок и группы, что в десктоп-меню (`nav:`) */
 const homeNavEntries: HomeNavEntry[] = [
   ...defaultNavStandaloneFirst.map((item) => ({ kind: 'link' as const, ...item })),
-  ...defaultNavGroups.map((group) => ({ kind: 'group' as const, ...group })),
+  { kind: 'group' as const, ...defaultNavGroups[0]! },
+  { kind: 'link' as const, name: 'Для бизнеса', href: businessHref },
+  { kind: 'group' as const, ...defaultNavGroups[1]! },
   ...defaultNavStandalone.map((item) => ({ kind: 'link' as const, ...item })),
 ];
 
@@ -160,7 +163,7 @@ const homeContactIconText =
       navVariant === 'corp'
         ? 'max-w-7xl'
         : isHome && navVariant === 'default'
-          ? 'max-w-[calc(80rem+32px)]'
+          ? 'max-w-[calc(80rem+32px)] nav:max-w-none'
           : homeQuickContacts
           ? 'max-w-[calc(90rem)]'
           : 'max-w-[calc(88rem)]',
@@ -278,7 +281,7 @@ const homeContactIconText =
                       <div
                         data-nav-menu-panel
                         data-nav-menu-id={entry.name}
-                        class="nav-dropdown-panel fixed z-[52] min-w-44 w-max max-w-[calc(100vw-2rem)] pt-4.5 invisible pointer-events-none"
+                        class="nav-dropdown-panel fixed z-52 min-w-44 w-max max-w-[calc(100vw-2rem)] pt-4.5 invisible pointer-events-none"
                       >
                         <ul
                           role="menu"
@@ -406,7 +409,7 @@ const homeContactIconText =
   <!-- Десктоп: выпадашки вне #header-inner — иначе blur не виден (вложенный backdrop-filter) -->
   <div
     id="nav-desktop-dropdown-layer"
-    class="pointer-events-none fixed inset-0 z-[51] max-[89.999rem]:hidden"
+    class="pointer-events-none fixed inset-0 z-51 max-[89.999rem]:hidden"
     aria-hidden="true"
   ></div>
 
@@ -722,7 +725,7 @@ const homeContactIconText =
               if (anchor) {
                 const top =
                   anchor.getBoundingClientRect().top + window.scrollY - 78;
-                window.scrollTo({ top, behavior: 'smooth' });
+                window.smoothScrollTo(top);
               }
             },
             { signal },
@@ -744,7 +747,7 @@ const homeContactIconText =
                   anchor.getBoundingClientRect().top +
                   window.scrollY -
                   (headerHeight + SERVICES_ANCHOR_GAP);
-                window.scrollTo({ top, behavior: 'smooth' });
+                window.smoothScrollTo(top);
               }
             },
             { signal },
@@ -764,7 +767,7 @@ const homeContactIconText =
                 const offset = headerHeight + GAP_PX;
                 const top =
                   anchor.getBoundingClientRect().top + window.scrollY - offset;
-                window.scrollTo({ top, behavior: 'smooth' });
+                window.smoothScrollTo(top);
               }
             },
             { signal },
@@ -800,7 +803,7 @@ const homeContactIconText =
         offset = headerHeight + AWARDS_GIFT_GAP;
       else offset = headerHeight + GAP_PX;
       const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.smoothScrollTo(top);
       if (menuOpen && menu) closeMenu();
     };
 
@@ -1243,7 +1246,9 @@ const homeContactIconText =
     nav.addEventListener(
       'mouseleave',
       (e) => {
-        if (e.relatedTarget instanceof Node && layer.contains(e.relatedTarget)) {
+        const related =
+          e instanceof MouseEvent ? e.relatedTarget : null;
+        if (related instanceof Node && layer.contains(related)) {
           return;
         }
         closeAll();
