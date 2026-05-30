@@ -2,14 +2,12 @@
 // src/components/SearchWidget.astro
 import NemoSearch from './widgets/NemoSearch.astro';
 // Tourvisor — lazy-load при переключении на вкладку (экономия ~890 KiB JS на первом рендере)
-
 ---
 
-<div class="search-widget-wrap relative isolate overflow-visible">
-  <section
-    id="search-widget"
-    class="search-widget-panel glass-panel relative z-10 max-md:backdrop-blur-none md:backdrop-blur-xl bg-white rounded-3xl border border-white/30 overflow-visible"
-  >
+<section
+  id="search-widget"
+  class="search-widget-panel glass-panel max-md:backdrop-blur-none md:backdrop-blur-xl bg-white rounded-3xl border border-white/30 overflow-visible"
+>
   <!-- Переключатель вкладок -->
   <div
     class="flex p-2 gap-1.5 border-b border-gray-100"
@@ -132,8 +130,7 @@ import NemoSearch from './widgets/NemoSearch.astro';
       </div>
     </div>
   </div>
-  </section>
-</div>
+</section>
 
 <script is:inline>
   function initSearchWidget() {
