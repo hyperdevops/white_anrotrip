@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import favicon from '../../assets/favicon.png';
 import FooterMinimal from '../../components/FooterMinimal.astro';
-import SectionSparklesLayer from '../../components/SectionSparklesLayer.astro';
 import Layout from '../../layouts/Layout.astro';
 import {
   maxIconPath,
@@ -144,13 +143,11 @@ const hasHero = hasCollage || !!post.data.heroImage;
       hasHero ? '-mt-8 rounded-t-3xl' : 'pt-32 md:pt-40',
     ]}
   >
-    <SectionSparklesLayer />
-
     <!-- Фоновые орбы статьи — паттерн как на главной -->
-    <div class="absolute -top-20 -right-20 z-[1] size-96 rounded-full bg-primary/8 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
-    <div class="absolute top-[30%] -left-16 z-[1] size-72 rounded-full bg-secondary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
-    <div class="absolute top-[65%] right-8 z-[1] size-64 rounded-full bg-primary/6 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
-    <div class="absolute bottom-48 -left-8 z-[1] size-56 rounded-full bg-primary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -top-20 -right-20 size-96 rounded-full bg-primary/8 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute top-[30%] -left-16 size-72 rounded-full bg-secondary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute top-[65%] right-8 size-64 rounded-full bg-primary/6 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute bottom-48 -left-8 size-56 rounded-full bg-primary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
     <!-- Без Hero: логотип в верхней зоне статьи (наезжает контент при скролле нет — нет sticky hero) -->
     {!hasHero && (
       <a
@@ -174,7 +171,7 @@ const hasHero = hasCollage || !!post.data.heroImage;
     )}
     <!-- Если нет Hero — показываем заголовок здесь -->
     {!hasHero && (
-      <div class="relative z-10 px-4 sm:px-6 max-w-4xl mx-auto pt-12 pb-8">
+      <div class="px-4 sm:px-6 max-w-4xl mx-auto pt-12 pb-8">
         <div class="flex flex-wrap items-center gap-3 mb-4">
           {post.data.destination && (
             <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary font-montserrat">
@@ -204,7 +201,7 @@ const hasHero = hasCollage || !!post.data.heroImage;
       </div>
     )}
 
-    <div class="relative z-10 px-4 sm:px-6 max-w-3xl mx-auto pb-20 md:pb-28">
+    <div class="px-4 sm:px-6 max-w-3xl mx-auto pb-20 md:pb-28">
       <!-- Хлебные крошки — minimal pill style -->
       <nav class="flex items-center gap-1.5 pt-10 mb-10" aria-label="Навигация">
         <a href={siteHome()} class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">
