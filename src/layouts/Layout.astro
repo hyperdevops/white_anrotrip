@@ -235,6 +235,81 @@ const schemaOrgGraph = {
         }
       })();
     </script>
+    {
+      /* Единый плавный скролл: детерминированная анимация на requestAnimationFrame —
+         одинаковая длительность и easing во ВСЕХ браузерах (нативный scroll-behavior:smooth
+         крутит с разной скоростью в Firefox/Chrome). Используется хедером, кнопкой «Наверх»,
+         Hero, PopularTours, corp, Team; делегированный фолбэк ловит прочие якорные ссылки. */
+    }
+    <script is:inline>
+      (function () {
+        function prefersReduced() {
+          return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        }
+        function clampTop(top) {
+          var max = document.documentElement.scrollHeight - window.innerHeight;
+          return Math.max(0, Math.min(top, max));
+        }
+        function easeInOutCubic(t) {
+          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        window.smoothScrollTo = function (top, onDone) {
+          var target = clampTop(top);
+          var startY = window.scrollY;
+          var dist = target - startY;
+          if (prefersReduced() || Math.abs(dist) < 2) {
+            window.scrollTo(0, target);
+            if (onDone) onDone();
+            return;
+          }
+          // Длительность зависит от дистанции, но в едином диапазоне (плавный, неспешный скролл)
+          var duration = Math.min(1600, Math.max(750, Math.abs(dist) * 0.7));
+          var startT = performance.now();
+          function step(now) {
+            var p = Math.min(1, (now - startT) / duration);
+            window.scrollTo(0, Math.round(startY + dist * easeInOutCubic(p)));
+            if (p < 1) requestAnimationFrame(step);
+            else if (onDone) onDone();
+          }
+          requestAnimationFrame(step);
+        };
+
+        window.smoothScrollIntoView = function (el, onDone) {
+          if (!el) return;
+          var smt = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+          var top = el.getBoundingClientRect().top + window.scrollY - smt;
+          window.smoothScrollTo(top, onDone);
+        };
+
+        // Фолбэк для прочих якорей (футер и т.п.); свои обработчики имеют приоритет
+        // через e.defaultPrevented. window/document переживают View Transitions —
+        // вешаем слушатель один раз.
+        if (!window.__anchorSmoothInit) {
+          window.__anchorSmoothInit = true;
+          document.addEventListener('click', function (e) {
+            if (
+              e.defaultPrevented ||
+              e.button !== 0 ||
+              e.metaKey ||
+              e.ctrlKey ||
+              e.shiftKey ||
+              e.altKey
+            )
+              return;
+            var t = e.target;
+            var a = t && t.closest ? t.closest('a[href^="#"]') : null;
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            if (href.length < 2) return;
+            var el = document.getElementById(href.slice(1));
+            if (!el) return;
+            e.preventDefault();
+            window.smoothScrollIntoView(el);
+          });
+        }
+      })();
+    </script>
     {/* Skip Link: виден при фокусе (Tab), для клавиатуры и скринридеров */}
     <a
       href="#content"
@@ -338,11 +413,6 @@ const schemaOrgGraph = {
           header.style.paddingRight = '';
         }
       };
-    </script>
-    <script>
-      import { bindSectionSparklesLifecycle } from '../lib/section-sparkles';
-
-      bindSectionSparklesLifecycle();
     </script>
   </body>
 </html>

@@ -234,7 +234,7 @@ const heroStatPills: HeroStatPill[] = [
         heroStatPills.map((pill) =>
           pill.placeholder ? (
             <div
-              class="min-h-10 min-w-[5.5rem] shrink-0 rounded-full border border-white/15 bg-white/10 px-6 py-2.5 sm:min-w-[6.5rem]"
+              class="min-h-10 min-w-22 shrink-0 rounded-full border border-white/15 bg-white/10 px-6 py-2.5 sm:min-w-26"
               aria-hidden="true"
             />
           ) : (
@@ -335,7 +335,7 @@ const heroStatPills: HeroStatPill[] = [
     ) => {
       const top =
         anchor.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.smoothScrollTo(top);
     };
 
     document
@@ -387,13 +387,11 @@ const heroStatPills: HeroStatPill[] = [
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
     const offset = isMobile ? headerHeight - 16 : 78;
     const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
+    window.smoothScrollTo(top);
   });
 
   arrowBtn?.addEventListener('click', () => {
-    document
-      .getElementById('popular-tours')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.smoothScrollIntoView(document.getElementById('popular-tours'));
   });
 
   // Blur-up: показать изображение при загрузке

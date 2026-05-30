@@ -62,7 +62,7 @@
     color-scheme: light;
     color-scheme: only light;
     background-color: #ffffff;
-    /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
+    /* Плавный скролл по якорям — единый JS (window.smoothScrollTo, Layout.astro), не CSS */
     /* НЕ используем scroll-snap-type на уровне html — тормозит мобайл */
     font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
     /* Единый отступ при прокрутке к якорям: хедер не перекрывает блок (см. :root и SCROLL ANCHORS) */
@@ -154,12 +154,10 @@
     }
   }
 
-  /* scroll-smooth только на десктопе — на iOS конфликтует с нативной инерцией */
-  @media (hover: hover) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
+  /* Плавный скролл по якорям — теперь единый JS на requestAnimationFrame
+     (window.smoothScrollTo в Layout.astro): одинаковая скорость во всех браузерах.
+     Нативный scroll-behavior: smooth НЕ используем — Firefox/Chrome крутят его
+     с разной длительностью. Ручная прокрутка (колесо/трекпад) не затрагивается. */
 }
 
 /* ═══════════════════════════════════════════════
@@ -613,81 +611,6 @@
 /* Форма поиска туров — тень primary */
 .search-widget-panel {
   box-shadow: 0 25px 50px -12px rgb(0 171 179 / 0.25);
-}
-
-/* Canvas-искры (журнал, награды) */
-.sparkles-atmosphere {
-  position: absolute;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 28% 42%, rgb(0 171 179 / 0.14), transparent 36%),
-    radial-gradient(ellipse at 72% 52%, rgb(0 109 115 / 0.12), transparent 36%),
-    radial-gradient(ellipse at center, rgb(255 255 255 / 0.2), transparent 58%);
-  filter: saturate(1.08);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, #000 52%, transparent 84%);
-  mask-image: radial-gradient(ellipse at center, #000 0%, #000 52%, transparent 84%);
-}
-.sparkles-atmosphere::before,
-.sparkles-atmosphere::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  z-index: 2;
-  height: 1px;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-.sparkles-atmosphere::before {
-  top: 38%;
-  width: min(84%, 720px);
-  background: linear-gradient(90deg, transparent, rgb(0 171 179 / 0.65), transparent);
-  box-shadow: 0 0 24px rgb(0 171 179 / 0.35);
-}
-.sparkles-atmosphere::after {
-  top: 58%;
-  width: min(68%, 560px);
-  background: linear-gradient(90deg, transparent, rgb(255 212 23 / 0.45), transparent);
-  box-shadow: 0 0 22px rgb(255 212 23 / 0.22);
-}
-.sparkles-atmosphere__canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-/* Искры секций (журнал) */
-.section-sparkles-atmosphere {
-  inset: 0;
-  background:
-    radial-gradient(ellipse 95% 42% at 50% 0%, rgb(240 249 255 / 0.5), transparent 48%),
-    radial-gradient(ellipse at 22% 38%, rgb(0 171 179 / 0.11), transparent 40%),
-    radial-gradient(ellipse at 78% 42%, rgb(0 109 115 / 0.09), transparent 40%),
-    radial-gradient(ellipse at 50% 55%, rgb(255 255 255 / 0.14), transparent 65%);
-  -webkit-mask-image: radial-gradient(
-    ellipse 135% 100% at 50% 36%,
-    #000 0%,
-    #000 50%,
-    transparent 97%
-  );
-  mask-image: radial-gradient(
-    ellipse 135% 100% at 50% 36%,
-    #000 0%,
-    #000 50%,
-    transparent 97%
-  );
-}
-.section-sparkles-atmosphere::before,
-.section-sparkles-atmosphere::after {
-  content: none;
-  display: none;
-}
-/* Награды — тёплый фон слоя, жёлтые точки (palette awards в JS) */
-.awards-sparkles-atmosphere {
-  background:
-    radial-gradient(ellipse 90% 45% at 50% 0%, rgb(255 212 23 / 0.14), transparent 52%),
-    radial-gradient(ellipse at 24% 40%, rgb(255 212 23 / 0.08), transparent 42%),
-    radial-gradient(ellipse at 76% 45%, rgb(0 171 179 / 0.08), transparent 40%),
-    radial-gradient(ellipse at 50% 58%, rgb(255 255 255 / 0.2), transparent 62%);
 }
 
 /* ═══════════════════════════════════════════════

@@ -25,10 +25,7 @@ const tinyPlaceholders = await Promise.all(
 );
 ---
 
-<section
-  id="tours"
-  class={`pt-14 pb-10 md:pb-16 bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-hidden ${classes}`}
->
+<section id="tours" class={`pt-14 pb-10 md:pb-16 bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-hidden ${classes}`}>
   <div class="@container container mx-auto px-4 sm:px-6 max-w-7xl">
 
     <!-- Асимметричный заголовок -->
@@ -149,7 +146,7 @@ const tinyPlaceholders = await Promise.all(
     const anchor = document.getElementById('search');
     if (anchor) {
       const top = anchor.getBoundingClientRect().top + window.scrollY - 104;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.smoothScrollTo(top);
     }
   };
 
