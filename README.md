@@ -1,6 +1,9 @@
 # ANRO TRIP — Путешествия и командировки
 
-Веб-сайт туристического агентства **ANRO TRIP**.Организации путешествий и командировок по всему миру. Консьерж-сервис с полным циклом обслуживания.
+Веб-сайт туристического агентства **ANRO TRIP**. Организации путешествий и командировок по всему миру. Консьерж-сервис с полным циклом обслуживания.
+
+**Репозиторий:** [github.com/hyperdevops/white_anrotrip](https://github.com/hyperdevops/white_anrotrip)  
+**Зеркало (Gitflic):** [gitflic.ru/project/shkrndns/white_anrotrip](https://gitflic.ru/project/shkrndns/white_anrotrip)
 
 ---
 
