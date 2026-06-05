@@ -45,6 +45,16 @@ const heroStatPills: HeroStatPill[] = [
     ariaLabel: 'Перейти к разделу «О нас»',
   },
 ];
+
+/** Услуги в бейдже под хедером Hero */
+const heroServiceLabels = [
+  'Авиабилеты',
+  'Туры',
+  'Отели',
+  'Визовая поддержка',
+  'Трансферы',
+  'Страхование',
+];
 ---
 
 <!-- pt: под хедер; pb: зона стрелки. overflow-hidden — Ken Burns и запрет внутреннего скролла секции (overflow-x:hidden + y:visible даёт в браузере y:auto и «плашка крутится отдельно»). -->
@@ -96,11 +106,19 @@ const heroStatPills: HeroStatPill[] = [
           class="reveal-hidden inline-block max-w-[min(100%,calc(100vw-2rem))] px-4 py-2 rounded-full bg-white/12 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest text-center transition-[background-color,border-color] duration-fast hover:bg-white/18 hover:border-white/30 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           aria-label="Перейти к разделу «Наши услуги»"
         >
-          <span
-            class="inline-block w-1.5 h-1.5 rounded-full bg-cta align-middle mr-1.5 md:animate-pulse"
-            aria-hidden="true"
-          ></span>
-          Авиабилеты · Туры · Отели · Визовая поддержка · Трансферы · Страхование
+          {
+            heroServiceLabels.map((label, i) => (
+              <>
+                {i > 0 && (
+                  <span
+                    class="inline-block w-1 h-1 rounded-full bg-primary align-middle mx-1.5 sm:mx-2"
+                    aria-hidden="true"
+                  />
+                )}
+                {label}
+              </>
+            ))
+          }
         </a>
       </div>
       <h1
