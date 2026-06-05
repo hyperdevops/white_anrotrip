@@ -158,7 +158,7 @@ async function main() {
   }
 
   // OG image 1200×630 для соцсетей (из hero)
-  const heroPath = join(ASSETS_DIR, 'hero', 'plane.avif');
+  const heroPath = join(ASSETS_DIR, 'hero', 'world.webp');
   const ogPath = join(process.cwd(), 'public', 'og-image.jpg');
   try {
     await sharp(heroPath)
