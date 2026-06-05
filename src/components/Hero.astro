@@ -27,20 +27,20 @@ interface HeroStatPill {
 
 const heroStatPills: HeroStatPill[] = [
   {
-    val: 'Доверие',
-    label: 'клиентов',
+    val: '19 ЛЕТ',
+    label: 'ОПЫТА',
     href: '#partners',
     ariaLabel: 'Перейти к разделу «Нам доверяют»',
   },
   {
-    val: 'Личный',
-    label: 'ассистент',
+    val: 'ЛИЧНЫЙ',
+    label: 'АССИСТЕНТ',
     href: '#business',
     ariaLabel: 'Перейти к разделу «Наши услуги»',
   },
   {
     val: '24/7',
-    label: 'поддержка',
+    label: 'ПОДДЕРЖКА',
     href: '#about',
     ariaLabel: 'Перейти к разделу «О нас»',
   },
@@ -103,7 +103,7 @@ const heroServiceLabels = [
         <a
           id="hero-services-badge"
           href="#services"
-          class="reveal-hidden inline-block max-w-[min(100%,calc(100vw-2rem))] px-4 py-2 rounded-full bg-white/12 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest text-center transition-[background-color,border-color] duration-fast hover:bg-white/18 hover:border-white/30 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          class="reveal-hidden inline-block max-w-[min(100%,calc(100vw-2rem))] px-4 py-2 rounded-full bg-white/90 border border-gray-300 text-gray-800 text-[9px] sm:text-[11px] font-bold uppercase tracking-widest text-center transition-[background-color,border-color] duration-fast hover:bg-white hover:border-gray-400 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           aria-label="Перейти к разделу «Наши услуги»"
         >
           {
@@ -122,53 +122,39 @@ const heroServiceLabels = [
         </a>
       </div>
       <h1
-        class="mx-auto max-w-4xl font-montserrat font-extrabold uppercase text-center leading-[0.9] tracking-tight drop-shadow-2xl text-[clamp(2.25rem,1.75rem+5vw,8rem)] [@media(max-height:820px)]:text-[clamp(1.85rem,1.35rem+3.5vw,4.5rem)] [@media(max-height:680px)]:text-[clamp(1.55rem,1.1rem+3vw,3.25rem)]"
+        class="mx-auto max-w-4xl font-montserrat font-extrabold uppercase text-center leading-tight tracking-tight text-gray-900 text-[clamp(1.2rem,1rem+1.5vw,2.25rem)]"
       >
-        Будь
+        Туристическая компания
         <br />
-        на&nbsp;высоте
-        <br />
-        <span class="hero-gradient-text">с&nbsp;ANRO TRIP!</span>
+        <span class="hero-gradient-text text-[clamp(2.5rem,2rem+5vw,7.5rem)] leading-[0.9] mt-2 block">ANRO TRIP</span>
       </h1>
     </div>
 
     <!-- Группа 2: подзаголовок + CTA -->
     <div class="reveal-hidden delay-150">
       <p
-        class="mx-auto mt-4 max-w-[95vw] sm:mt-6 sm:max-w-xl text-center text-white/80 leading-relaxed drop-shadow-md text-[clamp(1rem,0.8rem+1vw,1.35rem)] [@media(max-height:820px)]:mt-2.5 [@media(max-height:680px)]:mt-2 [@media(max-height:680px)]:text-[clamp(0.9rem,0.75rem+0.8vw,1.15rem)]"
+        class="mx-auto mt-3 max-w-[95vw] sm:mt-4 sm:max-w-2xl text-center text-gray-900 font-bold uppercase tracking-wide leading-relaxed text-[clamp(0.75rem,0.65rem+0.8vw,1.1rem)]"
       >
-        Создаем высочайший туристический сервис,<br class="hidden sm:block" /> доступный
+        Создаем высочайший сервис,<br class="hidden sm:block" /> доступный
         каждому!
       </p>
       <div
-        class="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row sm:flex-wrap sm:gap-4 [@media(max-height:820px)]:mt-5 [@media(max-height:680px)]:gap-4 [@media(max-height:680px)]:mt-4"
+        class="mt-8 flex flex-col items-center justify-center gap-6 [@media(max-height:820px)]:mt-6 [@media(max-height:680px)]:mt-5"
       >
         <a
           id="hero-search-btn"
           href="#search"
-          class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-[34px] py-[16px] font-black text-[#11111b] shadow-[0_4px_14px_4px_rgba(255,212,23,0.4)] hover:shadow-[0_6px_18px_4px_rgba(255,212,23,0.4)] transition-shadow duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-[clamp(0.9rem,0.75rem+0.8vw,1.1rem)] [@media(max-height:680px)]:px-[26px] [@media(max-height:680px)]:py-3 [@media(max-height:680px)]:text-[clamp(0.82rem,0.72rem+0.6vw,1rem)]"
+          class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-[#f4003d] px-[34px] py-[18px] font-black text-white shadow-[0_4px_14px_4px_rgba(244,0,61,0.3)] hover:bg-[#d80036] hover:shadow-[0_6px_18px_4px_rgba(244,0,61,0.4)] transition-[background-color,box-shadow] duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-[clamp(0.9rem,0.75rem+0.8vw,1.1rem)] [@media(max-height:680px)]:px-[26px] [@media(max-height:680px)]:py-3.5 [@media(max-height:680px)]:text-[clamp(0.82rem,0.72rem+0.6vw,1rem)]"
         >
           <!-- Shine sweep -->
           <span
-            class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/35 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"
+            class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"
           ></span>
-          <svg
-            class="w-3.5 h-3.5 shrink-0 relative z-10"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="8"></circle><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-4.35-4.35"></path>
-          </svg>
-          <span class="relative z-10 uppercase tracking-wider">Авиабилеты</span>
+          <span class="relative z-10 uppercase tracking-wider">Забронировать авиабилет</span>
         </a>
 
         <div
-          class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+          class="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
         >
           <a
             href="tel:88002224473"
@@ -253,19 +239,19 @@ const heroServiceLabels = [
         heroStatPills.map((pill) =>
           pill.placeholder ? (
             <div
-              class="min-h-10 min-w-22 shrink-0 rounded-full border border-white/15 bg-white/10 px-6 py-2.5 sm:min-w-26"
+              class="min-h-12 min-w-28 shrink-0 rounded-[1.25rem] border border-gray-300/50 bg-gray-200/80 px-6 py-2.5 sm:min-w-32"
               aria-hidden="true"
             />
           ) : (
             <a
               href={pill.href}
-              class="hero-stat-pill flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 border border-white/15 hover:bg-white/15 transition-[background-color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              class="hero-stat-pill flex flex-col items-center justify-center px-6 py-2.5 rounded-[1.25rem] bg-gray-200/80 border border-gray-300/50 hover:bg-gray-300/80 transition-[background-color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
               aria-label={pill.ariaLabel}
             >
-              <span class="font-montserrat font-black text-cta text-sm">
+              <span class="font-montserrat font-black text-primary text-[13px] uppercase leading-tight">
                 {pill.val}
               </span>
-              <span class="text-white/60 text-xs">
+              <span class="text-gray-600 font-bold text-[11px] uppercase leading-tight">
                 {pill.label}
                 {pill.footnote ? (
                   <sup
