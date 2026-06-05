@@ -1,0 +1,172 @@
+---
+// src/components/OurPartners.astro
+// ЗАГЛУШКА: Компонент "Наши партнеры".
+// Сюда можно добавить реальные логотипы и тексты.
+
+// ЗАГЛУШКА: 10 слотов — как в блоке «Нам доверяют» (Partners.astro)
+const placeholders = Array.from({ length: 10 }).map((_, i) => ({
+  id: i,
+  name: `Партнёр ${i + 1}`,
+}));
+
+// Дублируем один раз — бесшовный marquee, та же логика что в Partners.astro
+const row1 = [...placeholders, ...placeholders];
+const row2 = [...placeholders, ...placeholders].reverse();
+
+interface Props {
+  class?: string;
+}
+const { class: classes = '' }: Props = Astro.props;
+---
+
+<section id="our-partners" class={`relative py-[50px] bg-primary/4 overflow-hidden ${classes}`}>
+  <!-- Декоративные фоновые элементы -->
+  <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
+  <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl pointer-events-none translate-y-1/3 -translate-x-1/4"></div>
+
+  <div class="relative container mx-auto px-4 sm:px-6 max-w-7xl">
+
+    <!-- ЗАГОЛОВОК -->
+    <div class="text-center mb-12 md:mb-16 reveal-hidden">
+      <!-- Бейдж -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
+        <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Наши партнёры</span>
+      </div>
+
+      <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none mb-4" style="font-size: clamp(2rem, 1.5rem + 3vw, 3.5rem);">
+        <span class="text-primary">Сотрудничество</span>
+      </h2>
+      <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+        <!-- ЗАГЛУШКА: Текст-описание раздела -->
+        Мы сотрудничаем с ведущими авиакомпаниями, отельными сетями и туроператорами по всему миру, чтобы предоставлять вам лучший сервис.
+      </p>
+    </div>
+
+    <!-- BENTO БЛОКИ (ЗАГЛУШКИ) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-16 md:mb-20" data-reveal-stagger>
+
+      <!-- Блок 1 -->
+      <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/10 transition-all duration-normal min-h-[220px]">
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
+            <i class="fa-solid fa-plane text-xl text-gray-400 group-hover:text-primary transition-colors"></i>
+          </div>
+          <h3 class="font-montserrat font-bold text-xl text-gray-900 mb-3">Авиакомпании</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            <!-- ЗАГЛУШКА: Описание -->
+            Более 500 авиакомпаний по всему миру. Прямые договоры и эксклюзивные тарифы для наших клиентов.
+          </p>
+        </div>
+      </div>
+
+      <!-- Блок 2 -->
+      <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/10 transition-all duration-normal min-h-[220px]">
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
+            <i class="fa-solid fa-hotel text-xl text-gray-400 group-hover:text-primary transition-colors"></i>
+          </div>
+          <h3 class="font-montserrat font-bold text-xl text-gray-900 mb-3">Отельные сети</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            <!-- ЗАГЛУШКА: Описание -->
+            Сотрудничаем с крупнейшими мировыми сетями отелей. Гарантия лучшей цены и VIP-привилегии.
+          </p>
+        </div>
+      </div>
+
+      <!-- Блок 3 -->
+      <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-gray-900 p-8 text-white flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/30 transition-all duration-normal min-h-[220px]">
+        <div class="absolute inset-0 bg-linear-to-br from-gray-900 to-gray-800 pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-6 group-hover:bg-primary/30 transition-colors">
+            <i class="fa-solid fa-handshake text-xl text-white"></i>
+          </div>
+          <h3 class="font-montserrat font-bold text-xl text-white mb-3">Туроператоры</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            <!-- ЗАГЛУШКА: Описание -->
+            Надёжные партнёры для организации сложных индивидуальных и групповых туров в любую точку мира.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ЛЕНТА ЛОГОТИПОВ (MARQUEE) -->
+    <!-- ЗАГЛУШКА: Здесь выводятся пустые блоки. Для реальных логотипов замените содержимое .partners-logo-card на тег <Image /> -->
+    <div class="reveal-hidden relative">
+      <!-- Градиентные маски по краям для плавного исчезновения -->
+      <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+
+      <!-- Первый ряд (влево): классы и размеры карточек — как в Partners.astro -->
+      <div class="overflow-hidden mb-4">
+        <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
+          {row1.map((partner) => (
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
+              <!-- ЗАГЛУШКА: заменить span на <Image src={...} alt={partner.name} /> -->
+              <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
+                {partner.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Второй ряд (вправо): 30s — как .partners-track--reverse в global.css -->
+      <div class="overflow-hidden">
+        <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
+          {row2.map((partner) => (
+            <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
+              <!-- ЗАГЛУШКА: заменить span на <Image src={...} alt={partner.name} /> -->
+              <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
+                {partner.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Точное смещение marquee — как в Partners.astro (36s / 30s из global.css), только внутри #our-partners
+  function initOurPartnersMarqueeTrack(track: HTMLElement) {
+    track.style.animationPlayState = 'paused';
+
+    requestAnimationFrame(() => {
+      const cards = track.children;
+      const half = Math.floor(cards.length / 2);
+      if (half === 0) {
+        track.style.animationPlayState = '';
+        return;
+      }
+
+      const firstLeft = (cards[0] as HTMLElement).offsetLeft;
+      const halfLeft = (cards[half] as HTMLElement).offsetLeft;
+      const halfWidth = halfLeft - firstLeft;
+      const totalWidth = track.scrollWidth;
+
+      if (totalWidth > 0 && halfWidth > 0) {
+        const offset = -(halfWidth / totalWidth) * 100;
+        track.style.setProperty('--marquee-offset', `${offset.toFixed(4)}%`);
+      }
+
+      track.style.animationPlayState = '';
+    });
+  }
+
+  function initOurPartnersMarquee() {
+    const root = document.getElementById('our-partners');
+    if (!root) return;
+
+    root.querySelectorAll<HTMLElement>('.partners-track--forward, .partners-track--reverse').forEach(
+      initOurPartnersMarqueeTrack,
+    );
+  }
+
+  initOurPartnersMarquee();
+  document.addEventListener('astro:page-load', initOurPartnersMarquee);
+</script>

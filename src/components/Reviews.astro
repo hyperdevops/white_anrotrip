@@ -27,7 +27,7 @@ const reviewTitles = reviews.map((r) => r.title);
 const reviewCount = reviews.length;
 ---
 
-<section id="reviews" class="relative py-16 md:py-24 overflow-hidden bg-gray-950">
+<section id="reviews" class="relative py-[50px] overflow-hidden bg-gray-950">
   <!-- Фоновые орбы -->
   <div class="absolute -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-none md:blur-3xl pointer-events-none"></div>
   <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-secondary/8 rounded-full blur-none md:blur-3xl pointer-events-none"></div>
@@ -48,9 +48,6 @@ const reviewCount = reviews.length;
           <span class="text-primary">наши клиенты</span>
         </h2>
       </div>
-      <p class="text-white/40 text-sm max-w-xs leading-relaxed md:pb-2">
-        Благодарственные письма от компаний, которым мы организовали командировки и корпоративные поездки
-      </p>
     </div>
 
     <!-- Карусель документов -->

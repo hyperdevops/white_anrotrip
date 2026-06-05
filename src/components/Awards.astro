@@ -9,33 +9,46 @@ const awards = [
   {
     title: '«Маэстро путешествий»',
     image: leftAward,
-    rank: '9 место по России',
+    rank: 'Партнер холдинга',
     accent: 'bg-amber-400',
-    description: `По итогам 2026 года на четвёртой премии «Маэстро путешествий» от холдинга «Русский Экспресс» ANRO TRIP заняли:`,
+    description:
+      'Наша компания ANRO TRIP уже три раза была участницей премии «Маэстро путешествий» от холдинга «Русский Экспресс»:',
     results: [
-      { place: '1 место', geo: 'по УрФО' },
-      { place: '2 место', geo: 'среди регионов России' },
-      { place: '9 место', geo: 'по всей России' },
+      { place: '2023 год', geo: '20 место*' },
+      { place: '2024 год', geo: '2 место* и 1 место по УрФО' },
+      { place: '2025 год', geo: '7 место*' },
     ],
+    footnote:
+      '* рейтинг по регионам России (все субъекты, кроме Москвы и Санкт-Петербурга) среди 14 000 агентств',
+    partnerNote:
+      'Также имеем высший статус сотрудничества с холдингом — Партнёр Русского Экспресса.',
   },
   {
-    title: 'MAXX ROYAL',
+    title: 'MAXX ROYAL и VOYAGE Hotels',
     image: centerAward,
-    rank: '2 место по УрФО',
+    rank: 'Лучшие из лучших',
     accent: 'bg-violet-500',
-    description: `По итогам 2026 года на церемонии MAXX ROYAL ANRO TRIP заняли 2 место по УрФО. Первое участие в церемонии — и сразу такая высокая награда!`,
+    description:
+      'Сеть отелей VOYAGE Hotels неоднократно отмечала нас на своих церемониях, как лидеров продаж:',
     results: [
-      { place: '2 место', geo: 'по УрФО' },
+      { place: '2020', geo: 'TOP Seller Agency' },
+      { place: '2023', geo: 'TOP Seller Agency' },
     ],
+    partnerNote:
+      'По итогам 2024 года на церемонии MAXX ROYAL ANRO TRIP заняли 2 место по УрФО. Первое участие в церемонии — и сразу такая высокая награда!',
   },
   {
     title: 'NG PHASELIS BAY',
     image: rightAward,
-    rank: 'Best Seller 3 года подряд',
+    rank: '4 года Best Seller',
     accent: 'bg-emerald-500',
-    description: `По итогам 2026 года прошла четвёртая церемония в отеле NG PHASELIS BAY. ANRO TRIP третий год подряд получают звание «Best Seller».`,
+    description:
+      'С 2022 года ежегодно становимся участниками церемонии награждения SEE.FEEL.LOVE в отеле NG PHASELIS BAY:',
     results: [
-      { place: 'Best Seller', geo: '3 года подряд' },
+      { place: '2022', geo: 'Best Seller' },
+      { place: '2023', geo: 'Best Seller' },
+      { place: '2024', geo: 'Best Seller' },
+      { place: '2025', geo: 'Best Seller' },
     ],
   },
 ];
@@ -43,7 +56,7 @@ const awards = [
 
 <section
   id="awards"
-  class="relative py-16 md:py-24 bg-white overflow-hidden scroll-mt-[calc(var(--site-header-h,5rem)-28px)] md:scroll-mt-[calc(var(--site-header-h,5rem)+60px-6rem)]"
+  class="relative py-[50px] bg-white overflow-hidden scroll-mt-[calc(var(--site-header-h,5rem)-28px)] md:scroll-mt-[calc(var(--site-header-h,5rem)+60px-6rem)]"
 >
   <!-- Декор -->
   <div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-none md:blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
@@ -57,11 +70,11 @@ const awards = [
           <svg class="w-3.5 h-3.5 text-cta" fill="currentColor" viewBox="0 0 24 24">
             <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
           </svg>
-          <span class="text-xs font-semibold text-yellow-600 uppercase tracking-widest font-montserrat">Награды</span>
+          <span class="text-xs font-semibold text-yellow-600 uppercase tracking-widest font-montserrat">Наши достижения</span>
         </div>
         <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
           Награды<br />
-          <span class="text-primary">ANRO TRIP 2026</span>
+          <span class="text-primary">ANRO TRIP</span>
         </h2>
       </div>
       <p class="text-gray-400 text-sm max-w-xs leading-relaxed md:pb-2">
@@ -103,13 +116,21 @@ const awards = [
             <!-- Результаты -->
             <div class="space-y-2">
               {award.results.map(r => (
-                <div class="flex items-center gap-3">
-                  <span class:list={['shrink-0 w-2 h-2 rounded-full', award.accent]}></span>
-                  <span class="font-bold text-gray-900 text-sm">{r.place}</span>
-                  <span class="text-gray-400 text-xs">{r.geo}</span>
+                <div class="flex items-start gap-3">
+                  <span class:list={['shrink-0 w-2 h-2 rounded-full mt-1.5', award.accent]}></span>
+                  <p class="text-sm leading-snug">
+                    <span class="font-bold text-gray-900">{r.place}</span>
+                    <span class="text-gray-500"> — {r.geo}</span>
+                  </p>
                 </div>
               ))}
             </div>
+            {'footnote' in award && award.footnote && (
+              <p class="text-gray-400 text-xs leading-relaxed mt-4">{award.footnote}</p>
+            )}
+            {'partnerNote' in award && award.partnerNote && (
+              <p class="text-gray-600 text-sm leading-relaxed mt-4 pt-4 border-t border-gray-100">{award.partnerNote}</p>
+            )}
           </div>
           </div>
         </div>

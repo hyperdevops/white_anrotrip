@@ -1,7 +1,7 @@
 ---
 // src/pages/index.astro
 import { getImage } from 'astro:assets';
-import heroBg from '../assets/hero/plane.avif';
+import heroBg from '../assets/hero/world.webp';
 import antalyaImg from '../assets/tours/antalya.webp';
 import maldivesImg from '../assets/tours/maldives.webp';
 import seychellesImg from '../assets/tours/seychelles.webp';
@@ -16,7 +16,9 @@ import Hero from '../components/Hero.astro';
 import JournalSection from '../components/JournalSection.astro';
 import Partners from '../components/Partners.astro';
 import PopularTours from '../components/PopularTours.astro';
+import RecommendedHotels from '../components/RecommendedHotels.astro';
 import Reviews from '../components/Reviews.astro';
+import OurPartners from '../components/OurPartners.astro';
 import SearchWidget from '../components/SearchWidget.astro';
 import Team from '../components/Team.astro';
 import Layout from '../layouts/Layout.astro';
@@ -78,7 +80,7 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
     -->
     <div
       id="content"
-      class="relative z-10 mt-[20vh] bg-[linear-gradient(to_bottom,rgb(255_255_255)_0px,rgb(255_255_255)_60px,rgb(248_252_255)_120px,rgb(240_249_255)_180px,rgb(255_255_255)_100%)] rounded-t-3xl shadow-[0_-10px_40px_rgba(15,76,129,0.12)] transition-colors duration-slow ease-in-out pb-12 md:pb-20"
+      class="relative z-10 mt-[20vh] bg-[linear-gradient(to_bottom,rgb(255_255_255)_0px,rgb(255_255_255)_60px,rgb(248_252_255)_120px,rgb(240_249_255)_180px,rgb(255_255_255)_100%)] rounded-t-3xl shadow-[0_-10px_40px_rgba(15,76,129,0.12)] transition-colors duration-slow ease-in-out"
     >
       <!-- Якорь для кнопки "Поиск туров" (невидимый). scroll-margin — подсказка браузеру; точная коррекция — скрипт ниже (как Hero + Header). -->
       <div
@@ -93,22 +95,25 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
          -translate-y-24 поднимает его ВВЕРХ на границу Hero.
          glass-panel — класс из global.css.
       -->
-      <div class="relative z-20 -translate-y-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="relative z-20 -translate-y-24 px-4 sm:px-6 max-w-5xl 2xl:max-w-7xl mx-auto">
         <SearchWidget />
       </div>
 
       <div class="space-y-0">
         <!-- Якорь для стрелочки "Популярные туры" -->
         <!-- Отрицательный margin подтягивает блок к форме поиска, не меняя внутренние отступы PopularTours -->
-        <div id="popular-tours" class="scroll-mt-26 -mt-26 pt-2 md:pt-4">
+        <div id="popular-tours" class="scroll-mt-26 -mt-26">
           <PopularTours />
         </div>
+
+        <RecommendedHotels />
 
         <JournalSection />
 
         <About />
         <Partners />
         <Reviews />
+        <OurPartners />
         <Awards />
         <GiftSection />
         <FAQ />

@@ -65,7 +65,7 @@ const team = [
 ---
 
 <!-- ═══ ОСНОВАТЕЛИ ═══ -->
-<section id="team" class="relative -mt-7 py-16 md:py-24 bg-gray-950 text-white overflow-hidden">
+<section id="team" class="relative pt-[50px] pb-[50px] bg-gray-950 text-white overflow-hidden">
   <!-- Декор -->
   <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[60px_60px] pointer-events-none"></div>
   <div class="absolute top-0 right-0 w-96 h-96 bg-primary/8 rounded-full blur-none md:blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
@@ -153,7 +153,7 @@ const team = [
   </div>
 
   <!-- Кнопка: открыть / свернуть список (всегда на месте) -->
-  <div class="flex justify-center relative z-20 -mb-6" id="team-btn-wrapper">
+  <div class="flex justify-center relative z-20" id="team-btn-wrapper">
     <button
       type="button"
       id="toggle-team-btn"
@@ -173,7 +173,7 @@ const team = [
 
 <!-- ═══ ВСЯ КОМАНДА ═══ -->
 <section id="team-list" class="team-list-panel relative bg-gray-50 overflow-hidden transition-[max-height,opacity] duration-slow ease-in-out opacity-0 hidden border-t border-gray-100 motion-reduce:transition-none" aria-hidden="true">
-  <div class="container mx-auto px-4 sm:px-6 max-w-7xl pt-12 md:pt-16 pb-16 md:pb-20">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl py-[50px]">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {team.map((member) => (

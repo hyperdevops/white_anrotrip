@@ -8,38 +8,47 @@ const services = [
   {
     title: 'АВИА и Ж/Д БИЛЕТЫ',
     iconClass: 'fa-solid fa-ticket-simple',
+    desc: 'Подбор и бронирование авиа и ж/д билетов по всему миру. Работаем с регулярными и чартерными рейсами, подбираем оптимальные маршруты, тарифы, стыковки. Оперативное оформление и поддержка при изменениях. Обмен и возврат билетов по сообщению в вашем личном чате. Помогаем с апгрейдами, регистрируем на рейс, помогаем с увеличением багажа, провозом нестандартного багажа. Оформляем перелёты для детей с сопровождением от авиакомпании. Оформляем для вас перелёты с четвероногими друзьями. Сопровождаем группы.',
   },
   {
     title: 'VIP-залы',
     iconClass: 'fa-solid fa-crown',
+    desc: 'Заранее забронируем для вас комфортное ожидание рейса — доступ в бизнес и VIP-залы аэропортов по всему миру',
   },
   {
     title: 'VIP-сопровождение в аэропортах',
     iconClass: 'fa-solid fa-person-walking-luggage',
+    desc: 'Персональная помощь на всех этапах путешествия: ускоренное прохождение регистрации, контроля и паспортных процедур, встреча и сопровождение в аэропорту, помощь с багажом и трансферами',
   },
   {
     title: 'ТУРЫ',
     iconClass: 'fa-solid fa-globe',
+    desc: 'Подбор и бронирование индивидуальных, групповых пакетных туров под любые запросы: пляжный отдых, экскурсионные маршруты, семейные, индивидуальные путешествия и mice-туризм. Работаем с ведущими туроператорами и проверенными отелями',
   },
   {
     title: 'КРУИЗЫ',
     iconClass: 'fa-solid fa-sailboat',
+    desc: 'Организация морских и речных круизов по России и миру. Подбор маршрута, лайнера и каюты, помощь с оформлением документов и сопровождение до начала путешествия',
   },
   {
     title: 'ОТЕЛИ',
     iconClass: 'fa-solid fa-hotel',
+    desc: 'Бронирование отелей любого уровня. Индивидуальный подбор по бюджету, локации и предпочтениям, выгодные условия и специальные тарифы',
   },
   {
     title: 'ВИЗОВАЯ ПОДДЕРЖКА',
     iconClass: 'fa-solid fa-passport',
+    desc: 'Консультации и сопровождение при оформлении туристических виз и виз по приглашению. Подготовка пакета документов, заполнение анкет, запись в визовые центры и сопровождение на всех этапах подачи',
   },
   {
     title: 'ТРАНСФЕРЫ',
     iconClass: 'fa-solid fa-van-shuttle',
+    desc: 'Организация индивидуальных и групповых трансферов: аэропорт — отель — аэропорт, а также поездки по городу и между курортами. Комфортные автомобили и проверенные перевозчики',
   },
   {
     title: 'СТРАХОВАНИЕ',
     iconClass: 'fa-solid fa-heart',
+    desc: 'Оформление туристической страховки для поездок за границу и по России. Подбор оптимального покрытия: медицинские расходы, багаж, отмена поездки и дополнительные риски. Страхование от невыезда',
   },
 ];
 
@@ -48,21 +57,21 @@ const directions = [
   {
     num: '01',
     title: 'Корпоративное обслуживание',
-    desc: 'ANRO TRIP полностью возьмёт на себя организацию командировок вашей компании. Заключаем договор на индивидуальных условиях. Предоставляем отчётные документы через ЭДО.',
+    desc: 'ANRO TRIP полностью берёт на себя организацию командировок вашей компании. Заключаем договор на индивидуальных условиях. Предоставляем отчётные документы через ЭДО или любым удобным для вас способом.',
     iconClass: 'fa-solid fa-briefcase',
     accent: 'bg-primary',
   },
   {
     num: '02',
     title: 'Персональное сопровождение путешествий',
-    desc: 'За Вами закрепляется личный ассистент, который выслушает Ваши пожелания, подберёт маршрут и будет на связи 24/7 — от первого звонка до возвращения домой. Отели, билеты, трансферы, страховка и визовая поддержка — все эти услуги мы делаем для Вас.',
+    desc: 'За Вами закрепляется личный ассистент, который проконсультирует, подберёт комфортный маршрут, отель, тур, поможет с подготовкой визовых документов и будет на связи 24/7 — от обращения до возвращения домой.',
     iconClass: 'fa-solid fa-plane-departure',
     accent: 'bg-secondary',
   },
   {
     num: '03',
     title: 'Агентское обслуживание',
-    desc: 'Работаем с частными клиентами напрямую: туры по всему миру, круизы, авиабилеты и отели по агентским тарифам. Подберём оптимальный вариант под Ваш бюджет и предпочтения, оформим все документы и обеспечим поддержку на протяжении всей поездки.',
+    desc: 'Сотрудничаем с туристическими агентствами по бронированию авиа и ж/д билетов. Предлагаем доступ к билетам всех российских и международных авиакомпаний и помощь на всех этапах бронирования. Сопровождаем заявки до завершения поездки ваших клиентов.',
     iconClass: 'fa-solid fa-handshake',
     accent: 'bg-cta',
   },
@@ -79,7 +88,7 @@ const { class: classes = '' } = Astro.props;
   <!-- ══════════════════════════════════════════════
        БЛОК 1 — HERO-ЗАЯВЛЕНИЕ (асимметричный)
   ══════════════════════════════════════════════ -->
-  <div class="relative pt-12 pb-20 md:pt-20 md:pb-24 bg-white overflow-hidden">
+  <div class="relative py-[50px] bg-white overflow-hidden">
     <!-- Декор: большая буква фоном -->
     <!-- <div class="absolute right-0 top-1/2 -translate-y-1/2 text-[25rem] font-montserrat font-black text-primary/[0.04] leading-none select-none pointer-events-none -mr-16 hidden lg:block">A</div> -->
 
@@ -88,33 +97,32 @@ const { class: classes = '' } = Astro.props;
           A
         </div>
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-start">
 
         <!-- Левая часть: текст -->
         <div class="reveal-hidden">
           <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6">
             <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">О компании</span>
+            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">О нас</span>
           </div>
 
           <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-6 leading-[0.95]" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
             Почему<br />
             выбирают<br />
-            <span class="text-primary">ANRO TRIP</span>
+            <span class="text-primary">ANRO TRIP?</span>
           </h2>
 
-          <p class="text-gray-500 text-lg leading-relaxed max-w-lg mb-8">
-            Консьерж-сервис по организации путешествий и командировок
-            по всему миру. <strong class="text-gray-800 font-semibold">19 лет</strong> безупречной репутации
-            и <br class="md:hidden" /><strong class="text-gray-800 font-semibold">17 000+</strong> довольных клиентов.
+          <p class="text-gray-500 text-base leading-relaxed max-w-lg mb-8">
+            Наш генеральный директор Анна Рожкова работает в авиабизнесе и туризме с 2007 года.
+            Благодаря многолетнему опыту и надёжной репутации в 2019  <span class="whitespace-nowrap">ANRO TRIP</span>, а в 2020 году зарегистрирован собственный товарный знак. Также с 2020 года
+            <span class="whitespace-nowrap">ANRO TRIP</span> имеет аккредитацию туроператора по внутреннему туризму.
           </p>
 
-          <!-- Быстрые теги (один ряд, три плашки; третья — заглушка под текст от заказчика) -->
+          <!-- Быстрые теги — ценности компании -->
           <div class="flex flex-nowrap gap-2 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {['Личный ассистент', '24/7 поддержка', '—'].map((tag, i) => (
+            {['Экспертность', 'Надежность', 'Оперативность'].map((tag) => (
               <span
                 class="shrink-0 px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-primary/10 hover:text-primary transition-colors cursor-default whitespace-nowrap"
-                title={i === 2 ? 'Замените на финальный текст по согласованию с заказчиком' : undefined}
               >
                 {tag}
               </span>
@@ -122,8 +130,15 @@ const { class: classes = '' } = Astro.props;
           </div>
         </div>
 
-        <!-- Правая часть: Trust Badges -->
-        <div class="lg:min-w-[420px] reveal-hidden">
+        <!-- Правая часть: второй абзац + Trust Badges -->
+        <div class="lg:min-w-[640px] reveal-hidden flex flex-col gap-4 lg:pt-[calc(7.5rem+25px)]">
+          <p class="text-gray-500 text-base leading-relaxed">
+            С самого основания компания работает в собственном офисе,
+            а с 2025 года является плательщиком НДС. Сегодня в команде
+            ANRO TRIP работает <strong class="text-gray-700 font-semibold">27 профессионалов</strong>,
+            объединённых общей целью — создавать туристический сервис,
+            доступный каждому!
+          </p>
           <TrustBadges />
         </div>
       </div>
@@ -131,91 +146,103 @@ const { class: classes = '' } = Astro.props;
   </div>
 
   <!-- ══════════════════════════════════════════════
-       БЛОК 2 — УСЛУГИ (пилюли); якорь для бейджа в Hero и меню
-  ══════════════════════════════════════════════ -->
-  <div class="py-10 bg-gray-50 border-y border-gray-100 overflow-hidden reveal-hidden">
-    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <p
-        id="services"
-        class="text-sm sm:text-base font-semibold text-gray-400 uppercase tracking-widest font-montserrat mb-5 md:mb-6 text-center scroll-mt-[calc(var(--site-header-h,5rem)+100px)]"
-      >
-        Наши услуги
-      </p>
-      <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
-        {services.map((item) => (
-          <div class="about-services-pill flex items-center gap-2 sm:gap-2.5 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-gray-200 cursor-default group">
-            <i
-              class:list={[
-                ...item.iconClass.split(/\s+/).filter(Boolean),
-                'text-primary shrink-0 text-base leading-none',
-              ]}
-              aria-hidden="true"
-            />
-            <span class="text-xs sm:text-sm font-semibold tracking-wide text-gray-700 group-hover:text-gray-900 leading-none whitespace-nowrap">{item.title}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════
        БЛОК 3 — BENTO ПРЕИМУЩЕСТВА
   ══════════════════════════════════════════════ -->
-  <div class="py-16 md:py-24 bg-white">
+  <div class="py-[50px] bg-primary/4 border-t border-primary/5">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4" data-reveal-stagger>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" data-reveal-stagger>
 
-        <!-- Карточка 1: большая — «Быстро развиваемся» -->
-        <div class="reveal-hidden md:col-span-2 relative overflow-hidden rounded-3xl bg-linear-to-br from-primary to-secondary p-8 md:p-10 text-white min-h-[240px] flex flex-col justify-between group">
+        <!-- 1. Все услуги -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-linear-to-br from-primary to-secondary p-6 sm:p-8 text-white flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-normal">
           <div class="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-white/10 pointer-events-none"></div>
           <div class="absolute -right-4 -bottom-8 w-32 h-32 rounded-full bg-white/5 pointer-events-none"></div>
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center mb-6 group-hover:bg-white/30 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-white/30 transition-colors">
+              <i class="fa-solid fa-layer-group text-xl text-white"></i>
             </div>
-            <h3 class="font-montserrat font-bold text-2xl mb-3 leading-tight">Быстро развиваемся</h3>
-            <p class="text-white/80 leading-relaxed">Входим в <strong class="text-white">ТОП-10 компаний России</strong> по результатам 2026 года. Ежегодно увеличиваем объём и расширяем географию.</p>
-          </div>
-          <div class="flex items-center gap-2 mt-6 text-white/60 text-sm font-medium">
-            <span class="w-8 h-px bg-white/40"></span>
-            Топ-10 России 2026
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 leading-tight">Все услуги в одной компании</h3>
+            <p class="text-white/80 leading-relaxed text-sm">Авиа и ж/д билеты, туры, визы, отели, круизы, трансферы, экскурсии, страхование и полное сопровождение в поездке.</p>
           </div>
         </div>
 
-        <!-- Карточка 2: маленькая — «Всегда на связи» -->
-        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-gray-900 p-8 text-white min-h-[240px] flex flex-col justify-between group">
+        <!-- 2. Работаем для всех -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal">
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+              <i class="fa-solid fa-users text-xl text-primary"></i>
+            </div>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight">Работаем для всех</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">Сотрудничаем с частными и корпоративными клиентами, а также туристическими агентствами по всему миру.</p>
+          </div>
+        </div>
+
+        <!-- 3. Персональный сервис -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-gray-900 p-6 sm:p-8 text-white flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-normal">
           <div class="absolute inset-0 bg-linear-to-br from-gray-900 to-gray-800 pointer-events-none"></div>
           <div class="relative z-10">
-            <div class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/30 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+            <div class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/30 transition-colors">
+              <i class="fa-solid fa-headset text-xl text-primary"></i>
             </div>
-            <h3 class="font-montserrat font-bold text-xl mb-3">Всегда на связи</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Круглосуточная поддержка клиентов — 24/7, без выходных и праздников.</p>
-          </div>
-          <div class="relative z-10 mt-6">
-            <span class="inline-block px-3 py-1 rounded-full bg-primary/15 text-primary text-xs font-bold">24 / 7</span>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 leading-tight">Персональный сервис</h3>
+            <p class="text-gray-400 leading-relaxed text-sm">После обращения создаём личный чат с менеджером и круглосуточной поддержкой 24/7.</p>
           </div>
         </div>
 
-        <!-- Карточка 3: широкая — «Собственная авиакасса» -->
-        <div class="about-avia-card reveal-hidden md:col-span-3 relative overflow-hidden rounded-3xl bg-gray-50 border border-gray-100 p-8 md:p-10 min-h-[180px] flex flex-col md:flex-row md:items-center gap-8 group transition-all duration-normal max-sm:transition-none">
-          <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors duration-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="font-montserrat font-bold text-xl text-gray-900 mb-2">Собственная авиакасса</h3>
-            <p class="text-gray-500 leading-relaxed max-w-2xl">Бронируем любые направления и быстро осуществляем обмен и возврат в собственных <strong class="text-gray-700">GDS-пультах</strong>. Прямой доступ к тарифам без посредников.</p>
-          </div>
-          <div class="shrink-0 hidden md:flex items-center gap-3">
-            <span class="text-5xl font-montserrat font-black text-gray-100">GDS</span>
+        <!-- 4. Аккредитации -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal">
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+              <i class="fa-solid fa-certificate text-xl text-primary"></i>
+            </div>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight">Аккредитации</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">Имеем прямые аккредитации по продаже авиабилетов — IATA, ТКП и Аэрофлот для полного контроля оформления авиабилетов.</p>
           </div>
         </div>
+
+        <!-- 5. Работаем по всему миру -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal">
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+              <i class="fa-solid fa-earth-americas text-xl text-primary"></i>
+            </div>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight">Работаем по всему миру</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">Оформляем любые туристические услуги дистанционно для клиентов из любых регионов и стран.</p>
+          </div>
+        </div>
+
+        <!-- 6. Удобная оплата -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal">
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+              <i class="fa-solid fa-credit-card text-xl text-primary"></i>
+            </div>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight">Удобная оплата</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">Принимаем оплату в рублях из любой точки мира быстро и удобно.</p>
+          </div>
+        </div>
+
+        <!-- 7. Сильная команда -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal">
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+              <i class="fa-solid fa-people-group text-xl text-primary"></i>
+            </div>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight">Сильная команда</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">С вами работают профессионалы с большим опытом, вниманием к деталям и любовью к своему делу.</p>
+          </div>
+        </div>
+
+        <!-- 8. Быстро растём -->
+        <div class="reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal">
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+              <i class="fa-solid fa-arrow-trend-up text-xl text-primary"></i>
+            </div>
+            <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight">Быстро растём и развиваемся</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">За 7 лет стали лидером продаж у ведущих туроператоров и мировых отелей.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -225,16 +252,16 @@ const { class: classes = '' } = Astro.props;
   ══════════════════════════════════════════════ -->
   <div
     id="directions"
-    class="py-16 md:py-24 bg-gray-50 border-t border-gray-100 scroll-mt-[calc(var(--site-header-h,5rem)+var(--scroll-offset,22px))]"
+    class="py-[50px] bg-white scroll-mt-[calc(var(--site-header-h,5rem)+var(--scroll-offset,22px))]"
   >
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
 
       <!-- Заголовок — асимметричный; декор: крупный самолёт как буква «A» в hero (primary / 4%) -->
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8 md:mb-16 reveal-hidden">
         <div class="flex-1 min-w-0">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/8 border border-secondary/15 mb-4">
-            <span class="w-1.5 h-1.5 rounded-full bg-secondary md:animate-pulse"></span>
-            <span class="text-xs font-semibold text-secondary uppercase tracking-widest font-montserrat">Направления</span>
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
+            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Направления</span>
           </div>
           <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none" style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);">
             Направления<br />работы<br />
@@ -242,7 +269,7 @@ const { class: classes = '' } = Astro.props;
           </h2>
         </div>
         <div
-          class="hidden md:flex shrink-0 justify-end overflow-visible pointer-events-none select-none md:-translate-y-8"
+          class="hidden md:flex shrink-0 justify-end overflow-visible pointer-events-none select-none md:translate-y-[-12px]"
           aria-hidden="true"
         >
           <i
@@ -256,7 +283,7 @@ const { class: classes = '' } = Astro.props;
         {directions.map((item, i) => (
           <div
             class:list={[
-              'reveal-hidden group flex items-start gap-6 md:gap-10 border-b border-gray-200 last:border-0 hover:bg-white hover:px-6 hover:-mx-6 hover:rounded-2xl transition-all duration-normal',
+              'reveal-hidden group flex items-start gap-6 md:gap-10 border-b border-gray-100 last:border-0 hover:bg-gray-50 hover:px-6 hover:-mx-6 hover:rounded-2xl transition-all duration-normal',
               i === 0 ? 'pt-4 pb-8 md:py-8' : 'py-8',
             ]}
           >
@@ -294,11 +321,66 @@ const { class: classes = '' } = Astro.props;
   </div>
 
   <!-- ══════════════════════════════════════════════
-       БЛОК 5 — CTA (тёмная полоса), якорь «Наши услуги» в хедере
+       БЛОК 2 — УСЛУГИ (пилюли); якорь для бейджа в Hero и меню
+  ══════════════════════════════════════════════ -->
+  <div class="py-[50px] bg-primary/4 border-t border-primary/5 overflow-hidden reveal-hidden">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div
+        id="services"
+        class="mb-8 md:mb-12 scroll-mt-[calc(var(--site-header-h,5rem)+100px)]"
+      >
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
+          <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Наши услуги</span>
+        </div>
+        <h2
+          class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none"
+          style="font-size: clamp(2rem, 1.5rem + 3vw, 4rem);"
+        >
+          Наши <span class="text-primary">услуги</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-6" data-reveal-stagger>
+        {services.map((item, i) => (
+          <div
+            class:list={[
+              'reveal-hidden relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-6 sm:p-8 flex group hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-normal',
+              i === 0 ? 'flex-col lg:flex-row lg:items-center gap-6 lg:gap-10 md:col-span-2 lg:col-span-6' : 'flex-col justify-between',
+              i >= 1 && i <= 6 ? 'lg:col-span-2' : '',
+              i >= 7 ? 'lg:col-span-3' : ''
+            ]}
+          >
+            <div
+              class:list={[
+                'w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors',
+                i === 0 ? 'mb-0' : 'mb-5 sm:mb-6'
+              ]}
+            >
+              <i
+                class:list={[
+                  ...item.iconClass.split(/\s+/).filter(Boolean),
+                  'text-xl text-primary',
+                ]}
+                aria-hidden="true"
+              />
+            </div>
+            <div class="flex-1">
+              <h3 class="font-montserrat font-bold text-lg mb-2 sm:mb-3 text-gray-900 leading-tight group-hover:text-primary transition-colors">{item.title}</h3>
+              <p class="text-gray-500 leading-relaxed text-sm">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       БЛОК 5 — CTA (тёмная полоса), якорь #business
   ══════════════════════════════════════════════ -->
   <div
     id="business"
-    class="relative overflow-hidden bg-gray-900 py-14 md:py-20 scroll-mt-[calc(var(--site-header-h,5rem)+30px)]"
+    class="relative overflow-hidden bg-gray-900 py-[50px] scroll-mt-[calc(var(--site-header-h,5rem)+30px)]"
   >
     <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-none md:blur-3xl pointer-events-none -translate-y-1/2"></div>
     <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-none md:blur-3xl pointer-events-none translate-y-1/2"></div>

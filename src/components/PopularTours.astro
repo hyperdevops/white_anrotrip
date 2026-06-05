@@ -1,9 +1,7 @@
 ---
 import { getImage, Image } from 'astro:assets';
 import antalyaImg  from '../assets/tours/antalya.webp';
-import seychellesImg from '../assets/tours/seychelles.webp';
 import thailandImg from '../assets/tours/thailand.webp';
-import maldivesImg from '../assets/tours/maldives.webp';
 import egyptImg    from '../assets/tours/egypt.webp';
 import vietnamImg  from '../assets/tours/vietnam.webp';
 
@@ -11,12 +9,10 @@ export interface Props { class?: string; }
 const { class: classes = '' } = Astro.props;
 
 const tours = [
-  { title: 'Мальдивы',        price: 'от 150 000 ₽', image: maldivesImg,   size: 'large',  badge: 'Премиум',       badgeColor: 'bg-amber-400/90 text-amber-950',  tvCountry: '' },
-  { title: 'Сейшелы, Маэ',    price: 'от 180 000 ₽', image: seychellesImg, size: 'tall',   badge: 'Острова',       badgeColor: 'bg-[#0d9488]/85 text-white',       tvCountry: '' },
-  { title: 'Турция, Анталья', price: 'от 85 000 ₽',  image: antalyaImg,    size: 'normal', badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white',        tvCountry: 'Турция' },
-  { title: 'Таиланд, Пхукет', price: 'от 115 000 ₽', image: thailandImg,   size: 'normal', badge: 'Расслабление',  badgeColor: 'bg-emerald-500/80 text-white',     tvCountry: 'Таиланд' },
-  { title: 'Египет, Шарм',    price: 'от 105 000 ₽', image: egyptImg,      size: 'wide',   badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white',      tvCountry: 'Египет' },
-  { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽', image: vietnamImg,    size: 'wide',   badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white',         tvCountry: 'Вьетнам' },
+  { title: 'Турция, Анталья', price: 'от 85 000 ₽',  image: antalyaImg,    size: 'tall',   badge: 'Хит продаж',    badgeColor: 'bg-rose-500/90 text-white',        tvCountry: 'Турция' },
+  { title: 'Таиланд, Пхукет', price: 'от 115 000 ₽', image: thailandImg,   size: 'wide',   badge: 'Расслабление',  badgeColor: 'bg-emerald-500/80 text-white',     tvCountry: 'Таиланд' },
+  { title: 'Египет, Шарм',    price: 'от 105 000 ₽', image: egyptImg,      size: 'normal', badge: 'Всё включено',  badgeColor: 'bg-orange-500/90 text-white',      tvCountry: 'Египет' },
+  { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽', image: vietnamImg,    size: 'normal', badge: 'Пляжный отдых', badgeColor: 'bg-sky-500/80 text-white',         tvCountry: 'Вьетнам' },
 ];
 
 // Tiny placeholders (20px) для blur-up — мгновенное отображение до загрузки полного изображения
@@ -25,7 +21,7 @@ const tinyPlaceholders = await Promise.all(
 );
 ---
 
-<section id="tours" class={`pt-14 pb-10 md:pb-16 bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-hidden ${classes}`}>
+<section id="tours" class={`py-[50px] bg-[linear-gradient(to_bottom,transparent_0,rgb(240_249_255)_120px,rgb(255_255_255)_40%,rgb(249_250_251)_100%)] overflow-hidden ${classes}`}>
   <div class="@container container mx-auto px-4 sm:px-6 max-w-7xl">
 
     <!-- Асимметричный заголовок -->
@@ -45,7 +41,7 @@ const tinyPlaceholders = await Promise.all(
     </div>
 
     <!-- Bento Grid -->
-    <div class="grid grid-cols-1 @md:grid-cols-4 gap-3 md:gap-4 auto-rows-[240px] @lg:auto-rows-[270px]" data-reveal-stagger>
+    <div class="grid grid-cols-1 @md:grid-cols-3 gap-3 md:gap-4 auto-rows-[240px] @lg:auto-rows-[270px]" data-reveal-stagger>
       {tours.map((tour, i) => (
         <button
           type="button"
@@ -74,7 +70,7 @@ const tinyPlaceholders = await Promise.all(
                   width={1200}
                   height={800}
                   quality={92}
-                  sizes={tour.size === 'large' || tour.size === 'wide' ? '(max-width: 767px) 100vw, (min-width: 768px) 50vw' : '(max-width: 767px) 100vw, (min-width: 768px) 25vw'}
+                  sizes={tour.size === 'wide' ? '(max-width: 767px) 100vw, (min-width: 768px) 66vw' : '(max-width: 767px) 100vw, (min-width: 768px) 33vw'}
                   fetchpriority={i < 3 ? 'high' : 'low'}
                   loading={i < 3 ? 'eager' : 'lazy'}
                   class="tour-card-image h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out image-sharp"
