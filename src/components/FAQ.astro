@@ -5,18 +5,26 @@
 const faqItems = [
   {
     question: 'Как забронировать тур?',
-    answer:
-      'Вы можете оставить заявку на сайте через форму поиска, позвонить по телефону 8 (800) 222-44-73 или прийти в офис в Екатеринбурге или Челябинске. Менеджер подберёт подходящий вариант и оформит бронирование.',
+    answer: `Свяжитесь с нами любым удобным способом:
+• в мессенджерах по номеру +7-922-026-70-59
+• позвоните по телефону 8 (800) 222-44-73
+• приходите в офис в Челябинске по адресу ул. 250-летия Челябинска, 29
+
+Менеджер подберёт подходящий вариант и оформит бронирование.`,
   },
   {
     question: 'Какие способы оплаты вы принимаете?',
-    answer:
-      'Оплата банковской картой, переводом на расчётный счёт организации или в рассрочку. Для корпоративных клиентов — работа по договору с отсрочкой платежа и документами через ЭДО.',
+    answer: `• Наличными в офисе Челябинска
+• Банковской картой через терминал
+• Онлайн через интернет-эквайринг
+• По QR-коду через мобильный банк
+• Системой быстрых платежей (СБП)
+• Переводом на расчётный счёт`,
   },
   {
     question: 'Где находятся офисы ANRO TRIP?',
     answer:
-      'Офисы расположены в Екатеринбурге и Челябинске. Точные адреса и режим работы указаны в разделе «Контакты». Вы можете связаться с нами онлайн — по телефону, WhatsApp, Telegram или email.',
+      'Офис расположен в Челябинске по адресу ул. 250-летия Челябинска, 29. Режим работы указан в разделе «Контакты». Вы можете связаться с нами в любое время онлайн — по телефону, email или в любом мессенджере.',
   },
   {
     question: 'Организуете ли корпоративные туры?',
@@ -48,41 +56,109 @@ const faqItems = [
 
 const labelClass = 'whitespace-nowrap text-gray-900';
 const linkClass =
-  'whitespace-nowrap text-primary hover:text-primary-dark hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded cursor-pointer';
+  'text-primary hover:text-primary-dark hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded cursor-pointer';
 const sep =
   '<br class="md:hidden"><span class="hidden md:inline-block ml-1 text-gray-900 select-none" aria-hidden="true">·</span>';
 
-/** Оборачивает контакты: метки — текст, значения — ссылки. Точка-разделитель между контактами. */
-function wrapContactsWithNowrap(text: string): string {
-  return text
-    .replace(
-      /Телефон: 8 \(800\) 222-44-73\./g,
-      `<span class="${labelClass}">Телефон: </span><a href="tel:88002224473" class="${linkClass}">8 (800) 222-44-73</a>${sep}`,
+/** Временно прячет HTML, чтобы повторные replace не ломали уже вставленные ссылки */
+function linkifyContacts(text: string): string {
+  const tokens: string[] = [];
+  const stash = (html: string) => {
+    const key = `\x00${tokens.length}\x00`;
+    tokens.push(html);
+    return key;
+  };
+
+  let out = text
+    .replace(/Телефон: 8 \(800\) 222-44-73\./g, () =>
+      stash(
+        `<span class="${labelClass}">Телефон: </span><a href="tel:88002224473" class="${linkClass}">8 (800) 222-44-73</a>${sep}`,
+      ),
     )
-    .replace(
-      /WhatsApp: \+7 \(922\) 026-70-59\./g,
-      `<span class="${labelClass}">WhatsApp: </span><a href="https://wa.me/79220267059" target="_blank" rel="noopener noreferrer" class="${linkClass}">+7 (922) 026-70-59</a>${sep}`,
+    .replace(/WhatsApp: \+7 \(922\) 026-70-59\./g, () =>
+      stash(
+        `<span class="${labelClass}">WhatsApp: </span><a href="https://wa.me/79220267059" target="_blank" rel="noopener noreferrer" class="${linkClass}">+7 (922) 026-70-59</a>${sep}`,
+      ),
     )
-    .replace(
-      /Telegram: @anrotrip\./g,
-      `<span class="${labelClass}">Telegram: </span><a href="https://t.me/anrotrip" target="_blank" rel="noopener noreferrer" class="${linkClass}">@anrotrip</a>${sep}`,
+    .replace(/Telegram: @anrotrip\./g, () =>
+      stash(
+        `<span class="${labelClass}">Telegram: </span><a href="https://t.me/anrotrip" target="_blank" rel="noopener noreferrer" class="${linkClass}">@anrotrip</a>${sep}`,
+      ),
     )
-    .replace(
-      /Email: anro@anrotrip\.ru\./g,
-      `<span class="${labelClass}">Email: </span><a href="mailto:anro@anrotrip.ru" class="${linkClass}">anro@anrotrip.ru</a>${sep}`,
+    .replace(/Email: anro@anrotrip\.ru\./g, () =>
+      stash(
+        `<span class="${labelClass}">Email: </span><a href="mailto:anro@anrotrip.ru" class="${linkClass}">anro@anrotrip.ru</a>${sep}`,
+      ),
     )
-    .replace(
-      /8 \(800\) 222-44-73/g,
-      `<a href="tel:88002224473" class="${linkClass}">8 (800) 222-44-73</a>`,
+    .replace(/\+7-922-026-70-59/g, () =>
+      stash(`<a href="tel:+79220267059" class="${linkClass}">+7-922-026-70-59</a>`),
     )
-    .replace(
-      /\+7 \(922\) 026-70-59/g,
-      `<a href="https://wa.me/79220267059" target="_blank" rel="noopener noreferrer" class="${linkClass}">+7 (922) 026-70-59</a>`,
+    .replace(/\+7 \(922\) 026-70-59/g, () =>
+      stash(`<a href="tel:+79220267059" class="${linkClass}">+7 (922) 026-70-59</a>`),
     )
-    .replace(
-      /Работаем ежедневно\./g,
-      '<span class="whitespace-nowrap text-gray-900">Работаем ежедневно.</span>',
+    .replace(/8 \(800\) 222-44-73/g, () =>
+      stash(`<a href="tel:88002224473" class="${linkClass}">8 (800) 222-44-73</a>`),
+    )
+    .replace(/ул\. 250-летия Челябинска, 29/g, () =>
+      stash(`<a href="#contacts" class="${linkClass}">ул. 250-летия Челябинска, 29</a>`),
+    )
+    .replace(/разделе «Контакты»/g, () =>
+      stash(`разделе <a href="#contacts" class="${linkClass}">«Контакты»</a>`),
+    )
+    .replace(/anro@anrotrip\.ru/g, () =>
+      stash(`<a href="mailto:anro@anrotrip.ru" class="${linkClass}">anro@anrotrip.ru</a>`),
+    )
+    .replace(/по телефону/g, () =>
+      stash(`<a href="tel:88002224473" class="${linkClass}">по телефону</a>`),
+    )
+    .replace(/\bemail\b/g, () =>
+      stash(`<a href="mailto:anro@anrotrip.ru" class="${linkClass}">email</a>`),
+    )
+    .replace(/Работаем ежедневно\./g, () =>
+      stash('<span class="whitespace-nowrap text-gray-900">Работаем ежедневно.</span>'),
     );
+
+  tokens.forEach((html, i) => {
+    out = out.replace(`\x00${i}\x00`, html);
+  });
+
+  return out;
+}
+
+/** Форматирует ответ: абзацы, списки с • и кликабельные контакты */
+function formatFaqAnswer(text: string): string {
+  const lines = text.split('\n').map((line) => line.trim());
+  const parts: string[] = [];
+  let bulletBuffer: string[] = [];
+
+  const flushBullets = () => {
+    if (!bulletBuffer.length) return;
+    parts.push(
+      `<ul class="my-2 space-y-1.5 list-none">${bulletBuffer
+        .map(
+          (content) =>
+            `<li class="flex gap-2"><span class="text-primary shrink-0" aria-hidden="true">•</span><span>${linkifyContacts(content)}</span></li>`,
+        )
+        .join('')}</ul>`,
+    );
+    bulletBuffer = [];
+  };
+
+  for (const line of lines) {
+    if (!line) {
+      flushBullets();
+      continue;
+    }
+    if (line.startsWith('•')) {
+      bulletBuffer.push(line.replace(/^•\s*/, ''));
+      continue;
+    }
+    flushBullets();
+    parts.push(`<p>${linkifyContacts(line)}</p>`);
+  }
+
+  flushBullets();
+  return parts.join('');
 }
 
 const faqSchema = {
@@ -189,9 +265,9 @@ const { class: classes = '' } = Astro.props;
                   >
                     <div class="faq-content-inner overflow-hidden min-h-0">
                       <div class="border-t border-gray-100 px-4 md:px-5 py-3 md:py-4">
-                        <p
-                          class="text-sm md:text-base text-gray-600 leading-relaxed"
-                          set:html={wrapContactsWithNowrap(item.answer)}
+                        <div
+                          class="faq-answer text-sm md:text-base text-gray-600 leading-relaxed space-y-2 [&_p]:leading-relaxed"
+                          set:html={formatFaqAnswer(item.answer)}
                         />
                       </div>
                     </div>
