@@ -713,78 +713,9 @@ const homeContactIconText =
     const headerHeight = headerEl ? headerEl.offsetHeight : 64;
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
 
-    if (!isMobile) {
-      document
-        .querySelectorAll<HTMLAnchorElement>('header a[href="#search"]')
-        .forEach((link) => {
-          link.addEventListener(
-            'click',
-            (e) => {
-              e.preventDefault();
-              const anchor = document.getElementById('search');
-              if (anchor) {
-                const top =
-                  anchor.getBoundingClientRect().top + window.scrollY - 78;
-                window.smoothScrollTo(top);
-              }
-            },
-            { signal },
-          );
-        });
-
-      /** Как бейдж в Hero (`hero-services-badge`): тот же зазор до «Наши услуги» */
-      const SERVICES_ANCHOR_GAP = 55;
-      document
-        .querySelectorAll<HTMLAnchorElement>('header a[href="#services"]')
-        .forEach((link) => {
-          link.addEventListener(
-            'click',
-            (e) => {
-              e.preventDefault();
-              const anchor = document.getElementById('services');
-              if (anchor) {
-                const top =
-                  anchor.getBoundingClientRect().top +
-                  window.scrollY -
-                  (headerHeight + SERVICES_ANCHOR_GAP);
-                window.smoothScrollTo(top);
-              }
-            },
-            { signal },
-          );
-        });
-
-      const GAP_PX = 22;
-      document
-        .querySelectorAll<HTMLAnchorElement>('header a[href="#content"]')
-        .forEach((link) => {
-          link.addEventListener(
-            'click',
-            (e) => {
-              e.preventDefault();
-              const anchor = document.getElementById('content');
-              if (anchor) {
-                const offset = headerHeight + GAP_PX;
-                const top =
-                  anchor.getBoundingClientRect().top + window.scrollY - offset;
-                window.smoothScrollTo(top);
-              }
-            },
-            { signal },
-          );
-        });
-      return;
-    }
-
-    const GAP_PX = -28;
-    const SEARCH_GAP = -16; // хедер + минимальный зазор до search widget
-    const CORP_CONTENT_GAP = -28;
-    /** Как бейдж Hero и десктоп `#services` в хедере */
-    const SERVICES_ANCHOR_GAP = 55;
-    // Секция py-14 (56px) на мобиле: пилюля на 30px ниже хедера → offset = headerHeight - 26
-    const BUSINESS_GAP = -26;
-    // Секции py-16 (64px) на мобиле: пилюля ~36px ниже низа хедера → offset = headerHeight - 28 (см. .doc/header-anchor-scroll.md)
-    const AWARDS_GIFT_GAP = -28;
+    const SEARCH_GAP = isMobile ? -16 : 14; // на десктопе 64+14=78
+    const CORP_CONTENT_GAP = isMobile ? -28 : 22; // на десктопе 64+22=86
+    const GAP_PX = -30; // fallback
 
     const scrollToAnchor = (e: Event, href: string) => {
       const raw =
@@ -794,14 +725,24 @@ const homeContactIconText =
       const anchor = document.getElementById(id);
       if (!anchor) return;
       e.preventDefault();
+      
+      if (id !== 'search' && id !== 'content') {
+        const badge = anchor.querySelector('.inline-flex.rounded-full');
+        if (badge) {
+          const badgeTop = badge.getBoundingClientRect().top + window.scrollY;
+          const top = badgeTop - headerHeight - 20;
+          window.smoothScrollTo(top);
+          if (menuOpen && menu) closeMenu();
+          return;
+        }
+      }
+
       let offset: number;
       if (id === 'search') offset = headerHeight + SEARCH_GAP;
       else if (id === 'content') offset = headerHeight + CORP_CONTENT_GAP;
-      else if (id === 'services') offset = headerHeight + SERVICES_ANCHOR_GAP;
-      else if (id === 'business') offset = headerHeight + BUSINESS_GAP;
-      else if (id === 'awards' || id === 'gift')
-        offset = headerHeight + AWARDS_GIFT_GAP;
+      else if (id === 'business') offset = headerHeight - 26; // как было раньше: BUSINESS_GAP
       else offset = headerHeight + GAP_PX;
+      
       const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
       window.smoothScrollTo(top);
       if (menuOpen && menu) closeMenu();
