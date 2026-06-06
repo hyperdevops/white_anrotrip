@@ -83,9 +83,9 @@ const heroServiceLabels = [
     >
     </div>
     -->
-    <!-- Постоянный нижний затемняющий слой -->
+    <!-- Постоянный светлый затемняющий слой для минималистичного стиля -->
     <div
-      class="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent pointer-events-none"
+      class="absolute inset-0 bg-white/85 backdrop-blur-[2px] pointer-events-none"
     >
     </div>
   </div>
@@ -103,7 +103,7 @@ const heroServiceLabels = [
         <a
           id="hero-services-badge"
           href="#services"
-          class="reveal-hidden inline-block max-w-[min(100%,calc(100vw-2rem))] px-4 py-2 rounded-full bg-white/90 border border-gray-300 text-gray-800 text-[9px] sm:text-[11px] font-bold uppercase tracking-widest text-center transition-[background-color,border-color] duration-fast hover:bg-white hover:border-gray-400 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          class="reveal-hidden inline-block max-w-[min(100%,calc(100vw-2rem))] px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-md border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] text-gray-800 text-[9px] sm:text-[11px] font-bold uppercase tracking-widest text-center transition-all duration-fast hover:bg-white hover:border-white hover:shadow-[0_8px_25px_rgba(0,171,179,0.15)] hover:-translate-y-0.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           aria-label="Перейти к разделу «Наши услуги»"
         >
           {
@@ -126,7 +126,7 @@ const heroServiceLabels = [
       >
         Туристическая компания
         <br />
-        <span class="hero-gradient-text text-[clamp(2.5rem,2rem+5vw,7.5rem)] leading-[0.9] mt-2 block">ANRO TRIP</span>
+        <span class="partners-title text-[clamp(2.5rem,2rem+5vw,7.5rem)] leading-[0.9] mt-2 block drop-shadow-sm">ANRO TRIP</span>
       </h1>
     </div>
 
@@ -144,13 +144,25 @@ const heroServiceLabels = [
         <a
           id="hero-search-btn"
           href="#search"
-          class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-[#f4003d] px-[34px] py-[18px] font-black text-white shadow-[0_4px_14px_4px_rgba(244,0,61,0.3)] hover:bg-[#d80036] hover:shadow-[0_6px_18px_4px_rgba(244,0,61,0.4)] transition-[background-color,box-shadow] duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-[clamp(0.9rem,0.75rem+0.8vw,1.1rem)] [@media(max-height:680px)]:px-[26px] [@media(max-height:680px)]:py-3.5 [@media(max-height:680px)]:text-[clamp(0.82rem,0.72rem+0.6vw,1rem)]"
+          class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-linear-to-r from-cta to-cta-hover px-[34px] py-[16px] font-black text-[#11111b] shadow-[0_4px_14px_4px_rgba(255,212,23,0.4)] hover:shadow-[0_6px_18px_4px_rgba(255,212,23,0.4)] transition-shadow duration-normal btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-[clamp(0.9rem,0.75rem+0.8vw,1.1rem)] [@media(max-height:680px)]:px-[26px] [@media(max-height:680px)]:py-3 [@media(max-height:680px)]:text-[clamp(0.82rem,0.72rem+0.6vw,1rem)]"
         >
           <!-- Shine sweep -->
           <span
-            class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"
+            class="absolute inset-0 w-[200%] bg-linear-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-slow ease-out pointer-events-none"
           ></span>
-          <span class="relative z-10 uppercase tracking-wider">Забронировать авиабилет</span>
+          <svg
+            class="w-3.5 h-3.5 shrink-0 relative z-10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="11" cy="11" r="8"></circle><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-4.35-4.35"></path>
+          </svg>
+          <span class="relative z-10 uppercase tracking-wider">Подобрать тур</span>
         </a>
 
         <div
@@ -159,19 +171,19 @@ const heroServiceLabels = [
           <a
             href="tel:88002224473"
             aria-label="Позвонить 8 800 222 44 73"
-            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/60 text-white shadow-md ring-1 ring-white/15 transition-[box-shadow,background-color] duration-fast group-hover:bg-primary-dark/75 group-hover:shadow-lg animate-office-icon-pulse [--office-pulse-rgb:0_171_179] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-white/90 text-primary border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] backdrop-blur-md transition-all duration-normal hover:bg-primary hover:text-white hover:border-transparent hover:shadow-[0_8px_25px_rgba(0,171,179,0.25)] hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
-            <PhoneSolidIcon iconClass="w-6.5 h-6.5" colorClass="text-white" />
+            <PhoneSolidIcon iconClass="w-5.5 h-5.5" colorClass="text-current" />
           </a>
           <a
             href="https://t.me/anrotrip"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="ANRO TRIP в Telegram"
-            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-[#0087cb]/58 text-white shadow-md ring-1 ring-white/15 transition-[box-shadow,background-color] duration-fast group-hover:bg-[#0074b0]/72 group-hover:shadow-lg animate-office-icon-pulse [--office-pulse-rgb:0_135_203] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-white/90 text-primary border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] backdrop-blur-md transition-all duration-normal hover:bg-primary hover:text-white hover:border-transparent hover:shadow-[0_8px_25px_rgba(0,171,179,0.25)] hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <svg
-              class="h-9.5 w-9.5 shrink-0 overflow-visible text-white"
+              class="h-8 w-8 shrink-0 overflow-visible text-current"
               viewBox="0 0 80 80"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -191,10 +203,10 @@ const heroServiceLabels = [
             target="_blank"
             rel="noopener noreferrer"
             aria-label="ANRO TRIP в MAX"
-            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-[#7b3dec]/58 text-white shadow-md ring-1 ring-white/15 transition-[box-shadow,background-color] duration-fast group-hover:bg-[#6829d4]/72 group-hover:shadow-lg animate-office-icon-pulse [--office-pulse-rgb:123_61_236] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-white/90 text-primary border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] backdrop-blur-md transition-all duration-normal hover:bg-primary hover:text-white hover:border-transparent hover:shadow-[0_8px_25px_rgba(0,171,179,0.25)] hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <svg
-              class="h-7 w-7 shrink-0 overflow-visible text-white"
+              class="h-6 w-6 shrink-0 overflow-visible text-current"
               viewBox="80 80 80 80"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
@@ -213,10 +225,10 @@ const heroServiceLabels = [
             target="_blank"
             rel="noopener noreferrer"
             aria-label="ANRO TRIP в ВКонтакте"
-            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-[#0077FF]/58 text-white shadow-md ring-1 ring-white/15 transition-[box-shadow,background-color] duration-fast group-hover:bg-[#0066dd]/72 group-hover:shadow-lg animate-office-icon-pulse [--office-pulse-rgb:0_119_255] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            class="group inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-white/90 text-primary border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] backdrop-blur-md transition-all duration-normal hover:bg-primary hover:text-white hover:border-transparent hover:shadow-[0_8px_25px_rgba(0,171,179,0.25)] hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <svg
-              class="h-9 w-9 shrink-0 overflow-visible text-white"
+              class="h-7.5 w-7.5 shrink-0 overflow-visible text-current"
               viewBox="0 0 80 80"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -239,13 +251,13 @@ const heroServiceLabels = [
         heroStatPills.map((pill) =>
           pill.placeholder ? (
             <div
-              class="min-h-12 min-w-28 shrink-0 rounded-[1.25rem] border border-gray-300/50 bg-gray-200/80 px-6 py-2.5 sm:min-w-32"
+              class="min-h-12 min-w-28 shrink-0 rounded-[1.25rem] border border-gray-200/60 bg-white/80 backdrop-blur-md px-6 py-2.5 sm:min-w-32 shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
               aria-hidden="true"
             />
           ) : (
             <a
               href={pill.href}
-              class="hero-stat-pill flex flex-col items-center justify-center px-6 py-2.5 rounded-[1.25rem] bg-gray-200/80 border border-gray-300/50 hover:bg-gray-300/80 transition-[background-color] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              class="hero-stat-pill flex flex-col items-center justify-center px-6 py-2.5 rounded-[1.25rem] bg-white/80 backdrop-blur-md border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:bg-white transition-[background-color,transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,171,179,0.15)] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
               aria-label={pill.ariaLabel}
             >
               <span class="font-montserrat font-black text-primary text-[13px] uppercase leading-tight">
@@ -276,7 +288,7 @@ const heroServiceLabels = [
     <button
       id="scroll-arrow"
       aria-label="Скролл вниз"
-      class="text-white/80 hover:text-white transition-colors cursor-pointer"
+      class="text-primary/60 hover:text-primary transition-colors cursor-pointer"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
