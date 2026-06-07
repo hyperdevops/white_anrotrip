@@ -34,7 +34,7 @@ const { class: classes = '' }: Props = Astro.props;
         <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Наши партнёры</span>
       </div>
 
-      <h2 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-none mb-4">
+      <h2 class="section-heading-plus font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-4">
         <span class="text-primary">Сотрудничество</span>
       </h2>
       <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -91,19 +91,50 @@ const { class: classes = '' }: Props = Astro.props;
 
     </div>
 
-    <!-- ЛЕНТА ЛОГОТИПОВ (MARQUEE) -->
+    <!-- ЛЕНТА ЛОГОТИПОВ -->
     <!-- ЗАГЛУШКА: Здесь выводятся пустые блоки. Для реальных логотипов замените содержимое .partners-logo-card на тег <Image /> -->
-    <div class="reveal-hidden relative">
-      <!-- Градиентные маски по краям для плавного исчезновения -->
-      <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
-      <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
 
-      <!-- Первый ряд (влево): классы и размеры карточек — как в Partners.astro -->
+    <!-- Мобилка: только ручной скролл (как в Partners.astro — «Наши клиенты») -->
+    <div class="relative md:hidden">
+      <div class="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-primary/4 to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-primary/4 to-transparent z-10 pointer-events-none"></div>
+
+      <div
+        id="our-partners-mobile-scroll-1"
+        class="flex overflow-x-auto overflow-y-hidden gap-4 pb-4 mb-4 scrollbar-hide -mx-4 px-4 overscroll-x-contain touch-pan-x touch-pan-y scroll-auto"
+      >
+        {row1.map((partner) => (
+          <div class="shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3">
+            <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
+              {partner.name}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div
+        id="our-partners-mobile-scroll-2"
+        class="flex overflow-x-auto overflow-y-hidden gap-4 pb-4 scrollbar-hide -mx-4 px-4 overscroll-x-contain touch-pan-x touch-pan-y scroll-auto"
+      >
+        {row2.map((partner) => (
+          <div class="shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3">
+            <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
+              {partner.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Десктоп: marquee -->
+    <div class="reveal-hidden relative hidden md:block">
+      <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-r from-primary/4 to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-l from-primary/4 to-transparent z-10 pointer-events-none"></div>
+
       <div class="overflow-hidden mb-4">
         <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
           {row1.map((partner) => (
             <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
-              <!-- ЗАГЛУШКА: заменить span на <Image src={...} alt={partner.name} /> -->
               <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
                 {partner.name}
               </span>
@@ -112,12 +143,10 @@ const { class: classes = '' }: Props = Astro.props;
         </div>
       </div>
 
-      <!-- Второй ряд (вправо): 30s — как .partners-track--reverse в global.css -->
       <div class="overflow-hidden">
         <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
           {row2.map((partner) => (
             <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
-              <!-- ЗАГЛУШКА: заменить span на <Image src={...} alt={partner.name} /> -->
               <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
                 {partner.name}
               </span>
@@ -125,14 +154,13 @@ const { class: classes = '' }: Props = Astro.props;
           ))}
         </div>
       </div>
-
     </div>
 
   </div>
 </section>
 
 <script>
-  // Точное смещение marquee — как в Partners.astro (36s / 30s из global.css), только внутри #our-partners
+  // Десктоп: точное смещение marquee — как в Partners.astro
   function initOurPartnersMarqueeTrack(track: HTMLElement) {
     track.style.animationPlayState = 'paused';
 
@@ -159,6 +187,8 @@ const { class: classes = '' }: Props = Astro.props;
   }
 
   function initOurPartnersMarquee() {
+    if (window.innerWidth < 768) return;
+
     const root = document.getElementById('our-partners');
     if (!root) return;
 
@@ -167,6 +197,55 @@ const { class: classes = '' }: Props = Astro.props;
     );
   }
 
-  initOurPartnersMarquee();
-  document.addEventListener('astro:page-load', initOurPartnersMarquee);
+  // Мобилка: бесшовный цикл при ручном скролле — как в Partners.astro
+  function initOurPartnersSeamlessLoop(el: HTMLElement) {
+    if (window.innerWidth >= 768) return;
+
+    const half = () => el.scrollWidth / 2;
+    const max = () => Math.max(0, el.scrollWidth - el.clientWidth);
+    const threshold = 120;
+    let jumping = false;
+    let rafId = 0;
+
+    const resetJumping = () => { jumping = false; };
+
+    const checkAndLoop = () => {
+      if (jumping) return;
+      const m = max();
+      if (m <= 0) return;
+      const left = el.scrollLeft;
+      const h = half();
+      const cw = el.clientWidth;
+      if (left < threshold) {
+        jumping = true;
+        el.scrollLeft = h + left;
+        setTimeout(resetJumping, 50);
+      } else if (left > m - threshold) {
+        jumping = true;
+        el.scrollLeft = h - cw - (m - left);
+        setTimeout(resetJumping, 50);
+      }
+      rafId = 0;
+    };
+
+    el.addEventListener('scroll', () => {
+      if (jumping || rafId) return;
+      rafId = requestAnimationFrame(checkAndLoop);
+    }, { passive: true });
+  }
+
+  function initOurPartnersMobileScroll() {
+    const row1 = document.getElementById('our-partners-mobile-scroll-1');
+    const row2 = document.getElementById('our-partners-mobile-scroll-2');
+    if (row1) initOurPartnersSeamlessLoop(row1);
+    if (row2) initOurPartnersSeamlessLoop(row2);
+  }
+
+  function init() {
+    initOurPartnersMarquee();
+    initOurPartnersMobileScroll();
+  }
+
+  init();
+  document.addEventListener('astro:page-load', init);
 </script>
