@@ -316,6 +316,40 @@
   transform: translate3d(0, 0, 0) scale(1);
 }
 
+/* 3D Flip Effects */
+.perspective-\[1000px\] {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.group:hover .group-hover\:rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Custom Scrollbar for flipped cards */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
 /* ═══════════════════════════════════════════════
    SCROLL ANCHORS — единое расстояние от хедера до блока при любой прокрутке по якорям
    scroll-padding-top на html + scroll-margin-top на целях = один и тот же зазор (хедер + 40px)
@@ -495,9 +529,20 @@
   }
 }
 
+/* Заголовки отдельных блоков: +⅓ шага от h2 к section-heading (не полный шаг) */
+.section-heading-plus {
+  font-size: clamp(
+    calc(1.75rem + 0.5rem / 3),
+    calc(1rem + 0.25rem / 3 + 3vw + 1.5vw / 3),
+    calc(3rem + 1rem / 3)
+  );
+  line-height: 0.95;
+}
+
 /* ═══════════════════════════════════════════════
    HERO ANIMATIONS
 ═══════════════════════════════════════════════ */
+/* ВРЕМЕННО ОТКЛЮЧЕНО: Ken Burns на фоне Hero — раскомментировать вместе с hero-kenburns в Hero.astro
 @keyframes hero-kenburns {
   0% {
     transform: scale(1.03) translate(0, 0);
@@ -510,19 +555,19 @@
   }
 }
 
-/* kenburns — только десктоп */
 .hero-kenburns {
-  animation: none; /* мобайл — статичное фото */
+  animation: none;
 }
 @media (hover: hover) {
   .hero-kenburns {
     animation: hero-kenburns 30s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
   }
 }
+*/
 
-/* Gradient text — только десктоп, на мобайле просто белый */
+/* Gradient text — десктоп; на мобайле — primary */
 .hero-gradient-text {
-  color: #ffffff;
+  color: var(--color-primary);
 }
 @media (hover: hover) {
   .hero-gradient-text {

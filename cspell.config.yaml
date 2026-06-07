@@ -12,6 +12,12 @@ ignorePaths:
 ignoreRegExpList:
   - /'\.\.\/assets\/team\/[^']+'/
 words:
+  - Bento
+  - BENTO
+  - bento
+  - moduleid
+  - nums
+  - tabular
   - ANRO
   - anrotrip
   - anro
