@@ -61,27 +61,27 @@ const badges = [
 ];
 ---
 
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-3 w-full py-6 sm:py-8">
+<div class="grid grid-cols-2 gap-2.5 sm:gap-3 lg:gap-3 w-full py-6 lg:py-7">
   {badges.map((badge) => (
     <a
       href={badge.href}
       target={badge.external ? '_blank' : undefined}
       rel={badge.external ? 'noopener noreferrer' : undefined}
       class:list={[
-        'trust-badges-card glass-panel-interactive px-3 py-3 sm:px-4 sm:py-3 rounded-2xl flex flex-col sm:flex-row items-center gap-2 sm:gap-2 group cursor-pointer min-h-0 no-underline text-inherit hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 w-full min-w-0 text-center sm:text-left overflow-visible',
+        'trust-badges-card glass-panel-interactive px-3 py-4 lg:px-4 lg:py-4 rounded-2xl flex flex-col items-center gap-2 lg:gap-2 group cursor-pointer min-h-0 no-underline text-inherit hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 w-full min-w-0 text-center overflow-visible',
         'max-sm:contain-[layout] max-sm:transition-shadow max-sm:duration-fast max-sm:hover:translate-y-0',
-        'sm:transition-all sm:hover:shadow-lg',
+        'lg:transition-all lg:hover:shadow-lg',
       ]}
     >
-      <!-- Иконка в круге: на мобильном без scale при тапе — меньше композитинга -->
-      <div class={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${badge.bgClass} flex items-center justify-center shrink-0 max-sm:transition-none max-sm:group-hover:scale-100 sm:transition-transform sm:group-hover:scale-110`}>
+      <!-- Иконка в круге: вертикальная карточка; на мобиле без scale при тапе -->
+      <div class={`w-11 h-11 lg:w-12 lg:h-12 rounded-full ${badge.bgClass} flex items-center justify-center shrink-0 max-sm:transition-none max-sm:group-hover:scale-100 lg:transition-transform lg:group-hover:scale-110`}>
         {badge.icon === 'shield' && (
-          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
+          <svg class={`w-5 h-5 lg:w-6 lg:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17.93c-3.95-1.19-7-5.19-7-9.93V6.3l7-3.11v15.74z"/>
           </svg>
         )}
         {badge.icon === 'shield-check' && (
-          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg class={`w-5 h-5 lg:w-6 lg:h-6 ${badge.colorClass}`} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         )}
@@ -90,7 +90,7 @@ const badges = [
             xmlns="http://www.w3.org/2000/svg"
             viewBox={iataIconViewBoxEmblem}
             preserveAspectRatio="xMidYMid meet"
-            class={`mx-auto block size-7 sm:size-8 shrink-0 translate-y-[-4px] sm:translate-y-[-6px] ${badge.colorClass}`}
+            class={`mx-auto block size-7 lg:size-8 shrink-0 translate-y-[-4px] lg:translate-y-[-5px] ${badge.colorClass}`}
             fill="currentColor"
             aria-hidden="true"
           >
@@ -100,7 +100,7 @@ const badges = [
         {badge.icon === 'tkp' && (
           <span
             class:list={[
-              'mx-auto block h-3 w-7 sm:h-3.5 sm:w-8 shrink-0 bg-secondary',
+              'mx-auto block h-3 w-7 lg:h-3.5 lg:w-8 shrink-0 bg-secondary',
               'mask-[url(/logos/tkp.png)] mask-center mask-no-repeat mask-contain',
               '[-webkit-mask-image:url(/logos/tkp.png)] [-webkit-mask-position:center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:contain]',
             ]}
@@ -108,21 +108,21 @@ const badges = [
           />
         )}
         {badge.icon === 'calendar' && (
-          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class={`w-5 h-5 lg:w-6 lg:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/>
           </svg>
         )}
         {badge.icon === 'headset' && (
-          <svg class={`w-5 h-5 sm:w-6 sm:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class={`w-5 h-5 lg:w-6 lg:h-6 ${badge.colorClass}`} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 1a9 9 0 0 0-9 9v7c0 1.66 1.34 3 3 3h1v-8H5v-2a7 7 0 0 1 14 0v2h-2v8h1c1.66 0 3-1.34 3-3v-7a9 9 0 0 0-9-9zm-1 14H8v2h3v-2zm5 0h-3v2h3v-2z"/>
           </svg>
         )}
       </div>
 
-      <!-- Текст: label — nowrap (всегда короткий), value — допускает перенос -->
-      <div class="min-w-0 flex-1 w-full">
-        <div class="text-[10px] sm:text-xs text-gray-600 uppercase font-medium tracking-normal sm:tracking-wide leading-tight whitespace-nowrap">{badge.label}</div>
-        <div class="text-[11px] sm:text-xs font-bold text-gray-900 leading-tight whitespace-nowrap">{badge.value}</div>
+      <!-- Текст: по центру под иконкой -->
+      <div class="min-w-0 w-full">
+        <div class="text-[10px] lg:text-xs text-gray-600 uppercase font-medium tracking-wide leading-tight">{badge.label}</div>
+        <div class="text-[11px] lg:text-xs font-bold text-gray-900 leading-tight mt-0.5">{badge.value}</div>
       </div>
     </a>
   ))}
