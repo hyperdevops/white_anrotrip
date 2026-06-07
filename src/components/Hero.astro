@@ -67,10 +67,11 @@ const heroServiceLabels = [
     class="absolute inset-0 bg-cover bg-center bg-no-repeat"
     style={`background-image: url('${tinyHero.src}'); background-color: #0c4a6e`}
   >
+    <!-- Ken Burns: hero-kenburns scale-100 md:scale-105 — раскомментировать вместе с блоком в global.css -->
     <Image
       src={heroBg}
       alt="Путешествия по всему миру"
-      class="hero-bg-image h-full w-full object-cover scale-100 md:scale-105 hero-kenburns opacity-0 transition-opacity duration-500 ease-out"
+      class="hero-bg-image h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out"
       quality={90}
       loading="eager"
       fetchpriority="high"
@@ -273,10 +274,11 @@ const heroServiceLabels = [
   <div
     class="reveal-hidden absolute bottom-[clamp(0.75rem,2vh,1.5rem)] left-1/2 -translate-x-1/2 z-20 delay-200 animate-hero-scroll [@media(max-height:720px)]:hidden"
   >
-    <button
+    <a
       id="scroll-arrow"
-      aria-label="Скролл вниз"
-      class="text-white/80 hover:text-white transition-colors cursor-pointer"
+      href="#popular-tours"
+      aria-label="Перейти к разделу «Туры»"
+      class="text-white/80 hover:text-white transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-full"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -292,13 +294,15 @@ const heroServiceLabels = [
           stroke-width="2"
           d="M19 14l-7 7m0 0l-7-7"></path>
       </svg>
-    </button>
+    </a>
   </div>
 </section>
 
 <script>
   const searchBtn = document.getElementById('hero-search-btn');
-  const arrowBtn = document.getElementById('scroll-arrow');
+  const arrowBtn = document.getElementById(
+    'scroll-arrow',
+  ) as HTMLAnchorElement | null;
   const heroContent = document.getElementById('hero-content');
   const hero = document.getElementById('hero');
 
@@ -395,8 +399,24 @@ const heroServiceLabels = [
     window.smoothScrollTo(top);
   });
 
-  arrowBtn?.addEventListener('click', () => {
-    window.smoothScrollIntoView(document.getElementById('popular-tours'));
+  // Как пункт меню «Туры» (Header.astro initAnchorScroll, главная)
+  arrowBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const anchor = document.getElementById('popular-tours');
+    if (!anchor) return;
+    const badge = anchor.querySelector<HTMLElement>(
+      '.inline-flex.rounded-full',
+    );
+    if (!badge) return;
+    const headerEl = document.getElementById('site-header');
+    const headerHeight = headerEl ? headerEl.offsetHeight : 64;
+    let top = 0;
+    let node: HTMLElement | null = badge;
+    while (node) {
+      top += node.offsetTop;
+      node = node.offsetParent as HTMLElement | null;
+    }
+    window.smoothScrollTo(top - headerHeight - 26);
   });
 
   // Blur-up: показать изображение при загрузке
