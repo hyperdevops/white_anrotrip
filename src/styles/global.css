@@ -29,15 +29,28 @@
 /* ═══════════════════════════════════════════════
    DESIGN TOKENS — ANRO TRIP BRAND 2026
    Основной: #00abb3 (тил — цвет «trip» в логотипе)
+   Красный: #e31a33 — как CTA «Забронировать авиабилет» в Hero
+   CTA (жёлтый): легаси — пока не трогать существующие места; выводить из UI постепенно
 ═══════════════════════════════════════════════ */
 @theme {
+  /* Тил — основной бренд */
   --color-primary: #00abb3;
   --color-primary-light: #33bfc6;
   --color-primary-dark: #008a91;
   --color-secondary: #006d73;
   --color-secondary-hover: #00585d;
+
+  /* Брендовый красный — Hero CTA, акценты, ошибки (Tailwind: bg-red, text-red, …) */
+  --color-red: #e31a33;
+  --color-red-light: #f2a8b3;
+  --color-red-dark: #a01022;
+  --color-red-hover: #c2142a;
+  --color-red-muted: rgb(227 26 51 / 0.12);
+
+  /* Легаси CTA — не расширять на новые блоки; замена на primary/red — поэтапно */
   --color-cta: #ffd417;
   --color-cta-hover: #e5be14;
+
   --font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 
@@ -1213,6 +1226,18 @@ iframe[src*='tourvisor'] {
    glass-морфизм, тактильные тени с цветом бренда
 ═══════════════════════════════════════════════ */
 
+/* Юридические страницы: переносы как в блоге */
+.legal-content {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+.legal-content p,
+.legal-content li {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
 .blog-content {
   max-width: 42rem;
   margin-inline: auto;
@@ -1252,10 +1277,12 @@ iframe[src*='tourvisor'] {
   letter-spacing: -0.015em;
 }
 
-/* --- Параграфы --- */
+/* --- Параграфы (lang="ru" на <html> — для hyphens: auto) --- */
 .blog-content p {
   margin-bottom: 1.65rem;
   color: rgb(30 41 59);
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 /* --- Лид-абзац: только орбы на фоне страницы (без glass / заливки) --- */
