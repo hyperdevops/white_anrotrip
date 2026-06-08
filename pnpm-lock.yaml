@@ -80,6 +80,12 @@ importers:
       typescript:
         specifier: ^5.7.3
         version: 5.9.3
+      typograf:
+        specifier: ^7.7.0
+        version: 7.7.0
+      unist-util-visit:
+        specifier: ^5.1.0
+        version: 5.1.0
 
 packages:
 
@@ -2277,6 +2283,10 @@ packages:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  typograf@7.7.0:
+    resolution: {integrity: sha512-VaUj5T5KjAeXVsGdSJsaKaxiPq/dC1WB+xo+Y0aclUQ+omBQvCejqCk3t5QEY8n0OnTRYvUiPd2/rod1KAQzxA==}
+    engines: {node: '>= 4'}
 
   ufo@1.6.3:
     resolution: {integrity: sha512-yDJTmhydvl5lJzBmy/hyOAA0d+aqCBuwl818haVdYCRrWV84o7YyeVm4QlVHStqNrrJSTb6jKuFAVqAFsr+K3Q==}
@@ -5015,6 +5025,8 @@ snapshots:
       semver: 7.7.4
 
   typescript@5.9.3: {}
+
+  typograf@7.7.0: {}
 
   ufo@1.6.3: {}
 
