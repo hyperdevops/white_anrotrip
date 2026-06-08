@@ -1,41 +1,50 @@
 ---
 // src/components/widgets/NemoSearch.astro
+// Виджет Nemo: каркас с CDN + тема ANRO TRIP (public/nemo/anrotrip-widget-theme.css)
+// @see .doc/nemo-flights-widget-plan.md
+
+/** Pin-версия виджета — обновлять осознанно (теги: gitlab.nemo.travel/frontend/flights.search.widget) */
+const NEMO_WIDGET_VERSION = 'v2.5.64';
+const NEMO_CDN_BASE = `https://cdn.nemo.travel/search-form/${NEMO_WIDGET_VERSION}`;
+const NEMO_BOOKING_URL = 'https://ticket.anrotrip.ru';
 ---
 
 <!--
-  Убрали overflow-hidden! Это критично для выпадающих меню.
-  position: relative нужен для корректного позиционирования календаря.
+  overflow-hidden убран — критично для выпадающих меню.
+  position: relative — для позиционирования календаря.
 -->
 <div class="nemo-wrapper w-full relative z-40">
   <div id="nemo-root"></div>
 </div>
 
-<link
-  rel="stylesheet"
-  href="https://cdn.nemo.travel/search-form/v2.5.64/flights.search.widget.min.css"
-/>
-<script
-  is:inline
-  src="https://cdn.nemo.travel/search-form/v2.5.64/flights.search.widget.min.js"
-></script>
+<link rel="stylesheet" href={`${NEMO_CDN_BASE}/flights.search.widget.min.css`} />
+<link rel="stylesheet" href="/nemo/anrotrip-widget-theme.css" />
+<script is:inline defer src={`${NEMO_CDN_BASE}/flights.search.widget.min.js`}></script>
 
-<script is:inline>
+<script is:inline define:vars={{ nemoBookingUrl: NEMO_BOOKING_URL }}>
   function initNemoWidget() {
     const root = document.getElementById('nemo-root');
-    if (!root) return;
+    if (!root || root.dataset.nemoInit === '1') return;
 
-    const initNemo = () => {
-      if (typeof FlightsSearchWidget !== 'undefined') {
-        FlightsSearchWidget.init({
-          nemoURL: 'https://ticket.anrotrip.ru',
-          rootElement: root,
-          locale: 'ru',
-        });
-      } else {
-        setTimeout(initNemo, 200);
+    const boot = () => {
+      if (typeof FlightsSearchWidget === 'undefined') {
+        setTimeout(boot, 200);
+        return;
       }
+
+      root.dataset.nemoInit = '1';
+
+      FlightsSearchWidget.init({
+        nemoURL: nemoBookingUrl,
+        rootElement: root,
+        locale: 'ru',
+        defaultDepartureAirport: 'SVX',
+        // isAWP: true — включить после подтверждения Avia Widget Pro у Nemo
+        // Текст кнопки: search («Найти») + search_tickets (« билеты») — не переопределять search целиком
+      });
     };
-    initNemo();
+
+    boot();
   }
 
   window.initNemoWidget = initNemoWidget;
@@ -46,29 +55,3 @@
     initNemoWidget();
   }
 </script>
-
-<style is:global>
-  /* Попытка перекрасить кнопку Nemo в наш желтый */
-  .nemo-ui-button.nemo-ui-button_main {
-    background-color: var(--color-cta) !important; /* Наш желтый */
-    color: #11111b !important; /* Наш темный текст */
-    border-radius: 999px !important; /* Скругление как у нас */
-  }
-
-  /* Перекрасить активные элементы в наш синий */
-  .nemo-ui-state_active,
-  .nemo-ui-pseudoLink {
-    color: var(--color-primary) !important;
-  }
-  /*
-     Глобальный фикс для календаря Nemo.
-     Иногда он пытается спрятаться под другие блоки.
-  */
-  .ui-datepicker {
-    z-index: 9999 !important;
-  }
-  /* Подгоняем шрифты под наш сайт */
-  #nemo-root * {
-    font-family: 'Inter', sans-serif;
-  }
-</style>
