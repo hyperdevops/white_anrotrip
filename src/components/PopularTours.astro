@@ -25,7 +25,7 @@ const tinyPlaceholders = await Promise.all(
   <div class="@container container mx-auto px-4 sm:px-6 max-w-7xl">
 
     <!-- Асимметричный заголовок -->
-    <div class="mt-5 flex flex-col @md:flex-row @md:items-end justify-between gap-4 mb-6 md:mb-8 reveal-hidden">
+    <div class="mt-5 flex flex-col @md:flex-row @md:items-end justify-between gap-4 mb-4 md:mb-6 reveal-hidden">
       <div class="md:translate-y-6">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
           <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
@@ -91,7 +91,7 @@ const tinyPlaceholders = await Promise.all(
           <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
             <!-- Бейдж -->
             <div class="flex justify-between items-start">
-              <span class="inline-block rounded-full bg-[var(--color-primary)] px-3 py-1 text-[0.625rem] font-black uppercase tracking-wider !text-white">
+              <span class="inline-block rounded-full bg-(--color-primary) px-3 py-1 text-[0.625rem] font-black uppercase tracking-wider text-white!">
                 {tour.badge}
               </span>
               <!-- Иконка-стрелка появляется при hover (только десктоп) -->
@@ -102,7 +102,7 @@ const tinyPlaceholders = await Promise.all(
 
             <!-- Название и цена -->
             <div class="transform translate-y-1.5 md:group-hover:translate-y-0 md:transition-transform md:duration-normal">
-              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 text-[clamp(1rem,0.7rem+3.2cqw,1.65rem)]">
+              <h3 class="font-montserrat font-extrabold text-white leading-tight mb-1 text-[clamp(1rem,0.7rem+3.2cqw,1.65rem)] md:group-hover:text-[color-mix(in_srgb,var(--color-primary)_33%,white)] md:transition-colors md:duration-normal">
                 {tour.title}
               </h3>
               <div class="flex items-center gap-2">
