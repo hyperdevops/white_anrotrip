@@ -3,6 +3,15 @@
 import { modalLeadSubmitClass } from '../lib/form-classes';
 import { sitePrivacy } from '../lib/site-urls';
 import { Image } from 'astro:assets';
+import ExternalReviewsRow from './widgets/ExternalReviewsRow.astro';
+import {
+  twoGisRating,
+  twoGisReviews,
+  twoGisReviewsUrl,
+  yandexRating,
+  yandexReviews,
+  yandexReviewsUrl,
+} from '../lib/external-reviews';
 import molodezhImg from '../assets/reviews/molodezh.webp';
 import niagaraImg from '../assets/reviews/niagara.webp';
 import mercedesImg from '../assets/reviews/mercedes.webp';
@@ -40,7 +49,7 @@ const reviewCount = reviews.length;
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16 reveal-hidden">
       <div>
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/8 border border-white/12 mb-5">
-          <span class="w-1.5 h-1.5 rounded-full bg-cta md:animate-pulse"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
           <span class="text-xs font-semibold text-white/70 uppercase tracking-widest font-montserrat">Отзывы</span>
         </div>
         <h2 class="section-heading-plus font-montserrat font-extrabold text-white uppercase tracking-tight">
@@ -92,6 +101,50 @@ const reviewCount = reviews.length;
       </div>
     </div>
 
+    <!-- Отзывы с внешних площадок: Яндекс Карты + 2ГИС -->
+    <div class="mt-10 md:mt-12 space-y-8">
+      <ExternalReviewsRow
+        theme="light"
+        score={yandexRating.score}
+        ratingsCount={yandexRating.ratingsCount}
+        reviewsCount={yandexRating.reviewsCount}
+        link={yandexReviewsUrl}
+        platformLabel="Карты"
+        sourceLabel="Отзыв Яндекс Карт"
+        reviews={yandexReviews}
+        scrollerId="yandex-reviews-scroller"
+      >
+        <span
+          slot="logo"
+          class="w-5 h-5 rounded-full bg-[#FC3F1D] flex items-center justify-center text-white text-[11px] font-black font-montserrat leading-none shrink-0"
+          aria-hidden="true"
+        >
+          Я
+        </span>
+      </ExternalReviewsRow>
+
+      <ExternalReviewsRow
+        theme="dark"
+        score={twoGisRating.score}
+        ratingsCount={twoGisRating.ratingsCount}
+        reviewsCount={twoGisRating.reviewsCount}
+        link={twoGisReviewsUrl}
+        platformLabel="2ГИС"
+        sourceLabel="Отзыв 2ГИС"
+        reviews={twoGisReviews}
+        readMoreCaps
+        scrollerId="twogis-reviews-scroller"
+      >
+        <span
+          slot="logo"
+          class="w-5 h-5 rounded-full bg-[#2BA84A] flex items-center justify-center text-white shrink-0"
+          aria-hidden="true"
+        >
+          <i class="fa-solid fa-location-dot text-[10px]"></i>
+        </span>
+      </ExternalReviewsRow>
+    </div>
+
     <!-- CTA -->
     <div class="text-center mt-10 reveal-hidden">
       <button
@@ -117,7 +170,7 @@ const reviewCount = reviews.length;
   </style>
   <div
     id="lightbox"
-    class="fixed inset-0 z-2147483647 bg-black/95 hidden items-center justify-center opacity-0 transition-opacity duration-normal select-none backdrop-blur-sm cursor-zoom-in overflow-hidden"
+    class="fixed inset-0 z-modal bg-black/95 hidden items-center justify-center opacity-0 transition-opacity duration-normal select-none backdrop-blur-sm cursor-zoom-in overflow-hidden"
   >
     <!-- Панель управления -->
     <div
@@ -213,7 +266,7 @@ const reviewCount = reviews.length;
 
   <!-- ══════ ФОРМА ОТЗЫВА ══════ (по аналогии с CallbackModal / GiftModal: плавное открытие/закрытие, виджет офиса за блюром) -->
   <div id="review-modal-overlay"
-    class="fixed inset-0 z-2147483647 bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]">
+    class="fixed inset-0 z-modal bg-black/60 backdrop-blur-sm max-md:backdrop-blur-none hidden items-center justify-center opacity-0 transition-opacity duration-slow max-md:duration-300 max-md:ease-[cubic-bezier(0.33,1,0.68,1)]">
     <div id="review-modal-content"
       class="bg-white rounded-3xl shadow-2xl shadow-black/20 max-md:shadow-lg w-full max-w-md mx-4 relative transform max-h-[90vh] overflow-y-auto scrollbar-hide contain-[layout_paint]
         translate-y-20 max-md:translate-y-8
