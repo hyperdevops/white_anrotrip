@@ -9,10 +9,42 @@ export interface Props { class?: string; }
 const { class: classes = '' } = Astro.props;
 
 const tours = [
-  { title: 'Турция, Анталья', price: 'от 85 000 ₽',  image: antalyaImg,    size: 'tall',   badge: 'Хит продаж',    tvCountry: 'Турция' },
-  { title: 'Таиланд, Пхукет', price: 'от 115 000 ₽', image: thailandImg,   size: 'wide',   badge: 'Расслабление',  tvCountry: 'Таиланд' },
-  { title: 'Египет, Шарм',    price: 'от 105 000 ₽', image: egyptImg,      size: 'normal', badge: 'Всё включено',  tvCountry: 'Египет' },
-  { title: 'Вьетнам, Нячанг', price: 'от 125 000 ₽', image: vietnamImg,    size: 'normal', badge: 'Пляжный отдых', tvCountry: 'Вьетнам' },
+  {
+    title: 'Турция, Анталья',
+    price: 'от 85 000 ₽',
+    image: antalyaImg,
+    size: 'tall',
+    badge: 'Хит продаж',
+    badgeClass: 'bg-red text-white',
+    tvCountry: 'Турция',
+  },
+  {
+    title: 'Таиланд, Пхукет',
+    price: 'от 115 000 ₽',
+    image: thailandImg,
+    size: 'wide',
+    badge: 'Расслабление',
+    badgeClass: 'bg-primary text-white',
+    tvCountry: 'Таиланд',
+  },
+  {
+    title: 'Египет, Шарм',
+    price: 'от 105 000 ₽',
+    image: egyptImg,
+    size: 'normal',
+    badge: 'Всё включено',
+    badgeClass: 'bg-gray-400 text-white',
+    tvCountry: 'Египет',
+  },
+  {
+    title: 'Вьетнам, Нячанг',
+    price: 'от 125 000 ₽',
+    image: vietnamImg,
+    size: 'normal',
+    badge: 'Пляжный отдых',
+    badgeClass: 'bg-white text-gray-900 border border-white/70',
+    tvCountry: 'Вьетнам',
+  },
 ];
 
 // Tiny placeholders (20px) для blur-up — мгновенное отображение до загрузки полного изображения
@@ -25,8 +57,8 @@ const tinyPlaceholders = await Promise.all(
   <div class="@container container mx-auto px-4 sm:px-6 max-w-7xl">
 
     <!-- Асимметричный заголовок -->
-    <div class="mt-5 flex flex-col @md:flex-row @md:items-end justify-between gap-4 mb-4 md:mb-6 reveal-hidden">
-      <div class="md:translate-y-6">
+    <div class="mt-5 flex flex-col @md:flex-row @md:items-end justify-between gap-4 mb-6 md:mb-8 reveal-hidden">
+      <div>
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
           <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
           <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Туры</span>
@@ -35,13 +67,12 @@ const tinyPlaceholders = await Promise.all(
           Актуальные<br /><span class="text-primary">предложения</span>
         </h2>
       </div>
-      <p class="text-gray-500 text-sm max-w-xs leading-relaxed @md:translate-y-3 @md:text-right">
+      <p class="max-w-md text-left text-gray-500 text-sm leading-relaxed">
         Актуальные предложения и направления,<br /><span class="whitespace-nowrap">которые рекомендуют менеджеры ANRO TRIP.</span>
       </p>
     </div>
-
-    <p class="reveal-hidden mb-4 text-sm font-bold text-gray-500 @md:text-right">
-      Нажмите на карточку, чтобы подобрать тур
+    <p class="reveal-hidden mb-2 @md:mb-3 @md:ml-auto @md:max-w-md @md:text-right text-sm font-bold text-gray-500 @md:whitespace-nowrap">
+      Нажмите на карточку, чтобы просмотреть подборку туров
     </p>
 
     <!-- Сетка карточек -->
@@ -91,7 +122,10 @@ const tinyPlaceholders = await Promise.all(
           <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
             <!-- Бейдж -->
             <div class="flex justify-between items-start">
-              <span class="inline-block rounded-full bg-(--color-primary) px-3 py-1 text-[0.625rem] font-black uppercase tracking-wider text-white!">
+              <span class:list={[
+                'inline-block rounded-full px-3 py-1 text-[0.625rem] font-black uppercase tracking-wider',
+                tour.badgeClass,
+              ]}>
                 {tour.badge}
               </span>
               <!-- Иконка-стрелка появляется при hover (только десктоп) -->
@@ -154,12 +188,8 @@ const tinyPlaceholders = await Promise.all(
     btn.addEventListener('click', () => {
       const country = (btn as HTMLElement).dataset.tvCountry || '';
       // 1. Переключаем вкладку «Туры и Отели» и инициируем предвыбор страны
-      if (typeof (window as any).switchSearchTab === 'function') {
-        (window as any).switchSearchTab('tourvisor');
-      }
-      if (country && typeof (window as any).tvSelectCountry === 'function') {
-        (window as any).tvSelectCountry(country);
-      }
+      window.switchSearchTab?.('tourvisor');
+      if (country) window.tvSelectCountry?.(country);
       // 2. Скролл к виджету
       scrollToSearch();
     });
@@ -167,9 +197,7 @@ const tinyPlaceholders = await Promise.all(
 
   document.getElementById('popular-tours-all-btn')?.addEventListener('click', (e) => {
     e.preventDefault();
-    if (typeof (window as any).switchSearchTab === 'function') {
-      (window as any).switchSearchTab('tourvisor');
-    }
+    window.switchSearchTab?.('tourvisor');
     scrollToSearch();
   });
 

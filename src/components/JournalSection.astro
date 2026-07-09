@@ -16,6 +16,13 @@ const latestPosts = sortedPosts
 const displayPosts = featuredPost
   ? [featuredPost, ...latestPosts]
   : sortedPosts.slice(0, 4);
+
+const journalBadgeClasses = [
+  'bg-red text-white',
+  'bg-primary text-white',
+  'bg-gray-400 text-white',
+  'bg-white text-gray-900 border border-white/70',
+];
 ---
 
 <section
@@ -35,21 +42,9 @@ const displayPosts = featuredPost
           Наш <span class="text-primary">блог</span>
         </h2>
       </div>
-      <div class="flex flex-col items-start md:items-end gap-3 md:translate-y-6">
-        <p class="text-gray-500 text-sm max-w-sm leading-relaxed md:text-right">
-          Новости туризма, наши путешествия, направления сезона, обзоры отелей и полезные советы для ваших счастливых путешествий.
-        </p>
-        <a
-          href={siteBlogIndex()}
-          class="group inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast cursor-pointer"
-        >
-          Все статьи
-          <i
-            class="fa-solid fa-arrow-right text-sm leading-none group-hover:translate-x-1 transition-transform duration-fast"
-            aria-hidden="true"
-          ></i>
-        </a>
-      </div>
+      <p class="max-w-md text-left text-gray-500 text-sm leading-relaxed">
+        Новости туризма, путешествия команды ANRO TRIP, направления сезона, обзоры отелей и полезные советы для ваших счастливых путешествий.
+      </p>
     </div>
 
     <!-- Сетка: четыре карточки в ряд на lg+ -->
@@ -101,7 +96,12 @@ const displayPosts = featuredPost
               ))}
               <div class="absolute top-4 left-4 flex flex-wrap items-center gap-2">
                 {post.data.destination && (
-                  <span class="inline-block rounded-full bg-(--color-primary) px-3 py-1 text-[0.625rem] font-black uppercase tracking-wider font-montserrat text-white!">
+                  <span
+                    class:list={[
+                      'inline-block rounded-full px-3 py-1 text-[0.625rem] font-black uppercase tracking-wider',
+                      journalBadgeClasses[index % journalBadgeClasses.length],
+                    ]}
+                  >
                     {getTourStyleBadge(post.data.destination).label}
                   </span>
                 )}
@@ -150,6 +150,20 @@ const displayPosts = featuredPost
           );
         })
       }
+    </div>
+
+    <!-- CTA под сеткой -->
+    <div class="text-center mt-8 reveal-hidden">
+      <a
+        href={siteBlogIndex()}
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
+      >
+        Все статьи
+        <i
+          class="fa-solid fa-arrow-right text-sm leading-none group-hover:translate-x-1 transition-transform duration-fast"
+          aria-hidden="true"
+        ></i>
+      </a>
     </div>
 
   </div>
