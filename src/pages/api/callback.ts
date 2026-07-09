@@ -4,7 +4,9 @@
  */
 
 import type { APIRoute } from 'astro';
+import { firstZodError, readRequestBody } from '../../lib/api-request';
 import { buildTelegram, isRateLimited, sendEmail, sendTelegram, wrapHtml } from '../../lib/mailer';
+import { callbackBodySchema } from '../../lib/schemas';
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
@@ -14,28 +16,15 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       return json({ ok: false, error: 'Слишком много запросов. Попробуйте позже.' }, 429);
     }
 
-    let name     = '';
-    let phone    = '';
-    let honeypot = '';
+    const body = await readRequestBody(request);
 
-    const ct = request.headers.get('content-type') ?? '';
+    if (String(body._hp ?? '')) return json({ ok: true }, 200);
 
-    if (ct.includes('application/json')) {
-      const body = await request.json().catch(() => ({}));
-      name     = String(body.name  ?? '').trim();
-      phone    = String(body.phone ?? '').trim();
-      honeypot = String(body._hp   ?? '');
-    } else {
-      const fd = await request.formData().catch(() => new FormData());
-      name     = String(fd.get('name')  ?? '').trim();
-      phone    = String(fd.get('phone') ?? '').trim();
-      honeypot = String(fd.get('_hp')   ?? '');
+    const parsed = callbackBodySchema.safeParse(body);
+    if (!parsed.success) {
+      return json({ ok: false, error: firstZodError(parsed.error) }, 422);
     }
-
-    if (honeypot) return json({ ok: true }, 200);
-
-    if (!name  || name.length  < 2) return json({ ok: false, error: 'Укажите имя' }, 422);
-    if (!phone || phone.length < 7) return json({ ok: false, error: 'Укажите телефон' }, 422);
+    const { name, phone } = parsed.data;
 
     await sendEmail({
       subject: `📞 Обратный звонок — ${name}`,

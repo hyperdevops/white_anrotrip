@@ -90,6 +90,7 @@ export async function sendTelegram(text: string): Promise<void> {
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
+const CLEANUP_INTERVAL_MS = 30 * 60 * 1000;
 
 /**
  * Возвращает true, если IP превысил лимит запросов.
@@ -108,6 +109,17 @@ export function isRateLimited(ip: string): boolean {
   entry.count++;
   return false;
 }
+
+/** Удаляет из карты записи с истёкшим окном — иначе Map растёт бессрочно (уникальные IP/боты). */
+function cleanupRateLimitMap(): void {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap) {
+    if (now > entry.resetAt) rateLimitMap.delete(ip);
+  }
+}
+
+const cleanupTimer = setInterval(cleanupRateLimitMap, CLEANUP_INTERVAL_MS);
+cleanupTimer.unref?.();
 
 // ---------------------------------------------------------------------------
 // Вспомогательные функции

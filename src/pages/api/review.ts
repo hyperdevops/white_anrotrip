@@ -5,7 +5,9 @@
  */
 
 import type { APIRoute } from 'astro';
+import { firstZodError, readRequestBody } from '../../lib/api-request';
 import { buildTelegram, isRateLimited, sendEmail, sendTelegram, wrapHtml } from '../../lib/mailer';
+import { reviewBodySchema } from '../../lib/schemas';
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
@@ -15,46 +17,17 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       return json({ ok: false, error: 'Слишком много запросов. Попробуйте позже.' }, 429);
     }
 
-    let name     = '';
-    let phone    = '';
-    let email    = '';
-    let city     = '';
-    let service  = '';
-    let rating   = '';
-    let review   = '';
-    let honeypot = '';
+    const body = await readRequestBody(request);
 
-    const ct = request.headers.get('content-type') ?? '';
+    if (String(body._hp ?? '')) return json({ ok: true }, 200);
 
-    if (ct.includes('application/json')) {
-      const body = await request.json().catch(() => ({}));
-      name     = String(body.name    ?? '').trim();
-      phone    = String(body.phone   ?? '').trim();
-      email    = String(body.email   ?? '').trim();
-      city     = String(body.city    ?? '').trim();
-      service  = String(body.service ?? '').trim();
-      rating   = String(body.rating  ?? '').trim();
-      review   = String(body.review  ?? '').trim();
-      honeypot = String(body._hp     ?? '');
-    } else {
-      const fd = await request.formData().catch(() => new FormData());
-      name     = String(fd.get('name')    ?? '').trim();
-      phone    = String(fd.get('phone')   ?? '').trim();
-      email    = String(fd.get('email')   ?? '').trim();
-      city     = String(fd.get('city')    ?? '').trim();
-      service  = String(fd.get('service') ?? '').trim();
-      rating   = String(fd.get('rating')  ?? '').trim();
-      review   = String(fd.get('review')  ?? '').trim();
-      honeypot = String(fd.get('_hp')     ?? '');
+    const parsed = reviewBodySchema.safeParse(body);
+    if (!parsed.success) {
+      return json({ ok: false, error: firstZodError(parsed.error) }, 422);
     }
+    const { name, city, phone, email, service, rating, review } = parsed.data;
 
-    if (honeypot) return json({ ok: true }, 200);
-
-    if (!name   || name.length   < 2)  return json({ ok: false, error: 'Укажите имя' }, 422);
-    if (!review || review.length < 10) return json({ ok: false, error: 'Напишите текст отзыва (минимум 10 символов)' }, 422);
-
-    const ratingNum = rating ? Math.min(5, Math.max(1, Number(rating))) : 0;
-    const stars     = ratingNum ? '★'.repeat(ratingNum) + '☆'.repeat(5 - ratingNum) : '';
+    const stars = rating ? '★'.repeat(rating) + '☆'.repeat(5 - rating) : '';
 
     // Email
     const emailRows: [string, string, boolean?][] = [
