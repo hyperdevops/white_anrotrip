@@ -2,7 +2,7 @@
  * Иконки мобильного меню: Font Awesome Free (классы fa-solid / fa-brands) + цвет кружка.
  * Размер задаётся в Header через text-* на <i>.
  *
- * default — палитра главной: primary / secondary / cta из @theme.
+ * default — палитра главной: primary / secondary / red из @theme.
  * *-corp — деловой стиль: slate/gray + сбалансированные акценты primary / primary-dark.
  */
 export interface MobileNavIconDef {
@@ -66,23 +66,28 @@ const map: Record<string, MobileNavIconDef> = {
     fa: 'fa-solid fa-briefcase',
   },
   Партнеры: {
-    box: 'bg-cta/20',
-    icon: 'text-yellow-900',
+    box: 'bg-primary/12',
+    icon: 'text-primary',
     fa: 'fa-solid fa-handshake',
   },
   Отзывы: {
-    box: 'bg-cta/20',
-    icon: 'text-yellow-900',
+    box: 'bg-primary-light/14',
+    icon: 'text-primary-dark',
     fa: 'fa-solid fa-star',
   },
+  Сотрудничество: {
+    box: 'bg-secondary/10',
+    icon: 'text-secondary',
+    fa: 'fa-solid fa-people-group',
+  },
   Награды: {
-    box: 'bg-cta/22',
-    icon: 'text-yellow-900',
+    box: 'bg-primary-dark/10',
+    icon: 'text-primary',
     fa: 'fa-solid fa-trophy',
   },
   Сертификат: {
-    box: 'bg-cta/18',
-    icon: 'text-yellow-900',
+    box: 'bg-gray-400/12',
+    icon: 'text-primary-dark',
     fa: 'fa-solid fa-gift',
   },
   Вопросы: {

@@ -43,6 +43,8 @@ const businessHref = isHome ? '#business' : `${baseTrimmed}/#business`;
 const awardsHref = isHome ? '#awards' : `${baseTrimmed}/#awards`;
 /** Подарочный сертификат */
 const giftHref = isHome ? '#gift' : `${baseTrimmed}/#gift`;
+/** Блок сотрудничества с авиакомпаниями и отелями */
+const ourPartnersHref = isHome ? '#our-partners' : `${baseTrimmed}/#our-partners`;
 
 const defaultNavItems = [
   { name: 'Авиабилеты', href: '#search' },
@@ -53,6 +55,7 @@ const defaultNavItems = [
   { name: 'Для бизнеса', href: businessHref },
   { name: 'Партнёры', href: '#partners' },
   { name: 'Отзывы', href: '#reviews' },
+  { name: 'Сотрудничество', href: ourPartnersHref },
   { name: 'Награды', href: awardsHref },
   { name: 'Сертификат', href: giftHref },
   { name: 'Вопросы', href: '#faq' },
@@ -67,8 +70,8 @@ const defaultNavGroups: { name: string; items: { name: string; href: string }[] 
     name: 'О компании',
     items: [
       { name: 'О нас', href: '#about' },
-      { name: 'Наши услуги', href: servicesHref },
       { name: 'Направления', href: '#directions' },
+      { name: 'Наши услуги', href: servicesHref },
     ],
   },
   {
@@ -76,6 +79,7 @@ const defaultNavGroups: { name: string; items: { name: string; href: string }[] 
     items: [
       { name: 'Партнеры', href: '#partners' },
       { name: 'Отзывы', href: '#reviews' },
+      { name: 'Сотрудничество', href: ourPartnersHref },
       { name: 'Награды', href: awardsHref },
       { name: 'Сертификат', href: giftHref },
     ],
