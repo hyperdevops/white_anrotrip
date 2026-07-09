@@ -9,31 +9,31 @@ export interface TourStyleBadge {
 const TOUR_BADGE_BY_DESTINATION: Record<string, TourStyleBadge> = {
   Мальдивы: {
     label: 'Премиум',
-    className: 'bg-amber-400/90 text-amber-950',
+    className: 'bg-white text-gray-900 border border-white/70',
   },
   Сейшелы: {
     label: 'Острова',
-    className: 'bg-[#0d9488]/85 text-white',
+    className: 'bg-primary text-white',
   },
   Турция: {
     label: 'Хит продаж',
-    className: 'bg-rose-500/90 text-white',
+    className: 'bg-red text-white',
   },
   Таиланд: {
     label: 'Расслабление',
-    className: 'bg-emerald-500/80 text-white',
+    className: 'bg-primary text-white',
   },
   Египет: {
     label: 'Всё включено',
-    className: 'bg-orange-500/90 text-white',
+    className: 'bg-gray-400 text-white',
   },
   Вьетнам: {
     label: 'Пляжный отдых',
-    className: 'bg-sky-500/80 text-white',
+    className: 'bg-white text-gray-900 border border-white/70',
   },
   Направления: {
     label: 'Подборка',
-    className: 'bg-primary/90 text-white',
+    className: 'bg-primary text-white',
   },
 };
 
@@ -41,7 +41,7 @@ export function getTourStyleBadge(destination: string): TourStyleBadge {
   return (
     TOUR_BADGE_BY_DESTINATION[destination] ?? {
       label: destination,
-      className: 'bg-slate-600/85 text-white',
+      className: 'bg-gray-400 text-white',
     }
   );
 }

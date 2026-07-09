@@ -12,4 +12,11 @@ interface Window {
   toggleZoom: (event: Event) => void;
   closeReviewForm: () => void;
   openFavoritesWidget?: () => void;
+  /** Переключение вкладки поиска («nemo» | «tourvisor»); задаётся в SearchWidget.astro */
+  switchSearchTab?: (targetId: string, focus?: boolean) => void;
+  /** Визуальная подсказка страны над виджетом Tourvisor (программный выбор недоступен) */
+  tvSelectCountry?: (countryName: string) => void;
+  loadTourvisor?: (showLoading?: boolean) => void;
+  __tourvisorScriptAdded?: boolean;
+  __tourvisorReady?: boolean;
 }

@@ -30,7 +30,6 @@
    DESIGN TOKENS — ANRO TRIP BRAND 2026
    Основной: #00abb3 (тил — цвет «trip» в логотипе)
    Красный: #e31a33 — как CTA «Забронировать авиабилет» в Hero
-   CTA (жёлтый): легаси — пока не трогать существующие места; выводить из UI постепенно
 ═══════════════════════════════════════════════ */
 @theme {
   /* Тил — основной бренд */
@@ -40,16 +39,12 @@
   --color-secondary: #006d73;
   --color-secondary-hover: #00585d;
 
-  /* Брендовый красный — Hero CTA, акценты, ошибки (Tailwind: bg-red, text-red, …) */
+  /* Брендовый красный — Hero CTA, акцентные кнопки, ошибки (Tailwind: bg-red, text-red, …) */
   --color-red: #e31a33;
   --color-red-light: #f2a8b3;
   --color-red-dark: #a01022;
   --color-red-hover: #c2142a;
   --color-red-muted: rgb(227 26 51 / 0.12);
-
-  /* Легаси CTA — не расширять на новые блоки; замена на primary/red — поэтапно */
-  --color-cta: #ffd417;
-  --color-cta-hover: #e5be14;
 
   --font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
@@ -63,6 +58,12 @@
   --transition-duration-slow: 500ms; /* модалки, overlay, reveal */
   --transition-timing-function-default: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-timing-function-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Максимальный z-index — модалки/оверлеи поверх всего (включая сторонние виджеты).
+   Именованная утилита вместо магического числа в разметке: z-modal вместо z-2147483647. */
+@utility z-modal {
+  z-index: 2147483647;
 }
 
 /* ═══════════════════════════════════════════════
@@ -391,6 +392,7 @@
 #journal,
 #partners,
 #reviews,
+#our-partners,
 #team,
 #team-list,
 #contacts {
@@ -632,6 +634,15 @@
   }
 }
 
+@keyframes partners-title-shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
 @keyframes hero-scroll-bounce {
   0%,
   100% {
@@ -710,33 +721,6 @@
   }
 }
 
-@keyframes partners-title-shine {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: -200% center;
-  }
-}
-
-.partners-title {
-  background: linear-gradient(
-    135deg,
-    #1a1a2e 0%,
-    #003d3f 40%,
-    #00abb3 60%,
-    #1a1a2e 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-@media (hover: hover) {
-  .partners-title {
-    animation: partners-title-shine 4s linear infinite;
-  }
-}
 
 @media (hover: hover) {
   .partners-logo-card:hover {
@@ -1514,7 +1498,7 @@ iframe[src*='tourvisor'] {
   background: linear-gradient(
     to bottom,
     var(--color-primary),
-    var(--color-cta)
+    var(--color-red)
   );
   box-shadow: none;
 }
@@ -1534,25 +1518,25 @@ iframe[src*='tourvisor'] {
     90deg,
     transparent,
     var(--color-primary),
-    var(--color-cta),
+    var(--color-red),
     var(--color-primary),
     transparent
   );
   opacity: 0.5;
 }
 
-/* --- CTA-блок: glass + жёлтый свет + тени --- */
+/* --- CTA-блок: glass + красный акцент + тени --- */
 .blog-content .blog-content-cta {
   position: relative;
   margin-top: 3.5rem;
   padding: 2.5rem 2rem;
   border-radius: 1.5rem;
   text-align: center;
-  border: 1px solid rgb(255 212 23 / 0.4);
+  border: 1px solid rgb(227 26 51 / 0.25);
   background: linear-gradient(
     155deg,
     rgb(255 255 255 / 0.95) 0%,
-    rgb(255 212 23 / 0.12) 40%,
+    rgb(227 26 51 / 0.08) 40%,
     rgb(0 171 179 / 0.08) 100%
   );
   backdrop-filter: blur(16px);
@@ -1570,7 +1554,7 @@ iframe[src*='tourvisor'] {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgb(255 212 23 / 0.2) 0%,
+    rgb(227 26 51 / 0.14) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -1617,8 +1601,8 @@ iframe[src*='tourvisor'] {
   color: var(--color-secondary);
   margin-bottom: 1rem;
   padding: 0.4rem 1rem 0.4rem 0.75rem;
-  background: rgb(255 212 23 / 0.2);
-  border: 1px solid rgb(255 212 23 / 0.4);
+  background: var(--color-red-muted);
+  border: 1px solid rgb(227 26 51 / 0.25);
   border-radius: 9999px;
 }
 
@@ -1627,7 +1611,7 @@ iframe[src*='tourvisor'] {
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: var(--color-cta);
+  background: var(--color-red);
   box-shadow: none;
 }
 
@@ -1636,8 +1620,8 @@ iframe[src*='tourvisor'] {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: linear-gradient(135deg, var(--color-cta) 0%, #e5be14 100%);
-  color: rgb(17 24 39);
+  background: linear-gradient(135deg, var(--color-red) 0%, var(--color-red-hover) 100%);
+  color: #fff;
   font-family: var(--font-montserrat);
   font-size: 0.9rem;
   font-weight: 900;
@@ -1657,7 +1641,7 @@ iframe[src*='tourvisor'] {
 .blog-content .blog-content-cta-btn:hover {
   box-shadow: none;
   transform: translateY(-3px);
-  color: rgb(17 24 39);
+  color: #fff;
 }
 
 /* Мобильные: комфортная строка, отступы врезок, без лишней «школьной» плотности */
