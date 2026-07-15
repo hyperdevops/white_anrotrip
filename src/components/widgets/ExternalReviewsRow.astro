@@ -5,6 +5,7 @@
  * Без общей рамки-панели — карточки лежат прямо на фоне секции.
  * Иконку площадки передавай через slot="logo".
  */
+import { Image } from 'astro:assets';
 import { getInitials, avatarColors, pluralizeRu, type ExternalReview } from '../../lib/external-reviews';
 
 export interface Props {
@@ -128,9 +129,20 @@ const scrollBtnClass =
           class={`snap-start shrink-0 ${cardWidthClass} rounded-2xl p-4 flex flex-col gap-2 text-left transition-[background-color,box-shadow] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 ${reviewCardClass}`}
         >
           <div class="flex items-center gap-2.5">
-            <div class={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center text-white text-xs font-bold font-montserrat ${avatarColors[index % avatarColors.length]}`}>
-              {getInitials(review.name)}
-            </div>
+            {review.avatar ? (
+              <Image
+                src={review.avatar}
+                alt=""
+                width={72}
+                height={72}
+                loading="lazy"
+                class="w-9 h-9 shrink-0 rounded-full object-cover"
+              />
+            ) : (
+              <div class={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center text-white text-xs font-bold font-montserrat ${avatarColors[index % avatarColors.length]}`}>
+                {getInitials(review.name)}
+              </div>
+            )}
             <div class="min-w-0">
               <p class={`text-sm font-bold truncate ${nameClass}`}>{review.name}</p>
               <p class={`text-[11px] ${dateClass}`}>{review.date}</p>

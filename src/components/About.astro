@@ -413,32 +413,28 @@ const { class: classes = '' } = Astro.props;
     <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-none md:blur-3xl pointer-events-none translate-y-1/2"></div>
 
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-      <!-- Бейдж -->
-      <div class="text-center lg:text-left mb-6">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest font-montserrat">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-          Начните прямо сейчас
-        </div>
-      </div>
+      <div class="flex flex-col lg:flex-row lg:items-center gap-6">
 
-      <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
-
-        <div class="text-center lg:text-left">
+        <div class="text-center lg:text-left lg:max-w-lg shrink-0">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest font-montserrat mb-5">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
+            Начните прямо сейчас
+          </div>
           <h3 class="font-montserrat font-extrabold text-white text-2xl md:text-3xl leading-tight">
             Свяжитесь с нами<br />
             <span class="text-primary">и оцените сервис ANRO TRIP</span>
           </h3>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-4 shrink-0">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto lg:shrink-0 lg:ml-[144px] xl:ml-[176px]">
           <a
             href="https://t.me/anrotrip"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="ANRO TRIP в Telegram"
-            class="about-cta-btn inline-flex items-center justify-center gap-2.5 px-9 py-4 sm:min-w-[190px] rounded-full bg-primary text-white font-bold font-montserrat text-sm uppercase tracking-wider shadow-[0_4px_24px_rgba(0,171,179,0.4)] hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 btn-ripple focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 cursor-pointer"
+            class="about-cta-btn inline-flex items-center justify-center gap-3 px-12 py-2.5 sm:w-[250px] rounded-full bg-primary text-white font-bold font-montserrat text-base uppercase tracking-wider shadow-[0_4px_24px_rgba(0,171,179,0.4)] hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 btn-ripple focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 cursor-pointer"
           >
-            <svg class="h-6 w-6 shrink-0 overflow-visible" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg class="h-7 w-7 shrink-0 overflow-visible" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <g transform={socialLogoTransform0}>
                 <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d={telegramIconPath}></path>
               </g>
@@ -450,9 +446,9 @@ const { class: classes = '' } = Astro.props;
             target="_blank"
             rel="noopener noreferrer"
             aria-label="ANRO TRIP в MAX"
-            class="about-cta-btn inline-flex items-center justify-center gap-2 px-9 py-4 sm:min-w-[190px] rounded-full border border-primary/35 text-white font-semibold font-montserrat text-sm uppercase tracking-wider shadow-[0_4px_24px_rgba(0,171,179,0.4)] hover:bg-primary/10 active:bg-primary/30 active:border-primary/50 transition-colors duration-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 btn-ripple cursor-pointer"
+            class="about-cta-btn inline-flex items-center justify-center gap-3 px-12 py-2.5 sm:w-[250px] rounded-full border border-primary/35 text-white font-semibold font-montserrat text-base uppercase tracking-wider shadow-[0_4px_24px_rgba(0,171,179,0.4)] hover:bg-primary/10 active:bg-primary/30 active:border-primary/50 transition-colors duration-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 btn-ripple cursor-pointer"
           >
-            <svg class="h-4 w-4 shrink-0 overflow-visible" viewBox="80 80 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg class="h-5 w-5 shrink-0 overflow-visible" viewBox="80 80 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <g transform={socialLogoTransform80}>
                 <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d={maxIconPath}></path>
               </g>
