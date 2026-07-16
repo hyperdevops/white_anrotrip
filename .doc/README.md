@@ -9,6 +9,7 @@
 | Документ | Описание |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | [server-vps-stack-plan.md](./server-vps-stack-plan.md) | **Канон прода:** Beget VPS, Docker, Caddy, Astro SSR, GitHub Actions, formы / nodemailer SMTP + Telegram |
+| [deploy-prep-checklist.md](./deploy-prep-checklist.md) | **Подготовка к деплою:** сроки, что сделать заранее, роли (агент / владелец), чеклист на 1–2 дня |
 | [gitflic-mirror.md](./gitflic-mirror.md) | Зеркало на Gitflic (РФ): как работает, токены, что делать если GitHub недоступен |
 | [perimeter-edge-security.md](./perimeter-edge-security.md) | Периметр: фаервол, SSH, Cloudflare / DDoS-Guard, DNS (REG.RU), чек-лист миграции с Tilda |
 | [security-baseline-package.md](./security-baseline-package.md) | Этапный baseline-пакет безопасности: что внедрять сразу, что делать по мере интеграций |
