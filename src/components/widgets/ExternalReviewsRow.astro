@@ -68,8 +68,14 @@ const scrollBtnClass =
 
 <div data-ext-reviews-row>
   <div class="relative reveal-hidden">
-    <div class="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none bg-linear-to-r from-gray-950 to-transparent"></div>
-    <div class="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none bg-linear-to-l from-gray-950 to-transparent"></div>
+    <div
+      data-scroll-shadow-left
+      class="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none bg-linear-to-r from-gray-950 to-transparent opacity-0 transition-opacity duration-500 ease-out"
+    ></div>
+    <div
+      data-scroll-shadow-right
+      class="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none bg-linear-to-l from-gray-950 to-transparent opacity-0 transition-opacity duration-500 ease-out"
+    ></div>
 
     <button
       type="button"
@@ -203,6 +209,8 @@ const scrollBtnClass =
     const scroller = row.querySelector<HTMLElement>('[data-scroller]');
     const prevBtn = row.querySelector<HTMLButtonElement>('[data-scroll-prev]');
     const nextBtn = row.querySelector<HTMLButtonElement>('[data-scroll-next]');
+    const leftShadow = row.querySelector<HTMLElement>('[data-scroll-shadow-left]');
+    const rightShadow = row.querySelector<HTMLElement>('[data-scroll-shadow-right]');
     const modal = row.querySelector<HTMLElement>('[data-review-modal]');
     const modalContent = row.querySelector<HTMLElement>('[data-review-modal-content]');
     const closeBtn = row.querySelector<HTMLButtonElement>('[data-review-modal-close]');
@@ -222,10 +230,20 @@ const scrollBtnClass =
       btn.classList.toggle('pointer-events-none', !visible);
     };
 
+    const setShadowVisible = (shadow: HTMLElement | null, visible: boolean) => {
+      shadow?.classList.toggle('opacity-0', !visible);
+      shadow?.classList.toggle('opacity-100', visible);
+    };
+
     const updateArrows = () => {
       const maxScroll = scroller.scrollWidth - scroller.clientWidth;
-      setBtnVisible(prevBtn, scroller.scrollLeft > 4);
-      setBtnVisible(nextBtn, maxScroll > 4 && scroller.scrollLeft < maxScroll - 4);
+      const canScrollLeft = scroller.scrollLeft > 4;
+      const canScrollRight = maxScroll > 4 && scroller.scrollLeft < maxScroll - 4;
+
+      setBtnVisible(prevBtn, canScrollLeft);
+      setBtnVisible(nextBtn, canScrollRight);
+      setShadowVisible(leftShadow, canScrollLeft);
+      setShadowVisible(rightShadow, canScrollRight);
     };
 
     const easeInOutQuad = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);

@@ -213,7 +213,6 @@
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
   transition:
-    transform var(--motion-duration-fast) var(--motion-easing),
     box-shadow var(--motion-duration-fast) var(--motion-easing),
     border-color var(--motion-duration-fast) var(--motion-easing),
     background-color var(--motion-duration-fast) var(--motion-easing);
@@ -237,7 +236,6 @@
       0 25px 50px -12px rgb(0 171 179 / 0.35),
       0 0 0 1px rgb(0 171 179 / 0.15);
     border-color: rgb(0 171 179 / 0.3);
-    transform: translateY(-2px);
   }
 }
 
@@ -733,12 +731,11 @@
 }
 
 /* ═══════════════════════════════════════════════
-   TEAM CARDS — анимация подъёма как в Awards
+   TEAM CARDS — подсветка карточек без подъёма
    Через CSS (не Tailwind) — надёжная работа hover
 ═══════════════════════════════════════════════ */
 .team-founder-card {
   transition:
-    transform var(--motion-duration-slow) var(--motion-easing),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -753,7 +750,6 @@
 /* Reviews — документы и кнопка «Оставить отзыв» (подъём как Team) */
 .reviews-doc-card {
   transition:
-    transform var(--motion-duration-slow) var(--motion-easing),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -796,7 +792,6 @@
 .contacts-card {
   box-shadow: 0 8px 24px -4px rgb(0 171 179 / 0.15);
   transition:
-    transform var(--motion-duration-slow) var(--motion-easing),
     box-shadow var(--motion-duration-slow) var(--motion-easing),
     border-color var(--motion-duration-slow) var(--motion-easing);
 }
@@ -881,7 +876,6 @@
     );
   }
   .team-founder-card:hover {
-    transform: translateY(-6px);
     box-shadow:
       0 25px 50px -12px rgb(0 171 179 / 0.35),
       0 0 0 1px rgb(0 171 179 / 0.15);
@@ -894,7 +888,6 @@
     border-color: rgb(0 171 179 / 0.3);
   }
   .reviews-doc-card:hover {
-    transform: translateY(-6px);
     box-shadow:
       0 25px 50px -12px rgb(0 171 179 / 0.35),
       0 0 0 1px rgb(0 171 179 / 0.15);
@@ -934,7 +927,6 @@
     border-color: rgb(0 171 179 / 0.3);
   }
   .contacts-card:hover {
-    transform: translateY(-6px);
     box-shadow:
       0 25px 50px -12px rgb(0 171 179 / 0.35),
       0 0 0 1px rgb(0 171 179 / 0.15);

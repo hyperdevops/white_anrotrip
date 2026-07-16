@@ -1,5 +1,7 @@
 ---
 /** Компактный футер (блог/лендинги): соцсети, копирайт, юр. ссылки */
+import { Image } from 'astro:assets';
+import favicon from '../assets/favicon.png';
 import { sitePrivacy, siteTerms } from '../lib/site-urls';
 import {
   maxIconPath,
@@ -94,13 +96,37 @@ const socials: {
     <div
       class="flex flex-col items-center gap-1 text-center sm:items-start sm:justify-self-start sm:text-left"
     >
-      <span
-        class="font-montserrat text-xs font-bold tracking-tight text-white"
-      >
-        ANRO <span class="font-semibold italic text-primary">TRIP</span>
-      </span>
+      <div class="flex select-none items-center gap-3">
+        <Image
+          src={favicon}
+          alt=""
+          width={40}
+          height={40}
+          format="png"
+          densities={[2, 3, 4]}
+          quality="max"
+          decoding="async"
+          class="h-10 w-10 shrink-0 object-contain drop-shadow-sm"
+        />
+        <div class="flex flex-col leading-none">
+          <div class="flex items-baseline gap-0.5">
+            <span
+              class="font-montserrat text-[15px] font-black tracking-tight text-white"
+              >ANRO</span
+            >
+            <span
+              class="font-montserrat text-[15px] font-semibold italic text-primary"
+              >trip</span
+            >
+          </div>
+          <span
+            class="mt-0.5 text-[7px] uppercase leading-tight tracking-widest text-white/60"
+            >Туристическая<br /><span class="block -mt-px">компания</span></span
+          >
+        </div>
+      </div>
       <p class="text-[11px] leading-snug text-white/60">
-        © {currentYear} · Туристическая компания
+        © {currentYear}
       </p>
     </div>
 
