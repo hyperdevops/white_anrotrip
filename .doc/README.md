@@ -55,6 +55,7 @@
 | [header-frozen.md](./header-frozen.md) | **Хедер (главная + corp, десктоп + мобильный):** структура меню, вёрстка, подменю, drawer; **не менять без явной просьбы заказчика** |
 | [header-anchor-scroll.md](./header-anchor-scroll.md) | Якоря меню хедера: десктоп/мобиль, числа отступов, `scroll-mt` для `#awards` / `#gift`; **не менять без согласования с заказчиком** |
 | [mobile-menu.md](./mobile-menu.md) | Мобильный drawer (часть хедера): см. также [header-frozen.md](./header-frozen.md) |
+| [responsive-adaptation.md](./responsive-adaptation.md) | Адаптив сайта: контрольные размеры, инструменты, процесс и чеклист проверки |
 
 ---
 
