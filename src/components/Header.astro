@@ -745,15 +745,16 @@ const homeContactIconText =
 
       if (id !== 'search' && id !== 'content') {
         const badge = anchor.querySelector<HTMLElement>(
-          '.inline-flex.rounded-full',
+          '.section-badge, .inline-flex.rounded-full',
         );
         if (badge) {
           // #search-widget есть только на главной (как в Layout.astro).
           // Новая калибровка (offsetTop без reveal-сдвига, -26, +60) — только главная.
           const isHomePage = !!document.getElementById('search-widget');
           if (isHomePage) {
-            // «Направления» и «Для бизнеса» — ещё на 60px выше остальных
-            const extraGap = id === 'directions' || id === 'business' ? 60 : 0;
+            // «Направления» и «Для бизнеса» — на 40px ниже прежней калибровки.
+            const extraGap =
+              id === 'directions' || id === 'business' ? 20 : 0;
             const top = getLayoutTop(badge) - headerHeight - 26 - extraGap;
             window.smoothScrollTo(top);
           } else {

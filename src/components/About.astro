@@ -111,9 +111,9 @@ const { class: classes = '' } = Astro.props;
 
         <!-- Левая часть: текст -->
         <div class="reveal-hidden">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6">
-            <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">О нас</span>
+          <div class="section-badge mb-6">
+            <span class="section-badge__dot" aria-hidden="true"></span>
+            <span class="section-badge__label">О нас</span>
           </div>
 
           <h2 class="section-heading-plus font-montserrat font-extrabold text-gray-900 uppercase tracking-tight mb-7">
@@ -121,7 +121,7 @@ const { class: classes = '' } = Astro.props;
             выбирают<br />
             <span class="text-primary">ANRO TRIP?</span>
           </h2>
-             <ul class="mb-8 max-w-lg list-none space-y-2 text-base leading-snug text-gray-600">
+             <ul class="mb-8 max-w-lg list-none space-y-1 text-base leading-tight text-gray-600">
                <li class="flex gap-3">
                  <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
                  <span>
@@ -150,7 +150,7 @@ const { class: classes = '' } = Astro.props;
                  <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
                  <span>
                    Сегодня в&nbsp;команде ANRO&nbsp;TRIP работает <strong class="font-bold text-gray-900">27&nbsp;профессионалов</strong>, объединённых общей целью&nbsp;—
-                   <span class="mt-2 block font-bold uppercase tracking-wide text-primary">Создавать туристический сервис, доступный каждому!</span>
+                   <span class="mt-1 block font-bold uppercase tracking-wide text-primary">Создавать туристический сервис, доступный каждому!</span>
                  </span>
                </li>
              </ul>
@@ -289,9 +289,9 @@ const { class: classes = '' } = Astro.props;
       <!-- Заголовок; самолёт на уровне секции — к краю страницы (как «A» в hero) -->
       <div class="relative mb-10 md:mb-12 reveal-hidden">
         <div class="relative z-10 max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
-            <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Направления</span>
+          <div class="section-badge mb-4">
+            <span class="section-badge__dot" aria-hidden="true"></span>
+            <span class="section-badge__label">Направления</span>
           </div>
           <h2 class="section-heading-plus font-montserrat font-extrabold text-gray-900 uppercase tracking-tight">
             Направления<br />
@@ -352,9 +352,9 @@ const { class: classes = '' } = Astro.props;
           id="services"
           class="scroll-mt-[calc(var(--site-header-h,5rem)+20px)]"
         >
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-4">
-            <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-            <span class="text-xs font-semibold text-primary uppercase tracking-widest font-montserrat">Наши услуги</span>
+          <div class="section-badge mb-4">
+            <span class="section-badge__dot" aria-hidden="true"></span>
+            <span class="section-badge__label">Наши услуги</span>
           </div>
           <h2
             class="section-heading-plus font-montserrat font-extrabold text-gray-900 uppercase tracking-tight"
@@ -437,9 +437,9 @@ const { class: classes = '' } = Astro.props;
       <div class="flex flex-col lg:flex-row lg:items-center gap-6">
 
         <div class="text-center lg:text-left lg:max-w-lg shrink-0">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold uppercase tracking-widest font-montserrat mb-5">
-            <span class="w-1.5 h-1.5 rounded-full bg-primary md:animate-pulse"></span>
-            Начните прямо сейчас
+          <div class="section-badge mb-5">
+            <span class="section-badge__dot" aria-hidden="true"></span>
+            <span class="section-badge__label">Начните прямо сейчас</span>
           </div>
           <h3 class="font-montserrat font-extrabold text-white text-2xl md:text-3xl leading-tight">
             Свяжитесь с нами<br />
