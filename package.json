@@ -19,7 +19,7 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/node": "^10.1.4",
+		"@astrojs/node": "^11.0.2",
 		"@astrojs/sitemap": "^3.7.3",
 		"@fontsource/inter": "^5.2.8",
 		"@fontsource/montserrat": "^5.2.8",
