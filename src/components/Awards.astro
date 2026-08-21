@@ -1,9 +1,34 @@
 ---
 // src/components/Awards.astro
 import { Image } from 'astro:assets';
-import centerAward from '../assets/awards/center_awards.webp';
+import clickvoyageAward from '../assets/awards/clickvoyage_awards.webp';
 import leftAward from '../assets/awards/left_awards.webp';
+import maxxVoyage01 from '../assets/awards/maxx-voyage/01.webp';
+import maxxVoyage02 from '../assets/awards/maxx-voyage/02.webp';
+import maxxVoyage03 from '../assets/awards/maxx-voyage/03.webp';
+import maxxVoyage04 from '../assets/awards/maxx-voyage/04.webp';
+import maxxVoyage05 from '../assets/awards/maxx-voyage/05.webp';
+import maxxVoyage06 from '../assets/awards/maxx-voyage/06.webp';
+import maxxVoyage07 from '../assets/awards/maxx-voyage/07.webp';
+import maxxVoyage08 from '../assets/awards/maxx-voyage/08.webp';
+import maxxVoyage09 from '../assets/awards/maxx-voyage/09.webp';
+import maxxVoyage10 from '../assets/awards/maxx-voyage/10.webp';
+import maxxVoyage11 from '../assets/awards/maxx-voyage/11.webp';
 import rightAward from '../assets/awards/right_awards.webp';
+
+const maxxVoyageImages = [
+  maxxVoyage01,
+  maxxVoyage02,
+  maxxVoyage03,
+  maxxVoyage04,
+  maxxVoyage05,
+  maxxVoyage06,
+  maxxVoyage07,
+  maxxVoyage08,
+  maxxVoyage09,
+  maxxVoyage10,
+  maxxVoyage11,
+];
 
 const awards = [
   {
@@ -24,20 +49,6 @@ const awards = [
       'Также имеем высший статус сотрудничества с холдингом — Партнёр Русского Экспресса.',
   },
   {
-    title: 'MAXX ROYAL и VOYAGE Hotels',
-    image: centerAward,
-    rank: 'Лучшие из лучших',
-    accent: 'bg-primary',
-    description:
-      'Сеть отелей VOYAGE Hotels неоднократно отмечала нас на своих церемониях, как лидеров продаж:',
-    results: [
-      { place: '2020', geo: 'TOP Seller Agency' },
-      { place: '2023', geo: 'TOP Seller Agency' },
-    ],
-    partnerNote:
-      'По итогам 2024 года на церемонии MAXX ROYAL ANRO TRIP заняли 2 место по УрФО. Первое участие в церемонии — и сразу такая высокая награда!',
-  },
-  {
     title: 'NG PHASELIS BAY',
     image: rightAward,
     rank: '4 года Best Seller',
@@ -51,7 +62,33 @@ const awards = [
       { place: '2025', geo: 'Best Seller' },
     ],
   },
+  {
+    title: 'CLICKVOYAGE',
+    image: clickvoyageAward,
+    rank: 'Лидер продаж',
+    accent: 'bg-primary',
+    description:
+      'По итогам сезона 2025/26 ANRO TRIP стала единственной компанией из Челябинска и Екатеринбурга, которая приняла участие в церемонии награждения лидеров туроператора ClickVoyage в Москве и получила награду:',
+    results: [
+      { place: '2026', geo: 'Лидер продаж премиальных туров' },
+    ],
+  },
 ];
+
+const maxxAward = {
+  title: 'MAXX ROYAL и VOYAGE Hotels',
+  images: maxxVoyageImages,
+  rank: 'Лучшие из лучших',
+  accent: 'bg-primary',
+  description:
+    'Сеть отелей VOYAGE Hotels неоднократно отмечала нас на своих церемониях, как лидеров продаж:',
+  results: [
+    { place: '2020', geo: 'TOP Seller Agency' },
+    { place: '2023', geo: 'TOP Seller Agency' },
+  ],
+  partnerNote:
+    'По итогам 2024 года на церемонии MAXX ROYAL ANRO TRIP заняли 2 место по УрФО. Первое участие в церемонии — и сразу такая высокая награда!',
+};
 ---
 
 <section
@@ -136,5 +173,132 @@ const awards = [
         </div>
       ))}
     </div>
+
+    <!-- Лента сертификатов MAXX ROYAL / VOYAGE -->
+    <div class="awards-card reveal-hidden mt-6 bg-white rounded-3xl overflow-hidden border border-gray-100 transition-[box-shadow,border-color] duration-slow ease-out">
+      <div class="p-6 md:p-7">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-5">
+          <div class="max-w-3xl">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-wide text-white shadow-lg bg-primary mb-4">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+              </svg>
+              {maxxAward.rank}
+            </div>
+            <h3 class="font-montserrat font-extrabold text-gray-900 text-xl md:text-2xl mb-3 uppercase tracking-wide">{maxxAward.title}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{maxxAward.description}</p>
+          </div>
+
+          <div class="space-y-2 shrink-0">
+            {maxxAward.results.map(r => (
+              <div class="flex items-start gap-3">
+                <span class="shrink-0 w-2 h-2 rounded-full mt-1.5 bg-primary"></span>
+                <p class="text-sm leading-snug">
+                  <span class="font-bold text-gray-900">{r.place}</span>
+                  <span class="text-gray-500"> — {r.geo}</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="relative" data-awards-gallery-root="true">
+          <div
+            class="flex gap-4 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            data-awards-gallery-track
+          >
+            {maxxAward.images.map((image, index) => (
+              <div class="relative aspect-3/3 w-[78%] sm:w-[46%] lg:w-[30%] xl:w-[24%] shrink-0 overflow-hidden rounded-2xl bg-gray-50" data-awards-gallery-slide>
+                <Image
+                  src={image}
+                  alt={`${maxxAward.title} — сертификат ${index + 1}`}
+                  width={800}
+                  height={800}
+                  sizes="(max-width: 639px) 78vw, (max-width: 1023px) 46vw, 30vw"
+                  class="w-full h-full object-cover transition-transform duration-slow ease-out hover:scale-[1.03]"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            class="hidden sm:flex absolute left-3 top-1/2 z-20 h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-sm transition-colors duration-fast hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white pointer-events-auto"
+            aria-label="Предыдущий сертификат"
+            data-awards-gallery-prev
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="hidden sm:flex absolute right-3 top-1/2 z-20 h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-sm transition-colors duration-fast hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white pointer-events-auto"
+            aria-label="Следующий сертификат"
+            data-awards-gallery-next
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        <p class="text-gray-600 text-sm leading-relaxed mt-5 pt-5 border-t border-gray-100">{maxxAward.partnerNote}</p>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  const awardsGalleryState = new WeakMap<HTMLElement, { currentIndex: number }>();
+
+  function getSlideScrollLeft(track: HTMLElement, slide: HTMLElement) {
+    return slide.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+  }
+
+  function initAwardsGalleries() {
+    document.querySelectorAll('[data-awards-gallery-root]').forEach((root) => {
+      const gallery = root as HTMLElement;
+      const track = gallery.querySelector('[data-awards-gallery-track]') as HTMLElement | null;
+      const prevButton = gallery.querySelector('[data-awards-gallery-prev]') as HTMLButtonElement | null;
+      const nextButton = gallery.querySelector('[data-awards-gallery-next]') as HTMLButtonElement | null;
+      const slides = Array.from(gallery.querySelectorAll('[data-awards-gallery-slide]')) as HTMLElement[];
+
+      if (!track || !prevButton || !nextButton || slides.length < 2) return;
+      if (awardsGalleryState.has(gallery)) return;
+
+      /** 8 шагов (индексы 0–7), на 8-м «вперёд» — возврат к началу */
+      const lastStepIndex = Math.min(7, slides.length - 1);
+      const state = { currentIndex: 0 };
+      awardsGalleryState.set(gallery, state);
+
+      const scrollToIndex = (index: number) => {
+        const target = slides[index];
+        if (!target) return;
+
+        const maxScrollLeft = Math.max(0, track.scrollWidth - track.clientWidth);
+        state.currentIndex = index;
+
+        track.scrollTo({
+          left: Math.min(getSlideScrollLeft(track, target), maxScrollLeft),
+          behavior: 'smooth',
+        });
+      };
+
+      prevButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        scrollToIndex(state.currentIndex <= 0 ? lastStepIndex : state.currentIndex - 1);
+      });
+
+      nextButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        scrollToIndex(state.currentIndex >= lastStepIndex ? 0 : state.currentIndex + 1);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initAwardsGalleries);
+  document.addEventListener('astro:page-load', initAwardsGalleries);
+</script>
