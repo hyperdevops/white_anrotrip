@@ -5,7 +5,7 @@
 
 <div
   id="scroll-progress"
-  class="fixed top-0 left-0 h-1 bg-linear-to-r from-primary via-secondary to-primary-light z-9999 transition-all duration-fast ease-out"
+  class="fixed top-0 left-0 z-9999 h-1 bg-primary"
   style="width: 0%; transform-origin: left;"
 >
 </div>
@@ -39,6 +39,7 @@
     { passive: true },
   );
 
-  // Инициализация при загрузке
+  // Инициализация при загрузке и после View Transitions
   updateScrollProgress();
+  document.addEventListener('astro:page-load', updateScrollProgress);
 </script>

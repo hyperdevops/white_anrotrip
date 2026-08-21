@@ -934,9 +934,9 @@
   }
   .gift-cta-btn:hover {
     box-shadow:
-      0 10px 25px -5px rgb(255 212 23 / 0.3),
-      0 8px 10px -6px rgb(255 212 23 / 0.2),
-      0 0 0 1px rgb(255 212 23 / 0.2);
+      0 10px 25px -5px rgb(0 171 179 / 0.25),
+      0 8px 10px -6px rgb(0 171 179 / 0.15),
+      0 0 0 1px rgb(0 171 179 / 0.2);
   }
   .about-services-pill:hover {
     transform: translateY(-6px);
@@ -1287,18 +1287,18 @@ iframe[src*='tourvisor'] {
   margin-bottom: 2.5rem;
   padding: 1.5rem 1.75rem;
   border-radius: 1.25rem;
+  border: none;
   background:
     radial-gradient(
       circle at 92% 15%,
-      rgb(0 171 179 / 0.16) 0%,
+      rgb(51 191 198 / 0.16) 0%,
       transparent 38%
     ),
     radial-gradient(
       circle at 8% 88%,
-      rgb(255 212 23 / 0.12) 0%,
+      rgb(0 171 179 / 0.12) 0%,
       transparent 30%
     );
-  border: none;
   backdrop-filter: none;
   box-shadow: none;
 }
@@ -1382,12 +1382,12 @@ iframe[src*='tourvisor'] {
     ),
     radial-gradient(
       circle at 88% 80%,
-      rgb(0 109 115 / 0.12) 0%,
+      rgb(0 171 179 / 0.12) 0%,
       transparent 32%
     ),
     radial-gradient(
       circle at 50% 5%,
-      rgb(255 212 23 / 0.08) 0%,
+      rgb(0 171 179 / 0.08) 0%,
       transparent 28%
     );
   backdrop-filter: none;
@@ -1489,11 +1489,12 @@ iframe[src*='tourvisor'] {
   margin: 2.5rem 0;
   background: linear-gradient(
     135deg,
-    rgb(0 171 179 / 0.06) 0%,
-    rgb(255 255 255 / 0.95) 100%
+    rgb(0 171 179 / 0.08) 0%,
+    rgb(0 171 179 / 0.03) 45%,
+    transparent 100%
   );
   border-radius: 1.25rem;
-  border: 1px solid rgb(0 171 179 / 0.15);
+  border: 1px solid rgb(0 171 179 / 0.12);
   box-shadow: none;
 }
 
@@ -1505,11 +1506,7 @@ iframe[src*='tourvisor'] {
   bottom: 1rem;
   width: 4px;
   border-radius: 2px;
-  background: linear-gradient(
-    to bottom,
-    var(--color-primary),
-    var(--color-red)
-  );
+  background: var(--color-primary);
   box-shadow: none;
 }
 
@@ -1517,7 +1514,7 @@ iframe[src*='tourvisor'] {
   margin-bottom: 0;
 }
 
-/* --- HR: тонкий двухцветный градиент --- */
+/* --- HR: тонкий градиент primary --- */
 .blog-content hr {
   border: none;
   height: 2px;
@@ -1527,8 +1524,6 @@ iframe[src*='tourvisor'] {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-primary),
-    var(--color-red),
     var(--color-primary),
     transparent
   );
