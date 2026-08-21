@@ -35,6 +35,11 @@ const map: Record<string, MobileNavIconDef> = {
     icon: 'text-secondary',
     fa: 'fa-solid fa-newspaper',
   },
+  Блог: {
+    box: 'bg-secondary/10',
+    icon: 'text-secondary',
+    fa: 'fa-solid fa-newspaper',
+  },
   'О компании': {
     box: 'bg-primary/10',
     icon: 'text-primary-dark',
@@ -70,6 +75,11 @@ const map: Record<string, MobileNavIconDef> = {
     icon: 'text-primary',
     fa: 'fa-solid fa-handshake',
   },
+  'Наши клиенты': {
+    box: 'bg-primary/12',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-handshake',
+  },
   Отзывы: {
     box: 'bg-primary-light/14',
     icon: 'text-primary-dark',
@@ -81,6 +91,11 @@ const map: Record<string, MobileNavIconDef> = {
     fa: 'fa-solid fa-people-group',
   },
   Награды: {
+    box: 'bg-primary-dark/10',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-trophy',
+  },
+  Достижения: {
     box: 'bg-primary-dark/10',
     icon: 'text-primary',
     fa: 'fa-solid fa-trophy',
@@ -103,7 +118,7 @@ const map: Record<string, MobileNavIconDef> = {
   Контакты: {
     box: 'bg-primary/12',
     icon: 'text-primary',
-    fa: 'fa-solid fa-clipboard-list',
+    fa: 'fa-solid fa-mobile-screen-button',
   },
   Избранное: {
     box: 'bg-secondary/8',

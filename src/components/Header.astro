@@ -77,10 +77,10 @@ const defaultNavGroups: { name: string; items: { name: string; href: string }[] 
   {
     name: 'Доверие',
     items: [
-      { name: 'Партнеры', href: '#partners' },
+      { name: 'Наши клиенты', href: '#partners' },
       { name: 'Отзывы', href: '#reviews' },
       { name: 'Сотрудничество', href: ourPartnersHref },
-      { name: 'Награды', href: awardsHref },
+      { name: 'Достижения', href: awardsHref },
       { name: 'Сертификат', href: giftHref },
     ],
   },
@@ -90,7 +90,7 @@ const defaultNavGroups: { name: string; items: { name: string; href: string }[] 
 const defaultNavStandaloneFirst: { name: string; href: string }[] = [
   { name: 'Авиабилеты', href: '#search' },
   { name: 'Туры', href: '#popular-tours' },
-  { name: 'Журнал', href: journalHref },
+  { name: 'Блог', href: journalHref },
 ];
 const defaultNavStandalone: { name: string; href: string }[] = [
   { name: 'Вопросы', href: '#faq' },
@@ -752,9 +752,8 @@ const homeContactIconText =
           // Новая калибровка (offsetTop без reveal-сдвига, -26, +60) — только главная.
           const isHomePage = !!document.getElementById('search-widget');
           if (isHomePage) {
-            // «Направления» и «Для бизнеса» — на 40px ниже прежней калибровки.
-            const extraGap =
-              id === 'directions' || id === 'business' ? 20 : 0;
+            // «Направления» — reveal-анимация смещает бейдж до первого показа.
+            const extraGap = id === 'directions' ? 20 : 0;
             const top = getLayoutTop(badge) - headerHeight - 26 - extraGap;
             window.smoothScrollTo(top);
           } else {
@@ -772,7 +771,6 @@ const homeContactIconText =
       let offset: number;
       if (id === 'search') offset = headerHeight + SEARCH_GAP;
       else if (id === 'content') offset = headerHeight + CORP_CONTENT_GAP;
-      else if (id === 'business') offset = headerHeight - 26; // как было раньше: BUSINESS_GAP
       else offset = headerHeight + GAP_PX;
 
       const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
