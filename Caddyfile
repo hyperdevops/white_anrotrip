@@ -4,5 +4,14 @@ anrotrip.ru, www.anrotrip.ru {
     # Реальный IP клиента (через Cloudflare)
     trusted_proxies cloudflare
 
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        -Server
+    }
+
     reverse_proxy app:4321
 }

@@ -7,9 +7,14 @@ import type { APIRoute } from 'astro';
 import { firstZodError, readRequestBody } from '../../lib/api-request';
 import { buildTelegram, isRateLimited, sendEmail, sendTelegram, wrapHtml } from '../../lib/mailer';
 import { callbackBodySchema } from '../../lib/schemas';
+import { isAllowedFormRequest, safeApiError } from '../../lib/security';
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
+    if (!isAllowedFormRequest(request)) {
+      return json({ ok: false, error: 'Запрос отклонён.' }, 403);
+    }
+
     const ip = clientAddress ?? 'unknown';
 
     if (isRateLimited(ip)) {
@@ -41,8 +46,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     return json({ ok: true });
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Ошибка сервера';
-    return json({ ok: false, error: msg }, 500);
+    return json({ ok: false, error: safeApiError(err) }, 500);
   }
 };
 
