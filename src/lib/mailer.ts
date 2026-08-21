@@ -146,6 +146,11 @@ function escHtml(str: string): string {
     .replace(/\n/g, '<br>');
 }
 
+/** Экранирование для Telegram parse_mode: HTML */
+function escTelegram(str: string): string {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 // ---------------------------------------------------------------------------
 // Шаблон HTML-письма
 // ---------------------------------------------------------------------------
@@ -213,8 +218,8 @@ export function wrapHtml(
       <!-- Тип заявки -->
       <tr>
         <td style="padding:24px 32px 8px">
-          <div style="display:inline-block;background:#fffbeb;border:1.5px solid #fbbf24;border-radius:10px;padding:10px 20px">
-            <span style="font-size:15px;font-weight:700;color:#92400e">${escHtml(icon)}&nbsp;&nbsp;${escHtml(formType)}</span>
+          <div style="display:inline-block;background:#e6f7f8;border:1.5px solid #00abb3;border-radius:10px;padding:10px 20px">
+            <span style="font-size:15px;font-weight:700;color:#006d73">${escHtml(icon)}&nbsp;&nbsp;${escHtml(formType)}</span>
           </div>
           <div style="margin-top:10px;color:#9ca3af;font-size:12px">Новая заявка с сайта anrotrip.ru</div>
         </td>
@@ -273,15 +278,15 @@ export function buildTelegram(
   extra?: string,
 ): string {
   const fieldsText = fields
-    .map(([label, value]) => `${label}: <b>${value}</b>`)
+    .map(([label, value]) => `${escTelegram(label)}: <b>${escTelegram(value)}</b>`)
     .join('\n');
 
   const parts = [
-    `${icon} <b>${formType.toUpperCase()}</b>`,
+    `${icon} <b>${escTelegram(formType.toUpperCase())}</b>`,
     `<i>anrotrip.ru</i>`,
     LINE,
     fieldsText,
-    ...(extra ? [LINE, extra] : []),
+    ...(extra ? [LINE, escTelegram(extra)] : []),
     LINE,
     `🕐 ${nowRu()} (Екб)`,
   ];
