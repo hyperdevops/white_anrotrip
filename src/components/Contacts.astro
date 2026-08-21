@@ -16,8 +16,8 @@ import PhoneOutlineIcon from './PhoneOutlineIcon.astro';
 
   <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10 pb-[50px]">
     <!-- Заголовок -->
-    <div class="text-center mb-14 md:mb-18 reveal-hidden">
-      <div class="section-badge mb-5">
+    <div class="text-center mb-6 md:mb-8 reveal-hidden">
+      <div class="section-badge mb-4">
         <span class="section-badge__dot" aria-hidden="true"></span>
         <span class="section-badge__label">Контакты</span>
       </div>
@@ -89,7 +89,7 @@ import PhoneOutlineIcon from './PhoneOutlineIcon.astro';
             </div>
             <a
               href="mailto:anro@anrotrip.ru"
-              class="block font-semibold text-primary-light hover:text-white transition-colors cursor-pointer"
+              class="block font-semibold text-white hover:text-primary transition-colors cursor-pointer"
             >
               anro@anrotrip.ru
             </a>
@@ -177,8 +177,9 @@ import PhoneOutlineIcon from './PhoneOutlineIcon.astro';
               8 (351) 225-29-91 <span class="text-white/60">(офис)</span>
             </a>
             <p class="text-xs text-white/70 leading-relaxed">
-              Работаем онлайн без выходных.<br />
-              Свяжитесь с нами любым удобным способом — по телефону, через мессенджер или соцсети.
+              Работаем <strong class="font-bold text-white/90">онлайн без выходных</strong>.<br />
+              Свяжитесь с нами любым удобным способом —<br />
+              по телефону, через мессенджер или соцсети.
             </p>
           </div>
         </div>
@@ -201,21 +202,17 @@ import PhoneOutlineIcon from './PhoneOutlineIcon.astro';
         </h3>
         <div class="space-y-3 text-sm leading-relaxed">
           {
-            [
-              { city: 'Москва', note: 'по договорённости' },
-              { city: 'Екатеринбург', note: 'по договорённости' },
-            ].map((loc) => (
+            ['Москва', 'Екатеринбург'].map((city) => (
               <div class="flex items-center gap-3">
                 <div class="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></div>
-                <p>
-                  <span class="font-semibold text-gray-900">г. {loc.city}</span>
-                  <span class="ml-2 text-xs text-gray-500">{loc.note}</span>
-                </p>
+                <p class="font-semibold text-gray-900">г. {city}</p>
               </div>
             ))
           }
           <p class="text-xs text-gray-500 leading-relaxed pt-1">
-            Личная встреча возможна по предварительной договорённости. Свяжитесь с нами любым удобным способом — по телефону, через мессенджер или соцсети.
+            Личная встреча возможна по предварительной <wbr />договорённости.<br />
+            Свяжитесь с нами любым удобным способом —<br />
+            по телефону, через мессенджер или соцсети.
           </p>
         </div>
       </div>
