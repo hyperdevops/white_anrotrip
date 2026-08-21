@@ -24,6 +24,7 @@ import aKrestovskichImg from '../assets/team/a_krestovskich.webp';
 import eGolovanovaImg   from '../assets/team/e_golovanova.webp';
 import uPasynkovaImg    from '../assets/team/u_pasynkova.webp';
 import aBatenevaImg     from '../assets/team/a_bateneva.webp';
+import mVinokurovaImg   from '../assets/team/m_vinokurova.webp';
 import oGolikovaImg     from '../assets/team/o_golikova.webp';
 import oDomashevskayaImg from '../assets/team/o_domashevskaya.webp';
 import eMamikinaImg     from '../assets/team/e_mamykina.webp';
@@ -49,13 +50,14 @@ const team = [
   { name: 'Диана Семушова',        role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'diana@anrotrip.ru',            phone: '8 (800) 222-44-73 доб. 110', img: dSemushinaImg    },
   { name: 'Татьяна Данкова',       role: 'Авиакассир',         dept: 'Авиаотдел',           email: 't.dankova@anrotrip.ru',        phone: '8 (800) 222-44-73',          img: tDankovaImg      },
   { name: 'Светлана Леднева',      role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'svetlana.l@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 115', img: sLednevaImg      },
-  { name: 'Кристина Цыпышева',     role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'k.tsypysheva@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 222', img: kTsypyshevaImg   },
+  { name: 'Кристина Цыпышева',     role: 'Авиакассир',         dept: 'Авиаотдел',           email: 'k.tsypysheva@anrotrip.ru',     phone: '8 (800) 222-44-73 доб. 222', img: kTsypyshevaImg   },
   { name: 'Ксения Мусина',         role: 'Менеджер',           dept: 'Отдел сервиса',       email: 'ksenia@anrotrip.ru',           phone: '8 (800) 222-44-73 доб. 666', img: kMusinaImg       },
   { name: 'Анна Бочкарева',        role: 'Менеджер',           dept: 'Туристический отдел', email: 'bochkareva@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 120', img: aBochkarevaImg   },
   { name: 'Анастасия Крестовских', role: 'Менеджер',           dept: 'Туристический отдел', email: 'anastasiya@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 117', img: aKrestovskichImg },
   { name: 'Елена Голованова',      role: 'Менеджер',           dept: 'Туристический отдел', email: 'anro.chelyabinsk@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 119', img: eGolovanovaImg   },
   { name: 'Юлия Пасынкова',        role: 'Менеджер',           dept: 'Туристический отдел', email: 'anro.chelyabinsk@anrotrip.ru', phone: '8 (800) 222-44-73 доб. 118', img: uPasynkovaImg    },
   { name: 'Анна Батенева',         role: 'Менеджер',           dept: 'Туристический отдел', email: 'a.bateneva@anrotrip.ru',       phone: '8 (800) 222-44-73 доб. 122', img: aBatenevaImg     },
+  { name: 'Мария Винокурова',      role: 'Менеджер',           dept: 'Туристический отдел', email: 'm.vinokurova@anrotrip.ru',     phone: '8 (800) 222-44-73',          img: mVinokurovaImg   },
   { name: 'Ольга Голикова',        role: 'Визовый специалист', dept: 'Туристический отдел', email: 'visa@anrotrip.ru',             phone: '8 (800) 222-44-73',          img: oGolikovaImg     },
   { name: 'Ольга Домашевская',     role: 'Главный бухгалтер',  dept: 'Финансовый отдел',    email: 'finance@anrotrip.ru',          phone: '8 (800) 222-44-73 доб. 333', img: oDomashevskayaImg},
   { name: 'Екатерина Мамыкина',    role: 'Бухгалтер',          dept: 'Финансовый отдел',    email: 'katya@anrotrip.ru',            phone: '8 (800) 222-44-73',          img: eMamikinaImg     },
@@ -73,7 +75,7 @@ const team = [
   <div class="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
 
     <!-- Заголовок -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8 reveal-hidden">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-3.5 md:mb-5.5 reveal-hidden">
       <div>
         <div class="section-badge mb-4">
           <span class="section-badge__dot" aria-hidden="true"></span>
@@ -100,7 +102,7 @@ const team = [
             <Image
               src={annaRozhkovaImg}
               alt="Анна Рожкова"
-              class="w-full h-full object-cover transition-transform duration-slow ease-out group-hover:scale-[1.04]"
+              class="w-full h-full -translate-y-8 object-cover object-[50%_45%] scale-[1.32] transition-transform duration-slow ease-out group-hover:scale-[1.36]"
               loading="lazy"
             />
           </div>
