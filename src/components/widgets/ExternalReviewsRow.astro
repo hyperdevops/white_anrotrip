@@ -63,18 +63,20 @@ const readMoreClass = readMoreCaps
 const cardWidthClass = 'w-[250px] sm:w-[270px]';
 
 const scrollBtnClass =
-  'ext-reviews-arrow absolute top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-900/70 border border-white/30 text-white text-sm flex items-center justify-center opacity-0 pointer-events-none transition-[opacity,border-color,background-color] duration-fast cursor-pointer hover:bg-gray-900/90 hover:border-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950';
+  'ext-reviews-arrow hidden md:flex absolute top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-900/70 border border-white/30 text-white text-sm items-center justify-center opacity-0 pointer-events-none transition-[opacity,border-color,background-color] duration-fast cursor-pointer hover:bg-gray-900/90 hover:border-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950';
 ---
 
-<div data-ext-reviews-row>
+<div data-ext-reviews-row class="-mx-4 sm:-mx-6 md:mx-0">
   <div class="relative reveal-hidden">
     <div
       data-scroll-shadow-left
-      class="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none bg-linear-to-r from-gray-950 to-transparent opacity-0 transition-opacity duration-500 ease-out"
+      class="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none bg-linear-to-r from-gray-950 to-transparent opacity-0 transition-opacity duration-500 ease-out"
+      aria-hidden="true"
     ></div>
     <div
       data-scroll-shadow-right
-      class="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none bg-linear-to-l from-gray-950 to-transparent opacity-0 transition-opacity duration-500 ease-out"
+      class="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none bg-linear-to-l from-gray-950 to-transparent opacity-0 transition-opacity duration-500 ease-out"
+      aria-hidden="true"
     ></div>
 
     <button
@@ -97,7 +99,7 @@ const scrollBtnClass =
     <div
       id={scrollerId}
       data-scroller
-      class="flex overflow-x-auto gap-4 pb-2 snap-x snap-mandatory scrollbar-hide -mx-4 sm:-mx-6 px-4 sm:px-6 md:mx-0 md:px-0 overscroll-x-contain [touch-action:pan-x_pan-y]"
+      class="flex overflow-x-auto gap-4 pb-2 snap-x snap-mandatory scrollbar-hide px-6 md:px-0 overscroll-x-contain [touch-action:pan-x_pan-y]"
     >
       <!-- Карточка площадки: ведёт на внешний список отзывов -->
       <a
@@ -237,8 +239,8 @@ const scrollBtnClass =
 
     const updateArrows = () => {
       const maxScroll = scroller.scrollWidth - scroller.clientWidth;
-      const canScrollLeft = scroller.scrollLeft > 4;
-      const canScrollRight = maxScroll > 4 && scroller.scrollLeft < maxScroll - 4;
+      const canScrollLeft = scroller.scrollLeft > 8;
+      const canScrollRight = maxScroll > 8 && scroller.scrollLeft < maxScroll - 8;
 
       setBtnVisible(prevBtn, canScrollLeft);
       setBtnVisible(nextBtn, canScrollRight);
@@ -278,7 +280,15 @@ const scrollBtnClass =
     scroller.addEventListener('scroll', updateArrows, { passive: true });
     window.addEventListener('resize', updateArrows);
 
-    updateArrows();
+    const resetScrollStart = () => {
+      scroller.scrollLeft = 0;
+      requestAnimationFrame(() => {
+        scroller.scrollLeft = 0;
+        updateArrows();
+      });
+    };
+
+    resetScrollStart();
 
     let previousFocus: Element | null = null;
 
