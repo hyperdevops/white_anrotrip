@@ -569,6 +569,15 @@
   .section-badge__icon {
     @apply w-3.5 h-3.5 shrink-0 text-primary-light;
   }
+
+  /* Подпись справа в шапке секции (заголовок + описание) */
+  .section-caption {
+    @apply max-w-md text-left text-sm leading-relaxed font-bold text-gray-500;
+  }
+
+  .section-caption--on-dark {
+    @apply text-white/50;
+  }
 }
 
 /* ═══════════════════════════════════════════════
