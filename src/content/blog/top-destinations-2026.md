@@ -2,13 +2,8 @@
 title: 'Куда ехать: шесть стран и честное «кому подойдёт»'
 description: 'Мальдивы, Турция, Сейшелы, Таиланд, Египет, Вьетнам — разбираем без рекламы: кому подойдёт каждое направление и почему.'
 pubDate: '2026-03-18'
-heroImages:
-  - '../../assets/tours/maldives.webp'
-  - '../../assets/tours/antalya.webp'
-  - '../../assets/tours/seychelles.webp'
-  - '../../assets/tours/thailand.webp'
-  - '../../assets/tours/egypt.webp'
-  - '../../assets/tours/vietnam.webp'
+heroImage: '../../assets/blog/top-destinations-2026-hero.webp'
+cardImage: '../../assets/blog/top-destinations-2026-card.webp'
 author: 'Команда ANRO TRIP'
 destination: 'Направления'
 featured: true

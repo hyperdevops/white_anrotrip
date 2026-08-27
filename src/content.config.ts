@@ -10,8 +10,10 @@ const blog = defineCollection({
       description: z.string(),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
-      /** Одно главное изображение */
+      /** Hero внутри статьи (16:9) */
       heroImage: image().optional(),
+      /** Превью карточки (4:3); если нет — используется heroImage */
+      cardImage: image().optional(),
       /** Коллаж из нескольких изображений (приоритет над heroImage) */
       heroImages: z.array(image()).optional(),
       author: z.string().default('Команда ANRO TRIP'),

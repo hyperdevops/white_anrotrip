@@ -6,7 +6,8 @@ import favicon from '../../assets/favicon.png';
 import FooterMinimal from '../../components/FooterMinimal.astro';
 import Layout from '../../layouts/Layout.astro';
 import { getTourStyleBadge } from '../../lib/tourDestinationBadge';
-import { siteBlogPost, siteHome } from '../../lib/site-urls';
+import { buildBlogBreadcrumbSchema } from '../../lib/schema-blog';
+import { siteBlogIndex, siteBlogPost, siteHome } from '../../lib/site-urls';
 import { typografText } from '../../lib/typograf';
 
 export const prerender = true;
@@ -54,15 +55,26 @@ const materialsWord =
         (totalCount % 100 < 10 || totalCount % 100 >= 20)
       ? 'материала'
       : 'материалов';
+
+const siteOrigin = Astro.site?.href.replace(/\/$/, '') ?? Astro.url.origin;
+const blogIndexUrl = new URL(siteBlogIndex(), `${siteOrigin}/`).href;
+const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
+  baseUrl: `${siteOrigin}/`,
+  blogIndexUrl,
+});
 ---
 
 <Layout
   title="Журнал о путешествиях | ANRO TRIP"
   description="Вдохновляющие идеи, советы экспертов и путеводители по лучшим направлениям от команды ANRO TRIP."
+  canonicalURL={blogIndexUrl}
   showFavorites={false}
   showOfficeWidget={false}
   showScrollToTop={false}
 >
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(blogBreadcrumbSchema)} />
+  </Fragment>
   <!-- Одна сплошная страница: mesh-фон, без наезда блока списка на hero -->
   <main
     id="content"
@@ -215,9 +227,9 @@ const materialsWord =
                       </div>
                     ))}
                   </div>
-                ) : featuredPost.data.heroImage ? (
+                ) : (featuredPost.data.cardImage ?? featuredPost.data.heroImage) ? (
                   <Image
-                    src={featuredPost.data.heroImage}
+                    src={featuredPost.data.cardImage ?? featuredPost.data.heroImage!}
                     alt={featuredPost.data.title}
                     width={1200}
                     height={675}
@@ -355,9 +367,9 @@ const materialsWord =
                       </div>
                     ))}
                   </div>
-                ) : (post.data.heroImages?.[0] ?? post.data.heroImage) ? (
+                ) : (post.data.heroImages?.[0] ?? post.data.cardImage ?? post.data.heroImage) ? (
                   <Image
-                    src={post.data.heroImages?.[0] ?? post.data.heroImage!}
+                    src={post.data.heroImages?.[0] ?? post.data.cardImage ?? post.data.heroImage!}
                     alt={post.data.title}
                     width={600}
                     height={450}

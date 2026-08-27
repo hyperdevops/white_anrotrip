@@ -42,7 +42,7 @@ const journalBadgeClasses = [
           Наш <span class="text-primary">блог</span>
         </h2>
       </div>
-      <p class="max-w-md text-left text-gray-500 text-sm leading-relaxed">
+      <p class="section-caption">
         Новости туризма, путешествия команды ANRO TRIP,<br />
         направления сезона, обзоры отелей и полезные советы<br />
         для ваших счастливых путешествий
@@ -80,9 +80,9 @@ const journalBadgeClasses = [
                     </div>
                   ))}
                 </div>
-              ) : (post.data.heroImage ? (
+              ) : ((post.data.cardImage ?? post.data.heroImage) ? (
                 <Image
-                  src={post.data.heroImage}
+                  src={post.data.cardImage ?? post.data.heroImage!}
                   alt={post.data.title}
                   width={600}
                   height={450}

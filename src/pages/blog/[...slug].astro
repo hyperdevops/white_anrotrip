@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import favicon from '../../assets/favicon.png';
 import FooterMinimal from '../../components/FooterMinimal.astro';
@@ -11,7 +11,8 @@ import {
   telegramIconPath,
   vkIconPath,
 } from '../../lib/social-icons';
-import { siteBlogIndex, siteHome, siteHomeSearch } from '../../lib/site-urls';
+import { buildBlogPostSchemaGraph } from '../../lib/schema-blog';
+import { siteBlogIndex, siteBlogPost, siteHome, siteHomeSearch } from '../../lib/site-urls';
 import { typografText } from '../../lib/typograf';
 
 export const prerender = true;
@@ -38,16 +39,54 @@ const readingTimeLabel = `${readingTime}\u00a0мин`;
 const hasCollage = post.data.heroImages && post.data.heroImages.length >= 2;
 const collageImages = post.data.heroImages?.slice(0, 8) ?? [];
 const hasHero = hasCollage || !!post.data.heroImage;
+
+const siteOrigin = Astro.site?.href.replace(/\/$/, '') ?? Astro.url.origin;
+const postUrl = new URL(siteBlogPost(post.id), `${siteOrigin}/`).href;
+
+let heroImageUrl = new URL('/og-image.jpg', `${siteOrigin}/`).href;
+if (post.data.heroImage) {
+  const optimizedHero = await getImage({
+    src: post.data.heroImage,
+    width: 1200,
+    height: 630,
+    quality: 85,
+  });
+  heroImageUrl = new URL(optimizedHero.src, `${siteOrigin}/`).href;
+} else if (collageImages[0]) {
+  const optimizedHero = await getImage({
+    src: collageImages[0],
+    width: 1200,
+    height: 630,
+    quality: 85,
+  });
+  heroImageUrl = new URL(optimizedHero.src, `${siteOrigin}/`).href;
+}
+
+const blogSchemaGraph = buildBlogPostSchemaGraph({
+  baseUrl: `${siteOrigin}/`,
+  postUrl,
+  headline: displayTitle,
+  description: displayDescription,
+  datePublished: post.data.pubDate,
+  dateModified: post.data.updatedDate,
+  authorName: post.data.author,
+  imageUrl: heroImageUrl,
+});
 ---
 
 <Layout
   title={`${displayTitle} | Журнал ANRO TRIP`}
   description={displayDescription}
+  canonicalURL={postUrl}
+  ogImage={heroImageUrl}
   showFavorites={false}
   showOfficeWidget={false}
   showScrollToTop={true}
   scrollToTopVariant="blog"
 >
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(blogSchemaGraph)} />
+  </Fragment>
   <!-- Обёртка: ограничивает sticky Hero (как на corp), чтобы при скролле контент наползал на фото -->
   <div>
   <!-- Hero: sticky — при прокрутке main (z-10) наползает сверху; логотип внутри Hero -->

@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteBlogIndex, siteHome, siteHomeSearch } from '../lib/site-urls';
+
+Astro.response.status = 404;
+---
+
+<Layout
+  title="Страница не найдена — ANRO TRIP"
+  description="Запрошенная страница не найдена. Вернитесь на главную ANRO TRIP или воспользуйтесь поиском туров."
+  showFavorites={false}
+  showOfficeWidget={false}
+  showScrollProgress={false}
+>
+  <main
+    id="content"
+    class="min-h-dvh flex items-center justify-center px-4 sm:px-6 py-24"
+  >
+    <div class="max-w-lg text-center">
+      <p class="text-primary font-montserrat font-extrabold text-7xl md:text-8xl leading-none mb-4">
+        404
+      </p>
+      <h1 class="font-montserrat font-extrabold text-gray-900 text-2xl md:text-3xl uppercase tracking-tight mb-4">
+        Страница не найдена
+      </h1>
+      <p class="text-gray-500 text-sm md:text-base leading-relaxed mb-8">
+        Возможно, ссылка устарела или страница была перемещена. Перейдите на главную
+        или воспользуйтесь поиском туров и авиабилетов.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href={siteHome()}
+          class="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-bold text-white transition-colors duration-fast hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        >
+          На главную
+        </a>
+        <a
+          href={siteHomeSearch()}
+          class="inline-flex min-h-11 items-center justify-center rounded-full border border-primary/20 bg-white px-6 py-3 text-sm font-bold text-primary transition-colors duration-fast hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        >
+          Поиск туров
+        </a>
+        <a
+          href={siteBlogIndex()}
+          class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-bold text-gray-700 transition-colors duration-fast hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        >
+          Журнал
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
