@@ -13,5 +13,13 @@ anrotrip.ru, www.anrotrip.ru {
         -Server
     }
 
+    # Хешированные ассеты Astro — длинный immutable cache
+    @astroAssets path /_astro/*
+    header @astroAssets Cache-Control "public, max-age=31536000, immutable"
+
+    # Публичная статика с умеренным cache
+    @publicStatic path /og-image.jpg /favicon.png /nemo/* /images/*
+    header @publicStatic Cache-Control "public, max-age=604800"
+
     reverse_proxy app:4321
 }
