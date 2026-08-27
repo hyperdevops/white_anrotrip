@@ -162,6 +162,24 @@ const schemaOrgGraph = {
     <meta name="color-scheme" content="only light" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#00abb3" />
+    <meta name="geo.region" content="RU-SVE" />
+
+    {
+      import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
+        <meta
+          name="google-site-verification"
+          content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION}
+        />
+      )
+    }
+    {
+      import.meta.env.PUBLIC_YANDEX_VERIFICATION && (
+        <meta
+          name="yandex-verification"
+          content={import.meta.env.PUBLIC_YANDEX_VERIFICATION}
+        />
+      )
+    }
 
     <!-- Favicon (из assets — оптимизируется при сборке) -->
     <link rel="icon" type="image/png" href={favicon.src} />
@@ -378,7 +396,6 @@ const schemaOrgGraph = {
           window.initScrollReveal?.();
           window.initSearchWidget?.();
           window.initNemoWidget?.();
-          window.initTourvisorWidget?.();
         });
       });
 
