@@ -20,6 +20,11 @@ export function siteHomeSearch(): string {
   return `${siteHome()}#search`;
 }
 
+/** Главная, секция «Наш блог» (`#journal`). */
+export function siteHomeJournal(): string {
+  return `${siteHome()}#journal`;
+}
+
 /** Политика конфиденциальности. */
 export function sitePrivacy(): string {
   return sitePage('privacy');

@@ -12,7 +12,7 @@ import {
   vkIconPath,
 } from '../../lib/social-icons';
 import { buildBlogPostSchemaGraph } from '../../lib/schema-blog';
-import { siteBlogIndex, siteBlogPost, siteHome, siteHomeSearch } from '../../lib/site-urls';
+import { siteBlogIndex, siteBlogPost, siteHome, siteHomeJournal, siteHomeSearch } from '../../lib/site-urls';
 import { typografText } from '../../lib/typograf';
 
 export const prerender = true;
@@ -38,7 +38,6 @@ const readingTimeLabel = `${readingTime}\u00a0мин`;
 // Определяем режим Hero: коллаж или одиночное изображение
 const hasCollage = post.data.heroImages && post.data.heroImages.length >= 2;
 const collageImages = post.data.heroImages?.slice(0, 8) ?? [];
-const hasHero = hasCollage || !!post.data.heroImage;
 
 const siteOrigin = Astro.site?.href.replace(/\/$/, '') ?? Astro.url.origin;
 const postUrl = new URL(siteBlogPost(post.id), `${siteOrigin}/`).href;
@@ -90,8 +89,7 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
   <!-- Обёртка: ограничивает sticky Hero (как на corp), чтобы при скролле контент наползал на фото -->
   <div>
   <!-- Hero: sticky — при прокрутке main (z-10) наползает сверху; логотип внутри Hero -->
-  {hasHero && (
-    <div class="sticky top-0 z-0 h-[55vh] md:h-[65vh] overflow-hidden">
+  <div class="sticky top-0 z-0 h-[55vh] md:h-[65vh] overflow-hidden">
       {hasCollage ? (
         <!-- Слайд-шоу с плавной сменой -->
         <div class="absolute inset-0" data-slideshow="hero-collage">
@@ -109,10 +107,10 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
             </div>
           ))}
         </div>
-      ) : (
+      ) : post.data.heroImage ? (
         <!-- Одиночное изображение -->
         <Image
-          src={post.data.heroImage!}
+          src={post.data.heroImage}
           alt={post.data.title}
           width={1600}
           height={900}
@@ -120,6 +118,13 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
           fetchpriority="high"
           class="w-full h-full object-cover"
         />
+      ) : (
+        <div class="blog-hero-placeholder w-full h-full" role="img" aria-label="Место для фото">
+          <svg class="blog-media-placeholder__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span class="blog-media-placeholder__label">Фото скоро</span>
+        </div>
       )}
 
       <!-- Градиент снизу -->
@@ -157,10 +162,9 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
 
       <!-- Логотип «На главную» — в слое Hero, уезжает вместе с фото при скролле -->
       <a
-        href={siteHome()}
-        data-astro-reload
-        class="reveal-hidden pointer-events-auto absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
-        aria-label="На главную"
+        href={siteHomeJournal()}
+        class="pointer-events-auto absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
+        aria-label="Наш блог на главной"
       >
         <Image
           src={favicon}
@@ -175,90 +179,33 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
         />
       </a>
     </div>
-  )}
 
   <!-- Контент — наползает поверх Hero при скролле (z-10 > z-0) -->
   <main
     id="content"
-    class:list={[
-      'blog-mesh-text-bg relative overflow-hidden z-10 shadow-[0_-10px_40px_rgba(15,76,129,0.12)]',
-      hasHero ? '-mt-8 rounded-t-3xl' : 'pt-32 md:pt-40',
-    ]}
+    class="blog-mesh-text-bg relative overflow-hidden z-10 shadow-[0_-10px_40px_rgba(15,76,129,0.12)] -mt-8 rounded-t-3xl"
   >
     <!-- Фоновые орбы статьи — паттерн как на главной -->
     <div class="absolute -top-20 -right-20 size-96 rounded-full bg-primary/8 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
     <div class="absolute top-[30%] -left-16 size-72 rounded-full bg-secondary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
     <div class="absolute top-[65%] right-8 size-64 rounded-full bg-primary/6 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
     <div class="absolute bottom-48 -left-8 size-56 rounded-full bg-primary/5 blur-none md:blur-3xl pointer-events-none" aria-hidden="true"></div>
-    <!-- Без Hero: логотип в верхней зоне статьи (наезжает контент при скролле нет — нет sticky hero) -->
-    {!hasHero && (
-      <a
-        href={siteHome()}
-        data-astro-reload
-        class="reveal-hidden absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
-        aria-label="На главную"
-      >
-        <Image
-          src={favicon}
-          alt=""
-          width={40}
-          height={40}
-          format="png"
-          densities={[2, 3, 4]}
-          quality="max"
-          decoding="async"
-          class="h-10 w-10 object-contain drop-shadow-sm"
-        />
-      </a>
-    )}
-    <!-- Если нет Hero — показываем заголовок здесь -->
-    {!hasHero && (
-      <div class="px-4 sm:px-6 max-w-4xl mx-auto pt-12 pb-8">
-        <div class="flex flex-wrap items-center gap-3 mb-4">
-          {post.data.destination && (
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary font-montserrat">
-              {post.data.destination === 'Мальдивы' ? 'Направления' : post.data.destination}
-            </span>
-          )}
-          <time datetime={post.data.pubDate.toISOString()} class="text-gray-400 text-xs font-inter">
-            {post.data.pubDate.toLocaleDateString('ru-RU', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </time>
-          <span class="text-gray-300 text-xs" aria-hidden="true">·</span>
-          <span class="text-gray-400 text-xs font-inter">{post.data.author}</span>
-          <span class="text-gray-200 text-xs" aria-hidden="true">·</span>
-          <span class="text-gray-400 text-xs font-inter inline-flex items-center gap-1">
-            <svg class="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l3.5 2"/>
-            </svg>
-            {readingTimeLabel}
-          </span>
-        </div>
-        <h1 class="font-montserrat font-extrabold text-gray-900 uppercase tracking-tight leading-tight" style="font-size: clamp(1.5rem, 1.2rem + 3vw, 3rem);">
-          {displayTitle}
-        </h1>
-      </div>
-    )}
-
     <div class="px-4 sm:px-6 max-w-3xl mx-auto pb-20 md:pb-28">
       <!-- Хлебные крошки — minimal pill style -->
       <nav class="flex items-center gap-1.5 pt-10 mb-10" aria-label="Навигация">
-        <a href={siteHome()} class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">
-          <i class="fa-solid fa-house text-xs leading-none shrink-0 -translate-y-0.5" aria-hidden="true"></i>
+        <a href={siteHome()} class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">
+          <i class="fa-solid fa-house text-sm leading-none shrink-0 -translate-y-0.5" aria-hidden="true"></i>
           Главная
         </a>
-        <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-        <a href={siteBlogIndex()} class="px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">Журнал</a>
-        <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-        <span class="px-2.5 py-1 rounded-full text-[11px] font-medium text-gray-500 bg-gray-100/80 line-clamp-1 font-inter">{displayTitle}</span>
+        <svg class="w-3.5 h-3.5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <a href={siteBlogIndex()} class="px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">Журнал</a>
+        <svg class="w-3.5 h-3.5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <span class="px-2.5 py-1 rounded-full text-xs font-medium text-gray-500 bg-gray-100/80 line-clamp-1 font-inter">{displayTitle}</span>
       </nav>
 
       <!-- Лид-абзац: та же типографика и акцент слева, что у .blog-content h2 — единая редакционная система -->
       <p
-        class="font-montserrat font-extrabold tracking-tight mb-12 max-w-2xl text-slate-900 leading-snug pl-4 border-l-4 border-primary"
+        class="font-montserrat font-extrabold tracking-tight mb-12 max-w-2xl text-slate-900 leading-snug pl-4 border-l-4 border-primary whitespace-pre-line"
         style="font-size: clamp(1.35rem, 2.2vw + 0.5rem, 1.85rem); text-shadow: 0 1px 2px rgb(0 171 179 / 0.06);"
       >
         {displayDescription}
@@ -304,16 +251,12 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
             </div>
             <h3
               id="blog-cta-heading"
-              class="font-montserrat font-black text-slate-900 uppercase tracking-tight mb-5 md:mb-6 leading-[1.1]"
+              class="font-montserrat font-black text-primary uppercase tracking-tight mb-5 md:mb-6 leading-[1.1]"
               style="font-size: clamp(1.5rem, 1rem + 2.8vw, 2.35rem);"
             >
-              Вдохновились
-              <br />
-              <span class="text-primary">
-                {post.data.destination === 'Направления' ? 'Направления' : post.data.destination}?
-              </span>
+              Вдохновились?!
             </h3>
-            <div class="text-slate-500 mb-10 font-inter max-w-md mx-auto space-y-1 text-sm md:text-base leading-relaxed">
+            <div class="text-slate-700 mb-10 font-inter max-w-lg mx-auto space-y-1 text-base md:text-lg leading-relaxed">
               <p>Мы поможем организовать идеальное путешествие.</p>
               <p>Оставьте заявку — наши эксперты подберут лучшие варианты туров.</p>
             </div>
@@ -411,13 +354,23 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
       </div>
 
       <!-- Назад к журналу — pill link -->
-      <div class="mt-10 flex justify-center">
+      <div class="mt-10 flex flex-col items-center gap-4">
         <a
           href={siteBlogIndex()}
           class="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-slate-400 hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/15 transition-all duration-200 font-montserrat uppercase tracking-wider"
         >
           <i class="fa-solid fa-arrow-left text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast" aria-hidden="true"></i>
           Все статьи журнала
+        </a>
+        <a
+          href={siteHomeJournal()}
+          class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast"
+            aria-hidden="true"
+          ></i>
+          Наш блог
         </a>
       </div>
     </div>

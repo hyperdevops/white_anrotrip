@@ -1,6 +1,10 @@
 ---
-title: 'Куда ехать: шесть стран и честное «кому подойдёт»'
-description: 'Мальдивы, Турция, Сейшелы, Таиланд, Египет, Вьетнам — разбираем без рекламы: кому подойдёт каждое направление и почему.'
+title: 'Профессиональный сервис авиабронирования ANRO TRIP'
+description: |
+  Мы — аккредитованный агент авиакомпаний с прямыми договорами и контактами, что позволяет нам предоставлять высокий уровень сервиса.
+  
+  Ключевые плюсы, которые клиент получает при бронировании в нашей авиакассе:
+
 pubDate: '2026-03-18'
 heroImage: '../../assets/blog/top-destinations-2026-hero.webp'
 cardImage: '../../assets/blog/top-destinations-2026-card.webp'
@@ -9,114 +13,123 @@ destination: 'Направления'
 featured: true
 ---
 
-<p class="blog-content-lead">«Куда поехать?» — этот вопрос задают нам чаще любого другого. И самый честный ответ: зависит от того, что вы хотите почувствовать. Не «какая страна лучше» — они все хороши, но для разных людей и разных моментов жизни. Ниже — шесть направлений, которые мы знаем хорошо. Про каждое скажем главное: кому именно оно подойдёт.</p>
+<div class="grid gap-5 md:gap-6">
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Оплата в рублях без конвертации</h2>
+        <p>Удобный и прозрачный расчёт без скрытых комиссий.</p>
+      </div>
+    </div>
+  </section>
 
-## Мальдивы — когда нужен «перезагрузочный» отдых
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-repeat" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Единая система взаиморасчетов</h2>
+        <p>Возможен перенос денежных средств между авиакомпаниями.</p>
+      </div>
+    </div>
+  </section>
 
-<figure class="blog-content-spot">
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-handshake" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Постоянная поддержка менеджера в удобном для вас мессенджере</h2>
+        <p>Мы всегда на связи, готовы помочь в любой момент, будь то уточнение деталей или решение вопросов.</p>
+      </div>
+    </div>
+  </section>
 
-![Мальдивы — виллы над лагуной](../../assets/tours/maldives.webp)
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Оперативное решение проблем</h2>
+        <p>В случае задержки, отмены рейса или других форс-мажоров наш менеджер возьмёт всё на себя. Пассажиру не придётся ожидать на линии поддержки авиакомпании — мы решим вопросы напрямую через наши контакты, экономя время и нервы клиента.</p>
+      </div>
+    </div>
+  </section>
 
-</figure>
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Персонализированная помощь и дополнительные услуги</h2>
+        <p>Мы можем добавить любые опции, которые необходимы пассажиру для комфортного путешествия.</p>
+      </div>
+    </div>
+  </section>
 
-Белый песок, вода нереальных оттенков бирюзы и ритм «ничего не надо». Мальдивы честны: это про виллу над водой, риф у ступенек и долгие завтраки без будильника. Здесь не нужно ничего планировать — достаточно просто оказаться.
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-tags" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Специальные тарифы</h2>
+        <p>Нам доступны спецтарифы на перелеты авиакомпаниями Qatar Airways, Emirates, Etihad, Turkish airlines, Azal.</p>
+      </div>
+    </div>
+  </section>
 
-<div class="blog-content-callout">
-<span class="blog-content-callout-title">Кому подойдёт</span>
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-plane-circle-check" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Регистрация и выбор мест</h2>
+        <p>Перед вылетом мы регистрируем на рейс и выбираем места.</p>
+      </div>
+    </div>
+  </section>
 
-Тем, кому нужно выдохнуть после долгого года — без экскурсионной гонки и чужого расписания. Тем, кто давно откладывал «мечту» и наконец решился. Любителям дайвинга и снорклинга: подводный мир здесь один из лучших в мире.
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-arrow-up-right-dots" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Апгрейд класса обслуживания</h2>
+        <p>По запросу делаем апргейд на бизнес.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-gift" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Копим бонусы</h2>
+        <p>Регистрируем в программах лояльности авиакомпаний каждый ваш полет.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-content-feature-card">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-3xl text-white shadow-[0_12px_28px_rgba(0,171,179,0.25)]">
+        <i class="fa-solid fa-plane-departure" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Создаем высочайший сервис,<br />доступный каждому.</h2>
+      </div>
+    </div>
+  </section>
 </div>
-
-Бронируйте заранее и договаривайтесь о трансфере на лодке ещё до вылета — после длинного перелёта не хочется стоять в очереди, пока «договорится» телефон с местной связью.
-
-## Турция — удобный выбор, если знаешь за что берёшь
-
-<figure class="blog-content-spot">
-
-![Турция, Анталья — набережная и море](../../assets/tours/antalya.webp)
-
-</figure>
-
-Турция остаётся хитом не случайно: прямые рейсы, понятная система «всё включено», море с конца апреля по октябрь. Самое интересное — когда выбираешь не «Турцию вообще», а конкретный курорт под свой характер. Анталья — привычно и развито. Белек — простор и уровень. Сиде — история рядом с пляжем. Можно лечь и не вставать. Можно выбраться в Каппадокию и полетать на воздушном шаре на рассвете.
-
-<div class="blog-content-callout">
-<span class="blog-content-callout-title">Кому подойдёт</span>
-
-Семьям с детьми: понятная инфраструктура, анимация, детские бассейны, еда без сюрпризов. Тем, кто едет впервые и хочет «без стресса». Тем, кто любит сочетать пляж с культурными вылазками — Каппадокия, Эфес, Памуккале рядом.
-
-</div>
-
-## Сейшелы — природа, которая не похожа на открытку из соседнего номера
-
-<figure class="blog-content-spot">
-
-![Сейшелы — гранитные валуны и пальмы](../../assets/tours/seychelles.webp)
-
-</figure>
-
-Гранит, пальмы, редкие птицы и ощущение, что это не классический отдых «всё включено». Сейшелы ближе тем, кто любит **погулять, поплавать, повторить** — без гонки за галочками. Острова разные: Маэ — жизнь и логистика, Праслен — один из красивейших пляжей мира, Ла-Диг — велосипеды и деревенский ритм.
-
-<div class="blog-content-callout">
-<span class="blog-content-callout-title">Кому подойдёт</span>
-
-Тем, кто ценит природу и тишину больше, чем развлечения. Парам, которые хотят уединения без ощущения «курортного конвейера». Тем, кто уже был в Турции, Египте, Таиланде — и ищет что-то принципиально другое.
-
-</div>
-
-<hr />
-
-## Таиланд — азиатский микс «и пляж, и город»
-
-<figure class="blog-content-spot">
-
-![Таиланд — Пхукет, пляж и море](../../assets/tours/thailand.webp)
-
-</figure>
-
-Тут можно собрать и спокойные острова (Пхукет, Ко Самуи), и шумный Бангкок, и горы на севере. Для многих это первый длинный перелёт в Азию — и хороший компромисс между ценой, едой и сервисом. Главное — выбрать два акцента, а не пытаться охватить всё за десять дней.
-
-<div class="blog-content-callout">
-<span class="blog-content-callout-title">Кому подойдёт</span>
-
-Тем, кто хочет и пляж, и движение города в одной поездке. Гастротуристам: уличная еда здесь — отдельное путешествие. Тем, кто едет в Азию впервые и хочет мягкий вход: сервис понятный, цены доступные, английский повсюду.
-
-</div>
-
-## Египет — понятный отдых для семьи
-
-<figure class="blog-content-spot">
-
-![Египет — Красное море и курорт](../../assets/tours/egypt.webp)
-
-</figure>
-
-Короткий перелёт, привычное «всё включено», море круглый год. Для родителей с детьми это часто самый спокойный сценарий: бассейн, анимация, пляж — и вы не герой индивидуального маршрута каждый день. Добавьте экскурсию к пирамидам, если тянет на историю.
-
-<div class="blog-content-callout">
-<span class="blog-content-callout-title">Кому подойдёт</span>
-
-Семьям с детьми, особенно если важен аквапарк и детский клуб прямо в отеле. Тем, кто ценит короткий перелёт и хочет море уже через 4 часа. Дайверам и снорклерам — Красное море входит в топ-10 мира по богатству подводного мира.
-
-</div>
-
-## Вьетнам — Азия в одном билете
-
-<figure class="blog-content-spot">
-
-![Вьетнам — Нячанг, побережье](../../assets/tours/vietnam.webp)
-
-</figure>
-
-Север с Халонгом и шумным Ханоем, центр с Хойаном и пляжами Дананга, юг с Хошимином и дельтой Меконга — в одной стране несколько разных путешествий. Уличная еда, кофе со сгущёнкой и ночные рынки — не «галочка в гиде», а часть ритма.
-
-<div class="blog-content-callout">
-<span class="blog-content-callout-title">Кому подойдёт</span>
-
-Тем, кто хочет маршрут, а не «лежать у моря». Любопытным: история, архитектура, кухня — всё в одном направлении. Тем, кто ищет Азию без лишних трат: внутренние перелёты доступные, а впечатлений — на несколько поездок вперёд.
-
-</div>
-
-> Хорошая поездка — та, после которой не чувствуешь, что «надо отдохнуть от отпуска». Эти шесть стран закрывают разные запросы — и у каждой найдётся тот, кто скажет: «вот это — моё».
-
-Если присмотрели что-то из списка — напишите нам: уточним по сезону, перелётам и конкретному отелю под ваш темп.

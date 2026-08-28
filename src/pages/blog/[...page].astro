@@ -7,7 +7,7 @@ import FooterMinimal from '../../components/FooterMinimal.astro';
 import Layout from '../../layouts/Layout.astro';
 import { getTourStyleBadge } from '../../lib/tourDestinationBadge';
 import { buildBlogBreadcrumbSchema } from '../../lib/schema-blog';
-import { siteBlogIndex, siteBlogPost, siteHome } from '../../lib/site-urls';
+import { siteBlogIndex, siteBlogPost, siteHomeJournal } from '../../lib/site-urls';
 import { typografText } from '../../lib/typograf';
 
 export const prerender = true;
@@ -105,10 +105,9 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
 
     <div class="relative">
       <a
-        href={siteHome()}
-        data-astro-reload
-        class="reveal-hidden pointer-events-auto absolute top-4 right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:top-5 sm:right-5 md:top-6 md:right-6"
-        aria-label="На главную"
+        href={siteHomeJournal()}
+        class="pointer-events-auto absolute top-4 right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:top-5 sm:right-5 md:top-6 md:right-6"
+        aria-label="Наш блог на главной"
       >
         <Image
           src={favicon}
@@ -194,11 +193,10 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
       <!-- Крупная карточка «Направления» + сетка остальных материалов (стр. 1) -->
       <div
         class="mb-16 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5"
-        data-reveal-stagger
       >
         {
           page.currentPage === 1 && featuredPost && (
-            <article class="group reveal-hidden md:col-span-3 flex flex-col lg:flex-row rounded-3xl overflow-hidden bg-white border border-primary/15 shadow-[0_8px_40px_rgba(0,171,179,0.18)] hover:shadow-[0_12px_48px_rgba(0,171,179,0.28)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
+            <article class="group md:col-span-3 flex flex-col lg:flex-row rounded-3xl overflow-hidden bg-white border border-primary/15 shadow-[0_8px_40px_rgba(0,171,179,0.18)] hover:shadow-[0_12px_48px_rgba(0,171,179,0.28)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
               <a
                 href={siteBlogPost(featuredPost.id)}
                 class="relative block overflow-hidden aspect-16/10 lg:w-[58%] lg:shrink-0 lg:aspect-auto lg:min-h-[min(22rem,52vh)]"
@@ -237,21 +235,11 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
                     class="object-cover w-full h-full transition-transform duration-slow ease-out group-hover:scale-[1.02]"
                   />
                 ) : (
-                  <div class="w-full h-full bg-linear-to-br from-primary/10 to-primary/20 flex items-center justify-center min-h-48">
-                    <svg
-                      class="w-16 h-16 text-primary/30"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
+                  <div class="blog-card-placeholder w-full h-full min-h-48" role="img" aria-label="Место для фото">
+                    <svg class="blog-media-placeholder__icon blog-media-placeholder__icon--lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
+                    <span class="blog-media-placeholder__label">Фото скоро</span>
                   </div>
                 )}
                 <div class="absolute top-4 left-4 flex flex-wrap items-center gap-2">
@@ -338,7 +326,7 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
             const cardTitle = typografText(post.data.title);
             const cardDescription = typografText(post.data.description);
             return (
-            <article class="group reveal-hidden flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
+            <article class="group flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
               <a
                 href={siteBlogPost(post.id)}
                 class="block relative overflow-hidden aspect-4/3"
@@ -377,21 +365,11 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
                     class="object-cover w-full h-full transition-transform duration-slow ease-out group-hover:scale-[1.04]"
                   />
                 ) : (
-                  <div class="w-full h-full bg-linear-to-br from-primary/10 to-primary/20 flex items-center justify-center">
-                    <svg
-                      class="w-12 h-12 text-primary/30"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
+                  <div class="blog-card-placeholder w-full h-full" role="img" aria-label="Место для фото">
+                    <svg class="blog-media-placeholder__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
+                    <span class="blog-media-placeholder__label">Фото скоро</span>
                   </div>
                 )}
                 {post.data.destination && (
@@ -542,6 +520,19 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
           </div>
         )
       }
+    </div>
+
+    <div class="text-center mt-8 pb-2">
+      <a
+        href={siteHomeJournal()}
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast"
+          aria-hidden="true"
+        ></i>
+        Наш блог
+      </a>
     </div>
   </main>
 

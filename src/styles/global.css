@@ -1397,8 +1397,9 @@ iframe[src*='tourvisor'] {
   border-radius: 50%;
 }
 
-/* --- Врезка: только орбы (без glass / заливки) --- */
-.blog-content .blog-content-callout {
+/* --- Врезка / карточки преимуществ: мягкий градиент с орбами --- */
+.blog-content .blog-content-callout,
+.blog-content .blog-content-feature-card {
   border-radius: 1.25rem;
   border: none;
   background:
@@ -1420,7 +1421,25 @@ iframe[src*='tourvisor'] {
   backdrop-filter: none;
   box-shadow: none;
   padding: 1.75rem 1.75rem;
+}
+
+.blog-content .blog-content-callout {
   margin: 2.5rem 0;
+}
+
+.blog-content .blog-content-feature-card {
+  margin: 0;
+}
+
+.blog-content .blog-content-feature-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.15rem, 1.5vw + 0.5rem, 1.45rem);
+}
+
+.blog-content .blog-content-feature-card p {
+  font-size: clamp(0.875rem, 0.25vw + 0.8rem, 1rem);
+  margin-bottom: 0;
 }
 
 .blog-content .blog-content-callout-title {
@@ -1504,6 +1523,75 @@ iframe[src*='tourvisor'] {
 /* Markdown оборачивает картинку в <p> внутри <figure> — убираем лишний отступ */
 .blog-content figure.blog-content-spot > p {
   margin: 0;
+}
+
+/* Заглушка под будущее фото в тексте статьи */
+.blog-content figure.blog-content-spot--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  aspect-ratio: 16 / 9;
+  background:
+    linear-gradient(135deg, rgb(0 171 179 / 0.08), rgb(0 171 179 / 0.02)),
+    rgb(248 250 252);
+}
+
+.blog-content figure.blog-content-spot--empty::before {
+  content: 'Фото скоро';
+  font-family: var(--font-montserrat);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(0 171 179 / 0.45);
+}
+
+/* Заглушки карточек и hero блога */
+.blog-card-placeholder,
+.blog-hero-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background:
+    linear-gradient(135deg, rgb(0 171 179 / 0.1), rgb(0 171 179 / 0.03)),
+    rgb(248 250 252);
+}
+
+.blog-hero-placeholder {
+  background:
+    linear-gradient(135deg, rgb(15 23 42 / 0.08), rgb(0 171 179 / 0.12)),
+    rgb(226 232 240);
+}
+
+.blog-media-placeholder__icon {
+  width: 3rem;
+  height: 3rem;
+  color: rgb(0 171 179 / 0.35);
+}
+
+.blog-media-placeholder__icon--lg {
+  width: 4rem;
+  height: 4rem;
+}
+
+.blog-media-placeholder__label {
+  font-family: var(--font-montserrat);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(0 171 179 / 0.45);
+}
+
+.blog-hero-placeholder .blog-media-placeholder__label {
+  color: rgb(15 23 42 / 0.35);
+}
+
+.blog-hero-placeholder .blog-media-placeholder__icon {
+  color: rgb(15 23 42 / 0.2);
 }
 
 /* --- Цитата: premium с градиентом и свечением --- */
@@ -1692,6 +1780,14 @@ iframe[src*='tourvisor'] {
     font-size: clamp(1.2rem, 1.1rem + 1.5vw, 1.65rem);
   }
 
+  .blog-content .blog-content-feature-card h2 {
+    font-size: clamp(1.05rem, 0.95rem + 1.2vw, 1.3rem);
+  }
+
+  .blog-content .blog-content-feature-card p {
+    font-size: clamp(0.8125rem, 0.2vw + 0.75rem, 0.9375rem);
+  }
+
   .blog-content h3 {
     margin-top: 2rem;
   }
@@ -1702,10 +1798,14 @@ iframe[src*='tourvisor'] {
     border-radius: 1rem;
   }
 
-  .blog-content .blog-content-callout {
+  .blog-content .blog-content-callout,
+  .blog-content .blog-content-feature-card {
     padding: 1.35rem 1.15rem;
-    margin: 2rem 0;
     border-radius: 1rem;
+  }
+
+  .blog-content .blog-content-callout {
+    margin: 2rem 0;
   }
 
   .blog-content blockquote {
