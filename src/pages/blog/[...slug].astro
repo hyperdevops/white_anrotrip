@@ -91,7 +91,6 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
   <!-- Hero: sticky — при прокрутке main (z-10) наползает сверху; логотип внутри Hero -->
   <div class="sticky top-0 z-0 h-[55vh] md:h-[65vh] overflow-hidden">
       {hasCollage ? (
-        <!-- Слайд-шоу с плавной сменой -->
         <div class="absolute inset-0" data-slideshow="hero-collage">
           {collageImages.map((img, i) => (
             <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out" data-slide={i} data-slideshow-group="hero-collage">
@@ -108,7 +107,6 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
           ))}
         </div>
       ) : post.data.heroImage ? (
-        <!-- Одиночное изображение -->
         <Image
           src={post.data.heroImage}
           alt={post.data.title}

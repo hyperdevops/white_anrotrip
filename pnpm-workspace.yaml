@@ -6,8 +6,6 @@ allowBuilds:
   sharp: false
 
 overrides:
-  # Одна версия Vite: Astro 6 — ^7.x; @tailwindcss/vite совместим с 7 (не 8 — иначе дубль и ошибки check)
-  vite: 7.3.6
   rollup: '>=4.59.0'
   h3: '>=1.15.9'
   defu: '>=6.1.5'
@@ -30,5 +28,5 @@ packageExtensions:
       picomatch: '>=4.0.4'
 
 # Проверка engines зависимостей как на Node 22 LTS (см. Dockerfile, .node-version)
-nodeVersion: 22.14.0
+nodeVersion: 22.23.2
 engineStrict: true

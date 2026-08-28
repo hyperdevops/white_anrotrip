@@ -1,5 +1,6 @@
 // @ts-check
 import node from '@astrojs/node';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -8,8 +9,12 @@ import { rehypeTypograf } from './src/integrations/rehype-typograf.mjs';
 
 // https://astro.build/config
 export default defineConfig({
+  /** Astro 7: 'jsx' по умолчанию сжимает пробелы между inline-элементами; true — как в v6 */
+  compressHTML: true,
   markdown: {
-    rehypePlugins: [rehypeTypograf],
+    processor: unified({
+      rehypePlugins: [rehypeTypograf],
+    }),
   },
   /** Прод: anrotrip.ru (Beget VPS + Docker + Caddy).
    *  Локальный тест: docker run -p 4321:4321 — открыть http://localhost:4321
