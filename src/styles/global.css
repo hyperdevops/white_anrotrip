@@ -25,6 +25,17 @@
   animation-duration: var(--motion-duration-slow);
   animation-timing-function: var(--motion-easing);
 }
+html.has-pending-home-anchor body {
+  opacity: 0;
+}
+html.has-pending-home-anchor.is-home-anchor-ready body {
+  opacity: 1;
+  transition: opacity var(--motion-duration-normal) var(--motion-easing);
+}
+html.is-page-leaving body {
+  opacity: 0;
+  transition: opacity var(--motion-duration-fast) var(--motion-easing);
+}
 
 /* ═══════════════════════════════════════════════
    DESIGN TOKENS — ANRO TRIP BRAND 2026
@@ -269,6 +280,13 @@
   opacity: 1;
   transform: translate3d(0, 0, 0);
   /* will-change: auto — уже дефолт, явно не нужен */
+}
+
+/* View Transitions / смена маршрута: без мигания скрытых блоков */
+html.is-route-swapping .reveal-hidden {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 /* Staggered — сокращаем задержки на мобайле */

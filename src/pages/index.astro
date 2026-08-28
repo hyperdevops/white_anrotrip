@@ -121,25 +121,84 @@ const [maldivesPreload, seychellesPreload, antalyaPreload] = await Promise.all([
   </main>
   <Footer />
 
-  <!-- Тот же offset, что у кнопки «Поиск туров» в Hero (Hero.astro) и «Туры» в Header (desktop 78px, mobile headerHeight − 16) -->
+  <!-- Стабильный вход на главную по якорям из внутренних страниц: сначала выставляем позицию, потом показываем страницу -->
   <script is:inline>
     (function () {
-      function scrollToSearchLikeHero() {
-        if (window.location.hash !== '#search') return;
-        var anchor = document.getElementById('search');
-        if (!anchor) return;
+      function getAnchorOffset(id) {
         var headerEl = document.getElementById('site-header');
         var headerHeight = headerEl ? headerEl.offsetHeight : 64;
         var isMobile = window.matchMedia('(max-width: 767px)').matches;
-        var offset = isMobile ? headerHeight - 16 : 78;
+
+        if (id === 'search') return isMobile ? headerHeight - 16 : 78;
+
+        var scrollOffset = parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            '--scroll-offset',
+          ),
+        );
+
+        return headerHeight + (Number.isFinite(scrollOffset) ? scrollOffset : 24);
+      }
+
+      function revealPageAfterAnchor() {
+        document.documentElement.classList.add('is-home-anchor-ready');
+        window.setTimeout(function () {
+          document.documentElement.classList.remove(
+            'has-pending-home-anchor',
+            'is-home-anchor-ready',
+          );
+        }, 350);
+      }
+
+      function scrollToCurrentHash() {
+        var hash = window.location.hash;
+        if (!hash || hash.length < 2) return false;
+
+        var id = decodeURIComponent(hash.slice(1));
+        var anchor = document.getElementById(id);
+        if (!anchor) return;
+
+        var headerEl = document.getElementById('site-header');
+        var headerHeight = headerEl ? headerEl.offsetHeight : 64;
+
+        if (id !== 'search' && id !== 'content') {
+          var badge = anchor.querySelector(
+            '.section-badge, .inline-flex.rounded-full',
+          );
+          if (badge) {
+            var layoutTop = 0;
+            var node = badge;
+            while (node) {
+              layoutTop += node.offsetTop;
+              node = node.offsetParent;
+            }
+            var extraGap = id === 'directions' ? 20 : 0;
+            window.scrollTo({
+              top: layoutTop - headerHeight - 26 - extraGap,
+              behavior: 'auto',
+            });
+            return true;
+          }
+        }
+
+        var offset = getAnchorOffset(id);
         var top = anchor.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: top, behavior: 'auto' });
+        return true;
       }
 
       function runAfterLayout() {
-        if (window.location.hash !== '#search') return;
         requestAnimationFrame(function () {
-          requestAnimationFrame(scrollToSearchLikeHero);
+          requestAnimationFrame(function () {
+            if (scrollToCurrentHash()) {
+              revealPageAfterAnchor();
+            } else {
+              document.documentElement.classList.remove(
+                'has-pending-home-anchor',
+                'is-home-anchor-ready',
+              );
+            }
+          });
         });
       }
 

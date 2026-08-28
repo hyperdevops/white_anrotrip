@@ -47,6 +47,7 @@ const {
 
 const baseUrl = Astro.url.origin;
 const base = siteHome();
+const basePath = new URL(base, baseUrl).pathname.replace(/\/$/, '') || '/';
 const canonical = canonicalURL ?? Astro.url.href;
 const ogImageUrl = ogImage.startsWith('http')
   ? ogImage
@@ -211,6 +212,27 @@ const schemaOrgGraph = {
       )
     }
 
+    <script is:inline define:vars={{ basePath }}>
+      (function () {
+        var currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+        var normalizedBase = basePath.replace(/\/$/, '') || '/';
+        var isHome =
+          currentPath === normalizedBase ||
+          currentPath === normalizedBase + '/index.html';
+
+        var pendingHash = null;
+        try {
+          pendingHash = sessionStorage.getItem('pendingHomeHash');
+        } catch (e) {
+          pendingHash = null;
+        }
+
+        if (isHome && (window.location.hash || pendingHash)) {
+          document.documentElement.classList.add('has-pending-home-anchor');
+        }
+      })();
+    </script>
+
     <ClientRouter />
 
     <title>{title}</title>
@@ -229,14 +251,23 @@ const schemaOrgGraph = {
         var prefersReduced = window.matchMedia(
           '(prefers-reduced-motion: reduce)',
         ).matches;
-        if (!prefersReduced) {
+        var sameOriginReferrer = false;
+        try {
+          sameOriginReferrer =
+            !!document.referrer &&
+            new URL(document.referrer).origin === window.location.origin;
+        } catch (e) {
+          sameOriginReferrer = false;
+        }
+        // Fade только при «холодном» заходе; при возврате с блога/других страниц сайта — без вспышки
+        if (!prefersReduced && !sameOriginReferrer) {
           d.documentElement.style.opacity = '0';
           d.body.style.opacity = '0';
           d.documentElement.style.transition = 'opacity 0.5s ease';
           d.body.style.transition = 'opacity 0.5s ease';
         }
         function fadeIn() {
-          if (prefersReduced) return;
+          if (prefersReduced || sameOriginReferrer) return;
           d.documentElement.style.opacity = '1';
           d.body.style.opacity = '1';
           setTimeout(function () {
@@ -349,17 +380,189 @@ const schemaOrgGraph = {
       /* Tourvisor не поддерживает View Transition → полная перезагрузка при переходе на главную; при «Назад» из bfcache тоже перезагружаем */
     }
     <script is:inline>
+      function scrollHomeToHash(hash, doc) {
+        var root = doc || document;
+        var view = root.defaultView || window;
+        if (!hash || hash.length < 2) return false;
+
+        var id = decodeURIComponent(hash.charAt(0) === '#' ? hash.slice(1) : hash);
+        var anchor = root.getElementById(id);
+        if (!anchor) return false;
+
+        var headerEl = root.getElementById('site-header');
+        var headerHeight = headerEl ? headerEl.offsetHeight : 64;
+        var top;
+
+        if (id !== 'search' && id !== 'content') {
+          var badge = anchor.querySelector(
+            '.section-badge, .inline-flex.rounded-full',
+          );
+          if (badge) {
+            var layoutTop = 0;
+            var node = badge;
+            while (node) {
+              layoutTop += node.offsetTop;
+              node = node.offsetParent;
+            }
+            var extraGap = id === 'directions' ? 20 : 0;
+            top = layoutTop - headerHeight - 26 - extraGap;
+          }
+        }
+
+        if (top === undefined) {
+          var isMobile = view.matchMedia('(max-width: 767px)').matches;
+          var offset =
+            id === 'search'
+              ? isMobile
+                ? headerHeight - 16
+                : 78
+              : headerHeight + 25;
+          top =
+            anchor.getBoundingClientRect().top + view.scrollY - offset;
+        }
+
+        view.scrollTo(0, Math.max(0, top));
+        return true;
+      }
+
+      function revealHomeAfterAnchor() {
+        document.documentElement.classList.add('is-home-anchor-ready');
+        window.setTimeout(function () {
+          document.documentElement.classList.remove(
+            'has-pending-home-anchor',
+            'is-home-anchor-ready',
+          );
+        }, 200);
+      }
+
+      window.scrollHomeToHash = scrollHomeToHash;
+      window.revealHomeAfterAnchor = revealHomeAfterAnchor;
+
+      function getHomeNavigation(url) {
+        var base = document.body.dataset.base || '/';
+        var basePath =
+          new URL(base, window.location.origin).pathname.replace(/\/$/, '') ||
+          '/';
+        var targetPath = url.pathname.replace(/\/$/, '') || '/';
+        var isHome =
+          url.origin === window.location.origin &&
+          (targetPath === basePath || targetPath === basePath + '/index.html');
+
+        return { isHome: isHome, hash: url.hash || '' };
+      }
+
+      function runHomeAnchorScroll(doc) {
+        var hash =
+          (doc && doc.defaultView && doc.defaultView.location.hash) ||
+          window.location.hash ||
+          sessionStorage.getItem('pendingHomeHash') ||
+          '';
+        if (!hash) return false;
+
+        var scrolled = scrollHomeToHash(hash, doc || undefined);
+        if (scrolled && !doc) {
+          sessionStorage.removeItem('pendingHomeHash');
+        }
+        return scrolled;
+      }
+
+      document.addEventListener('click', function (event) {
+        var target = event.target;
+        var link = target && target.closest ? target.closest('a[href]') : null;
+        if (!link) return;
+
+        try {
+          var url = new URL(link.href);
+          var homeNavigation = getHomeNavigation(url);
+
+          if (homeNavigation.isHome && homeNavigation.hash) {
+            sessionStorage.setItem('pendingHomeHash', homeNavigation.hash);
+            document.documentElement.classList.add('has-pending-home-anchor');
+          } else {
+            sessionStorage.removeItem('pendingHomeHash');
+          }
+        } catch (e) {
+          sessionStorage.removeItem('pendingHomeHash');
+        }
+      });
+
+      document.addEventListener(
+        'click',
+        function (event) {
+          if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+          )
+            return;
+
+          var target = event.target;
+          var link = target && target.closest ? target.closest('a[href]') : null;
+          if (!link || !link.hasAttribute('data-astro-reload')) return;
+
+          try {
+            var url = new URL(link.href);
+            var homeNavigation = getHomeNavigation(url);
+            if (!homeNavigation.isHome) return;
+
+            event.preventDefault();
+            if (homeNavigation.hash) {
+              sessionStorage.setItem('pendingHomeHash', homeNavigation.hash);
+            } else {
+              sessionStorage.removeItem('pendingHomeHash');
+            }
+            document.documentElement.classList.add('is-page-leaving');
+            window.setTimeout(function () {
+              window.location.href = url.href;
+            }, 220);
+          } catch (e) {
+            return;
+          }
+        },
+        true,
+      );
+
       document.addEventListener('astro:before-swap', function (e) {
-        var isMainPage = e.newDocument.querySelector(
-          '.tv-search-form.tv-moduleid-192367',
-        );
-        if (isMainPage) {
+        var isMainPage = e.newDocument.getElementById('search-widget');
+        if (!isMainPage) return;
+
+        var hash = sessionStorage.getItem('pendingHomeHash') || '';
+        if (hash) {
+          e.newDocument.documentElement.classList.add('has-pending-home-anchor');
+          runHomeAnchorScroll(e.newDocument);
+          return;
+        }
+
+        if (
+          e.newDocument.querySelector('.tv-search-form.tv-moduleid-192367')
+        ) {
           e.swap = function () {
             var b = document.body.dataset.base || '/';
+            sessionStorage.removeItem('pendingHomeHash');
             window.location.href = window.location.origin + b;
           };
         }
       });
+
+      document.addEventListener('astro:after-swap', function () {
+        if (!document.getElementById('search-widget')) return;
+
+        var hash =
+          window.location.hash || sessionStorage.getItem('pendingHomeHash') || '';
+        if (!hash) return;
+
+        document.documentElement.classList.add('has-pending-home-anchor');
+        runHomeAnchorScroll();
+
+        requestAnimationFrame(function () {
+          runHomeAnchorScroll();
+          revealHomeAfterAnchor();
+        });
+      });
+
       window.addEventListener('pageshow', function (e) {
         if (e.persisted && document.querySelector('#search-widget')) {
           window.location.reload();
@@ -369,29 +572,62 @@ const schemaOrgGraph = {
     <!-- Scroll reveal + scroll lock (модалки) -->
     <script is:inline>
       window.initScrollReveal = () => {
-        const observerOptions = {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.1,
-        };
+        if (window.__revealObserver) {
+          window.__revealObserver.disconnect();
+        }
 
-        const observer = new IntersectionObserver((entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('reveal-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, observerOptions);
+        const prefersReduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            root: null,
+            rootMargin: '0px 0px -4% 0px',
+            threshold: 0.01,
+          },
+        );
+
+        window.__revealObserver = observer;
+
+        const viewportH =
+          window.innerHeight || document.documentElement.clientHeight;
 
         document.querySelectorAll('.reveal-hidden').forEach((el) => {
+          if (prefersReduced) {
+            el.classList.add('reveal-visible');
+            return;
+          }
+
+          const rect = el.getBoundingClientRect();
+          const inView = rect.top < viewportH * 0.96 && rect.bottom > 0;
+
+          if (inView) {
+            el.classList.add('reveal-visible');
+            return;
+          }
+
+          el.classList.remove('reveal-visible');
           observer.observe(el);
         });
       };
 
       window.initScrollReveal();
 
+      document.addEventListener('astro:before-swap', () => {
+        document.documentElement.classList.add('is-route-swapping');
+      });
+
       document.addEventListener('astro:page-load', () => {
+        document.documentElement.classList.remove('is-route-swapping');
         requestAnimationFrame(() => {
           window.initScrollReveal?.();
           window.initSearchWidget?.();

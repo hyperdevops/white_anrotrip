@@ -179,10 +179,17 @@ import NemoSearch from './widgets/NemoSearch.astro';
 
     function loadTourvisor(showLoading) {
       var loadingEl = document.getElementById('tourvisor-loading');
+      var container = document.getElementById('tourvisor-container');
       if (window.__tourvisorScriptAdded) {
+        if (container && !container.children.length) {
+          window.__tourvisorReady = false;
+        }
         if (showLoading && loadingEl && !window.__tourvisorReady) {
           loadingEl.classList.remove('opacity-0', 'pointer-events-none');
           loadingEl.setAttribute('aria-hidden', 'false');
+        }
+        if (container && !container.children.length) {
+          window.dispatchEvent(new Event('resize'));
         }
         return;
       }
@@ -299,4 +306,5 @@ import NemoSearch from './widgets/NemoSearch.astro';
   } else {
     initSearchWidget();
   }
+  document.addEventListener('astro:page-load', initSearchWidget);
 </script>
