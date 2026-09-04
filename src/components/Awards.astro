@@ -361,8 +361,8 @@ const awards = [
         setShadowVisible(rightShadow, canScrollRight);
       };
 
-      /** 8 шагов (индексы 0–7), на 8-м «вперёд» — возврат к началу */
-      const lastStepIndex = Math.min(7, slides.length - 1);
+      /** 9 шагов (индексы 0–8), на 9-м «вперёд» — возврат к началу */
+      const lastStepIndex = Math.min(8, slides.length - 1);
       const state = { currentIndex: 0 };
       awardsGalleryState.set(gallery, state);
 
