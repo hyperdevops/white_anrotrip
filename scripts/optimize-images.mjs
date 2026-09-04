@@ -18,13 +18,12 @@ const WEBP_QUALITY = 92;
 const AVIF_QUALITY = 85;
 const JPEG_QUALITY = 92;
 
-// Исключения: мелкие логотипы, hero/welcome/corp (полноэкранные), tours (карточки — макс. чёткость)
+// Исключения: мелкие логотипы, hero/welcome (полноэкранные), tours (карточки — макс. чёткость)
 const SKIP_PATTERNS = [
   /favicon\.(png|ico)$/i,
   /partners\//,
   /hero\//,
   /welcome\//,
-  /corp\//,
   /tours\//,
 ];
 

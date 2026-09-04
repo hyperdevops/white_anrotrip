@@ -35,11 +35,6 @@ export function siteTerms(): string {
   return sitePage('terms');
 }
 
-/** Корпоративным клиентам. */
-export function siteCorp(): string {
-  return sitePage('corp');
-}
-
 /** Личный кабинет (вход). */
 export function siteCabinet(): string {
   return sitePage('cabinet');

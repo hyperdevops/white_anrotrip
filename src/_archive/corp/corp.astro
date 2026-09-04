@@ -1,14 +1,14 @@
 ---
 import { getImage, Image } from 'astro:assets';
-import corpHero from '../assets/corp/corp.webp';
-import corp1 from '../assets/corp/corp1.webp';
-import corp2 from '../assets/corp/corp2.webp';
-import corp3 from '../assets/corp/corp3.webp';
-import corp4 from '../assets/corp/corp4.webp';
-import Header from '../components/Header.astro';
-import Layout from '../layouts/Layout.astro';
-import PhoneOutlineIcon from '../components/PhoneOutlineIcon.astro';
-import { maxIconPath, socialLogoTransform80 } from '../lib/social-icons';
+import corpHero from './assets/corp.webp';
+import corp1 from './assets/corp1.webp';
+import corp2 from './assets/corp2.webp';
+import corp3 from './assets/corp3.webp';
+import corp4 from './assets/corp4.webp';
+import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';
+import PhoneOutlineIcon from '../../components/PhoneOutlineIcon.astro';
+import { maxIconPath, socialLogoTransform80 } from '../../lib/social-icons';
 
 const corpHeroPreload = await getImage({ src: corpHero, quality: 90 });
 // Tiny placeholder (20px) — как Tilda: размытый превью до загрузки полного изображения
