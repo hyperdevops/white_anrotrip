@@ -105,26 +105,20 @@ const reviewCount = reviews.length;
     <div class="mt-10 md:mt-12 space-y-8">
       <ExternalReviewsRow
         theme="light"
+        platform="yandex"
         score={yandexRating.score}
         ratingsCount={yandexRating.ratingsCount}
         reviewsCount={yandexRating.reviewsCount}
         link={yandexReviewsUrl}
         platformLabel="Карты"
-        sourceLabel="Отзыв Яндекс Карт"
+        sourceLabel="Отзыв Яндекс Карты"
         reviews={yandexReviews}
         scrollerId="yandex-reviews-scroller"
-      >
-        <span
-          slot="logo"
-          class="w-5 h-5 rounded-full bg-[#FC3F1D] flex items-center justify-center text-white text-[11px] font-black font-montserrat leading-none shrink-0"
-          aria-hidden="true"
-        >
-          Я
-        </span>
-      </ExternalReviewsRow>
+      />
 
       <ExternalReviewsRow
         theme="dark"
+        platform="2gis"
         score={twoGisRating.score}
         ratingsCount={twoGisRating.ratingsCount}
         reviewsCount={twoGisRating.reviewsCount}
@@ -134,15 +128,7 @@ const reviewCount = reviews.length;
         reviews={twoGisReviews}
         readMoreCaps
         scrollerId="twogis-reviews-scroller"
-      >
-        <span
-          slot="logo"
-          class="w-5 h-5 rounded-full bg-[#2BA84A] flex items-center justify-center text-white shrink-0"
-          aria-hidden="true"
-        >
-          <i class="fa-solid fa-location-dot text-[10px]"></i>
-        </span>
-      </ExternalReviewsRow>
+      />
     </div>
 
     <!-- CTA -->

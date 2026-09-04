@@ -3,13 +3,14 @@
  * Строка-виджет отзывов с внешней площадки (Яндекс Карты / 2ГИС):
  * горизонтальная карусель — полноразмерная карточка площадки (лого, рейтинг, ссылка) и карточки отзывов.
  * Без общей рамки-панели — карточки лежат прямо на фоне секции.
- * Иконку площадки передавай через slot="logo".
+ * Иконка площадки — через prop `platform` (карточка площадки и модальное окно).
  */
 import { Image } from 'astro:assets';
 import { getInitials, avatarColors, pluralizeRu, type ExternalReview } from '../../lib/external-reviews';
 
 export interface Props {
   theme: 'light' | 'dark';
+  platform: 'yandex' | '2gis';
   score: string;
   ratingsCount: number;
   reviewsCount: number;
@@ -24,6 +25,7 @@ export interface Props {
 
 const {
   theme,
+  platform,
   score,
   ratingsCount,
   reviewsCount,
@@ -64,6 +66,9 @@ const cardWidthClass = 'w-[250px] sm:w-[270px]';
 
 const scrollBtnClass =
   'ext-reviews-arrow hidden md:flex absolute top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-900/70 border border-white/30 text-white text-sm items-center justify-center opacity-0 pointer-events-none transition-[opacity,border-color,background-color] duration-fast cursor-pointer hover:bg-gray-900/90 hover:border-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950';
+
+const platformIconClass =
+  'flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white';
 ---
 
 <div data-ext-reviews-row class="-mx-4 sm:-mx-6 md:mx-0">
@@ -109,7 +114,18 @@ const scrollBtnClass =
         class={`snap-start shrink-0 ${cardWidthClass} rounded-2xl p-4 flex flex-col justify-center gap-2.5 transition-[background-color,box-shadow] duration-fast ${logoCardClass}`}
       >
       <div class="flex items-center gap-2">
-        <slot name="logo" />
+        {platform === 'yandex' ? (
+          <span
+            class:list={[platformIconClass, 'bg-[#FC3F1D] text-[11px] font-black font-montserrat leading-none']}
+            aria-hidden="true"
+          >
+            Я
+          </span>
+        ) : (
+          <span class:list={[platformIconClass, 'bg-[#2BA84A]']} aria-hidden="true">
+            <i class="fa-solid fa-location-dot text-[10px]"></i>
+          </span>
+        )}
         <span class={`text-base font-bold font-montserrat ${textPrimaryClass}`}>{platformLabel}</span>
       </div>
       <div class="flex items-baseline gap-2">
@@ -134,6 +150,10 @@ const scrollBtnClass =
           data-review-rating={review.rating}
           data-review-text={review.text}
           data-review-source={sourceLabel}
+          data-review-has-avatar={review.avatar ? '1' : '0'}
+          data-review-avatar={review.avatar?.src}
+          data-review-initials={getInitials(review.name)}
+          data-review-avatar-color={avatarColors[index % avatarColors.length]}
           class={`snap-start shrink-0 ${cardWidthClass} rounded-2xl p-4 flex flex-col gap-2 text-left transition-[background-color,box-shadow] duration-fast cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 ${reviewCardClass}`}
         >
           <div class="flex items-center gap-2.5">
@@ -193,9 +213,40 @@ const scrollBtnClass =
         <i class="fa-solid fa-xmark text-sm" aria-hidden="true"></i>
       </button>
       <div class="pr-10">
-        <p data-review-modal-source class="mb-2 text-xs font-semibold uppercase tracking-widest text-primary"></p>
-        <h3 id={`${scrollerId}-modal-title`} data-review-modal-name class="font-montserrat text-xl font-extrabold text-gray-900"></h3>
-        <p data-review-modal-date class="mt-1 text-sm text-gray-400"></p>
+        <div class="mb-3 flex items-center gap-2">
+          {platform === 'yandex' ? (
+            <span
+              class:list={[platformIconClass, 'bg-[#FC3F1D] text-[11px] font-black font-montserrat leading-none']}
+              aria-hidden="true"
+            >
+              Я
+            </span>
+          ) : (
+            <span class:list={[platformIconClass, 'bg-[#2BA84A]']} aria-hidden="true">
+              <i class="fa-solid fa-location-dot text-[10px]"></i>
+            </span>
+          )}
+          <p data-review-modal-source class="text-xs font-semibold uppercase tracking-widest text-primary"></p>
+        </div>
+        <div class="flex items-center gap-3">
+          <img
+            data-review-modal-avatar
+            class="hidden h-11 w-11 shrink-0 rounded-full object-cover"
+            alt=""
+            width="44"
+            height="44"
+            decoding="async"
+          />
+          <div
+            data-review-modal-initials
+            class="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold font-montserrat text-white"
+            aria-hidden="true"
+          ></div>
+          <div class="min-w-0">
+            <h3 id={`${scrollerId}-modal-title`} data-review-modal-name class="font-montserrat text-xl font-extrabold text-gray-900"></h3>
+            <p data-review-modal-date class="mt-0.5 text-sm text-gray-400"></p>
+          </div>
+        </div>
       </div>
       <div data-review-modal-rating class="mt-4 flex gap-0.5 text-primary text-sm" aria-label="Оценка 5 из 5"></div>
       <p data-review-modal-text class="mt-4 whitespace-pre-line text-sm leading-relaxed text-gray-700"></p>
@@ -226,6 +277,9 @@ const scrollBtnClass =
     if (modal.parentElement !== document.body) {
       document.body.appendChild(modal);
     }
+
+    const modalAvatar = modal.querySelector<HTMLImageElement>('[data-review-modal-avatar]');
+    const modalInitials = modal.querySelector<HTMLElement>('[data-review-modal-initials]');
 
     const setBtnVisible = (btn: HTMLButtonElement, visible: boolean) => {
       btn.classList.toggle('opacity-0', !visible);
@@ -327,6 +381,28 @@ const scrollBtnClass =
           star.setAttribute('aria-hidden', 'true');
           modalRating.appendChild(star);
         });
+      }
+
+      const avatarSrc = card.dataset.reviewAvatar ?? '';
+      const hasAvatar =
+        card.dataset.reviewHasAvatar === '1' && avatarSrc.length > 0;
+      if (modalAvatar && modalInitials) {
+        if (hasAvatar) {
+          modalAvatar.src = avatarSrc;
+          modalAvatar.alt = card.dataset.reviewName ?? '';
+          modalAvatar.classList.remove('hidden');
+          modalInitials.classList.add('hidden');
+          modalInitials.textContent = '';
+        } else {
+          modalAvatar.removeAttribute('src');
+          modalAvatar.classList.add('hidden');
+          modalInitials.textContent = card.dataset.reviewInitials ?? '';
+          modalInitials.className = [
+            'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold font-montserrat text-white',
+            card.dataset.reviewAvatarColor ?? 'bg-primary',
+          ].join(' ');
+          modalInitials.classList.remove('hidden');
+        }
       }
 
       modal.classList.remove('hidden');
