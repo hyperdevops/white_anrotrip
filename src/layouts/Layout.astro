@@ -467,6 +467,8 @@ const schemaOrgGraph = {
       }
 
       document.addEventListener('click', function (event) {
+        if (event.defaultPrevented) return;
+
         var target = event.target;
         var link = target && target.closest ? target.closest('a[href]') : null;
         if (!link) return;
@@ -476,7 +478,23 @@ const schemaOrgGraph = {
           var homeNavigation = getHomeNavigation(url);
 
           if (homeNavigation.isHome && homeNavigation.hash) {
+            var rawHref = link.getAttribute('href') || '';
+            // Якорь на текущей странице — не прятать body (только переход на главную с другой страницы)
+            if (rawHref.charAt(0) === '#') return;
+            var currentPath =
+              window.location.pathname.replace(/\/$/, '') || '/';
+            var targetPath = url.pathname.replace(/\/$/, '') || '/';
+            if (
+              url.origin === window.location.origin &&
+              targetPath === currentPath
+            ) {
+              return;
+            }
+
             sessionStorage.setItem('pendingHomeHash', homeNavigation.hash);
+            if (homeNavigation.hash === '#journal') {
+              sessionStorage.removeItem('blogExitToJournal');
+            }
             document.documentElement.classList.add('has-pending-home-anchor');
           } else {
             sessionStorage.removeItem('pendingHomeHash');
@@ -550,6 +568,8 @@ const schemaOrgGraph = {
       document.addEventListener('astro:after-swap', function () {
         if (!document.getElementById('search-widget')) return;
 
+        if (applyJournalAfterBlogExit()) return;
+
         var hash =
           window.location.hash || sessionStorage.getItem('pendingHomeHash') || '';
         if (!hash) return;
@@ -568,6 +588,167 @@ const schemaOrgGraph = {
           window.location.reload();
         }
       });
+
+      /* Блог: «Назад» в браузере → главная #journal (как кнопка favicon «ANRO trip») */
+      function normalizePath(path) {
+        var p = path.replace(/\/$/, '');
+        return p || '/';
+      }
+
+      function getBasePath() {
+        var base = document.body.dataset.base || '/';
+        return normalizePath(new URL(base, window.location.origin).pathname);
+      }
+
+      function getBlogPrefix() {
+        var basePath = getBasePath();
+        return basePath === '/' ? '/blog' : basePath + '/blog';
+      }
+
+      function isBlogPath(pathname) {
+        var p = normalizePath(pathname);
+        var prefix = getBlogPrefix();
+        return p === prefix || p.indexOf(prefix + '/') === 0;
+      }
+
+      function isBlogIndexPath(pathname) {
+        var p = normalizePath(pathname);
+        var prefix = getBlogPrefix();
+        if (p === prefix) return true;
+        return new RegExp(
+          '^' + prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '/\\d+$',
+        ).test(p);
+      }
+
+      function getHomeJournalHref() {
+        var base = document.body.dataset.base || '/';
+        var url = new URL(base, window.location.origin);
+        url.hash = 'journal';
+        return url.href;
+      }
+
+      function applyJournalAfterBlogExit() {
+        try {
+          if (sessionStorage.getItem('blogExitToJournal') !== '1') return false;
+        } catch (e) {
+          return false;
+        }
+
+        if (!getHomeNavigation(new URL(window.location.href)).isHome) {
+          return false;
+        }
+
+        try {
+          sessionStorage.removeItem('blogExitToJournal');
+          sessionStorage.setItem('pendingHomeHash', '#journal');
+        } catch (e) {}
+
+        document.documentElement.classList.add('has-pending-home-anchor');
+
+        if (window.location.hash !== '#journal') {
+          var journalUrl = new URL(getHomeJournalHref());
+          history.replaceState(
+            null,
+            '',
+            journalUrl.pathname + journalUrl.search + journalUrl.hash,
+          );
+        }
+
+        runHomeAnchorScroll();
+        revealHomeAfterAnchor();
+        return true;
+      }
+
+      function goHomeJournalFromBlog() {
+        try {
+          sessionStorage.setItem('pendingHomeHash', '#journal');
+          sessionStorage.removeItem('blogExitToJournal');
+        } catch (e) {}
+        document.documentElement.classList.add('has-pending-home-anchor');
+        window.location.replace(getHomeJournalHref());
+      }
+
+      function updateBlogExitFlag() {
+        if (!isBlogPath(window.location.pathname)) {
+          try {
+            sessionStorage.removeItem('blogInternalNav');
+          } catch (e) {}
+          return;
+        }
+
+        if (isBlogIndexPath(window.location.pathname)) {
+          try {
+            if (sessionStorage.getItem('blogInternalNav') === '1') {
+              sessionStorage.removeItem('blogInternalNav');
+              sessionStorage.removeItem('blogExitToJournal');
+            } else {
+              sessionStorage.setItem('blogExitToJournal', '1');
+            }
+          } catch (e) {}
+          return;
+        }
+
+        try {
+          if (sessionStorage.getItem('blogInternalNav') === '1') {
+            sessionStorage.removeItem('blogInternalNav');
+            sessionStorage.removeItem('blogExitToJournal');
+          } else {
+            sessionStorage.setItem('blogExitToJournal', '1');
+          }
+        } catch (e) {}
+      }
+
+      function initBlogBackNavigation() {
+        updateBlogExitFlag();
+
+        if (!isBlogPath(window.location.pathname)) {
+          applyJournalAfterBlogExit();
+        }
+      }
+
+      if (!window.__blogBackNavigationInit) {
+        window.__blogBackNavigationInit = true;
+
+        document.addEventListener(
+          'click',
+          function (event) {
+            if (!isBlogPath(window.location.pathname)) return;
+            var link =
+              event.target &&
+              event.target.closest &&
+              event.target.closest('a[href]');
+            if (!link) return;
+            try {
+              var url = new URL(link.href, window.location.origin);
+              if (
+                url.origin === window.location.origin &&
+                isBlogPath(url.pathname)
+              ) {
+                sessionStorage.setItem('blogInternalNav', '1');
+              }
+            } catch (e) {}
+          },
+          true,
+        );
+
+        window.addEventListener('popstate', function () {
+          requestAnimationFrame(function () {
+            if (applyJournalAfterBlogExit()) return;
+
+            try {
+              if (
+                isBlogPath(window.location.pathname) &&
+                sessionStorage.getItem('blogExitToJournal') === '1'
+              ) {
+                goHomeJournalFromBlog();
+              }
+            } catch (e) {}
+          });
+        });
+      }
+
+      initBlogBackNavigation();
+      document.addEventListener('astro:page-load', initBlogBackNavigation);
     </script>
     <!-- Scroll reveal + scroll lock (модалки) -->
     <script is:inline>

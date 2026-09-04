@@ -270,19 +270,19 @@ const heroServiceLabels = [
     </div>
   </div>
 
-  <!-- Скролл-стрелка — внизу Hero -->
+  <!-- Скролл-стрелка: без reveal-hidden (иначе opacity:0), bounce только на ссылке -->
   <div
-    class="reveal-hidden absolute bottom-[clamp(0.75rem,2vh,1.5rem)] left-1/2 -translate-x-1/2 z-20 delay-200 animate-hero-scroll [@media(max-height:720px)]:hidden"
+    class="absolute bottom-[clamp(0.75rem,2vh,1.5rem)] left-1/2 -translate-x-1/2 z-20 [@media(max-height:720px)]:hidden"
   >
     <a
       id="scroll-arrow"
-      href="#popular-tours"
-      aria-label="Перейти к разделу «Туры»"
-      class="text-white/80 hover:text-white transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-full"
+      href="#search"
+      aria-label="Перейти к форме поиска"
+      class="animate-hero-scroll block text-white/80 hover:text-white transition-colors cursor-pointer outline-none [-webkit-tap-highlight-color:transparent] focus-visible:text-white"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-10 w-10 drop-shadow-md"
+        class="h-10 w-10"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -292,7 +292,7 @@ const heroServiceLabels = [
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="M19 14l-7 7m0 0l-7-7"></path>
+          d="M6 9l6 6 6-6"></path>
       </svg>
     </a>
   </div>
@@ -386,9 +386,19 @@ const heroServiceLabels = [
   initHeroStatPills();
   document.addEventListener('astro:page-load', initHeroStatPills);
 
-  // Scroll to search: mobile — headerHeight - 6 (как в меню, SEARCH_GAP = -6); desktop — 104
-  searchBtn?.addEventListener('click', (e) => {
+  // Scroll to search: mobile — headerHeight - 16; desktop — 78 (как в меню и index.astro)
+  const scrollToSearch = (e: Event) => {
     e.preventDefault();
+    // На случай гонки с Layout.astro (has-pending-home-anchor прячет body)
+    document.documentElement.classList.remove(
+      'has-pending-home-anchor',
+      'is-home-anchor-ready',
+    );
+    try {
+      sessionStorage.removeItem('pendingHomeHash');
+    } catch {
+      /* ignore */
+    }
     const anchor = document.getElementById('search');
     if (!anchor) return;
     const headerEl = document.getElementById('site-header');
@@ -397,27 +407,11 @@ const heroServiceLabels = [
     const offset = isMobile ? headerHeight - 16 : 78;
     const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
     window.smoothScrollTo(top);
-  });
+    (e.currentTarget as HTMLElement | null)?.blur();
+  };
 
-  // Как пункт меню «Туры» (Header.astro initAnchorScroll, главная)
-  arrowBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const anchor = document.getElementById('popular-tours');
-    if (!anchor) return;
-    const badge = anchor.querySelector<HTMLElement>(
-      '.inline-flex.rounded-full',
-    );
-    if (!badge) return;
-    const headerEl = document.getElementById('site-header');
-    const headerHeight = headerEl ? headerEl.offsetHeight : 64;
-    let top = 0;
-    let node: HTMLElement | null = badge;
-    while (node) {
-      top += node.offsetTop;
-      node = node.offsetParent as HTMLElement | null;
-    }
-    window.smoothScrollTo(top - headerHeight - 26);
-  });
+  searchBtn?.addEventListener('click', scrollToSearch);
+  arrowBtn?.addEventListener('click', scrollToSearch);
 
   // Blur-up: показать изображение при загрузке
   const heroImg = hero?.querySelector(
