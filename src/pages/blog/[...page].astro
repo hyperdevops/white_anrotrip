@@ -109,19 +109,15 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
     <div class="relative">
       <a
         href={siteHomeJournal()}
-        class="pointer-events-auto absolute top-4 right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:top-5 sm:right-5 md:top-6 md:right-6"
+        class="group pointer-events-auto absolute top-4 right-4 z-20 flex h-[2.625rem] w-[2.625rem] items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:top-5 sm:right-5 md:top-6 md:right-6"
         aria-label="Наш блог на главной"
       >
         <Image
           src={favicon}
           alt=""
-          width={40}
-          height={40}
-          format="png"
-          densities={[2, 3, 4]}
           quality="max"
           decoding="async"
-          class="h-10 w-10 object-contain drop-shadow-sm"
+          class="h-full w-full shrink-0 origin-center object-contain drop-shadow-md transition-transform duration-normal scale-[0.952] [@media(hover:hover)]:group-hover:scale-100 motion-reduce:group-hover:scale-[0.952]"
         />
       </a>
       <div class="container mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 md:pb-12">
@@ -529,10 +525,17 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
         href={siteHomeJournal()}
         class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
       >
-        <i
-          class="fa-solid fa-arrow-left text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast"
-          aria-hidden="true"
-        ></i>
+        <Image
+          src={favicon}
+          alt=""
+          width={20}
+          height={20}
+          format="png"
+          densities={[2, 3, 4]}
+          quality="max"
+          decoding="async"
+          class="h-5 w-5 shrink-0 object-contain transition-transform duration-fast group-hover:-translate-x-1"
+        />
         Наш блог
       </a>
     </div>

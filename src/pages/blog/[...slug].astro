@@ -162,19 +162,15 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
       <!-- Логотип «На главную» — в слое Hero, уезжает вместе с фото при скролле -->
       <a
         href={siteHomeJournal()}
-        class="pointer-events-auto absolute top-4 left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.08)] transition-[box-shadow,transform] duration-normal hover:shadow-[0_0_32px_rgba(0,0,0,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
+        class="group pointer-events-auto absolute top-4 left-4 z-20 flex h-[2.625rem] w-[2.625rem] items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:left-6"
         aria-label="Наш блог на главной"
       >
         <Image
           src={favicon}
           alt=""
-          width={40}
-          height={40}
-          format="png"
-          densities={[2, 3, 4]}
           quality="max"
           decoding="async"
-          class="h-10 w-10 object-contain drop-shadow-sm"
+          class="h-full w-full shrink-0 origin-center object-contain drop-shadow-md transition-transform duration-normal scale-[0.952] [@media(hover:hover)]:group-hover:scale-100 motion-reduce:group-hover:scale-[0.952]"
         />
       </a>
     </div>
