@@ -24,6 +24,8 @@
 | Документ | Описание |
 | ---------------------- | ---------------------------------------------------------------------------------------------------- |
 | [forms.md](./forms.md) | Все формы: поля, эндпоинты, UI-состояния, `.env`, nodemailer SMTP + Telegram, защита (honeypot / rate-limit), 152-ФЗ |
+| [legal-pages-review.md](./legal-pages-review.md) | **Юридические страницы:** `/privacy`, `/terms`, cookie-баннер, чеклист для юриста |
+| [analytics-cookies-plan.md](./analytics-cookies-plan.md) | **Cookie и аналитика:** текущий стек без Метрики, чеклист подключения Яндекс Метрики |
 | [nemo-flights-widget-plan.md](./nemo-flights-widget-plan.md) | **Nemo авиа:** виджет на главной, своя тема, DNS/SSL `ticket.`/`b2b.`, этапы до и после деплоя VPS |
 
 ---
