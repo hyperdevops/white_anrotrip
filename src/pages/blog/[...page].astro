@@ -8,7 +8,7 @@ import Layout from '../../layouts/Layout.astro';
 import { getTourStyleBadge } from '../../lib/tourDestinationBadge';
 import { buildBlogBreadcrumbSchema } from '../../lib/schema-blog';
 import { siteBlogIndex, siteBlogPost, siteHomeJournal } from '../../lib/site-urls';
-import { typografText } from '../../lib/typograf';
+import { typografText, formatBlogTitleHtml } from '../../lib/typograf';
 
 export const prerender = true;
 
@@ -31,6 +31,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 const { page, featuredPost } = Astro.props;
 const featuredTitle = featuredPost ? typografText(featuredPost.data.title) : '';
+const featuredTitleHtml = featuredPost
+  ? formatBlogTitleHtml(featuredPost.data.title)
+  : '';
 const featuredDescription = featuredPost
   ? typografText(featuredPost.data.description)
   : '';
@@ -138,7 +141,7 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
           </h1>
           <p class="max-w-md text-sm leading-relaxed text-gray-500">
             Вдохновляющие идеи, советы экспертов и путеводители по лучшим
-            направлениям от команды ANRO TRIP.
+            направлениям от команды ANRO&nbsp;TRIP.
           </p>
 
           <!-- Редакционная строка -->
@@ -284,9 +287,7 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
                   })}
                 </time>
                 <h2 class="text-xl md:text-2xl lg:text-[1.65rem] font-extrabold text-gray-900 mb-3 font-montserrat leading-tight tracking-tight line-clamp-3 group-hover:text-primary transition-colors duration-fast">
-                  <a href={siteBlogPost(featuredPost.id)}>
-                    {featuredTitle}
-                  </a>
+                  <a href={siteBlogPost(featuredPost.id)} set:html={featuredTitleHtml} />
                 </h2>
                 <p class="text-sm md:text-base text-gray-600 line-clamp-4 mb-6 grow font-inter leading-relaxed">
                   {featuredDescription}
@@ -324,6 +325,7 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
         {
           page.data.map((post, index) => {
             const cardTitle = typografText(post.data.title);
+            const cardTitleHtml = formatBlogTitleHtml(post.data.title);
             const cardDescription = typografText(post.data.description);
             return (
             <article class="group flex flex-col rounded-3xl overflow-hidden bg-white border border-white/10 shadow-[0_4px_24px_rgba(0,171,179,0.15)] hover:shadow-[0_8px_32px_rgba(0,171,179,0.25)] transition-[opacity,transform,box-shadow] duration-slow [content-visibility:auto]">
@@ -442,7 +444,7 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
                   })}
                 </time>
                 <h2 class="text-base font-extrabold text-gray-900 mb-2 font-montserrat leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-fast">
-                  <a href={siteBlogPost(post.id)}>{cardTitle}</a>
+                  <a href={siteBlogPost(post.id)} set:html={cardTitleHtml} />
                 </h2>
                 <p class="text-sm text-gray-500 line-clamp-2 mb-4 grow font-inter leading-relaxed">
                   {cardDescription}

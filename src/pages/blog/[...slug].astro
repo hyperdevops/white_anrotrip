@@ -13,7 +13,7 @@ import {
 } from '../../lib/social-icons';
 import { buildBlogPostSchemaGraph } from '../../lib/schema-blog';
 import { siteBlogIndex, siteBlogPost, siteHome, siteHomeJournal, siteHomeSearch } from '../../lib/site-urls';
-import { typografText } from '../../lib/typograf';
+import { typografText, formatBlogTitleHtml } from '../../lib/typograf';
 
 export const prerender = true;
 
@@ -28,6 +28,9 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const displayTitle = typografText(post.data.title);
+const displayTitleHtml = formatBlogTitleHtml(post.data.title, {
+  uppercase: true,
+});
 const displayDescription = typografText(post.data.description);
 
 // Расчёт времени чтения
@@ -153,9 +156,7 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
             {readingTimeLabel}
           </span>
         </div>
-        <h1 class="font-montserrat font-extrabold text-white uppercase tracking-tight leading-tight" style="font-size: clamp(1.5rem, 1.2rem + 3vw, 3rem);">
-          {displayTitle}
-        </h1>
+        <h1 class="blog-post-hero__title font-montserrat font-extrabold text-white tracking-tight leading-tight" set:html={displayTitleHtml} />
       </div>
 
       <!-- Логотип «На главную» — в слое Hero, уезжает вместе с фото при скролле -->
@@ -191,21 +192,18 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
     <div class="px-4 sm:px-6 max-w-3xl mx-auto pb-20 md:pb-28">
       <!-- Хлебные крошки — minimal pill style -->
       <nav class="flex items-center gap-1.5 pt-10 mb-10" aria-label="Навигация">
-        <a href={siteHome()} class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">
+        <a href={siteHome()} class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-gray-500 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">
           <i class="fa-solid fa-house text-sm leading-none shrink-0 -translate-y-0.5" aria-hidden="true"></i>
           Главная
         </a>
-        <svg class="w-3.5 h-3.5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-        <a href={siteBlogIndex()} class="px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">Журнал</a>
-        <svg class="w-3.5 h-3.5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-        <span class="px-2.5 py-1 rounded-full text-xs font-medium text-gray-500 bg-gray-100/80 line-clamp-1 font-inter">{displayTitle}</span>
+        <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <a href={siteBlogIndex()} class="px-2.5 py-1 rounded-full text-xs font-medium text-gray-500 hover:text-primary hover:bg-primary/5 transition-all duration-200 font-inter">Журнал</a>
+        <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <span class="px-2.5 py-1 rounded-full text-xs font-semibold text-gray-600 bg-gray-100/80 line-clamp-1 font-inter">{displayTitle}</span>
       </nav>
 
       <!-- Лид-абзац: та же типографика и акцент слева, что у .blog-content h2 — единая редакционная система -->
-      <p
-        class="font-montserrat font-extrabold tracking-tight mb-12 max-w-2xl text-slate-900 leading-snug pl-4 border-l-4 border-primary whitespace-pre-line"
-        style="font-size: clamp(1.35rem, 2.2vw + 0.5rem, 1.85rem); text-shadow: 0 1px 2px rgb(0 171 179 / 0.06);"
-      >
+      <p class="blog-article-intro whitespace-pre-line">
         {displayDescription}
       </p>
 
@@ -277,7 +275,7 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
 
       <!-- Поделиться -->
       <div class="mt-14 py-5 border-t border-primary/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p class="text-xs text-gray-400 font-inter">Понравилась статья? Поделитесь:</p>
+        <p class="text-xs text-gray-600 font-inter">Понравилась статья? Поделитесь:</p>
         <div class="flex flex-wrap items-center justify-center gap-2 sm:justify-end">
           <a
             href="https://max.ru/id6658540239_biz"
@@ -355,12 +353,12 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
       <div class="mt-10 flex flex-col items-center gap-4">
         <a
           href={siteBlogIndex()}
-          class="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-slate-400 hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/15 transition-all duration-200 font-montserrat uppercase tracking-wider"
+          class="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-slate-600 hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/15 transition-all duration-200 font-montserrat uppercase tracking-wider"
         >
           <i class="fa-solid fa-arrow-left text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast" aria-hidden="true"></i>
           Все статьи журнала
         </a>
-        <a
+        <!-- <a
           href={siteHomeJournal()}
           class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
         >
@@ -369,7 +367,7 @@ const blogSchemaGraph = buildBlogPostSchemaGraph({
             aria-hidden="true"
           ></i>
           Наш блог
-        </a>
+        </a> -->
       </div>
     </div>
   </main>

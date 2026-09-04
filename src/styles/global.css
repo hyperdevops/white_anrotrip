@@ -380,6 +380,38 @@ html.is-route-swapping .reveal-hidden {
   background: rgba(255, 255, 255, 0.5);
 }
 
+/* About — декоративные орбы на карточках преимуществ (как на первой карточке) */
+.about-benefit-orbs::before,
+.about-benefit-orbs::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.about-benefit-orbs::before {
+  right: -2.5rem;
+  top: -2.5rem;
+  width: 12rem;
+  height: 12rem;
+}
+.about-benefit-orbs::after {
+  right: -1rem;
+  bottom: -2rem;
+  width: 8rem;
+  height: 8rem;
+}
+.about-benefit-orbs--on-dark::before {
+  background: rgb(255 255 255 / 0.1);
+}
+.about-benefit-orbs--on-dark::after {
+  background: rgb(255 255 255 / 0.05);
+}
+.about-benefit-orbs--orb-bl-left::after {
+  right: auto;
+  left: -1rem;
+}
+
 /* ═══════════════════════════════════════════════
    SCROLL ANCHORS — единое расстояние от хедера до блока при любой прокрутке по якорям
    scroll-padding-top на html + scroll-margin-top на целях = один и тот же зазор (хедер + 40px)
@@ -690,12 +722,10 @@ html.is-route-swapping .reveal-hidden {
 @keyframes hero-scroll-bounce {
   0%,
   100% {
-    transform: translateY(0);
-    opacity: 0.7;
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(5px);
-    opacity: 0.35;
+    transform: translate3d(0, 5px, 0);
   }
 }
 @media (hover: hover) {
@@ -1259,6 +1289,29 @@ iframe[src*='tourvisor'] {
   hyphens: auto;
 }
 
+/* Заголовки блога: «профессиональный» целиком от 425px; на узких экранах — перенос */
+.blog-title__nowrap-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.blog-post-hero__title {
+  font-size: clamp(1.5rem, 1.2rem + 3vw, 3rem);
+}
+
+@media (max-width: 424px) {
+  .blog-title__nowrap-word {
+    display: inline;
+    white-space: normal;
+  }
+
+  .blog-post-hero__title {
+    font-size: clamp(1.125rem, 3.6vw + 0.65rem, 1.375rem);
+    line-height: 1.2;
+    overflow-wrap: break-word;
+  }
+}
+
 .blog-content {
   max-width: 42rem;
   margin-inline: auto;
@@ -1397,9 +1450,42 @@ iframe[src*='tourvisor'] {
   border-radius: 50%;
 }
 
-/* --- Врезка / карточки преимуществ: мягкий градиент с орбами --- */
+/* --- Лид статьи (description над контентом) --- */
+.blog-article-intro {
+  max-width: 42rem;
+  margin-bottom: 3rem;
+  padding: 1.75rem 1.75rem 1.75rem 1.5rem;
+  border-radius: 1.25rem;
+  border: none;
+  border-left: 4px solid var(--color-primary);
+  background:
+    radial-gradient(
+      circle at 10% 18%,
+      rgb(51 191 198 / 0.18) 0%,
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 88% 80%,
+      rgb(0 171 179 / 0.12) 0%,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 50% 5%,
+      rgb(0 171 179 / 0.08) 0%,
+      transparent 28%
+    );
+  font-family: var(--font-montserrat);
+  font-size: clamp(1.35rem, 2.2vw + 0.5rem, 1.85rem);
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+  color: rgb(15 23 42);
+  text-shadow: 0 1px 2px rgb(0 171 179 / 0.06);
+}
+
+/* --- Врезка / блок преимуществ: мягкий градиент с орбами --- */
 .blog-content .blog-content-callout,
-.blog-content .blog-content-feature-card {
+.blog-content .blog-content-features {
   border-radius: 1.25rem;
   border: none;
   background:
@@ -1427,18 +1513,51 @@ iframe[src*='tourvisor'] {
   margin: 2.5rem 0;
 }
 
-.blog-content .blog-content-feature-card {
-  margin: 0;
+.blog-content .blog-content-features {
+  display: flex;
+  flex-direction: column;
+  gap: 3.75rem;
+  margin: 2.5rem 0;
 }
 
-.blog-content .blog-content-feature-card h2 {
+.blog-content .blog-content-feature-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .blog-content .blog-content-feature-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.blog-content .blog-content-feature-icon {
+  display: inline-flex;
+  width: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1.875rem;
+  line-height: 1;
+  box-shadow: 0 12px 28px rgb(0 171 179 / 0.25);
+}
+
+.blog-content .blog-content-feature-item h2 {
   margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
   font-size: clamp(1.15rem, 1.5vw + 0.5rem, 1.45rem);
+  line-height: 1.4;
 }
 
-.blog-content .blog-content-feature-card p {
+.blog-content .blog-content-feature-item p {
   font-size: clamp(0.875rem, 0.25vw + 0.8rem, 1rem);
+  line-height: 2.05;
   margin-bottom: 0;
 }
 
@@ -1780,11 +1899,11 @@ iframe[src*='tourvisor'] {
     font-size: clamp(1.2rem, 1.1rem + 1.5vw, 1.65rem);
   }
 
-  .blog-content .blog-content-feature-card h2 {
+  .blog-content .blog-content-feature-item h2 {
     font-size: clamp(1.05rem, 0.95rem + 1.2vw, 1.3rem);
   }
 
-  .blog-content .blog-content-feature-card p {
+  .blog-content .blog-content-feature-item p {
     font-size: clamp(0.8125rem, 0.2vw + 0.75rem, 0.9375rem);
   }
 
@@ -1798,14 +1917,23 @@ iframe[src*='tourvisor'] {
     border-radius: 1rem;
   }
 
-  .blog-content .blog-content-callout,
-  .blog-content .blog-content-feature-card {
-    padding: 1.35rem 1.15rem;
+  .blog-article-intro {
+    padding: 1.35rem 1.15rem 1.35rem 1.1rem;
+    margin-bottom: 2rem;
     border-radius: 1rem;
+    font-size: clamp(1.2rem, 1.1rem + 1.5vw, 1.65rem);
+    line-height: 1.4;
   }
 
-  .blog-content .blog-content-callout {
+  .blog-content .blog-content-callout,
+  .blog-content .blog-content-features {
+    padding: 1.35rem 1.15rem;
+    border-radius: 1rem;
     margin: 2rem 0;
+  }
+
+  .blog-content .blog-content-features {
+    gap: 3rem;
   }
 
   .blog-content blockquote {
