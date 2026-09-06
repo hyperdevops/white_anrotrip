@@ -17,6 +17,8 @@ interface Window {
   /** Визуальная подсказка страны над виджетом Tourvisor (программный выбор недоступен) */
   tvSelectCountry?: (countryName: string) => void;
   loadTourvisor?: (showLoading?: boolean) => void;
+  initNemoWidget?: () => void;
+  __nemoAssetsPromise?: Promise<void>;
   __tourvisorScriptAdded?: boolean;
   __tourvisorReady?: boolean;
 }

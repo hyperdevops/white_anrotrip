@@ -1,7 +1,7 @@
 ---
 // src/components/widgets/NemoSearch.astro
-// Виджет Nemo: каркас с CDN + тема ANRO TRIP (public/nemo/anrotrip-widget-theme.css)
-// @see .doc/nemo-flights-widget-plan.md
+// Виджет Nemo: lazy-load (IntersectionObserver) + тема ANRO TRIP (public/nemo/anrotrip-widget-theme.css)
+// @see .doc/nemo-flights-widget-plan.md, audit PERF-3 / 1.9
 
 /** Pin-версия виджета — обновлять осознанно (теги: gitlab.nemo.travel/frontend/flights.search.widget) */
 const NEMO_WIDGET_VERSION = 'v2.5.64';
@@ -17,34 +17,116 @@ const NEMO_BOOKING_URL = 'https://ticket.anrotrip.ru';
   <div id="nemo-root"></div>
 </div>
 
-<link rel="stylesheet" href={`${NEMO_CDN_BASE}/flights.search.widget.min.css`} />
-<link rel="stylesheet" href="/nemo/anrotrip-widget-theme.css" />
-<script is:inline defer src={`${NEMO_CDN_BASE}/flights.search.widget.min.js`}></script>
+<script is:inline define:vars={{ nemoCdnBase: NEMO_CDN_BASE, nemoBookingUrl: NEMO_BOOKING_URL }}>
+  function loadStylesheet(href, assetId) {
+    if (document.querySelector('link[data-nemo-asset="' + assetId + '"]')) {
+      return Promise.resolve();
+    }
 
-<script is:inline define:vars={{ nemoBookingUrl: NEMO_BOOKING_URL }}>
-  function initNemoWidget() {
-    const root = document.getElementById('nemo-root');
+    return new Promise(function (resolve, reject) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.dataset.nemoAsset = assetId;
+      link.onload = function () {
+        resolve();
+      };
+      link.onerror = function () {
+        reject(new Error('Nemo CSS failed: ' + href));
+      };
+      document.head.appendChild(link);
+    });
+  }
+
+  function loadNemoAssets() {
+    if (window.__nemoAssetsPromise) return window.__nemoAssetsPromise;
+
+    window.__nemoAssetsPromise = Promise.all([
+      loadStylesheet(nemoCdnBase + '/flights.search.widget.min.css', 'widget-css'),
+      loadStylesheet('/nemo/anrotrip-widget-theme.css', 'theme'),
+      new Promise(function (resolve, reject) {
+        if (document.querySelector('script[data-nemo-widget-js]')) {
+          resolve();
+          return;
+        }
+
+        var script = document.createElement('script');
+        script.src = nemoCdnBase + '/flights.search.widget.min.js';
+        script.async = true;
+        script.dataset.nemoWidgetJs = '1';
+        script.onload = function () {
+          resolve();
+        };
+        script.onerror = function () {
+          reject(new Error('Nemo JS failed to load'));
+        };
+        document.body.appendChild(script);
+      }),
+    ]);
+
+    return window.__nemoAssetsPromise;
+  }
+
+  function bootNemoWidget() {
+    var root = document.getElementById('nemo-root');
     if (!root || root.dataset.nemoInit === '1') return;
 
-    const boot = () => {
-      if (typeof FlightsSearchWidget === 'undefined') {
-        setTimeout(boot, 200);
-        return;
-      }
+    var start = function () {
+      loadNemoAssets()
+        .then(function () {
+          var tick = function () {
+            if (typeof FlightsSearchWidget === 'undefined') {
+              setTimeout(tick, 200);
+              return;
+            }
 
-      root.dataset.nemoInit = '1';
+            if (root.dataset.nemoInit === '1') return;
+            root.dataset.nemoInit = '1';
 
-      FlightsSearchWidget.init({
-        nemoURL: nemoBookingUrl,
-        rootElement: root,
-        locale: 'ru',
-        defaultDepartureAirport: 'SVX',
-        // isAWP: true — включить после подтверждения Avia Widget Pro у Nemo
-        // Текст кнопки: search («Найти») + search_tickets (« билеты») — не переопределять search целиком
-      });
+            FlightsSearchWidget.init({
+              nemoURL: nemoBookingUrl,
+              rootElement: root,
+              locale: 'ru',
+              defaultDepartureAirport: 'SVX',
+            });
+          };
+
+          tick();
+        })
+        .catch(function () {
+          /* виджет не критичен для первого экрана */
+        });
     };
 
-    boot();
+    start();
+  }
+
+  function initNemoWidget() {
+    var root = document.getElementById('nemo-root');
+    if (!root || root.dataset.nemoObserving === '1') return;
+
+    var target = document.getElementById('search-widget') || root;
+    root.dataset.nemoObserving = '1';
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          if (
+            entries.some(function (entry) {
+              return entry.isIntersecting;
+            })
+          ) {
+            observer.disconnect();
+            bootNemoWidget();
+          }
+        },
+        { rootMargin: '200px 0px' },
+      );
+      observer.observe(target);
+      return;
+    }
+
+    bootNemoWidget();
   }
 
   window.initNemoWidget = initNemoWidget;
@@ -54,4 +136,5 @@ const NEMO_BOOKING_URL = 'https://ticket.anrotrip.ru';
   } else {
     initNemoWidget();
   }
+  document.addEventListener('astro:page-load', initNemoWidget);
 </script>
