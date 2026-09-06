@@ -274,48 +274,6 @@ const schemaOrgGraph = {
     data-base={base}
   >
     {
-      /* Вспышка при загрузке — fade-in 0.5s, учитываем prefers-reduced-motion */
-    }
-    <script is:inline>
-      (function () {
-        var d = document;
-        var prefersReduced = window.matchMedia(
-          '(prefers-reduced-motion: reduce)',
-        ).matches;
-        var sameOriginReferrer = false;
-        try {
-          sameOriginReferrer =
-            !!document.referrer &&
-            new URL(document.referrer).origin === window.location.origin;
-        } catch (e) {
-          sameOriginReferrer = false;
-        }
-        // Fade только при «холодном» заходе; при возврате с блога/других страниц сайта — без вспышки
-        if (!prefersReduced && !sameOriginReferrer) {
-          d.documentElement.style.opacity = '0';
-          d.body.style.opacity = '0';
-          d.documentElement.style.transition = 'opacity 0.5s ease';
-          d.body.style.transition = 'opacity 0.5s ease';
-        }
-        function fadeIn() {
-          if (prefersReduced || sameOriginReferrer) return;
-          d.documentElement.style.opacity = '1';
-          d.body.style.opacity = '1';
-          setTimeout(function () {
-            d.documentElement.style.transition = '';
-            d.documentElement.style.opacity = '';
-            d.body.style.transition = '';
-            d.body.style.opacity = '';
-          }, 500);
-        }
-        if (d.readyState === 'loading') {
-          d.addEventListener('DOMContentLoaded', fadeIn);
-        } else {
-          fadeIn();
-        }
-      })();
-    </script>
-    {
       /* Единый плавный скролл: детерминированная анимация на requestAnimationFrame —
          одинаковая длительность и easing во ВСЕХ браузерах (нативный scroll-behavior:smooth
          крутит с разной скоростью в Firefox/Chrome). Используется хедером, кнопкой «Наверх»,

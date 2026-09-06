@@ -1192,3 +1192,13 @@ Astro 7 (миграция, `compressHTML`, `security.allowedDomains`) · `src/mi
 - Удалены 12 устаревших `origin/dependabot/*` (на 46–136 коммитов позади `main`).
 - На remote остался только `origin/main`.
 - `.github/dependabot.yml` сохранён — свежие PR создаст в понедельник.
+
+### ✅ 1.1 — убран page fade на `<html>`/`<body>` (2026-09-06)
+
+**Сделано:**
+- Удалён inline-скрипт fade-in в `Layout.astro` (`opacity: 0` на `<html>`/`<body>` скрывал контент до DOMContentLoaded → регресс LCP).
+- Fade на overlay (модалки, drawer, logo-click в Header) не тронут.
+
+**Ожидаемый эффект:** LCP −~500 мс на холодных заходах.
+
+**Файлы:** `src/layouts/Layout.astro`
