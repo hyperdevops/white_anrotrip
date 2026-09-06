@@ -20,6 +20,16 @@ const blog = defineCollection({
       destination: z.string().optional(),
       /** Крупная карточка в блоке «Журнал» на главной (одна на сайт) */
       featured: z.boolean().optional(),
+      /** Черновик — не показывается на сайте (импорт из MAX и т.п.) */
+      draft: z.boolean().default(false),
+      /** Источник импорта */
+      source: z.enum(['max']).optional(),
+      /** ID поста в MAX (body.mid) */
+      sourceId: z.string().optional(),
+      /** Публичная ссылка на пост в MAX */
+      sourceUrl: z.string().url().optional(),
+      /** Дата импорта в репозиторий */
+      importedAt: z.coerce.date().optional(),
     }),
 });
 

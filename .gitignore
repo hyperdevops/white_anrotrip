@@ -35,6 +35,7 @@ skills-lock.json
 convert-to-webp.js
 scripts/*
 !scripts/optimize-images.mjs
+!scripts/import-max-blog.mjs
 
 # --- Настройки редакторов и системы ---
 .vscode/

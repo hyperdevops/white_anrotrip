@@ -14,6 +14,7 @@
 		"build": "astro build",
 		"prebuild": "pnpm optimize:images",
 		"optimize:images": "node scripts/optimize-images.mjs",
+		"import:max-blog": "node scripts/import-max-blog.mjs",
 		"typograf:blog": "node scripts/typograf-blog.mjs",
 		"preview": "astro preview",
 		"astro": "astro"

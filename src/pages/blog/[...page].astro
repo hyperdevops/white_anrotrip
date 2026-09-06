@@ -13,7 +13,7 @@ import { typografText, formatBlogTitleHtml } from '../../lib/typograf';
 export const prerender = true;
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const allPosts = await getCollection('blog');
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
   const sortedPosts = allPosts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
   );
@@ -39,7 +39,7 @@ const featuredDescription = featuredPost
   : '';
 
 // Все направления из коллекции — для тегов в шапке
-const allBlogPosts = await getCollection('blog');
+const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
 const allDestinations = [
   ...new Set(
     allBlogPosts
@@ -109,15 +109,16 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
     <div class="relative">
       <a
         href={siteHomeJournal()}
-        class="group pointer-events-auto absolute top-4 right-4 z-20 flex h-[2.625rem] w-[2.625rem] items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:top-5 sm:right-5 md:top-6 md:right-6"
+        class="pointer-events-auto absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:top-5 sm:right-5 md:top-6 md:right-6"
         aria-label="Наш блог на главной"
       >
         <Image
           src={favicon}
           alt=""
+          format="png"
           quality="max"
           decoding="async"
-          class="h-full w-full shrink-0 origin-center object-contain drop-shadow-md transition-transform duration-normal scale-[0.952] [@media(hover:hover)]:group-hover:scale-100 motion-reduce:group-hover:scale-[0.952]"
+          class="h-10 w-10 shrink-0 object-contain drop-shadow-md"
         />
       </a>
       <div class="container mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 md:pb-12">
@@ -528,10 +529,7 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
         <Image
           src={favicon}
           alt=""
-          width={20}
-          height={20}
           format="png"
-          densities={[2, 3, 4]}
           quality="max"
           decoding="async"
           class="h-5 w-5 shrink-0 object-contain transition-transform duration-fast group-hover:-translate-x-1"
