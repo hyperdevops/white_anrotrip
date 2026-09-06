@@ -10,8 +10,6 @@ import FavoritesWidget from '../components/FavoritesWidget.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import OfficeWidget from '../components/OfficeWidget.astro';
 import GiftModal from '../components/GiftModal.astro';
-import { stat } from 'node:fs/promises';
-import { join } from 'node:path';
 import { getPublicOrigin, resolveOgImageUrl, siteHome } from '../lib/site-urls';
 
 interface Props {
@@ -31,6 +29,8 @@ interface Props {
   officeWidgetVariant?: 'default' | 'corp';
   /** Показывать Schema.org JSON-LD (для страниц вроде cabinet/terms/privacy — false) */
   showSchema?: boolean;
+  /** Meta robots (404 — noindex; по умолчанию max-image-preview:large) */
+  robots?: string;
 }
 
 const {
@@ -45,19 +45,10 @@ const {
   showOfficeWidget = true,
   officeWidgetVariant = 'default',
   showSchema = true,
+  robots = 'max-image-preview:large',
 } = Astro.props;
 
-const ogImageVersion = await (async () => {
-  for (const file of ['og-image.png', 'og-image.jpg']) {
-    try {
-      const st = await stat(join(process.cwd(), 'public', file));
-      return String(Math.floor(st.mtimeMs / 1000));
-    } catch {
-      /* try next */
-    }
-  }
-  return '';
-})();
+const ogImageVersion = import.meta.env.OG_IMAGE_VERSION ?? '';
 
 const baseUrl = getPublicOrigin(
   Astro.request,
@@ -208,7 +199,7 @@ const schemaOrgGraph = {
     <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="apple-touch-icon" href={favicon.src} />
 
-    <meta name="robots" content="max-image-preview:large" />
+    <meta name="robots" content={robots} />
 
     <link rel="canonical" href={canonical} />
 
