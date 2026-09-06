@@ -1,82 +1,59 @@
 ---
-import type { GetStaticPathsOptions } from 'astro';
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import favicon from '../../assets/favicon.png';
-import FooterMinimal from '../../components/FooterMinimal.astro';
+import FooterMinimal from '../FooterMinimal.astro';
+import FaIcon from '../icons/FaIcon.astro';
 import Layout from '../../layouts/Layout.astro';
+import type { BlogListContext } from '../../lib/blog-list';
 import { getTourStyleBadge } from '../../lib/tourDestinationBadge';
-import { buildBlogBreadcrumbSchema } from '../../lib/schema-blog';
-import { siteBlogIndex, siteBlogPost, siteHomeJournal } from '../../lib/site-urls';
-import { typografText, formatBlogTitleHtml } from '../../lib/typograf';
+import { siteBlogPost, siteHomeJournal } from '../../lib/site-urls';
+import { formatBlogTitleHtml, typografText } from '../../lib/typograf';
 
-export const prerender = true;
-
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-  const sortedPosts = allPosts.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
-  const featuredPost =
-    sortedPosts.find((p) => p.data.featured === true) ?? null;
-  const postsForGrid = featuredPost
-    ? sortedPosts.filter((p) => p.id !== featuredPost.id)
-    : sortedPosts;
-
-  return paginate(postsForGrid, {
-    pageSize: 6,
-    props: { featuredPost },
-  });
+interface Props extends BlogListContext {
+  featuredTitle: string;
+  featuredTitleHtml: string;
+  featuredDescription: string;
+  blogIndexUrl: string;
+  pageUrl: string;
+  prevUrl?: string;
+  nextUrl?: string;
+  blogBreadcrumbSchema: Record<string, unknown>;
 }
 
-const { page, featuredPost } = Astro.props;
-const featuredTitle = featuredPost ? typografText(featuredPost.data.title) : '';
-const featuredTitleHtml = featuredPost
-  ? formatBlogTitleHtml(featuredPost.data.title)
-  : '';
-const featuredDescription = featuredPost
-  ? typografText(featuredPost.data.description)
-  : '';
-
-// Все направления из коллекции — для тегов в шапке
-const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
-const allDestinations = [
-  ...new Set(
-    allBlogPosts
-      .map((p) => p.data.destination)
-      .filter((d): d is string => Boolean(d)),
-  ),
-].sort();
-
-// Счётчик материалов с правильным склонением
-const totalCount = page.total + (featuredPost ? 1 : 0);
-const materialsWord =
-  totalCount % 10 === 1 && totalCount % 100 !== 11
-    ? 'материал'
-    : totalCount % 10 >= 2 &&
-        totalCount % 10 <= 4 &&
-        (totalCount % 100 < 10 || totalCount % 100 >= 20)
-      ? 'материала'
-      : 'материалов';
-
-const siteOrigin = Astro.site?.href.replace(/\/$/, '') ?? Astro.url.origin;
-const blogIndexUrl = new URL(siteBlogIndex(), `${siteOrigin}/`).href;
-const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
-  baseUrl: `${siteOrigin}/`,
+const {
+  page,
+  featuredPost,
+  allDestinations,
+  totalCount,
+  materialsWord,
+  featuredTitle,
+  featuredTitleHtml,
+  featuredDescription,
   blogIndexUrl,
-});
+  pageUrl,
+  prevUrl,
+  nextUrl,
+  blogBreadcrumbSchema,
+} = Astro.props;
+
+const listTitle =
+  page.currentPage > 1
+    ? `Журнал о путешествиях — страница ${page.currentPage} | ANRO TRIP`
+    : 'Журнал о путешествиях | ANRO TRIP';
 ---
 
 <Layout
-  title="Журнал о путешествиях | ANRO TRIP"
+  title={listTitle}
   description="Вдохновляющие идеи, советы экспертов и путеводители по лучшим направлениям от команды ANRO TRIP."
-  canonicalURL={blogIndexUrl}
+  canonicalURL={pageUrl}
   showFavorites={false}
   showOfficeWidget={false}
   showScrollToTop={false}
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(blogBreadcrumbSchema)} />
+    {prevUrl && <link rel="prev" href={prevUrl} />}
+    {nextUrl && <link rel="next" href={nextUrl} />}
   </Fragment>
   <!-- Одна сплошная страница: mesh-фон, без наезда блока списка на hero -->
   <main
@@ -488,12 +465,12 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
                 href={page.url.prev}
                 class="group inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast font-montserrat uppercase tracking-wide"
               >
-                <i class="fa-solid fa-arrow-left text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast" aria-hidden="true"></i>
+                <FaIcon name="fa6-solid:arrow-left" iconClass="text-sm leading-none group-hover:-translate-x-1 transition-transform duration-fast" />
                 Назад
               </a>
             ) : (
               <span class="inline-flex items-center gap-2 text-sm font-semibold text-gray-200 font-montserrat uppercase tracking-wide cursor-not-allowed">
-                <i class="fa-solid fa-arrow-left text-sm leading-none opacity-60" aria-hidden="true"></i>
+                <FaIcon name="fa6-solid:arrow-left" iconClass="text-sm leading-none opacity-60" />
                 Назад
               </span>
             )}
@@ -508,12 +485,12 @@ const blogBreadcrumbSchema = buildBlogBreadcrumbSchema({
                 class="group inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-primary transition-colors duration-fast font-montserrat uppercase tracking-wide"
               >
                 Вперёд
-                <i class="fa-solid fa-arrow-right text-sm leading-none group-hover:translate-x-1 transition-transform duration-fast" aria-hidden="true"></i>
+                <FaIcon name="fa6-solid:arrow-right" iconClass="text-sm leading-none group-hover:translate-x-1 transition-transform duration-fast" />
               </a>
             ) : (
               <span class="inline-flex items-center gap-2 text-sm font-semibold text-gray-200 font-montserrat uppercase tracking-wide cursor-not-allowed">
                 Вперёд
-                <i class="fa-solid fa-arrow-right text-sm leading-none opacity-60" aria-hidden="true"></i>
+                <FaIcon name="fa6-solid:arrow-right" iconClass="text-sm leading-none opacity-60" />
               </span>
             )}
           </div>

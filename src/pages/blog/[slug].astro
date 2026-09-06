@@ -1,8 +1,9 @@
 ---
 import { getImage, Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import favicon from '../../assets/favicon.png';
 import FooterMinimal from '../../components/FooterMinimal.astro';
+import FaIcon from '../../components/icons/FaIcon.astro';
 import Layout from '../../layouts/Layout.astro';
 import {
   maxIconPath,
@@ -15,17 +16,16 @@ import { buildBlogPostSchemaGraph } from '../../lib/schema-blog';
 import { siteBlogIndex, siteBlogPost, siteHome, siteHomeJournal, siteHomeSearch } from '../../lib/site-urls';
 import { typografText, formatBlogTitleHtml } from '../../lib/typograf';
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+const slug = Astro.params.slug;
+if (!slug) {
+  return Astro.redirect(siteBlogIndex());
 }
 
-const { post } = Astro.props;
+const post = await getEntry('blog', slug);
+if (!post || post.data.draft) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
 const { Content } = await render(post);
 const displayTitle = typografText(post.data.title);
 const displayTitleHtml = formatBlogTitleHtml(post.data.title, {
