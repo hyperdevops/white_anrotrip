@@ -16,7 +16,7 @@ const CONTENT_SECURITY_POLICY = [
   "form-action 'self' https://lk.anrotrip.ru",
 ].join('; ');
 
-export const onRequest = defineMiddleware(async (_context, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
   const response = await next();
 
   response.headers.set('X-Content-Type-Options', 'nosniff');
@@ -24,6 +24,11 @@ export const onRequest = defineMiddleware(async (_context, next) => {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   response.headers.set('Content-Security-Policy', CONTENT_SECURITY_POLICY);
+
+  if (/^\/og-image\.(png|jpe?g)$/i.test(context.url.pathname)) {
+    response.headers.set('Cache-Control', 'public, max-age=86400');
+    response.headers.set('X-Robots-Tag', 'all');
+  }
 
   if (process.env.NODE_ENV === 'production') {
     response.headers.set(

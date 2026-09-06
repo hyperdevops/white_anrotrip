@@ -22,6 +22,7 @@ const JPEG_QUALITY = 92;
 const SKIP_PATTERNS = [
   /favicon\.(png|ico)$/i,
   /partners\//,
+  /our-partners\//,
   /hero\//,
   /welcome\//,
   /tours\//,
@@ -156,15 +157,38 @@ async function main() {
     }
   }
 
-  // OG image 1200×630 для соцсетей (из hero)
-  const heroPath = join(ASSETS_DIR, 'hero', 'world.webp');
-  const ogPath = join(process.cwd(), 'public', 'og-image.jpg');
+  // OG image 1200×630 для соцсетей (логотип на фоне primary)
+  const logoPath = join(ASSETS_DIR, 'favicon.png');
+  const ogPngPath = join(process.cwd(), 'public', 'og-image.png');
+  const ogJpgPath = join(process.cwd(), 'public', 'og-image.jpg');
   try {
-    await sharp(heroPath)
-      .resize(1200, 630, { fit: 'cover', position: 'center' })
-      .jpeg({ quality: 85 })
-      .toFile(ogPath);
-    console.log('OG image: public/og-image.jpg (1200×630)');
+    const logoSize = 380;
+    const logo = await sharp(logoPath)
+      .resize(logoSize, logoSize, {
+        fit: 'contain',
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
+      .png()
+      .toBuffer();
+
+    const ogBase = sharp({
+      create: {
+        width: 1200,
+        height: 630,
+        channels: 3,
+        background: { r: 255, g: 255, b: 255 },
+      },
+    }).composite([
+      {
+        input: logo,
+        left: Math.round((1200 - logoSize) / 2),
+        top: Math.round((630 - logoSize) / 2),
+      },
+    ]);
+
+    await ogBase.clone().png({ compressionLevel: 9 }).toFile(ogPngPath);
+    await ogBase.clone().jpeg({ quality: 92, mozjpeg: true }).toFile(ogJpgPath);
+    console.log('OG image: public/og-image.png + og-image.jpg (1200×630, logo on white)');
   } catch (e) {
     console.warn('⚠ OG image:', e.message);
   }
