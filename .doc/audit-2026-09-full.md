@@ -1202,3 +1202,148 @@ Astro 7 (миграция, `compressHTML`, `security.allowedDomains`) · `src/mi
 **Ожидаемый эффект:** LCP −~500 мс на холодных заходах.
 
 **Файлы:** `src/layouts/Layout.astro`
+
+### ✅ 1.2 — Font Awesome → SVG (astro-iconify) (2026-09-06)
+
+**Сделано:**
+- `FaIcon.astro` + `src/lib/fa-icons.ts` — обёртка Iconify (`fa6-solid:*`, `fa6-regular:*`).
+- Мигрированы ~15 компонентов, `mobile-nav-icons.ts`, `PhoneOutlineIcon.astro`.
+- Markdown: `rehype-fa-icons.mjs` — `<i class="fa-solid …">` → inline SVG при сборке.
+- **Доп. фикс (иконки в HTML-блоках блога):** Astro запускает кастомные rehype-плагины до `rehype-raw`; HTML из `.md` лежит в узлах `raw` — плагин дополнен обработкой `raw` (статья `top-destinations-2026`).
+- JS: клон `<template>` для звёзд в модалке отзывов; bottom sheet услуг — clone SVG с карточки.
+- Удалены `@fortawesome/fontawesome-free` и 4 `@import` из `global.css`.
+
+**Проверка:** `pnpm check` — 0 errors; `pnpm build` — vite OK (prerender падает на typograf `patch.json`, не связано с иконками).
+
+**Файлы:** `FaIcon.astro`, `fa-icons.ts`, `rehype-fa-icons.mjs`, `mobile-nav-icons.ts`, `global.css`, `package.json`, 15+ компонентов.
+
+### ✅ 1.3 — subset шрифтов cyrillic + latin (2026-09-06)
+
+**Сделано:**
+- `global.css`: вместо полных `@fontsource/inter/{400,500,600}.css` и `montserrat/{600,700,800}.css` — только `cyrillic-*` + `latin-*` для каждого начертания.
+- Убраны greek, vietnamese, latin-ext, cyrillic-ext из бандла (не нужны для RU-сайта).
+
+**Замер woff2 в node_modules (только используемые начертания):**
+- Inter 400/500/600: **312 KB → 96 KB** (−69%)
+- Montserrat 600/700/800: **264 KB → 96 KB** (−64%)
+- **Итого: ~576 KB → ~192 KB**
+
+**Файлы:** `src/styles/global.css`
+
+### ✅ 1.4 — `encode zstd gzip` в Caddy (2026-09-06)
+
+**Сделано:**
+- `Caddyfile`: `encode gzip` → `encode zstd gzip` — Caddy отдаёт zstd клиентам с поддержкой, иначе gzip (HTML/CSS/JS ≈ −15–20 % к одному gzip).
+- **Brotli (`br`)** в официальном `caddy:2-alpine` **нет** (`http.encoders.br` не зарегистрирован; только `gzip` + `zstd`). Для `br` нужен xcaddy-сборка — отложено.
+
+**Проверка:** `caddy validate` — Valid configuration (`caddy:2-alpine`).
+
+**Файлы:** `Caddyfile`
+
+### ✅ 1.5 — убран `astro-compressor` (2026-09-06)
+
+**Сделано:**
+- Удалены `astro-compressor` из `package.json` и `compressor()` из `astro.config.mjs`.
+- При SSR + `reverse_proxy` предсжатые `.br/.gz` в `dist/client/` не отдавались; сжатие делает Caddy (`encode zstd gzip` из 1.4).
+- Сборка короче (нет post-build pass по 34+ файлам).
+
+**Альтернатива на будущее:** отдавать `/_astro/*` через Caddy `file_server { precompressed }` + volume с `dist/client` — снимет нагрузку с Node; отложено.
+
+**Проверка:** `pnpm check` — 0 errors.
+
+**Файлы:** `astro.config.mjs`, `package.json`, `pnpm-lock.yaml`
+
+### ⏸ 1.6 — prerender для index / privacy / terms / 404 (отложено)
+
+**Проблема:** `pnpm build` падал на prerender: Tailwind v4 + `css-tree` в prerender-chunk.
+
+**Временный обход (2026-09-06):** блог переведён на SSR — маршруты `blog/index.astro`, `blog/page/[page].astro`, `blog/[slug].astro` + `src/lib/blog-list.ts`. `pnpm build` — **Complete**.
+
+**Дополнительно:**
+- Редирект 301: `/blog/N` → `/blog/page/N` (legacy astro paginate) в `middleware.ts`.
+- SEO-2: canonical = текущая страница, `title` с номером, `rel="prev/next"` в `BlogListPage.astro`.
+- URL пагинации: `/blog/page/2` (было `/blog/2`).
+
+**Следующий шаг (1–2 дня):** vite-плагин для css-tree или апстрим-фикс → вернуть prerender блога и включить 1.6 для `index`, `privacy`, `terms`, `404`.
+
+**Файлы:** `blog/index.astro`, `blog/page/[page].astro`, `blog/[slug].astro`, `blog-list.ts`, `BlogListPage.astro`, `middleware.ts` (удалены `[...page].astro`, `[...slug].astro`)
+
+### ✅ 1.8 — Cache-Control для HTML в middleware (2026-09-06)
+
+**Сделано:**
+- HTML 200: `public, max-age=0, s-maxage=300, stale-while-revalidate=600` (CDN кеш, браузер revalidate).
+- `/api/*`: `no-store`.
+- HTML 404: `no-cache`.
+- `/_astro/*` и og-image — без изменений (Caddy / существующие правила).
+
+**Файлы:** `src/middleware.ts`
+
+### ✅ 1.9 — Nemo lazy + preconnect (2026-09-06)
+
+**Сделано:**
+- Убраны render-blocking `<link rel="stylesheet">` и `<script defer>` из `NemoSearch.astro`.
+- Ассеты Nemo (CSS виджета, тема, JS) подгружаются через `IntersectionObserver` на `#search-widget` (`rootMargin: 200px`) — паттерн как у Tourvisor.
+- `preconnect` + `dns-prefetch` к `cdn.nemo.travel` в `index.astro` (раньше был только Tourvisor).
+
+**Ожидаемый эффект:** CSS/JS Nemo вне критического пути первого экрана; раннее TCP/TLS к CDN при загрузке главной.
+
+**Файлы:** `NemoSearch.astro`, `index.astro`, `window.d.ts`
+
+### ✅ 1.10 — Hero LCP + приоритет загрузки (2026-09-06)
+
+**Сделано:**
+- `Hero.astro`: `width={1920}` `height={1080}` `sizes="100vw"` — не отдаём 4K-декодирование на мобильном.
+- `index.astro`: preload только Hero (1920px); убраны preload туров (ниже первого экрана, конкурировали с LCP; к тому же maldives/seychelles не использовались в сетке).
+- `PopularTours.astro`: все карточки `loading="lazy"` + `fetchpriority="low"` (секция ниже fold).
+- `JournalSection.astro`: все превью lazy + `sizes` для responsive srcset.
+
+**Отложено (по решению заказчика):**
+- `tours/` в `optimize-images` — ассеты «Актуальные предложения» будут полностью заменены; прогон sharp на текущих файлах не имеет смысла. После замены — убрать `/tours/` из `SKIP_PATTERNS` и прогнать `pnpm optimize:images`.
+- Тонкая настройка блога (AVIF, cardImage) — секция «Наш блог» будет меняться; `sizes` уже заложены под будущие ассеты.
+
+**Файлы:** `Hero.astro`, `index.astro`, `PopularTours.astro`, `JournalSection.astro`, `optimize-images.mjs`
+
+### ✅ 1.11 — dumb-init + limits + log rotation (2026-09-06)
+
+**Сделано:**
+- `Dockerfile`: `dumb-init` как `ENTRYPOINT` — `SIGTERM`/`SIGINT` корректно доходят до Node (без 10 с таймаута при `docker stop`). Заодно `wget` для `HEALTHCHECK`.
+- `compose.yml`: `mem_limit`/`cpus` (app 512m/1 CPU, caddy 128m/0.25 CPU), ротация логов `json-file` 10m×3, `security_opt: no-new-privileges` на оба сервиса.
+- `compose.local.yml`: `restart`, logging, `security_opt` — паритет с prod (без mem limits — локальная разработка).
+
+**Отложено:** `read_only: true` + `tmpfs` для app — Astro 7 пишет file-sessions; нужен отдельный writable volume.
+
+**Файлы:** `Dockerfile`, `compose.yml`, `compose.local.yml`
+
+### ✅ 1.12 — CI: SHA-pin, buildx-кэш, provenance (2026-09-06)
+
+**Сделано:**
+- `deploy.yml`: все actions запинены на полный commit SHA (с комментарием версии).
+- `docker/setup-buildx-action` + `docker/build-push-action` вместо `docker build`/`push --all-tags`.
+- GHA cache: `cache-from/to: type=gha,mode=max` — повторные сборки быстрее.
+- `provenance: true`, `sbom: true` + permissions `attestations: write`, `id-token: write`.
+- `concurrency: deploy-${{ github.ref }}` с `cancel-in-progress`.
+- Явные теги `:latest` и `:sha-${{ github.sha }}` (без `--all-tags`).
+- `mirror-gitflic.yml`: checkout тоже на SHA.
+
+**Файлы:** `.github/workflows/deploy.yml`, `.github/workflows/mirror-gitflic.yml`
+
+### ✅ 1.13 — SEO: 404 noindex, description главной (2026-09-06)
+
+**Сделано:**
+- `Layout.astro`: prop `robots` (дефолт `max-image-preview:large`).
+- `404.astro`: `robots="noindex, follow"`, `showSchema={false}` — soft-404 не попадает в индекс.
+- `index.astro`: уникальный description ~130 символов (услуги + Екатеринбург + УТП).
+- **SEO-2 (пагинация блога):** уже в 1.6 — canonical/title/prev/next в `BlogListPage.astro`.
+
+**Файлы:** `Layout.astro`, `404.astro`, `index.astro`
+
+### ✅ 1.7 — `ogImageVersion` на этапе сборки (2026-09-06)
+
+**Сделано:**
+- Убран `stat()` из `Layout.astro` на каждый SSR-запрос.
+- `astro.config.mjs`: `vite.define` → `import.meta.env.OG_IMAGE_VERSION` (mtime `public/og-image.png|jpg` после prebuild).
+- Тип в `src/env.d.ts`.
+
+**Проверка:** `pnpm check` — 0 errors.
+
+**Файлы:** `Layout.astro`, `astro.config.mjs`, `env.d.ts`
