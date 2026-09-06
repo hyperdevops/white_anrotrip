@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { getTourStyleBadge } from '../lib/tourDestinationBadge';
 import { siteBlogIndex, siteBlogPost } from '../lib/site-urls';
 import { typografText } from '../lib/typograf';
+import FaIcon from './icons/FaIcon.astro';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort(
@@ -74,7 +75,8 @@ const journalBadgeClasses = [
                         alt={`${post.data.title} — фото ${i + 1}`}
                         width={600}
                         height={450}
-                        loading={index === 0 ? 'eager' : 'lazy'}
+                        sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
+                        loading="lazy"
                         class="w-full h-full object-cover"
                       />
                     </div>
@@ -86,7 +88,8 @@ const journalBadgeClasses = [
                   alt={post.data.title}
                   width={600}
                   height={450}
-                  loading={index === 0 ? 'eager' : 'lazy'}
+                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
+                  loading="lazy"
                   class="object-cover w-full h-full transition-transform duration-slow ease-out group-hover:scale-[1.04]"
                 />
               ) : (
@@ -162,10 +165,10 @@ const journalBadgeClasses = [
         class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
       >
         Все статьи
-        <i
-          class="fa-solid fa-arrow-right text-sm leading-none group-hover:translate-x-1 transition-transform duration-fast"
-          aria-hidden="true"
-        ></i>
+        <FaIcon
+          name="fa6-solid:arrow-right"
+          iconClass="text-sm leading-none group-hover:translate-x-1 transition-transform duration-fast"
+        />
       </a>
     </div>
 

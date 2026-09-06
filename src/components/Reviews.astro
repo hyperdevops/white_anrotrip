@@ -4,6 +4,7 @@ import { modalLeadSubmitClass } from '../lib/form-classes';
 import { sitePrivacy } from '../lib/site-urls';
 import { Image } from 'astro:assets';
 import ExternalReviewsRow from './widgets/ExternalReviewsRow.astro';
+import FaIcon from './icons/FaIcon.astro';
 import {
   twoGisRating,
   twoGisReviews,
@@ -207,7 +208,7 @@ const reviewCount = reviews.length;
         aria-label="Предыдущий отзыв"
         class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center text-white/90 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
       >
-        <i class="fa-solid fa-arrow-left text-lg leading-none" aria-hidden="true"></i>
+        <FaIcon name="fa6-solid:arrow-left" iconClass="text-lg leading-none" />
       </button>
     </div>
     <div
@@ -222,7 +223,7 @@ const reviewCount = reviews.length;
         aria-label="Следующий отзыв"
         class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center text-white/90 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
       >
-        <i class="fa-solid fa-arrow-right text-lg leading-none" aria-hidden="true"></i>
+        <FaIcon name="fa6-solid:arrow-right" iconClass="text-lg leading-none" />
       </button>
     </div>
 

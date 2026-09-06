@@ -2,6 +2,7 @@
 // src/components/Team.astro
 // cspell:words ANRO anrotrip anro Rozhkova rozhkova Rozhkov rozhkov Denisova denisova Nedelko nedelko Sherbakova sherbakova Mosinceva mosinceva Koroleva koroleva Subotina subotina Semushina semushina Dankova dankova Ledneva ledneva Tsypysheva tsypysheva Musina musina Bochkareva bochkareva Krestovskich krestovskich Golovanova golovanova Pasynkova pasynkova Bateneva bateneva Golikova golikova Domashevskaya domashevskaya Mamykina mamykina Mamikina Vafina vafina Nagovicyna nagovicyna
 import { Image } from 'astro:assets';
+import FaIcon from './icons/FaIcon.astro';
 
 import annaRozhkovaImg  from '../assets/team/a_rozhkova.webp';
 import nikitaRozhkovImg from '../assets/team/n_rozhkov.webp';
@@ -163,12 +164,15 @@ const team = [
       aria-controls="team-list"
       class="team-toggle-btn inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/10 border border-primary/15 text-white font-bold text-sm uppercase tracking-wider hover:bg-white/18 btn-ripple cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-[background-color,box-shadow] duration-slow ease-out"
     >
-      <i
-        class="fa-solid fa-users text-base leading-none shrink-0 text-primary"
-        aria-hidden="true"
-      ></i>
+      <FaIcon
+        name="fa6-solid:users"
+        iconClass="text-base leading-none shrink-0 text-primary"
+      />
       <span class="team-btn-label font-montserrat">Вся команда</span>
-      <i class="team-btn-chevron fa-solid fa-chevron-down text-sm leading-none shrink-0 text-primary transition-transform duration-slow ease-out" aria-hidden="true"></i>
+      <FaIcon
+        name="fa6-solid:chevron-down"
+        iconClass="team-btn-chevron text-sm leading-none shrink-0 text-primary transition-transform duration-slow ease-out"
+      />
     </button>
   </div>
 </section>
@@ -228,7 +232,7 @@ const team = [
         id="team-collapse-bottom"
         class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-primary shadow-sm transition-[color,background-color,transform,box-shadow] duration-slow ease-out hover:bg-primary/10 hover:border-primary/35 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 md:text-sm"
       >
-        <i class="fa-solid fa-chevron-up text-sm leading-none shrink-0" aria-hidden="true"></i>
+        <FaIcon name="fa6-solid:chevron-up" iconClass="text-sm leading-none shrink-0" />
         Свернуть
       </button>
     </div>

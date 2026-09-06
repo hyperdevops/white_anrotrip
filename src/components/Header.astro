@@ -10,6 +10,7 @@ import {
 } from '../lib/social-icons';
 import { getMobileNavIcon } from '../lib/mobile-nav-icons';
 import { siteCabinet, siteHome } from '../lib/site-urls';
+import FaIcon from './icons/FaIcon.astro';
 import PhoneSolidIcon from './PhoneSolidIcon.astro';
 
 export interface Props {
@@ -361,12 +362,9 @@ const homeContactIconText =
               ]}
               aria-label="Открыть избранное (корзину туров)"
             >
-              <i
-                class:list={[
-                  ...favHeaderIcon.fa.split(' '),
-                  'block text-base leading-none text-primary translate-x-[0.2px] translate-y-[0.6px]',
-                ]}
-                aria-hidden="true"
+              <FaIcon
+                name={favHeaderIcon.icon}
+                iconClass="block text-base leading-none text-primary translate-x-[0.2px] translate-y-[0.6px]"
               />
             </button>
           ) : null
@@ -431,9 +429,10 @@ const homeContactIconText =
             class="header-cta-btn btn-ripple mb-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 transition-[background-color,box-shadow] duration-fast hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [@media(max-height:680px)]:mb-3 [@media(max-height:560px)]:mb-3 [@media(max-height:560px)]:py-2.5 [@media(max-height:480px)]:mb-2.5 [@media(max-height:480px)]:py-2 [@media(max-height:480px)]:text-[13px]"
             {...ctaPrefetch}
           >
-            <i
-              class="fa-solid fa-circle-user text-lg leading-none text-white"
-              aria-hidden="true"></i>
+            <FaIcon
+              name="fa6-solid:circle-user"
+              iconClass="text-lg leading-none text-white"
+            />
             {ctaText}
           </a>
           <div
@@ -465,13 +464,9 @@ const homeContactIconText =
                               navIcon.box,
                             ]}
                           >
-                            <i
-                              class:list={[
-                                ...navIcon.fa.split(' '),
-                                navIcon.icon,
-                                'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
-                              ]}
-                              aria-hidden="true"
+                            <FaIcon
+                              name={navIcon.icon}
+                              iconClass={`block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base ${navIcon.color}`}
                             />
                           </span>
                           <span class="min-w-0 flex-1 text-left leading-snug">
@@ -495,13 +490,9 @@ const homeContactIconText =
                                       groupIcon.box,
                                     ]}
                                   >
-                                    <i
-                                      class:list={[
-                                        ...groupIcon.fa.split(' '),
-                                        groupIcon.icon,
-                                        'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
-                                      ]}
-                                      aria-hidden="true"
+                                    <FaIcon
+                                      name={groupIcon.icon}
+                                      iconClass={`block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base ${groupIcon.color}`}
                                     />
                                   </span>
                                   <span class="min-w-0 flex-1 text-left leading-snug">
@@ -543,13 +534,9 @@ const homeContactIconText =
                               navIcon.box,
                             ]}
                           >
-                            <i
-                              class:list={[
-                                ...navIcon.fa.split(' '),
-                                navIcon.icon,
-                                'block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base',
-                              ]}
-                              aria-hidden="true"
+                            <FaIcon
+                              name={navIcon.icon}
+                              iconClass={`block text-[1.125rem] leading-none [@media(max-height:520px)]:text-base ${navIcon.color}`}
                             />
                           </span>
                           <span class="min-w-0 flex-1 text-left leading-snug">
@@ -588,9 +575,10 @@ const homeContactIconText =
               aria-label="Позвонить: 8 800 222-44-73"
             >
               <span class={homeContactIconBox}>
-                <i
-                  class="fa-solid fa-phone block text-[1.125rem] leading-none text-white [@media(max-height:520px)]:text-base"
-                  aria-hidden="true"></i>
+                <FaIcon
+                  name="fa6-solid:phone"
+                  iconClass="block text-[1.125rem] leading-none text-white [@media(max-height:520px)]:text-base"
+                />
               </span>
               <span class={homeContactIconText}>Звонок</span>
             </a>

@@ -1,6 +1,6 @@
 /**
- * Иконки мобильного меню: Font Awesome Free (классы fa-solid / fa-brands) + цвет кружка.
- * Размер задаётся в Header через text-* на <i>.
+ * Иконки мобильного меню: Iconify fa6-solid + цвет кружка.
+ * Размер задаётся в Header через text-* на FaIcon (1em).
  *
  * default — палитра главной: primary / secondary / red из @theme.
  * *-corp — деловой стиль: slate/gray + сбалансированные акценты primary / primary-dark.
@@ -8,164 +8,164 @@
 export interface MobileNavIconDef {
   box: string;
   icon: string;
-  /** Полная строка классов FA, напр. fa-solid fa-magnifying-glass */
-  fa: string;
+  /** Tailwind-класс цвета иконки */
+  color: string;
 }
 
 const fallback: MobileNavIconDef = {
   box: 'bg-gray-100',
-  icon: 'text-gray-600',
-  fa: 'fa-solid fa-link',
+  color: 'text-gray-600',
+  icon: 'fa6-solid:link',
 };
 
 const map: Record<string, MobileNavIconDef> = {
   /* ─── Главная (default) — бренд ANRO TRIP ─── */
   Авиабилеты: {
     box: 'bg-primary-light/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-plane-departure',
+    color: 'text-primary',
+    icon: 'fa6-solid:plane-departure',
   },
   Туры: {
     box: 'bg-primary/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-globe',
+    color: 'text-primary',
+    icon: 'fa6-solid:globe',
   },
   Журнал: {
     box: 'bg-secondary/10',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-newspaper',
+    color: 'text-secondary',
+    icon: 'fa6-solid:newspaper',
   },
   Блог: {
     box: 'bg-secondary/10',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-newspaper',
+    color: 'text-secondary',
+    icon: 'fa6-solid:newspaper',
   },
   'О компании': {
     box: 'bg-primary/10',
-    icon: 'text-primary-dark',
-    fa: 'fa-solid fa-building',
+    color: 'text-primary-dark',
+    icon: 'fa6-solid:building',
   },
   Доверие: {
     box: 'bg-secondary/10',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-shield-halved',
+    color: 'text-secondary',
+    icon: 'fa6-solid:shield-halved',
   },
   'О нас': {
     box: 'bg-primary/10',
-    icon: 'text-primary-dark',
-    fa: 'fa-solid fa-circle-info',
+    color: 'text-primary-dark',
+    icon: 'fa6-solid:circle-info',
   },
   'Наши услуги': {
     box: 'bg-secondary/12',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-list-check',
+    color: 'text-secondary',
+    icon: 'fa6-solid:list-check',
   },
   Направления: {
     box: 'bg-primary-light/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-arrow-trend-up',
+    color: 'text-primary',
+    icon: 'fa6-solid:arrow-trend-up',
   },
   'Направления работы': {
     box: 'bg-primary-light/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-arrow-trend-up',
+    color: 'text-primary',
+    icon: 'fa6-solid:arrow-trend-up',
   },
   'Для бизнеса': {
     box: 'bg-secondary/12',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-briefcase',
+    color: 'text-secondary',
+    icon: 'fa6-solid:briefcase',
   },
   Партнеры: {
     box: 'bg-primary/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-handshake',
+    color: 'text-primary',
+    icon: 'fa6-solid:handshake',
   },
   'Наши клиенты': {
     box: 'bg-primary/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-handshake',
+    color: 'text-primary',
+    icon: 'fa6-solid:handshake',
   },
   Отзывы: {
     box: 'bg-primary-light/14',
-    icon: 'text-primary-dark',
-    fa: 'fa-solid fa-star',
+    color: 'text-primary-dark',
+    icon: 'fa6-solid:star',
   },
   Сотрудничество: {
     box: 'bg-secondary/10',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-people-group',
+    color: 'text-secondary',
+    icon: 'fa6-solid:people-group',
   },
   Награды: {
     box: 'bg-primary-dark/10',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-trophy',
+    color: 'text-primary',
+    icon: 'fa6-solid:trophy',
   },
   Достижения: {
     box: 'bg-primary-dark/10',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-trophy',
+    color: 'text-primary',
+    icon: 'fa6-solid:trophy',
   },
   Сертификат: {
     box: 'bg-gray-400/12',
-    icon: 'text-primary-dark',
-    fa: 'fa-solid fa-gift',
+    color: 'text-primary-dark',
+    icon: 'fa6-solid:gift',
   },
   Вопросы: {
     box: 'bg-secondary/12',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-circle-question',
+    color: 'text-secondary',
+    icon: 'fa6-solid:circle-question',
   },
   Команда: {
     box: 'bg-primary-light/14',
-    icon: 'text-primary-dark',
-    fa: 'fa-solid fa-users',
+    color: 'text-primary-dark',
+    icon: 'fa6-solid:users',
   },
   Контакты: {
     box: 'bg-primary/12',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-mobile-screen-button',
+    color: 'text-primary',
+    icon: 'fa6-solid:mobile-screen-button',
   },
   Избранное: {
     box: 'bg-secondary/8',
-    icon: 'text-secondary',
-    fa: 'fa-solid fa-heart',
+    color: 'text-secondary',
+    icon: 'fa6-solid:heart',
   },
 
-  /* ─── CORP: нейтраль + ритм primary / primary-dark (бизнес, без «сплошного серого») ─── */
+  /* ─── CORP ─── */
   'О компании-corp': {
     box: 'bg-slate-400/10',
-    icon: 'text-primary-dark/90',
-    fa: 'fa-solid fa-building',
+    color: 'text-primary-dark/90',
+    icon: 'fa6-solid:building',
   },
   'Авиабилеты-corp': {
     box: 'bg-primary-light/12',
-    icon: 'text-primary-dark/90',
-    fa: 'fa-solid fa-plane-departure',
+    color: 'text-primary-dark/90',
+    icon: 'fa6-solid:plane-departure',
   },
   'Отели-corp': {
     box: 'bg-slate-400/10',
-    icon: 'text-primary/80',
-    fa: 'fa-solid fa-hotel',
+    color: 'text-primary/80',
+    icon: 'fa6-solid:hotel',
   },
   'Туры-corp': {
     box: 'bg-primary/10',
-    icon: 'text-primary-dark',
-    fa: 'fa-solid fa-magnifying-glass',
+    color: 'text-primary-dark',
+    icon: 'fa6-solid:magnifying-glass',
   },
   'Трансфер-corp': {
     box: 'bg-gray-400/10',
-    icon: 'text-primary-dark/85',
-    fa: 'fa-solid fa-car-side',
+    color: 'text-primary-dark/85',
+    icon: 'fa6-solid:car-side',
   },
   'Преимущества-corp': {
     box: 'bg-primary/8',
-    icon: 'text-primary/88',
-    fa: 'fa-solid fa-wand-magic-sparkles',
+    color: 'text-primary/88',
+    icon: 'fa6-solid:wand-magic-sparkles',
   },
   'Контакты-corp': {
     box: 'bg-primary-dark/10',
-    icon: 'text-primary',
-    fa: 'fa-solid fa-clipboard-list',
+    color: 'text-primary',
+    icon: 'fa6-solid:clipboard-list',
   },
 };
 

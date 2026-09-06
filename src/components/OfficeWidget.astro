@@ -1,5 +1,6 @@
 ---
 import PhoneSolidIcon from './PhoneSolidIcon.astro';
+import FaIcon from './icons/FaIcon.astro';
 import {
   maxIconPath,
   socialLogoTransform0,
@@ -384,17 +385,29 @@ const officeContactCardClass =
     <span
       class="pointer-events-none absolute inset-[-3px] rounded-full opacity-0 ring-2 ring-primary/30 transition-opacity duration-300 [@media(hover:hover)]:group-hover:opacity-100 motion-reduce:opacity-0"
       aria-hidden="true"></span>
-    <span class="relative block h-8 w-8 shrink-0">
-      <i
+    <span class="relative flex h-8 w-8 shrink-0 items-center justify-center">
+      <span
         id="icon-msg"
-        class="fa-solid fa-comment-dots absolute left-1/2 top-1/2 text-2xl leading-none -translate-x-1/2 -translate-y-1/2 origin-center transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none"
+        class="absolute inset-0 flex items-center justify-center origin-center transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none"
         aria-hidden="true"
-      ></i>
-      <i
+      >
+        <FaIcon
+          name="fa6-solid:comment-dots"
+          iconClass="text-2xl leading-none"
+          baseline={false}
+        />
+      </span>
+      <span
         id="icon-close"
-        class="fa-regular fa-comment-dots absolute left-1/2 top-1/2 text-2xl leading-none -translate-x-1/2 -translate-y-1/2 origin-center scale-75 rotate-90 opacity-0 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none"
+        class="absolute inset-0 flex scale-75 rotate-90 items-center justify-center opacity-0 origin-center transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none"
         aria-hidden="true"
-      ></i>
+      >
+        <FaIcon
+          name="fa6-regular:comment-dots"
+          iconClass="text-2xl leading-none"
+          baseline={false}
+        />
+      </span>
     </span>
   </button>
 </div>

@@ -1,18 +1,18 @@
 @import 'tailwindcss';
 
-/* Локальные шрифты (без Google Fonts — надёжнее при блокировках CDN и строгом CSP) */
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
-@import '@fontsource/montserrat/600.css';
-@import '@fontsource/montserrat/700.css';
-@import '@fontsource/montserrat/800.css';
-
-/* Font Awesome Free — solid + regular + brands */
-@import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
-@import '@fortawesome/fontawesome-free/css/solid.min.css';
-@import '@fortawesome/fontawesome-free/css/regular.min.css';
-@import '@fortawesome/fontawesome-free/css/brands.min.css';
+/* Локальные шрифты: только cyrillic + latin (без greek/vietnamese/latin-ext) */
+@import '@fontsource/inter/cyrillic-400.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/cyrillic-500.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/cyrillic-600.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/montserrat/cyrillic-600.css';
+@import '@fontsource/montserrat/latin-600.css';
+@import '@fontsource/montserrat/cyrillic-700.css';
+@import '@fontsource/montserrat/latin-700.css';
+@import '@fontsource/montserrat/cyrillic-800.css';
+@import '@fontsource/montserrat/latin-800.css';
 
 /* View Transitions: не блокировать клики после анимации + плавная длительность */
 ::view-transition-group(*),

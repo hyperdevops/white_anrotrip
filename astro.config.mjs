@@ -1,10 +1,12 @@
 // @ts-check
+import { statSync } from 'node:fs';
+import { join } from 'node:path';
 import node from '@astrojs/node';
 import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
-import compressor from 'astro-compressor';
+import { rehypeFaIcons } from './src/integrations/rehype-fa-icons.mjs';
 import { rehypeTypograf } from './src/integrations/rehype-typograf.mjs';
 
 /** Доверенные Host / X-Forwarded-* (Astro 7). Без whitelist clientAddress = IP прокси, rate-limit ломается. */
@@ -22,13 +24,27 @@ const devAllowedDomains = [
 /** Лимит тела POST для /api/* (отзыв до 8 KB; 64 KB с запасом). Дефолт адаптера — 1 GB. */
 const API_BODY_SIZE_LIMIT = 64 * 1024;
 
+/** mtime og-image.* после prebuild — cache-buster без stat() на каждый SSR-запрос */
+function readOgImageVersion() {
+  for (const file of ['og-image.png', 'og-image.jpg']) {
+    try {
+      return String(
+        Math.floor(statSync(join(process.cwd(), 'public', file)).mtimeMs / 1000),
+      );
+    } catch {
+      /* try next */
+    }
+  }
+  return '';
+}
+
 // https://astro.build/config
 export default defineConfig({
   /** Astro 7: 'jsx' по умолчанию сжимает пробелы между inline-элементами; true — как в v6 */
   compressHTML: true,
   markdown: {
     processor: unified({
-      rehypePlugins: [rehypeTypograf],
+      rehypePlugins: [rehypeFaIcons, rehypeTypograf],
     }),
   },
   /** Прод: anrotrip.ru (Beget VPS + Docker + Caddy).
@@ -46,6 +62,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    define: {
+      'import.meta.env.OG_IMAGE_VERSION': JSON.stringify(readOgImageVersion()),
+    },
     build: {
       /** Не minify CSS: иначе пропадает backdrop-blur (Tailwind v4 + Vite).
        *  См. AGENTS.md → «Blur в production» и .doc/notes-blur-production.md */
@@ -53,5 +72,5 @@ export default defineConfig({
     },
   },
 
-  integrations: [sitemap(), compressor()],
+  integrations: [sitemap()],
 });

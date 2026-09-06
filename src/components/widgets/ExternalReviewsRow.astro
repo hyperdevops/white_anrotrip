@@ -7,6 +7,7 @@
  */
 import { Image } from 'astro:assets';
 import { getInitials, avatarColors, pluralizeRu, type ExternalReview } from '../../lib/external-reviews';
+import FaIcon from '../icons/FaIcon.astro';
 
 export interface Props {
   theme: 'light' | 'dark';
@@ -90,7 +91,7 @@ const platformIconClass =
       aria-label="Прокрутить отзывы влево"
       class={`${scrollBtnClass} left-0 sm:-left-1`}
     >
-      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+      <FaIcon name="fa6-solid:chevron-left" />
     </button>
     <button
       type="button"
@@ -98,7 +99,7 @@ const platformIconClass =
       aria-label="Прокрутить отзывы вправо"
       class={`${scrollBtnClass} right-0 sm:-right-1`}
     >
-      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <FaIcon name="fa6-solid:chevron-right" />
     </button>
 
     <div
@@ -123,7 +124,7 @@ const platformIconClass =
           </span>
         ) : (
           <span class:list={[platformIconClass, 'bg-[#2BA84A]']} aria-hidden="true">
-            <i class="fa-solid fa-location-dot text-[10px]"></i>
+            <FaIcon name="fa6-solid:location-dot" iconClass="text-[10px]" />
           </span>
         )}
         <span class={`text-base font-bold font-montserrat ${textPrimaryClass}`}>{platformLabel}</span>
@@ -131,7 +132,7 @@ const platformIconClass =
       <div class="flex items-baseline gap-2">
         <span class={`font-montserrat font-extrabold text-3xl leading-none ${textPrimaryClass}`}>{score}</span>
         <div class="flex gap-0.5 text-primary text-sm" aria-hidden="true">
-          {[...Array(5)].map(() => <i class="fa-solid fa-star"></i>)}
+          {[...Array(5)].map(() => <FaIcon name="fa6-solid:star" />)}
         </div>
       </div>
       <span class={`text-[11px] leading-snug ${textMutedClass}`}>
@@ -177,7 +178,7 @@ const platformIconClass =
             </div>
           </div>
           <div class="flex gap-0.5 text-primary text-[10px]" aria-hidden="true">
-            {[...Array(review.rating)].map(() => <i class="fa-solid fa-star"></i>)}
+            {[...Array(review.rating)].map(() => <FaIcon name="fa6-solid:star" />)}
           </div>
           <p class={`text-[13px] leading-snug line-clamp-3 ${textClass}`}>{review.text}</p>
           <span class={`${readMoreClass} w-fit`}>
@@ -210,7 +211,7 @@ const platformIconClass =
         aria-label="Закрыть отзыв"
         class="absolute right-4 top-4 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
-        <i class="fa-solid fa-xmark text-sm" aria-hidden="true"></i>
+        <FaIcon name="fa6-solid:xmark" iconClass="text-sm" />
       </button>
       <div class="pr-10">
         <div class="mb-3 flex items-center gap-2">
@@ -223,7 +224,7 @@ const platformIconClass =
             </span>
           ) : (
             <span class:list={[platformIconClass, 'bg-[#2BA84A]']} aria-hidden="true">
-              <i class="fa-solid fa-location-dot text-[10px]"></i>
+              <FaIcon name="fa6-solid:location-dot" iconClass="text-[10px]" />
             </span>
           )}
           <p data-review-modal-source class="text-xs font-semibold uppercase tracking-widest text-primary"></p>
@@ -252,6 +253,10 @@ const platformIconClass =
       <p data-review-modal-text class="mt-4 whitespace-pre-line text-sm leading-relaxed text-gray-700"></p>
     </div>
   </div>
+
+  <template id="ext-review-star-template">
+    <FaIcon name="fa6-solid:star" />
+  </template>
 </div>
 
 <script>
@@ -375,11 +380,11 @@ const platformIconClass =
       if (modalRating) {
         const rating = Number(card.dataset.reviewRating ?? '5');
         modalRating.innerHTML = '';
+        const starTemplate = document.getElementById('ext-review-star-template') as HTMLTemplateElement | null;
         Array.from({ length: rating }).forEach(() => {
-          const star = document.createElement('i');
-          star.className = 'fa-solid fa-star';
-          star.setAttribute('aria-hidden', 'true');
-          modalRating.appendChild(star);
+          if (starTemplate?.content) {
+            modalRating.appendChild(starTemplate.content.cloneNode(true));
+          }
         });
       }
 

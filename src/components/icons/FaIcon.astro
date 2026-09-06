@@ -1,0 +1,36 @@
+---
+import { Icon } from 'astro-iconify';
+import { faClassesToIconName } from '../../lib/fa-icons';
+
+interface Props {
+  /** Iconify id, напр. `fa6-solid:globe` */
+  name?: string;
+  /** Legacy FA-классы: `fa-solid fa-globe` */
+  fa?: string;
+  iconClass?: string;
+  class?: string;
+  /** false — без optical baseline (круглые кнопки, flex-center) */
+  baseline?: boolean;
+}
+
+const {
+  name,
+  fa,
+  iconClass,
+  class: className,
+  baseline = true,
+} = Astro.props;
+const iconName = name ?? (fa ? faClassesToIconName(fa) : 'fa6-solid:link');
+---
+
+<Icon
+  name={iconName}
+  class:list={[
+    iconClass,
+    className,
+    'inline-block shrink-0 leading-none',
+    baseline && 'align-[-0.125em]',
+  ]}
+  style="width: 1em; height: 1em;"
+  aria-hidden="true"
+/>

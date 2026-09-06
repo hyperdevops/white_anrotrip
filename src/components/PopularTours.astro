@@ -1,5 +1,6 @@
 ---
 import { getImage, Image } from 'astro:assets';
+import FaIcon from './icons/FaIcon.astro';
 import antalyaImg  from '../assets/tours/antalya.webp';
 import thailandImg from '../assets/tours/thailand.webp';
 import egyptImg    from '../assets/tours/egypt.webp';
@@ -107,8 +108,8 @@ const tinyPlaceholders = await Promise.all(
                   height={800}
                   quality={92}
                   sizes={tour.size === 'wide' ? '(max-width: 767px) 100vw, (min-width: 768px) 66vw' : '(max-width: 767px) 100vw, (min-width: 768px) 33vw'}
-                  fetchpriority={i < 3 ? 'high' : 'low'}
-                  loading={i < 3 ? 'eager' : 'lazy'}
+                  loading="lazy"
+                  fetchpriority="low"
                   class="tour-card-image h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out image-sharp"
                 />
               </div>
@@ -131,7 +132,10 @@ const tinyPlaceholders = await Promise.all(
               </span>
               <!-- Иконка-стрелка появляется при hover (только десктоп) -->
               <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-normal -translate-y-1 md:group-hover:translate-y-0">
-                <i class="fa-solid fa-arrow-right text-sm leading-none text-white md:transition-transform md:duration-normal md:group-hover:translate-x-0.5" aria-hidden="true"></i>
+                <FaIcon
+                  name="fa6-solid:arrow-right"
+                  iconClass="text-sm leading-none text-white md:transition-transform md:duration-normal md:group-hover:translate-x-0.5"
+                />
               </span>
             </div>
 
@@ -158,18 +162,9 @@ const tinyPlaceholders = await Promise.all(
         class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-[color,transform] duration-fast group cursor-pointer"
       >
         Смотреть все направления
-        <i
-          class:list={[
-            'fa-solid',
-            'fa-arrow-right',
-            'text-sm',
-            'leading-none',
-            'shrink-0',
-            'group-hover:translate-x-1',
-            'transition-transform',
-            'duration-fast',
-          ]}
-          aria-hidden="true"
+        <FaIcon
+          name="fa6-solid:arrow-right"
+          iconClass="text-sm leading-none shrink-0 group-hover:translate-x-1 transition-transform duration-fast"
         />
       </a>
     </div>

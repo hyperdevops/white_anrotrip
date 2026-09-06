@@ -1,5 +1,5 @@
 ---
-// src/components/FavoritesWidget.astro
+import FaIcon from './icons/FaIcon.astro';
 ---
 
 <div
@@ -13,10 +13,10 @@
   >
     <!-- Иконка с индикатором: фиксированная область, иконка по центру ячейки -->
     <span class="relative inline-flex size-6 shrink-0 items-center justify-center">
-      <i
-        class="fa-solid fa-heart text-lg leading-none transition-transform duration-normal group-hover:scale-110 text-primary"
-        aria-hidden="true"
-      ></i>
+      <FaIcon
+        name="fa6-solid:heart"
+        iconClass="text-lg leading-none transition-transform duration-normal group-hover:scale-110 text-primary"
+      />
 
       <!-- Индикатор -->
       <span

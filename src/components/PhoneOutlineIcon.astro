@@ -1,8 +1,6 @@
 ---
-/**
- * Телефон — Font Awesome Solid (единый стиль с остальным UI).
- * iconClass: кегль, напр. text-base, text-xl, text-2xl
- */
+import { Icon } from 'astro-iconify';
+
 interface Props {
   iconClass?: string;
   colorClass?: string;
@@ -12,7 +10,9 @@ interface Props {
 const { iconClass = 'text-base', colorClass = 'text-primary' } = Astro.props;
 ---
 
-<i
-  class:list={['fa-solid fa-phone shrink-0 leading-none', iconClass, colorClass]}
+<Icon
+  name="fa6-solid:phone"
+  class:list={[iconClass, colorClass, 'inline-block shrink-0 align-[-0.125em] leading-none']}
+  style="width: 1em; height: 1em;"
   aria-hidden="true"
-></i>
+/>
