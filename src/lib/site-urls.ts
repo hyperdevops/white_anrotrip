@@ -50,31 +50,67 @@ export function siteBlogPost(slug: string): string {
   return sitePage(`blog/${slug}`);
 }
 
+/** Прод-домены для canonical / OG (защита от Host header injection). */
+const PROD_ALLOWED_HOSTNAMES = new Set(['anrotrip.ru', 'www.anrotrip.ru']);
+
+function parseHostname(hostHeader: string): string {
+  return hostHeader.split(':')[0]?.trim().toLowerCase() ?? '';
+}
+
+function resolveProto(
+  protoHeader: string | null | undefined,
+  fallbackOrigin: string,
+): 'http' | 'https' {
+  const p = protoHeader?.split(',')[0]?.trim().toLowerCase();
+  if (p === 'http' || p === 'https') return p;
+  try {
+    return new URL(fallbackOrigin).protocol === 'http:' ? 'http' : 'https';
+  } catch {
+    return 'https';
+  }
+}
+
+function isLocalDevHost(hostname: string): boolean {
+  return hostname === 'localhost' || hostname === '127.0.0.1';
+}
+
+function originFromHostHeader(
+  hostHeader: string,
+  protoHeader: string | null | undefined,
+  fallbackOrigin: string,
+): string {
+  const host = hostHeader.split(',')[0]?.trim() ?? hostHeader;
+  return `${resolveProto(protoHeader, fallbackOrigin)}://${host}`;
+}
+
 /**
  * Публичный origin для OG/canonical за прокси (Dev Tunnel, Caddy).
- * Берёт X-Forwarded-Host / X-Forwarded-Proto, иначе Host, иначе site/fallback.
+ * Production: только whitelist (anrotrip.ru / www). Dev: localhost + любой X-Forwarded-Host (туннели).
  */
 export function getPublicOrigin(
   request: Request,
   fallbackOrigin: string,
   siteOrigin?: string,
 ): string {
+  const isProd = import.meta.env.PROD;
   const xfHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
-  const xfProto = request.headers
-    .get('x-forwarded-proto')
-    ?.split(',')[0]
-    ?.trim();
+  const xfProto = request.headers.get('x-forwarded-proto');
+
   if (xfHost) {
-    return `${xfProto || 'https'}://${xfHost}`;
+    const hostname = parseHostname(xfHost);
+    if (!isProd || PROD_ALLOWED_HOSTNAMES.has(hostname)) {
+      return originFromHostHeader(xfHost, xfProto, fallbackOrigin);
+    }
   }
 
   const host = request.headers.get('host')?.split(',')[0]?.trim();
-  if (host && !/^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(host)) {
-    try {
-      const proto = new URL(fallbackOrigin).protocol.replace(':', '') || 'https';
-      return `${proto}://${host}`;
-    } catch {
-      return `https://${host}`;
+  if (host) {
+    const hostname = parseHostname(host);
+    if (
+      PROD_ALLOWED_HOSTNAMES.has(hostname) ||
+      (!isProd && isLocalDevHost(hostname))
+    ) {
+      return originFromHostHeader(host, xfProto, fallbackOrigin);
     }
   }
 

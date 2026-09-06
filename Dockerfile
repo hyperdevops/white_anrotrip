@@ -11,8 +11,9 @@ FROM node:22.23-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Оптимизация изображений + astro build (prebuild → build)
-RUN corepack enable && pnpm exec astro build
+# Sharp-оптимизация ассетов (prebuild) + production-сборка Astro.
+# Нельзя `pnpm exec astro build` — обходит lifecycle-хуки, prebuild не запускается.
+RUN corepack enable && pnpm build && pnpm prune --prod
 
 # ─── Stage 3: продакшн (минимальный образ) ────────────────────────────────────
 FROM node:22.23-alpine AS runner

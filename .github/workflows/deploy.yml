@@ -2,7 +2,7 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [main, main-design-green]
+    branches: [main]
   workflow_dispatch:
     inputs:
       deploy:
@@ -17,11 +17,36 @@ permissions:
   packages: write
 
 jobs:
+  # ── Шаг 0: TypeScript + Astro check ─────────────────────────────────────
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.3.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Astro check
+        run: pnpm check
+
   # ── Шаг 1: Сборка и push образа в GHCR ──────────────────────────────────
   # Запускается при каждом push в main.
   # VPS не нужен — образ всегда актуален в реестре.
   build-push:
     runs-on: ubuntu-latest
+    needs: check
 
     steps:
       - name: Checkout
