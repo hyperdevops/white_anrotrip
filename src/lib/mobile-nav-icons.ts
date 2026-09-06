@@ -65,6 +65,11 @@ const map: Record<string, MobileNavIconDef> = {
     icon: 'text-primary',
     fa: 'fa-solid fa-arrow-trend-up',
   },
+  'Направления работы': {
+    box: 'bg-primary-light/12',
+    icon: 'text-primary',
+    fa: 'fa-solid fa-arrow-trend-up',
+  },
   'Для бизнеса': {
     box: 'bg-secondary/12',
     icon: 'text-secondary',

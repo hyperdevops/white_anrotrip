@@ -37,25 +37,19 @@ const isHome =
 const journalHref = isHome ? '#journal' : `${baseTrimmed}/#journal`;
 /** Как бейдж в Hero (`#hero-services-badge`) — секция «Наши услуги» в About */
 const servicesHref = isHome ? '#services' : `${baseTrimmed}/#services`;
-/** Блок «Для бизнеса» / travel-ассистент в About */
-const businessHref = isHome ? '#business' : `${baseTrimmed}/#business`;
 /** Раздел наград */
 const awardsHref = isHome ? '#awards' : `${baseTrimmed}/#awards`;
 /** Подарочный сертификат */
 const giftHref = isHome ? '#gift' : `${baseTrimmed}/#gift`;
-/** Блок сотрудничества с авиакомпаниями и отелями */
-const ourPartnersHref = isHome ? '#our-partners' : `${baseTrimmed}/#our-partners`;
 
 const defaultNavItems = [
   { name: 'Авиабилеты', href: '#search' },
   { name: 'Туры', href: '#popular-tours' },
-  { name: 'Журнал', href: journalHref },
+  { name: 'Блог', href: journalHref },
   { name: 'О нас', href: '#about' },
+  { name: 'Направления работы', href: '#directions' },
   { name: 'Наши услуги', href: servicesHref },
-  { name: 'Для бизнеса', href: businessHref },
-  { name: 'Партнёры', href: '#partners' },
   { name: 'Отзывы', href: '#reviews' },
-  { name: 'Сотрудничество', href: ourPartnersHref },
   { name: 'Награды', href: awardsHref },
   { name: 'Сертификат', href: giftHref },
   { name: 'Вопросы', href: '#faq' },
@@ -70,18 +64,10 @@ const defaultNavGroups: { name: string; items: { name: string; href: string }[] 
     name: 'О компании',
     items: [
       { name: 'О нас', href: '#about' },
-      { name: 'Направления', href: '#directions' },
+      { name: 'Направления работы', href: '#directions' },
       { name: 'Наши услуги', href: servicesHref },
-    ],
-  },
-  {
-    name: 'Доверие',
-    items: [
-      { name: 'Наши клиенты', href: '#partners' },
       { name: 'Отзывы', href: '#reviews' },
-      { name: 'Сотрудничество', href: ourPartnersHref },
-      { name: 'Достижения', href: awardsHref },
-      { name: 'Сертификат', href: giftHref },
+      { name: 'Награды', href: awardsHref },
     ],
   },
 ];
@@ -93,6 +79,7 @@ const defaultNavStandaloneFirst: { name: string; href: string }[] = [
   { name: 'Блог', href: journalHref },
 ];
 const defaultNavStandalone: { name: string; href: string }[] = [
+  { name: 'Сертификат', href: giftHref },
   { name: 'Вопросы', href: '#faq' },
   { name: 'Команда', href: '#team' },
   { name: 'Контакты', href: '#contacts' },
@@ -127,8 +114,6 @@ type HomeNavEntry =
 const homeNavEntries: HomeNavEntry[] = [
   ...defaultNavStandaloneFirst.map((item) => ({ kind: 'link' as const, ...item })),
   { kind: 'group' as const, ...defaultNavGroups[0]! },
-  { kind: 'link' as const, name: 'Для бизнеса', href: businessHref },
-  { kind: 'group' as const, ...defaultNavGroups[1]! },
   ...defaultNavStandalone.map((item) => ({ kind: 'link' as const, ...item })),
 ];
 
@@ -201,10 +186,7 @@ const homeContactIconText =
         <Image
           src={favicon}
           alt=""
-          width={40}
-          height={40}
           format="png"
-          densities={[2, 3, 4]}
           quality="max"
           decoding="async"
           class="h-10 w-10 shrink-0 object-contain drop-shadow-sm"
