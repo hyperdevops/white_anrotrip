@@ -795,6 +795,19 @@ html.is-route-swapping .reveal-hidden {
   }
 }
 
+/* Viewport marquee: вертикальный padding — hover не обрезает верхнюю границу */
+.partners-marquee-viewport {
+  overflow: hidden;
+  padding-block: 6px;
+  margin-block: -6px;
+}
+
+.partners-logo-card {
+  transition:
+    transform var(--motion-duration-fast) var(--motion-easing),
+    box-shadow var(--motion-duration-fast) var(--motion-easing),
+    border-color var(--motion-duration-fast) var(--motion-easing);
+}
 
 @media (hover: hover) {
   .partners-logo-card:hover {

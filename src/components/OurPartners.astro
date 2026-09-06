@@ -1,17 +1,34 @@
 ---
 // src/components/OurPartners.astro
-// ЗАГЛУШКА: Компонент "Наши партнеры".
-// Сюда можно добавить реальные логотипы и тексты.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import anexTourLogo from '../assets/our-partners/anex-tour.webp';
+import funSunLogo from '../assets/our-partners/fun-sun.webp';
+import gkpLogo from '../assets/our-partners/gkp.webp';
 
-// ЗАГЛУШКА: 10 слотов — как в блоке «Нам доверяют» (Partners.astro)
-const placeholders = Array.from({ length: 10 }).map((_, i) => ({
-  id: i,
+type PartnerSlot =
+  | { type: 'logo'; name: string; logo: ImageMetadata }
+  | { type: 'placeholder'; name: string };
+
+const placeholders: PartnerSlot[] = Array.from({ length: 10 }).map((_, i) => ({
+  type: 'placeholder',
   name: `Партнёр ${i + 1}`,
 }));
 
-// Дублируем один раз — бесшовный marquee, та же логика что в Partners.astro
-const row1 = [...placeholders, ...placeholders];
-const row2 = [...placeholders, ...placeholders].reverse();
+// Пробная тройка: 2 логотипа в верхнем ряду, 1 — в нижнем
+const row1Slots: PartnerSlot[] = [
+  { type: 'logo', name: 'ГКП', logo: gkpLogo },
+  { type: 'logo', name: 'FUN&SUN', logo: funSunLogo },
+  ...placeholders.slice(2),
+];
+
+const row2Slots: PartnerSlot[] = [
+  { type: 'logo', name: 'Anex Tour', logo: anexTourLogo },
+  ...placeholders.slice(1),
+];
+
+const row1 = [...row1Slots, ...row1Slots];
+const row2 = [...row2Slots, ...row2Slots].reverse();
 
 interface Props {
   class?: string;
@@ -45,7 +62,6 @@ const { class: classes = '' }: Props = Astro.props;
     </div>
 
     <!-- ЛЕНТА ЛОГОТИПОВ -->
-    <!-- ЗАГЛУШКА: Здесь выводятся пустые блоки. Для реальных логотипов замените содержимое .partners-logo-card на тег <Image /> -->
 
     <!-- Мобилка: только ручной скролл (как в Partners.astro — «Наши клиенты») -->
     <div class="relative md:hidden">
@@ -58,9 +74,21 @@ const { class: classes = '' }: Props = Astro.props;
       >
         {row1.map((partner) => (
           <div class="shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3">
-            <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
-              {partner.name}
-            </span>
+            {partner.type === 'logo' ? (
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={160}
+                height={120}
+                class="max-h-full w-auto max-w-full object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
+                {partner.name}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -71,9 +99,21 @@ const { class: classes = '' }: Props = Astro.props;
       >
         {row2.map((partner) => (
           <div class="shrink-0 w-40 h-22 sm:w-44 sm:h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3">
-            <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
-              {partner.name}
-            </span>
+            {partner.type === 'logo' ? (
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={160}
+                height={120}
+                class="max-h-full w-auto max-w-full object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
+                {partner.name}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -84,25 +124,45 @@ const { class: classes = '' }: Props = Astro.props;
       <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-r from-primary/4 to-transparent z-10 pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-linear-to-l from-primary/4 to-transparent z-10 pointer-events-none"></div>
 
-      <div class="overflow-hidden mb-4">
+      <div class="partners-marquee-viewport mb-4">
         <div class="partners-track partners-track--forward flex gap-4 w-max" aria-hidden="true">
           {row1.map((partner) => (
             <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
-              <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
-                {partner.name}
-              </span>
+              {partner.type === 'logo' ? (
+                <Image
+                  src={partner.logo}
+                  alt={partner.name}
+                  class="max-h-full w-auto max-w-full object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
+                  {partner.name}
+                </span>
+              )}
             </div>
           ))}
         </div>
       </div>
 
-      <div class="overflow-hidden">
+      <div class="partners-marquee-viewport">
         <div class="partners-track partners-track--reverse flex gap-4 w-max" aria-hidden="true">
           {row2.map((partner) => (
             <div class="partners-logo-card shrink-0 w-40 h-22 sm:w-44 sm:h-24 md:h-36 rounded-2xl bg-white border border-gray-100 flex items-center justify-center px-5 py-3 group transition-all duration-normal">
-              <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
-                {partner.name}
-              </span>
+              {partner.type === 'logo' ? (
+                <Image
+                  src={partner.logo}
+                  alt={partner.name}
+                  class="max-h-full w-auto max-w-full object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="text-gray-300 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wider group-hover:text-primary/50 transition-colors text-center">
+                  {partner.name}
+                </span>
+              )}
             </div>
           ))}
         </div>
