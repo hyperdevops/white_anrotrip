@@ -17,6 +17,15 @@ services:
     depends_on:
       app:
         condition: service_healthy
+    mem_limit: 128m
+    cpus: "0.25"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
 
   app:
     image: ghcr.io/${GITHUB_REPOSITORY:-owner/white_anrotrip}:${IMAGE_TAG:-latest}
@@ -24,6 +33,15 @@ services:
     env_file: .env
     expose:
       - "4321"
+    mem_limit: 512m
+    cpus: "1.0"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
   caddy_data:

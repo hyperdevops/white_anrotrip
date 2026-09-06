@@ -19,6 +19,8 @@ RUN corepack enable && pnpm build && pnpm prune --prod
 FROM node:22.23-alpine AS runner
 WORKDIR /app
 
+RUN apk add --no-cache dumb-init wget
+
 RUN addgroup -g 1001 -S nodejs && adduser -S astro -u 1001
 
 COPY --from=builder --chown=astro:nodejs /app/dist ./dist
@@ -35,4 +37,5 @@ EXPOSE 4321
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD wget -qO- http://localhost:4321/ || exit 1
 
+ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "./dist/server/entry.mjs"]
